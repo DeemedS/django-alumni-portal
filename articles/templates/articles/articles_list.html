@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    News
+{% endblock %}
+
+{% block content %}
+    <section>   
+        <h1>News</h1>
+        <ul>
+            {% for article in articles %}
+                <li>
+                    <h2>
+                        <a href="{% url 'articles:article_page' slug=article.slug %}">
+                            {{ article.title }}
+                        </a>
+                     </h2>
+                    <p>{{ article.body }}</p>
+                    <p>Published on: {{ article.date }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}
