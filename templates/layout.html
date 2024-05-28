@@ -10,11 +10,12 @@
         {% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </head>
 <body>
-    <nav>
-    </nav>
+    
+    {% include "components/nav.html" %}
     
     <main>
         {% block content %}
