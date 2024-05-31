@@ -12,6 +12,7 @@ defusedxml==0.7.1
 diff-match-patch==20230430
 Django==4.2.3
 django-import-export==3.2.0
+django-recaptcha==4.0.0
 djangorestframework==3.15.1
 et-xmlfile==1.1.0
 etelemetry==0.3.0

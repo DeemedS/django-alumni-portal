@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from .forms import FormWithCaptcha
 
 def home(request):
-    return render(request, 'home/home.html')
+    context = {'form' : FormWithCaptcha()}
+    return render(request, 'home/home.html', context)
 
 def about(request):
     return render(request, 'about/about.html')
