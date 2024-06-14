@@ -46,8 +46,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #apps
+    'users',
+    'homepage',
     'articles',
+    'events',
+
+    #third party
     'django_recaptcha',
+    'fontawesomefree'
 ]
 
 MIDDLEWARE = [
@@ -65,7 +71,7 @@ ROOT_URLCONF = 'alumniwebsite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

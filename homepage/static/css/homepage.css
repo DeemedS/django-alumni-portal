@@ -1,0 +1,77 @@
+/* .hero .carousel .carousel-inner .carousel-item img {
+    object-fit: cover;
+} */
+
+
+.announcement {
+    padding: 2rem 0;
+    font-family: 'Poppins';
+}
+
+.announcement-title {
+    font-family: 'Inter';
+    font-weight: 700;
+    text-align: center;
+    margin: 2rem 0;
+    color: #800000;
+    line-height: 30px;
+    letter-spacing: 2.5px;
+}
+
+
+.announcement .card img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0%;
+}
+
+.announcement .card  {
+    border-radius: 0%;
+}
+
+.announcement .card-img-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.featured {
+    margin: 2rem 0;
+}
+
+.articles {
+    margin: 2rem 0;
+}
+
+.announcement .btn-ann {
+    border: 1px solid #800000;
+    border-radius: 0%;
+    color: #800000;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 2px;
+}
+
+.announcement .btn-ann:hover {
+    background-color: #800000;
+    color: white;
+}
+
+.announcement .btn-ann img{
+    width: 1.2rem;
+    height: 1.2rem;
+    color: #800000;
+}
+
+.announcement .btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.carousel-inner > .carousel-item > img {
+    height: 30vh;
+  }
+
+@media (min-width: 1024px) {
+    .carousel-inner > .carousel-item > img {
+        height: 700px;
+      }
+}
