@@ -107,6 +107,10 @@ button.navbar-toggler img {
     background-repeat: repeat;
 }
 
+ul li.h-item {
+    display: none;
+} 
+
 
 @media (max-width: 576px) {
 
@@ -120,6 +124,7 @@ button.navbar-toggler img {
     
     .navbar-nav .nav-item .nav-link {
         padding: 1rem; 
+        letter-spacing: 1.5px;
     }
       
 
@@ -155,6 +160,21 @@ button.navbar-toggler img {
     .navbar-nav {
         text-align: center;
         align-items: center;
+    }
+}
+
+@media (max-width: 992px) {
+    ul li.h-item {
+        display: block;
+        background: #FFC107;
+        text-align: center;
+        box-shadow: #555555 0px 0px 5px;
+    } 
+
+    ul li.h-item a {
+        font-family: 'Sansation';
+        font-weight: 500;
+        letter-spacing: 2px;
     }
 }
 
