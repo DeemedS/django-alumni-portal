@@ -8,8 +8,7 @@
     font-family: 'Poppins';
 }
 
-.announcement-title {
-    font-family: 'Inter';
+.body-title {
     font-weight: 700;
     text-align: center;
     margin: 2rem 0;
@@ -72,6 +71,178 @@
 
 @media (min-width: 1024px) {
     .carousel-inner > .carousel-item > img {
-        height: 700px;
+        height: 570px;
       }
+    
+      .card-text-mobile {
+        display: none;
+    }
 }
+
+@media screen and (max-width: 992px) {
+    .card-text-mobile {
+        display: block;
+    }
+    .card-text-featured {
+        display: none;
+    }
+}
+
+
+/* SERVICES */
+.services {
+    color: white;
+    padding: 2rem 0;
+    line-height: 30px;
+    background-color: #581515;
+}
+
+.services .body-title {
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    margin: 2rem 0;
+    line-height: 30px;
+    letter-spacing: 2.5px;
+}
+
+
+.services hr {
+    margin: 2rem 0;
+}
+
+
+.service-cards{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin: 2rem 0 !important;
+
+}
+
+.services .card {
+    max-width: 600px;
+    min-height: 210px;
+    border-radius: 0%;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.services .card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.services .card .card-title {
+    font-weight: 700;
+    color: #800000;
+    line-height: 30px;
+    text-transform: capitalize;
+}
+
+.services .card .service-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.services img {
+    width: fit-content;
+    height: fit-content;
+    object-fit: contain;
+}
+
+.services .btn-ann {
+    border-radius: 0%;
+    background-color: #fff;
+    color: #800000;
+    font-weight: 900;
+    line-height: 30px;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.services .btn-ann:hover {
+    background-color: #FFF;
+    color: #800000;
+}
+
+.services .btn-ann:active {
+    background-color: #FFF;
+    color: #800000;
+}
+
+.services .btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+
+    .services img {
+        height: 170px;
+    }
+}
+
+/* END SERVICES */
+
+/* EVENTS */
+
+.events {
+    padding: 2rem 0;
+}
+
+.events .card {
+    width: 18rem;
+    padding: 0;
+}
+
+.events .event {
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* END EVENTS */
+
+/* SOCIALS */
+
+.socials {
+    padding: 2rem 0;
+    background-color: #800000;
+    color: #FFF;
+}
+
+
+.socials .social-container {
+    width: 100%;
+    min-height: 100px;
+    text-align: center;
+}
+
+.socials .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.socials .social-icons i {
+    font-size: 7rem;
+    color: #fff;
+}
+
+.socials .social-icons i:hover {
+    color: darkcyan;
+}
+
+@media screen and (max-width: 768px) {
+    .socials .social-icons i {
+        font-size: 3rem;
+    }
+    
+}
+
+
