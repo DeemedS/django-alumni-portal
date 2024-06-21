@@ -6,8 +6,9 @@ class Article(models.Model):
     body = models.TextField()
     slug = models.SlugField()
     banner = models.ImageField(blank=True, null=True)
+    thumbnail = models.ImageField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
-
+    featured = models.BooleanField(default=False)
      
     def __str__(self):
         return self.title
