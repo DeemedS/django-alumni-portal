@@ -12,7 +12,7 @@
         <div class="card-img-overlay">
           <h5 class="card-title">{{ featured_article.title }}</h5>
           <p class="card-text-featured">{{ featured_article.body|truncatewords:80 }}</p>
-          <p class="card-text-mobile">{{ featured_article.body|truncatewords:30 }}</p>
+          <p class="card-text-mobile">{{ featured_article.body|truncatewords:20 }}</p>
           <a href="{% url 'articles:article_page' slug=featured_article.slug %}" class="card-link">Read More</a>
         </div>
       </div>

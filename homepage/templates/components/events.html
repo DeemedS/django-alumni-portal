@@ -2,22 +2,27 @@
 
 <div class="events">
     <div class="container">
-        <h1 class="body-title">EVENTS</h1>
-            <div class="row event">
-                {% for event in events_articles %}
-                <div class="card">
-                    {% if event.banner %}
-                    <img src="{{ event.banner.url }}" class="card-img-top" alt="...">
+        <h1 class="body-title">LATEST EVENTS</h1>
+
+            <div class="card featured-event">
+                <div class="row">
+                <div class="col-md-8 featured-event-image">
+                    {% if event_article.thumbnail %}
+                    <img src="{{ event_article.thumbnail.url }}" alt="Thumbnail for {{ article.title }}">
                     {% else %}
                     <img src="{% static 'images/pup-image-2.jpg' %}" class="card-img-top" alt="...">
                     {% endif %}
+                </div>
+                <div class="col-md-4">
                     <div class="card-body">
-                        <p class="card-text">{{ event.title }}</p>
-                        <p class="card-text">{{ event.body|truncatewords:30 }}</p>
-                        <a href="{% url 'events:event_page' slug=event.slug %}" class="card-link">Read More</a>
+                    <h5 class="card-title">{{ event_article.title }}</h5>
+                    <p class="card-text">{{ event_article.body }}</p>
                     </div>
                 </div>
-                {% endfor %}
-        </div>
+                </div>
+            </div>
+
+    </div>
+
     </div>
 </div>

@@ -34,6 +34,7 @@
 
 .featured {
     margin: 2rem 0;
+    height: 100%;
 }
 
 .articles {
@@ -193,20 +194,44 @@
 
 .events {
     padding: 2rem 0;
+    height: 100%;
 }
 
-.events .card {
-    width: 18rem;
+.events .event .card {
     padding: 0;
+    border-radius: 0%;
 }
 
 .events .event {
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+}
+
+.events .event img{
+    border-radius: 0%;
+}
+
+.events .featured-event  {
+    border-radius: 0%;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.events .featured-event .featured-event-image {
+    border-radius: 0%;
+    height: 600px;
+}
+
+.events .featured-event .featured-event-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0%;
+    object-position: top;
 }
 
 /* END EVENTS */
+
 
 /* SOCIALS */
 
