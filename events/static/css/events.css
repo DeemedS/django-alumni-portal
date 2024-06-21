@@ -1,0 +1,9 @@
+.events-banner {
+  background-image: url('/static/images/alumni.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  text-align: center;
+  padding: 100px 0;
+}
