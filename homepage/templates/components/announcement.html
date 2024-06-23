@@ -11,9 +11,9 @@
         <img src={% static "images/pup-image.webp" %} class="card-img" alt="...">
         <div class="card-img-overlay">
           <h5 class="card-title">{{ featured_article.title }}</h5>
-          <p class="card-text-featured">{{ featured_article.body|truncatewords:80 }}</p>
-          <p class="card-text-mobile">{{ featured_article.body|truncatewords:20 }}</p>
-          <a href="{% url 'articles:article_page' slug=featured_article.slug %}" class="card-link">Read More</a>
+          <p class="card-text-featured">{{ featured_article.body|truncatewords:70 }}</p>
+          <p class="card-text-mobile">{{ featured_article.body|truncatewords:15 }}</p>
+          <a href="{% url 'articles:article_page' slug=featured_article.slug %}" class="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
