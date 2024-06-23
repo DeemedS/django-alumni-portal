@@ -198,6 +198,10 @@
         background: linear-gradient(to bottom, #800000 0%, #710000 100%);
     }
 
+    .login-container .right {
+        min-height: 400px;
+    }
+
     .login-container .logos{
         padding: 0;
         margin-top: 1rem;
