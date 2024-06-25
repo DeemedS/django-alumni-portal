@@ -1,6 +1,6 @@
 # DJANGO ALUMNI PORTAL
 
-## View live at [a link] http://152.42.188.199
+## View live website at http://152.42.188.199
 
 ## Table of Contents
 - Installation
