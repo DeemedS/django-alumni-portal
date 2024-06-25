@@ -39,19 +39,22 @@ python manage.py createsuperuser
 python manage.py collectstatic
 ```
 ## Configuration
-Create .env file
+Create .env file (see .env.example)
 ```
 SECRET_KEY=
 
 # PostgreSQL Credentials
-DB_NAME=
-DB_USER=
-DB_PASSWORD=
-DB_HOST=
-DB_PORT=
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_HOST=
+POSTGRES_PORT=
 DB_SSLMODE=
 
 DEBUG=
+
+# allowed hosts
+ALLOWED_HOSTS=
 
 # Recaptcha
 RECAPTCHA_SITE_KEY=
