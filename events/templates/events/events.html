@@ -1,9 +1,72 @@
 {% extends "layout.html" %}
+{% load static %}
+
 
 {% block title %}
     Alumni Portal | Events
 {% endblock %}
 
 {% block content %}
-    {% include "components/banner.html" %}
+    {% include "components/test-banner.html" %}
+
+    <div class="top-spacer">
+        <div class="container">
+        <h1><i class="fa-solid fa-calendar-days"></i> LATEST EVENTS</h1>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="">
+            <div class="col-md-3">
+                <p>Show Me</p>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Upcoming Events</option>
+                    <option value="1">Past Events</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row event-cards">
+
+
+            <div class="card">
+                <img src={% static "images/grad.jpg" %} class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+
+              <div class="card">
+                <img src={% static "images/grad.jpg" %} class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+
+              <div class="card">
+                <img src={% static "images/grad.jpg" %} class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+
+              <div class="card">
+                <img src={% static "images/grad.jpg" %} class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+ 
+        </div>
+
+    </div>
 {% endblock %}

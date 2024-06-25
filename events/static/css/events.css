@@ -1,9 +1,61 @@
 .events-banner {
-  background-image: url('/static/images/alumni.jpg');
   background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  color: white;
   text-align: center;
-  padding: 100px 0;
+  background-position: center;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  line-height: 30px;
+  padding: 1rem 0;
+}
+
+.events-banner .carousel-caption {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 10px;
+  justify-content: center;
+}
+
+.events-banner .caption-content {
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+.splide__slide img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  filter: brightness(0.8)  contrast(1.2);
+}
+
+.event-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  min-height: 80vh;
+}
+
+.event-cards .card{
+  height: fit-content;
+  border-radius: 0%;
+  padding: 0;
+  width: 18rem;
+}
+
+.event-cards .card img{
+  object-fit: cover;
+  border-radius: 0% !important;
+
+}
+
+@media screen and (max-width: 1024px) {
+  .event-cards {
+    justify-content: center;
+  }
+  
 }
