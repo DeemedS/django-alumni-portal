@@ -31,6 +31,8 @@ urlpatterns = [
     path('home/', include('homepage.urls')),
     path('about/', views.about, name='about'),
     path('news/', include('articles.urls')), 
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('api.urls')),
     
 ]
 

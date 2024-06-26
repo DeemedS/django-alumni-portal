@@ -53,7 +53,8 @@ INSTALLED_APPS = [
 
     #third party
     'django_recaptcha',
-    'fontawesomefree'
+    'fontawesomefree',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
