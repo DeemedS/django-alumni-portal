@@ -1,0 +1,23 @@
+{% load static %}
+
+{% for event in events %}
+    <div class="card">
+
+        {% if event.thumbnail %}
+            <img src="{{ event.thumbnail.url }}" class="card-img-top" alt="{{ event.title }}">
+        {% else %}
+            <img src={% static "images/default_image.png" %} class="card-img-top" alt="default image">  
+        {% endif %}
+
+        
+        
+        <div class="card-body">
+            <h5 class="card-title">{{ event.title }}</h5>
+            <p class="card-text">{{ event.body|truncatewords:20 }}</p>
+            <a href="{% url 'events:event_page' event.slug %}" class="btn btn-primary">View Details</a>
+            <a href="#" class="btn btn-primary">Register</a>
+        </div>
+    </div>
+{% empty %}
+    <p>No events found.</p>
+{% endfor %}

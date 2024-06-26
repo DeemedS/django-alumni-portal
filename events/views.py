@@ -1,10 +1,39 @@
 from django.shortcuts import render
 from .models import Event
+from django.utils.timezone import now
 
-# Create your views here.
 
 def events(request):
-    return render(request, 'events/events.html')
+    current_year = now().year
+    current_month = now().month
+    years = list(range(2010, current_year + 1))
+
+    months = [
+        {'value': 1, 'name': 'January'},
+        {'value': 2, 'name': 'February'},
+        {'value': 3, 'name': 'March'},
+        {'value': 4, 'name': 'April'},
+        {'value': 5, 'name': 'May'},
+        {'value': 6, 'name': 'June'},
+        {'value': 7, 'name': 'July'},
+        {'value': 8, 'name': 'August'},
+        {'value': 9, 'name': 'September'},
+        {'value': 10, 'name': 'October'},
+        {'value': 11, 'name': 'November'},
+        {'value': 12, 'name': 'December'}
+    ]
+    
+    return render(request, 'events/events.html', {
+        'years': years,
+        'months': months,
+        'current_year': current_year,
+        'current_month': current_month
+    })
 
 def event_page(request, slug):
-    return render(request, 'events/event_page.html')
+    event = Event.objects.get(slug=slug)
+    return render(request, 'events/event_page.html', {'event': event})
+
+def signup_event(request, id):
+    event = Event.objects.get(id=id)
+    return render(request, 'events/signup_page.html', {'event': event})

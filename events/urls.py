@@ -5,5 +5,6 @@ app_name = 'events'
 
 urlpatterns = [
     path('events/', views.events, name='events'),
-    path('events/<slug:slug>/', views.event_page, name='event_page'),
+    path('events/signup/<int:id>/', views.signup_event, name='signup_event'),
+    path('events/view/<slug:slug>/', views.event_page, name='event_page'),
 ]

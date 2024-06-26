@@ -1,72 +1,37 @@
 {% load static %}
 
-<div class="events-banner">
-
-    <div id="eventcarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-              <button type="button" data-bs-target="#eventcarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#eventcarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#eventcarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src={% static 'images/grad.jpg' %}  alt="...">
-                <div class="carousel-caption">
-                    <H1>Event Title</H1> 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer libero lacus, bibendum id suscipit at, euismod vitae nunc.</p>
-                    <div class="row caption-content">
-                        <div class="col-md-2">
-                            <p><span><i class="fa-regular fa-calendar"></i></span> April 21, 2025</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><span><i class="fa-solid fa-clock"></i></span> 10:00 AM</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><span><i class="fa-solid fa-location-dot"></i></span> Zoom Meeting</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src={% static 'images/gradpic.jpg' %}  alt="...">
-                <div class="carousel-caption">
-                    <H1>Event Title</H1> 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer libero lacus, bibendum id suscipit at, euismod vitae nunc.</p>
-                    <div class="row caption-content">
-                        <div class="col-md-2">
-                            <p><span><i class="fa-regular fa-calendar"></i></span> April 21, 2025</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><span><i class="fa-solid fa-clock"></i></span> 10:00 AM</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><span><i class="fa-solid fa-location-dot"></i></span> Zoom Meeting</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src={% static 'images/PUP-GRADUATION.png' %}  alt="...">
-                <div class="carousel-caption">
-                    <H1>Event Title</H1> 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer libero lacus, bibendum id suscipit at, euismod vitae nunc.</p>
-                    <div class="row caption-content">
-                        <div class="col-md-2">
-                            <p><span><i class="fa-regular fa-calendar"></i></span> April 21, 2025</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><span><i class="fa-solid fa-clock"></i></span> 10:00 AM</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><span><i class="fa-solid fa-location-dot"></i></span> Zoom Meeting</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="events-banner ">
+  <div class="splide" role="group" aria-label="Splide Basic HTML Example">
+    <div class="splide__track">
+      <ul class="splide__list">
+        <li class="splide__slide">
+          <img src={% static 'images/grad.jpg' %} alt="...">
+            <div class="carousel-caption">
+              <H1>Event Title</H1> 
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer libero lacus, bibendum id suscipit at, euismod vitae nunc.</p>
+              <div class="row caption-content">
+                  <div class="col-md-2">
+                      <p><span><i class="fa-regular fa-calendar"></i></span> April 21, 2025</p>
+                  </div>
+                  <div class="col-md-2">
+                      <p><span><i class="fa-solid fa-clock"></i></span> 10:00 AM</p>
+                  </div>
+                  <div class="col-md-2">
+                      <p><span><i class="fa-solid fa-location-dot"></i></span> Zoom Meeting</p>
+                  </div>
+              </div>
+          </div>
+        </li>
+        <li class="splide__slide">
+          <img src={% static 'images/main.jpg' %} alt="...">
+        </li>
+        <li class="splide__slide">
+          <img src={% static 'images/lagoon.jpg' %} alt="...">
+        </li>
+      </ul>
     </div>
-
+  </div>
 </div>
+
+
+<script src={% static 'js/events-banner-init.js' %}></script>

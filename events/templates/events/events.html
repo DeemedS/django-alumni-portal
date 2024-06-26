@@ -1,72 +1,59 @@
 {% extends "layout.html" %}
 {% load static %}
 
-
 {% block title %}
     Alumni Portal | Events
 {% endblock %}
 
 {% block content %}
-    {% include "components/test-banner.html" %}
+    {% include "components/banner.html" %}
 
     <div class="top-spacer">
         <div class="container">
-        <h1><i class="fa-solid fa-calendar-days"></i> LATEST EVENTS</h1>
+            <h1><i class="fa-solid fa-calendar-days"></i> LATEST EVENTS</h1>
         </div>
     </div>
 
     <div class="container">
-
-        <div class="">
-            <div class="col-md-3">
-                <p>Show Me</p>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Upcoming Events</option>
-                    <option value="1">Past Events</option>
+        <div class="row event-filter">
+            <div class="col-auto">
+                <label for="event-filter" class="col-form-label">Filter Event</label>
+            </div>
+            <div class="col-auto">
+                <select id="event-filter" class="form-select" aria-label="Event filter">
+                    <option value="all" selected>All Events</option>
+                    <option value="upcoming" >Upcoming Events</option>
+                    <option value="past">Past Events</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <label for="month-filter" class="col-form-label">Month</label>
+            </div>
+            <div class="col-auto">
+                <select id="month-filter" class="form-select" aria-label="Month select example">
+                    {% for month in months %}
+                        <option value="{{ month.value }}" {% if month.value == current_month %}selected{% endif %}>{{ month.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto">
+                <label for="year-filter" class="col-form-label">Year</label>
+            </div>
+            <div class="col-auto">
+                <select id="year-filter" class="form-select" aria-label="Year select">
+                    {% for year in years %}
+                        <option value="{{ year }}" {% if year == current_year %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
 
-        <div class="row event-cards">
-
-
-            <div class="card">
-                <img src={% static "images/grad.jpg" %} class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src={% static "images/grad.jpg" %} class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src={% static "images/grad.jpg" %} class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-
-              <div class="card">
-                <img src={% static "images/grad.jpg" %} class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
- 
+        <div class="row event-cards" id="event-cards-container">
+            {% include 'events/event_cards.html' %}
         </div>
-
     </div>
+
+
+    <script src="{% static 'js/submit-filter.js' %}"></script>
+
 {% endblock %}

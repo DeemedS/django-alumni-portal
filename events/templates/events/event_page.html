@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ event.title }}
+{% endblock %}
+
+{% block content %}
+    <article>
+        <h1>{{ event.title }}</h1>
+
+        {% if event.banner %}
+            <img src="{{ event.banner.url }}" alt="Banner for {{ article.title }}">
+        {% endif %}
+
+        <p>{{ event.body }}</p>
+        <p>Published on: {{ event.date }}</p>
+    </article>
+{% endblock %}
