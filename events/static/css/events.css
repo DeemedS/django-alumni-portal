@@ -34,7 +34,10 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
   padding: 1rem;
-  min-height: 80vh;
+}
+
+.events-container {
+  width: 80vh;
 }
 
 .event-cards .card{

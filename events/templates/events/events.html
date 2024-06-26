@@ -14,32 +14,32 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container events-container">
         <div class="row event-filter">
             <div class="col-auto">
                 <label for="event-filter" class="col-form-label">Filter Event</label>
-            </div>
-            <div class="col-auto">
+
                 <select id="event-filter" class="form-select" aria-label="Event filter">
                     <option value="all" selected>All Events</option>
                     <option value="upcoming" >Upcoming Events</option>
                     <option value="past">Past Events</option>
                 </select>
             </div>
+
+
             <div class="col-auto">
                 <label for="month-filter" class="col-form-label">Month</label>
-            </div>
-            <div class="col-auto">
+
                 <select id="month-filter" class="form-select" aria-label="Month select example">
                     {% for month in months %}
                         <option value="{{ month.value }}" {% if month.value == current_month %}selected{% endif %}>{{ month.name }}</option>
                     {% endfor %}
                 </select>
             </div>
+
             <div class="col-auto">
                 <label for="year-filter" class="col-form-label">Year</label>
-            </div>
-            <div class="col-auto">
+
                 <select id="year-filter" class="form-select" aria-label="Year select">
                     {% for year in years %}
                         <option value="{{ year }}" {% if year == current_year %}selected{% endif %}>{{ year }}</option>
@@ -51,9 +51,17 @@
         <div class="row event-cards" id="event-cards-container">
             {% include 'events/event_cards.html' %}
         </div>
+
+        <div class="pagination-controls d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" id="pagination">
+                </ul>
+            </nav>
+        </div>
+
     </div>
 
 
-    <script src="{% static 'js/submit-filter.js' %}"></script>
+    <script src="{% static 'js/filter-events.js' %}"></script>
 
 {% endblock %}
