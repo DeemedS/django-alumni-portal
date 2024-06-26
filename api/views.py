@@ -1,10 +1,8 @@
-from django.shortcuts import render
 from .serializers import EventSerializer
 from django.utils.timezone import now
 from events.models import Event
 
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 

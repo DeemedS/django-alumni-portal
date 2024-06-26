@@ -44,7 +44,7 @@ $(document).ready(function() {
                             cardHtml += '<div class="card-body">';
                             cardHtml += '<h5 class="card-title">' + event.title + '</h5>';
                             cardHtml += '<p class="card-text">' + truncateWords(event.body, 20) + '</p>';
-                            cardHtml += '<a href="/events/' + event.slug + '" class="btn btn-primary">Learn More</a>';
+                            cardHtml += '<a href="/events/view/' + event.slug + '" class="btn btn-primary">Learn More</a>';
                             cardHtml += '</div></div>';
                             $('#event-cards-container').append(cardHtml);
                         });
