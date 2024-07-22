@@ -127,6 +127,10 @@ ul li.h-item {
     display: none;
 } 
 
+ul li.h-item a:hover {
+    color: #464543;
+}
+
 
 @media (max-width: 576px) {
 

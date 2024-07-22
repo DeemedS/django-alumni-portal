@@ -5,10 +5,10 @@ from django.utils.timezone import now
 
 def events(request):
     current_year = now().year
-    current_month = now().month
     years = list(range(2010, current_year + 1))
 
     months = [
+        {'value': 0, 'name': 'All'},
         {'value': 1, 'name': 'January'},
         {'value': 2, 'name': 'February'},
         {'value': 3, 'name': 'March'},
@@ -27,7 +27,6 @@ def events(request):
         'years': years,
         'months': months,
         'current_year': current_year,
-        'current_month': current_month
     })
 
 def event_page(request, slug):

@@ -54,6 +54,19 @@
   object-position: top;
 }
 
+.event-cards .overlay {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  text-align: right;
+}
+
+
+.event-cards .badge {
+  display: inline-block;
+  border-radius: 0;
+}
+
 @media screen and (max-width: 1024px) {
   .event-cards {
     justify-content: center;

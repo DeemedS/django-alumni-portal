@@ -22,8 +22,9 @@ class FilteredEventsAPIView(APIView):
         else:
             events = events.order_by('-date')
         
-        if month:
+        if month and month != 0:
             events = events.filter(date__month=month)
+
         if year:
             events = events.filter(date__year=year)
 

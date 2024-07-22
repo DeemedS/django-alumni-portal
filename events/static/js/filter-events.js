@@ -21,31 +21,48 @@ $(document).ready(function() {
 
         var pageSize = window.innerWidth <= 640 ? 2 : (window.innerWidth <= 1024 ? 4 : 8);
 
+        var data = {
+            event_filter: eventFilter,
+            page: page,
+            page_size: pageSize
+        };
+
+        if (monthFilter !== "0") {
+            data.month = monthFilter;
+        }
+
+        if (yearFilter) {
+            data.year = yearFilter;
+        }
+
 
 
         $('#event-cards-container').fadeOut(400, function() {
             $.ajax({
                 url: '/api/filtered-events/',
                 type: 'GET',
-                data: {
-                    event_filter: eventFilter,
-                    month: monthFilter,
-                    year: yearFilter,
-                    page: page,
-                    page_size: pageSize
-                },
+                data: data,
                 success: function(response) {
 
                     $('#event-cards-container').empty();
                     if (response.results.length > 0) {
                         $.each(response.results, function(index, event) {
-                            var cardHtml = '<div class="card col-md-4 mb-4">';
-                            cardHtml += '<img src="' + (event.thumbnail || '/static/images/default_image.png') + '" class="card-img-top" alt="' + event.title + '">';
-                            cardHtml += '<div class="card-body">';
-                            cardHtml += '<h5 class="card-title">' + event.title + '</h5>';
-                            cardHtml += '<p class="card-text">' + truncateWords(event.body, 20) + '</p>';
-                            cardHtml += '<a href="/events/view/' + event.slug + '" class="btn btn-primary">Learn More</a>';
-                            cardHtml += '</div></div>';
+                            var eventDate = new Date(event.date).toDateString();
+                            var badgeClass = event.status === "Upcoming Event" ? "text-bg-success" : "text-bg-secondary";
+                            var cardHtml = `<div class="card col-md-4 mb-4">
+                                                <div class="position-relative">
+                                                    <img src="${event.thumbnail || '/static/images/default_image.png'}" class="card-img-top" alt="${event.title}">
+                                                    <div class="overlay">
+                                                        <div class="badge text-bg-warning">${eventDate}</div>
+                                                        <span class="badge ${badgeClass}">${event.status}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${event.title}</h5>
+                                                    <p class="card-text">${truncateWords(event.body, 20)}</p>
+                                                    <a href="/events/view/${event.slug}" class="btn btn-primary">Learn More</a>
+                                                </div>
+                                            </div>`;
                             $('#event-cards-container').append(cardHtml);
                         });
                     } else {
@@ -57,7 +74,7 @@ $(document).ready(function() {
                     $('#pagination').empty();
                     for (var i = 1; i <= Math.ceil(response.count / pageSize); i++) {
                         var activeClass = (i === page) ? ' active' : '';
-                        var pageLink = '<li class="page-item' + activeClass + '"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>';
+                        var pageLink = '<li class="page-item' + activeClass + '"><a class="page-link" href="#latest-events" data-page="' + i + '">' + i + '</a></li>';
                         $('#pagination').append(pageLink);
                     }
 
