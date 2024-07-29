@@ -1,0 +1,27 @@
+{% load static %}
+
+{% for article in articles %}
+    <div class="card">
+
+        {% if article.thumbnail %}
+            <img src="{{ article.thumbnail.url }}" class="card-img-top" alt="{{ article.title }}">
+        {% else %}
+            <img src={% static "images/default_image.png" %} class="card-img-top" alt="default image">  
+        {% endif %}
+
+        
+        
+        <div class="card-body">
+            <h5 class="card-title">{{ article.title }}</h5>
+            <p class="card-text">{{ article.body|truncatewords:20 }}</p>
+
+            <p class="card-text"><small class="text-muted">{{ article.date }}</small></p>
+
+            <a href="{% url 'articles:article_page' article.slug %}" class="btn btn-primary">View Details</a>
+            <a href="#" class="btn btn-primary">Register</a>
+        </div>
+    </div>
+
+{% empty %}
+    <p>No events found.</p>
+{% endfor %}

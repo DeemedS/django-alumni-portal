@@ -45,6 +45,7 @@
   border-radius: 0%;
   padding: 0;
   width: 18rem;
+  min-height: 438px;
 }
 
 .event-cards .card img{
@@ -65,6 +66,11 @@
 .event-cards .badge {
   display: inline-block;
   border-radius: 0;
+}
+
+.event-cards .card .card-body a{
+  position: absolute;
+  bottom: 16px;
 }
 
 @media screen and (max-width: 1024px) {

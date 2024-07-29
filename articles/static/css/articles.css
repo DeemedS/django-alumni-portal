@@ -1,0 +1,84 @@
+.FeaturedArticle {
+    position: relative;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+    overflow: hidden;
+    height: 300px;
+    margin-bottom: 20px;
+}
+.FeaturedArticle img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.FeaturedArticle h2,
+.FeaturedArticle p {
+    position: relative;
+    z-index: 1;
+}
+.FeaturedArticle .btn-primary {
+    position: relative;
+    z-index: 1;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.article-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+.article-container {
+    width: 80vh;
+  }
+  
+.article-cards .card{
+    height: fit-content;
+    border-radius: 0%;
+    padding: 0;
+    width: 18rem;
+    min-height: 438px;
+  }
+  
+.article-cards .card img{
+    object-fit: cover;
+    border-radius: 0% !important;
+    height: 200px;
+    object-position: top;
+  }
+  
+.article-cards .overlay {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    text-align: right;
+  }
+  
+  
+.article-cards .badge {
+    display: inline-block;
+    border-radius: 0;
+  }
+
+.article-cards .card .card-body a{
+    position: absolute;
+    bottom: 16px;
+  }
+  
+  @media screen and (max-width: 1024px) {
+    .article-cards {
+      justify-content: center;
+    }
+    
+  }
+  
+  .article-filter {
+    margin: 1rem 0 !important;
+    align-items: center;
+  }
