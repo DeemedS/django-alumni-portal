@@ -26,11 +26,11 @@
 
     <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'articles:articles_list' %}">News & Feautures</a></li>
-        <li class="nav-item"><a class="nav-link" href="">Career</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'articles:articles_list' %}">News & Announcements</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'careers:careers'%}">Careers</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'events:events'%}">Events</a></li>
-        <li class="nav-item"><a class="nav-link" href="">Online Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'services:services'%}">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about:about'%}">About</a></li>
         <li class="nav-item h-item"><a class="nav-link" href="{% url 'users:portal'%}">Alumni Portal</a></li>
     </ul>
     </div>

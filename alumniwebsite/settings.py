@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     'homepage',
     'articles',
     'events',
+    'careers',
+    'services',
+    'about',
 
     #third party
     'django_recaptcha',

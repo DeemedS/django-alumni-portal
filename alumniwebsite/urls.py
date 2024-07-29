@@ -28,9 +28,11 @@ urlpatterns = [
     path('', include('homepage.urls')),
     path('', include('events.urls')),
     path('', include('articles.urls')),
+    path('', include('services.urls')),
+    path('', include('careers.urls')),
+    path('', include('about.urls')),
 
     path('home/', include('homepage.urls')),
-    path('about/', views.about, name='about'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('api.urls')),
     
