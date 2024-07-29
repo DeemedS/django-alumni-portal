@@ -1,6 +1,6 @@
 # DJANGO ALUMNI PORTAL
 
-## View live website at http://152.42.188.199
+## View live website at http://alumniwebsite.guianalankem.works
 
 ## Table of Contents
 - Installation
