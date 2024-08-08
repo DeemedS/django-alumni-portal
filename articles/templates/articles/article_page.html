@@ -1,18 +1,59 @@
 {% extends "layout.html" %}
 
+{% load static %}
+
+
 {% block title %}
-    {{ article.title }}
+    PUP Alumni Website | {{ article.title }}
 {% endblock %}
 
 {% block content %}
-    <article>
-        <h1>{{ article.title }}</h1>
 
-        {% if article.banner %}
-            <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
-        {% endif %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <!-- Main content -->
+        <div class="article-content col-md-8">
+                    
 
-        <p>{{ article.body }}</p>
-        <p>Published on: {{ article.date }}</p>
-    </article>
+        <article>
+            
+            
+            {% if article.banner %}
+                <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
+            {% else %}
+                <img src="{% static 'images/default_image.png' %}" alt="Default banner">
+            {% endif %}
+            <h1>{{ article.title }}</h1>
+            <p>Published on: {{ article.date }}</p>
+            
+            <p>{{ article.body }}</p>
+
+            
+        </article>
+
+        </div>
+        <!-- Sidebar -->
+        <div class="sidebar col-md-3">
+            <div class="sidebar-content">
+                <div class="sidebar-search">
+                    <h2>Search Article</h2>
+                    <form action="" method="GET">
+                        <input type="text" name="q" placeholder="Search...">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+
+                <div class="sidebar-archive">
+                    <h2>Archive</h2>
+                    <ul>
+                        {% for article in articles %}
+                            <li><a href="{% url 'article_page' article.id %}">{{ article.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

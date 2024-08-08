@@ -58,7 +58,7 @@ $(document).ready(function() {
                                                 <div class="card-body">
                                                     <h5 class="card-title">${article.title}</h5>
                                                     <p class="card-text">${truncateWords(article.body, 20)}</p>
-                                                    <a href="/articles/view/${article.slug}" class="btn btn-primary">Learn More</a>
+                                                    <a href="/articles/view/${article.slug}" class="btn btn-primary">Read Article</a>
                                                 </div>
                                             </div>`;
                             $('#article-cards-container').append(cardHtml);

@@ -78,7 +78,51 @@
     
   }
   
-  .article-filter {
+.article-filter {
     margin: 1rem 0 !important;
     align-items: center;
   }
+
+article {
+    min-height: 100vh;
+}
+
+article img {
+    width: 85%;
+    height: auto;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
+  align-items: end;
+}
+
+.sidebar-search {
+  background-color: #fff;
+  height: 20%;
+  width: 90%;
+  padding: 1rem;
+}
+
+.sidebar-archive {
+    background-color: #fff;
+    height: 80%;
+    width: 90%;
+    padding: 1rem;
+}
+
+.article-content {
+    background-color: #fff;
+    padding: 1rem;
+    margin: 1rem 0 !important;
+}
