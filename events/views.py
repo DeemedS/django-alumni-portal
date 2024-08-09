@@ -23,7 +23,7 @@ def events(request):
         {'value': 12, 'name': 'December'}
     ]
     
-    return render(request, 'events/events.html', {
+    return render(request, 'events/events_list.html', {
         'years': years,
         'months': months,
         'current_year': current_year,

@@ -59,7 +59,7 @@ $(document).ready(function() {
                                                 </div>
                                                 <div class="card-body">
                                                     <h5 class="card-title">${event.title}</h5>
-                                                    <p class="card-text">${truncateWords(event.body, 20)}</p>
+                                                    <p class="card-text">${event.body}</p>
                                                     <a href="/events/view/${event.slug}" class="btn btn-primary">Learn More</a>
                                                 </div>
                                             </div>`;
@@ -71,12 +71,9 @@ $(document).ready(function() {
                     }
 
 
+                    // Pagination with ellipses
                     $('#pagination').empty();
-                    for (var i = 1; i <= Math.ceil(response.count / pageSize); i++) {
-                        var activeClass = (i === page) ? ' active' : '';
-                        var pageLink = '<li class="page-item' + activeClass + '"><a class="page-link" href="#latest-events" data-page="' + i + '">' + i + '</a></li>';
-                        $('#pagination').append(pageLink);
-                    }
+                    createPagination(page, Math.ceil(response.count / pageSize), 5);
 
                     $('#event-cards-container').fadeIn(400);
                 },
@@ -88,12 +85,4 @@ $(document).ready(function() {
         });
     }
 
-    function truncateWords(str, num) {
-        if (!str) return '';
-        var words = str.split(" ");
-        if (words.length <= num) {
-            return str;
-        }
-        return words.slice(0, num).join(" ") + "...";
-    }
 });
