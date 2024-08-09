@@ -39,13 +39,12 @@
   }
   
 .article-cards .card{
-    height: fit-content;
+    height: 438px;
     border-radius: 0%;
     padding: 0;
     width: 18rem;
-    min-height: 438px;
   }
-  
+
 .article-cards .card img{
     object-fit: cover;
     border-radius: 0% !important;
@@ -70,6 +69,16 @@
     position: absolute;
     bottom: 16px;
   }
+
+  .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    max-height: 75px;
+}
   
   @media screen and (max-width: 1024px) {
     .article-cards {
@@ -77,6 +86,8 @@
     }
     
   }
+
+/* ARTICLE PAGE */
   
 .article-filter {
     margin: 1rem 0 !important;
@@ -85,6 +96,14 @@
 
 article {
     min-height: 100vh;
+    padding: 1em;
+}
+
+article pre {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  white-space: pre-wrap;
+  word-wrap: break-word; 
 }
 
 article img {

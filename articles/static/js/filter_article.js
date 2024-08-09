@@ -2,11 +2,9 @@ $(document).ready(function() {
 
     updateArticleCards();
 
-
     $('#article-filter, #month-filter, #year-filter').change(function() {
         updateArticleCards();
     });
-
 
     $(document).on('click', '.page-link', function(e) {
         e.preventDefault();
@@ -35,8 +33,6 @@ $(document).ready(function() {
             data.year = yearFilter;
         }
 
-
-
         $('#article-cards-container').fadeOut(400, function() {
             $.ajax({
                 url: '/api/filtered-articles/',
@@ -57,7 +53,7 @@ $(document).ready(function() {
                                                 </div>
                                                 <div class="card-body">
                                                     <h5 class="card-title">${article.title}</h5>
-                                                    <p class="card-text">${truncateWords(article.body, 20)}</p>
+                                                    <p class="card-text">${article.body}</p>
                                                     <a href="/articles/view/${article.slug}" class="btn btn-primary">Read Article</a>
                                                 </div>
                                             </div>`;
@@ -68,13 +64,9 @@ $(document).ready(function() {
                         $('#article-cards-container').append(noArticleHtml);
                     }
 
-
+                    // Pagination with ellipses
                     $('#pagination').empty();
-                    for (var i = 1; i <= Math.ceil(response.count / pageSize); i++) {
-                        var activeClass = (i === page) ? ' active' : '';
-                        var pageLink = '<li class="page-item' + activeClass + '"><a class="page-link" href="#latest-articles" data-page="' + i + '">' + i + '</a></li>';
-                        $('#pagination').append(pageLink);
-                    }
+                    createPagination(page, Math.ceil(response.count / pageSize), 5);
 
                     $('#article-cards-container').fadeIn(400);
                 },
@@ -86,12 +78,4 @@ $(document).ready(function() {
         });
     }
 
-    function truncateWords(str, num) {
-        if (!str) return '';
-        var words = str.split(" ");
-        if (words.length <= num) {
-            return str;
-        }
-        return words.slice(0, num).join(" ") + "...";
-    }
 });
