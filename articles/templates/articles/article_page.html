@@ -14,22 +14,54 @@
         <!-- Main content -->
         <div class="article-content col-md-8">
                     
+            <article>
+                {% if article.banner %}
+                    <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
+                {% else %}
+                    <img src="{% static 'images/default_image.png' %}" alt="Default banner">
+                {% endif %}
+            
+                <h1>{{ article.title }}</h1>
+                <p>Published on: {{ article.date }}</p>
+                
+                <pre>{{ article.body }}</pre> 
 
-        <article>
-            
-            
-            {% if article.banner %}
-                <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
-            {% else %}
-                <img src="{% static 'images/default_image.png' %}" alt="Default banner">
-            {% endif %}
-            <h1>{{ article.title }}</h1>
-            <p>Published on: {{ article.date }}</p>
-            
-            <p>{{ article.body }}</p>
+                {% if article.order %}
+                    {% for item_id in article.order %}
+                        {% if item_id == 'bodytext_2' %}
+                            <pre>{{ article.bodytext_2 }}</pre>
+                        {% elif item_id == 'bodyimage_1' %}
+                            {% if article.bodyimage_1 %}
+                                <img src="{{ article.bodyimage_1.url }}" alt="Body Image 1">
+                            {% endif %}
+                        {% elif item_id == 'bodytext_3' %}
+                            <pre>{{ article.bodytext_3 }}</pre>
+                        {% elif item_id == 'bodyimage_2' %}
+                            {% if article.bodyimage_2 %}
+                                <img src="{{ article.bodyimage_2.url }}" alt="Body Image 2">
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                {% else %}
+                
+                    {% if article.bodytext_2 %}
+                        <pre>{{ article.bodytext_2 }}</pre>
+                    {% endif %}
+                    {% if article.bodyimage_1 %}
+                        <img src="{{ article.bodyimage_1.url }}" alt="Body Image 1">
+                    {% endif %}
+                    {% if article.bodytext_3 %}
+                        <pre>{{ article.bodytext_3 }}</pre>
+                    {% endif %}
+                    {% if article.bodyimage_2 %}
+                        <img src="{{ article.bodyimage_2.url }}" alt="Body Image 2">
+                    {% endif %}
+
+                {% endif %}
 
             
-        </article>
+            </article>
 
         </div>
         <!-- Sidebar -->
