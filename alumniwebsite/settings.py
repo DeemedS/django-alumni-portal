@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'careers',
     'services',
     'about',
+    'faculty',
 
     #third party
     'django_recaptcha',

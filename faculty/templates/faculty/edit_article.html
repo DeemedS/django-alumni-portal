@@ -1,0 +1,134 @@
+<!-- edit_article.html -->
+
+ {% load static %}
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Article</title>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .sortable-container {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .sortable-item {
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Article</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+
+    <h2>Arrange Content</h2>
+    {% if article.order %}
+        <div id="sortable-container" class="sortable-container">
+            {% for item in article.order %}
+                {% if item == 'bodytext_2' %}
+                    {% if article.bodytext_2 %}
+                        <div data-id="bodytext_2" class="sortable-item">Text Block 2: {{ article.bodytext_2 }}</div>
+                    {% endif %}
+
+                {% elif item == 'bodyimage_1' %}
+                    <div data-id="bodyimage_1" class="sortable-item">
+                        {% if article.bodyimage_1 %}
+                            <img src="{{ article.bodyimage_1.url }}" alt="Body Image 1" style="max-width: 100%;">
+                        {% endif %}
+                    </div>
+
+                {% elif item == 'bodytext_3' %}
+                    {% if article.bodytext_3 %}
+                        <div data-id="bodytext_3" class="sortable-item">Text Block 3: {{ article.bodytext_3 }}</div>
+                    {% endif %}
+
+                {% elif item == 'bodyimage_2' %}
+                    <div data-id="bodyimage_2" class="sortable-item">
+                        {% if article.bodyimage_2 %}
+                            <img src="{{ article.bodyimage_2.url }}" alt="Body Image 2" style="max-width: 100%;">
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+    {% else %}
+        <div id="sortable-container" class="sortable-container">
+
+            {% if article.banner %}
+            <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
+            {% else %}
+                <img src="{% static 'images/default_image.png' %}" alt="Default banner">
+            {% endif %}
+        
+            <h1>{{ article.title }}</h1>
+            <p>Published on: {{ article.date }}</p>
+            
+            <pre>{{ article.body }}</pre> 
+
+            {% if article.bodytext_2 %}
+                <div data-id="bodytext_2" class="sortable-item">Text Block 2: {{ article.bodytext_2 }}</div>
+            {% endif %}
+
+            {% if article.bodyimage_1 %}
+                <div data-id="bodyimage_1" class="sortable-item">
+                <img src="{{ article.bodyimage_1.url }}" alt="Body Image 1" style="max-width: 100%;">
+                </div>
+            {% endif %}
+
+            {% if article.bodytext_3 %}
+                <div data-id="bodytext_3" class="sortable-item">Text Block 3: {{ article.bodytext_3 }}</div>
+            {% endif %}
+
+            {% if article.bodyimage_2 %}
+                <div data-id="bodyimage_2" class="sortable-item">
+                    <img src="{{ article.bodyimage_2.url }}" alt="Body Image 2" style="max-width: 100%;">
+                </div>
+            {% endif %}
+
+        </div>
+    {% endif %}
+
+    <script>
+        $(document).ready(function() {
+            const sortable = new Sortable(document.getElementById('sortable-container'), {
+                animation: 150,
+                onEnd: function(evt) {
+                    const order = Array.from(evt.from.children).map(child => child.dataset.id);
+
+                    $.ajax({
+                        url: '{% url "faculty:update_order" %}',
+                        type: 'POST',
+                        data: JSON.stringify({
+                            order: order,
+                            slug: '{{ article.slug }}'
+                        }),
+                        contentType: 'application/json',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        success: function(response) {
+                            console.log('Order updated:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
