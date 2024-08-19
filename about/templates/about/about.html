@@ -1,9 +1,74 @@
 {% extends "layout.html" %}
 
+{% load static %}
+
 {% block title %}PUP Alumni Website | About Us{% endblock %}
 
 {% block content %}
-    <h1>About</h1>
-    <p>This is the about page.</p>
+   <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{% static 'images/arcdologo.jpg' %}" alt="PUP Logo" class="img-thumbnail">
+            </div>
+            <div class="col-md-8">
+                <h2>ALUMNI RELATIONS AND CAREER DEVELOPMENT OFFICE</h2>
+                <p>We are the driving force behind the PUP Career Development and Placement Office, dedicated to connecting students and graduates with meaningful employment opportunities. Our mission is to cultivate globally competitive professionals who embody excellence, integrity, and a commitment to making a positive impact in their fields and communities.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>OUR MISSION</h2>
+                <p>The PUP Career Development and Placement Office envisions itself as a borderless work pool providing students and graduates employment in reputable companies, institutions, and other entities. It is also a training ground that will develop globally competitive graduates who are ready to face the challenges of the new millennium.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>OUR VISION</h2>
+                <p>The PUP Career Development and Placement Office envisions a future where all graduates and working students are globally competitive professionals who embody excellence, integrity, and a commitment to making a positive impact in their fields and communities.</p>
+            </div>
+        </div>
+
+        <div class = "row">
+            <div class="col-md-12">
+                <h2>OUR FUNCTIONS</h2>
+            </div>
+            <div class="col-md-6">
+                <p>To formulate a Manual of Operations for the Office and eventually implement its guidelines, rules, and regulations</p>
+                <p>To coordinate with various companies for possible positions for PUP graduates and alumni</p>
+                <p>To disseminate the recruitment needs of companies by posting ads within the university premises</p>
+                <p>To facilitate the processing of the companies staffing requirements by providing them the list of graduates</p>
+                <p>To establish linkages with more multinational companies, government agencies, non-government organizations, and international agencies for possible job offers</p>
+                <p>To prepare referral letters for the graduates and alumni of the University</p>
+                <p>To conduct pre-employment seminars and career orientation activities for the graduating students</p>
+                <p>To coordinate with the Communications Management Office for updates in the Career Development and Placement Services Website</p>
+                <p>To coordinate with agencies, companies, institutions, and organizations for possible sponsorship of University activities</p>
+            </div>
+            <div class="col-md-6">
+                <p>To prepare and send communications pertinent to the functions of the Office to all concerned colleges, offices, and companies</p>
+                <p>To reply to queries of walk-ins and telephone calls</p>
+                <p>To conduct job fairs for the graduates and alumni of the University</p>
+                <p>To coordinate with the Admission Services and Guidance, Counseling and Testing Services in the conduct of the Freshmen Orientation at the beginning of each academic year</p>
+                <p>To invite companies to subscribe to the Career Development and Placement Services website</p>
+                <p>To coordinate with the different colleges regarding recruitment and placement requirements</p>
+                <p>To monitor the career plans of graduates and alumni and assist them in their employment needs</p>
+                <p>To attend meetings, seminars, workshops, conventions for updates on recent recruitment, staffing and employment principles, techniques and issues and concerns related to such matters</p>
+                <p>To perform other functions as necessary in achieving the noble goals of the University</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>CORE VALUES</h2>
+                <p>The Alumni Relations and Career Development Offices staff and personnel pledge and serve the clientele with utmost responsibility and integrity, passion and loyalty, efficiency and teamwork</p>
+            </div>
+        </div>
+    </div> 
+
+    {% include "components/org_chart.html" %}
+    
+    {% include "components/socials.html" %}
+
 {% endblock %}
 
