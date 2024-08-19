@@ -25,6 +25,8 @@ $(document).ready(function() {
             page_size: pageSize
         };
 
+        console.log('Filter:', articleFilter, monthFilter, yearFilter);
+
         if (monthFilter !== "0") {
             data.month = monthFilter;
         }
@@ -48,6 +50,9 @@ $(document).ready(function() {
                                                 <div class="position-relative">
                                                     <img src="${article.thumbnail || '/static/images/default_image.png'}" class="card-img-top" alt="${article.title}">
                                                     <div class="overlay">
+                                                        ${article.category == 'news' ? `<div class="badge text-bg-info">NEWS</div>` : 
+                                                            `<div class="badge text-bg-danger">ANN</div>`}
+
                                                         <div class="badge text-bg-warning">${articleDate}</div>
                                                     </div>
                                                 </div>
