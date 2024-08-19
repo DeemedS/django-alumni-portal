@@ -4,7 +4,7 @@
 
 
 {% block title %}
-    PUP Alumni Website | {{ article.title }}
+    {{ school_abv }} Alumni Website | {{ article.title }}
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <!-- Main content -->
-        <div class="article-content col-md-8">
+        <div class="article-content col-xl-8">
                     
             <article>
                 {% if article.banner %}
@@ -23,49 +23,47 @@
             
                 <h1>{{ article.title }}</h1>
                 <p>Published on: {{ article.date }}</p>
-                
-                <pre>{{ article.body }}</pre> 
 
-                {% if article.order %}
-                    {% for item_id in article.order %}
-                        {% if item_id == 'bodytext_2' %}
-                            <pre>{{ article.bodytext_2 }}</pre>
-                        {% elif item_id == 'bodyimage_1' %}
-                            {% if article.bodyimage_1 %}
-                                <img src="{{ article.bodyimage_1.url }}" alt="Body Image 1">
-                            {% endif %}
-                        {% elif item_id == 'bodytext_3' %}
-                            <pre>{{ article.bodytext_3 }}</pre>
-                        {% elif item_id == 'bodyimage_2' %}
-                            {% if article.bodyimage_2 %}
-                                <img src="{{ article.bodyimage_2.url }}" alt="Body Image 2">
-                            {% endif %}
+                <div class="more-info">
+
+                    <pre>{{ article.body }}</pre> 
+
+                    {% for item in content_order %}
+                        {% if item.type == 'subtitle' %}
+                            <h1>{{ item.object.subtitle }}</h1>
+                        {% elif item.type == 'bodytext' %}
+                                {% if item.object.quoted %}
+                                    <pre class="text-center px-5" 
+                                    style="font-size:{{ item.object.fontsize }}px;
+                                    {% if item.object.bold %}font-weight:bold;{% endif %}
+                                    {% if item.object.italic %}font-style:italic;{% endif %}"><q>{{ item.object.bodytext }}</q></pre>
+                                {% else %}
+                                    <pre style="font-size:{{ item.object.fontsize }}px;
+                                    {% if item.object.bold %}font-weight:bold;{% endif %}
+                                    {% if item.object.italic %}font-style:italic;{% endif %}">{{ item.object.bodytext }}</pre>
+                                {% endif %}
+                        {% elif item.type == 'bodyimage' %}
+                            <figure class="text-center">
+                                {% if item.object.image %}
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ item.object.image.url }}" alt="{{ item.object.alt }}">
+                                </div>
+                                {% else %}
+                                <div class="d-flex justify-content-center">
+                                    <img src="{% static 'images/default_image.png' %}" alt="Default image">
+                                </div>
+                                {% endif %}
+                                <figcaption class="fw-light fst-italic">{{ item.object.caption }}</figcaption>
+                            </figure>
                         {% endif %}
                     {% endfor %}
+                </div>
 
-                {% else %}
-                
-                    {% if article.bodytext_2 %}
-                        <pre>{{ article.bodytext_2 }}</pre>
-                    {% endif %}
-                    {% if article.bodyimage_1 %}
-                        <img src="{{ article.bodyimage_1.url }}" alt="Body Image 1">
-                    {% endif %}
-                    {% if article.bodytext_3 %}
-                        <pre>{{ article.bodytext_3 }}</pre>
-                    {% endif %}
-                    {% if article.bodyimage_2 %}
-                        <img src="{{ article.bodyimage_2.url }}" alt="Body Image 2">
-                    {% endif %}
-
-                {% endif %}
-
-            
             </article>
 
         </div>
         <!-- Sidebar -->
-        <div class="sidebar col-md-3">
+        <div class="sidebar col-xl-3">
             <div class="sidebar-content">
                 <div class="sidebar-search">
                     <h2>Search Article</h2>
