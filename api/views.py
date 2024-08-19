@@ -46,10 +46,10 @@ class FilteredArticlesAPIView(APIView):
         
         articles = Article.objects.all()
 
-        if article_filter == 'upcoming':
-            articles = articles.filter(date__gte=now()).order_by('-date')
-        elif article_filter == 'past':
-            articles = articles.filter(date__lt=now()).order_by('-date')
+        if article_filter == 'news':
+            articles = articles.filter(category='news').order_by('-date')
+        elif article_filter == 'Ann':
+            articles = articles.filter(category='Ann').order_by('-date')
         else:
             articles = articles.order_by('-date')
         
