@@ -1,16 +1,29 @@
 {
-    "builds": [
-        {
-        "src": "alumniwebsite/wsgpi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.11.3" }
-        }
-    ],
+  "version": 2,
 
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "alumniwebsite/wsgpi.py"
-        }
-    ]
+  "builds": [
+    {
+      "src": "projectname/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.11.3" }
+    },
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "projectname/wsgi.py"
+    },
+    {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+    }
+  ]
+
 }
