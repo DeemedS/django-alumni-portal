@@ -3,7 +3,7 @@
 
   "builds": [
     {
-      "src": "projectname/wsgi.py",
+      "src": "alumniwebsite/wsgi.py",
       "use": "@vercel/python",
       "config": { "maxLambdaSize": "15mb", "runtime": "python3.11.3" }
     },
@@ -17,12 +17,12 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "projectname/wsgi.py"
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1"
     },
     {
-        "src": "/static/(.*)",
-        "dest": "/static/$1"
+      "src": "/(.*)",
+      "dest": "alumniwebsite/wsgi.py"
     }
   ]
 
