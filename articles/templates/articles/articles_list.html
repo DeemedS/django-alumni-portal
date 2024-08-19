@@ -1,9 +1,10 @@
 {% extends "layout.html" %}
 
+
 {% load static %}
 
 {% block title %}
-    Alumni Portal | News
+    {{ school_abv }} Alumni Website | News
 {% endblock %}
 
 {% block content %}
@@ -23,8 +24,8 @@
 
                 <select id="article-filter" class="form-select" aria-label="News filter">
                     <option value="all" selected>All Aricles</option>
-                    <option value="announcements">News</option>
-                    <option value="events">Announcements</option>
+                    <option value="news">News</option>
+                    <option value="Ann">Announcements</option>
                 </select>
             </div>
 

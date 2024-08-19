@@ -1,68 +1,47 @@
 # forms.py
 from django import forms
-from .models import Article
-from django.core.files.storage import default_storage
+from .models import Article, BodyText, BodyImage, SubTitle
 
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'body', 'bodytext_2', 'bodytext_3', 'bodyimage_1', 'bodyimage_2', 
-                  'slug', 'banner', 'thumbnail', 'featured']
+        fields = ['title', 'body','slug', 'banner', 'thumbnail', 'author', 'featured', 'category']
+
+        widgets = {
+            'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
         
-    def save(self, commit=True):
-        instance = super().save(commit=False)
+class BodyTextForm(forms.ModelForm):
 
-        # Check for file deletions and handle accordingly
-        if self.instance.pk:  # Ensure this is an update
-            old_instance = Article.objects.get(pk=self.instance.pk)
-            
-            if old_instance.bodyimage_1 and self.cleaned_data.get('bodyimage_1') != old_instance.bodyimage_1:
-                self._delete_file(old_instance.bodyimage_1)
-                
-            if old_instance.bodyimage_2 and self.cleaned_data.get('bodyimage_2') != old_instance.bodyimage_2:
-                self._delete_file(old_instance.bodyimage_2)
+    id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
 
-            if old_instance.banner and self.cleaned_data.get('banner') != old_instance.banner:
-                self._delete_file(old_instance.banner)
+    class Meta:
+        model = BodyText
+        fields = ['id', 'bodytext', 'quoted', 'bold', 'italic', 'fontsize']
+        widgets = {
+            'fontzize': forms.NumberInput(attrs={'min': 1, 'max': 100}),
+        }
 
-            if old_instance.thumbnail and self.cleaned_data.get('thumbnail') != old_instance.thumbnail:
-                self._delete_file(old_instance.thumbnail)
+class BodyImageForm(forms.ModelForm):
 
-                
-            order = []
+    id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    image = forms.ImageField(required=False)
 
-            ## Update the order field
-            if instance.bodytext_2:
-                order.append('bodytext_2')
-            if instance.bodyimage_1:
-                order.append('bodyimage_1')
-            if instance.bodytext_3:
-                order.append('bodytext_3')
-            if instance.bodyimage_2:
-                order.append('bodyimage_2')
+    class Meta:
+        model = BodyImage
+        fields = ['id', 'alt', 'image', 'caption', 'date']
+        widgets = {
+            'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
 
+class SubTitleForm(forms.ModelForm):
 
-            # Delete field in order if it is empty
-            if not instance.bodytext_2 and 'bodytext_2' in instance.order:
-                instance.order.remove('bodytext_2')
-            if not instance.bodyimage_1 and 'bodyimage_1' in instance.order:
-                instance.order.remove('bodyimage_1')
-            if not instance.bodytext_3 and 'bodytext_3' in instance.order:
-                instance.order.remove('bodytext_3')
-            if not instance.bodyimage_2 and 'bodyimage_2' in instance.order:
-                instance.order.remove('bodyimage_2')
-                
-            instance.order = order
+    id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+
+    class Meta:
+        model = SubTitle
+        fields = ['id', 'subtitle']
 
 
-
-        if commit:
-            instance.save()
-
-        return instance
-
-    def _delete_file(self, file_field):
-        if file_field and file_field.name:
-            file_path = file_field.name
-            if default_storage.exists(file_path):
-                default_storage.delete(file_path)
+    
+    
