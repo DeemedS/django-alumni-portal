@@ -1,0 +1,32 @@
+services:
+  web:
+    depends_on:
+      - postgres_db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: django-alumni-portal:1.0
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    command: sh -c "chmod +x /app/migrate.sh && sh /app/migrate.sh && chmod +x /app/entrypoint.sh && sh /app/entrypoint.sh && chmod +x /app/collectstatic.sh && sh /app/collectstatic.sh"
+
+    volumes:
+      - staticfiles:/app/staticfiles
+  postgres_db:
+    image: postgres:13
+    restart: always
+    command: -p 25060
+    env_file:
+      - .env
+    expose:
+      - 25060
+    ports:
+      - "25060:25060"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  staticfiles:
