@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Event
 from django.utils.timezone import now
+from django.conf import settings
 
 
 def events(request):
@@ -27,12 +28,13 @@ def events(request):
         'years': years,
         'months': months,
         'current_year': current_year,
+        'school_abv': settings.SCHOOL_ABV
     })
 
 def event_page(request, slug):
     event = Event.objects.get(slug=slug)
-    return render(request, 'events/event_page.html', {'event': event})
+    return render(request, 'events/event_page.html', {'event': event, 'school_abv': settings.SCHOOL_ABV})
 
 def signup_event(request, id):
     event = Event.objects.get(id=id)
-    return render(request, 'events/signup_page.html', {'event': event})
+    return render(request, 'events/signup_page.html', {'event': event, 'school_abv': settings.SCHOOL_ABV})
