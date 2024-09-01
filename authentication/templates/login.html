@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% load static %} 
+
+{% block title %} Alumni Portal |Login {% endblock %} 
+
+{% block content %}
+<div class="login-container">
+  <div class="wrapper">
+    <div class="container main">
+      <div class="row">
+        <div class="col side-image">
+          <div class="logos">
+            <img src="{% static 'images/PUPLogo.png' %}" alt="pup-logo" />
+            <img src="{% static 'images/arcdologo.jpg' %}" alt="pup-image" />
+          </div>
+
+          <div class="text">
+            <h1>POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</h1>
+            <p>Alumni Relations & Carreer Development</p>
+          </div>
+        </div>
+
+        <div class="col-md-7 right">
+          <div class="input-box">
+            <header>Student/Alumni Login</header>
+            <form method="POST">
+              {% csrf_token %} {% if messages %} {% for message in messages %}
+              <div class="alert alert-danger" role="alert">{{ message }}</div>
+              {% endfor %} {% endif %}
+
+              <div class="input-field">
+                <label for="email">Email</label>
+                <input class="input" type="text" id="email" name="email" required="" autocomplete="off"/>
+              </div>
+              <div class="input-field">
+                <input type="password" class="input" name="password" id="password" required="" />
+                <label for="password">Password</label>
+              </div>
+              <div class="input-field">
+                <input type="submit" class="submit" value="Sign In" />
+              </div>
+              <div class="signup">
+                <p>Does not have an account?</p>
+                <p><a href="/signup">Sign Up Here</a></p>
+                <p><a href="/forgot-password">Forgot Password</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

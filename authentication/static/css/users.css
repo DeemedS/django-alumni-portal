@@ -1,0 +1,261 @@
+/* POPPINS FONT */
+.login-container{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
+.login-container .wrapper{
+    padding: 0 20px 0 20px;
+    background-image: url('/static/images/pup-image-2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-container .main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.login-container .side-image{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+}
+
+.login-container .row{
+  width:  900px;
+  min-height:550px;
+  box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.5);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.login-container .logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 3rem;
+}
+
+.login-container .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #800000;
+    
+}
+
+.login-container .text h1{
+    font-weight: 700;
+    font-size: 35px;
+}
+
+.login-container .text p{
+    color: #000000;
+    font-size: 10px; 
+}
+
+.login-container i{
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.login-container .right{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: linear-gradient(to bottom, #800000 0%, #710000 100%);
+}
+
+.login-container .input-box{
+  width: 330px;
+  box-sizing: border-box;
+  padding: 40px;
+  background: #fff;
+}
+
+.login-container img{
+    border-radius: 100%;
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+}
+.login-container .input-box header{
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 45px;
+}
+.login-container .input-field{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0 10px 0 10px;
+}
+.login-container .input{
+    height: 45px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
+    margin-bottom: 20px;
+    color: #40414a;
+}
+.login-container .input-box .input-field label{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    pointer-events: none;
+    transition: .5s;
+}
+.login-container .input-field input:focus ~ label
+   {
+    top: -10px;
+    font-size: 13px;
+  }
+  
+.login-container .input-field input:valid ~ label
+  {
+   top: -10px;
+   font-size: 13px;
+   color: #5d5076;
+ }
+
+.login-container .input-field .input:focus, .input-field .input:valid{
+    border-bottom: 1px solid #743ae1;
+ }
+ 
+ .login-container .submit{
+    border: none;
+    outline: none;
+    height: 45px;
+    background: #ececec;
+    border-radius: 5px;
+    transition: .4s;
+ }
+
+ .login-container .submit:hover{
+    background: #5e0000;
+    color: #fff;
+    border: #fff 1px solid;
+ }
+
+ .login-container .signup{
+    text-align: center;
+    font-size: small;
+    margin-top: 25px;
+}
+
+.login-container .signup p{
+    margin: 0;
+    line-height: 1.5rem;
+}
+
+
+.login-container .signup p a{
+    text-decoration: none;
+    font-weight: 700;
+    color: #000;
+    transition: .5s;
+}
+
+.login-container .signup p a:hover{
+    text-decoration: underline;
+    color: #000;
+}
+
+.login-container .right .btn-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    text-align: center;
+}
+
+.login-container .right .d-grid {
+    width: 70%;
+}
+
+.login-container .right .btn {
+    background: #5e0000;
+    width: 100%;
+    border-radius: 0%;
+    color: #fff;
+}
+
+@media only screen and (max-width: 576px){
+    .login-container .side-image{
+        border-radius: 0;
+        background: linear-gradient(to bottom, #800000 0%, #710000 100%);
+    }
+
+    .login-container .right {
+        min-height: 400px;
+    }
+
+    .login-container .logos{
+        padding: 0;
+        margin-top: 1rem;
+    }
+
+    .login-container img{
+        width: 50px;
+        height: 50px;
+    }
+
+    .login-container .text{
+        width: 100%;
+        text-align: center;
+    }
+
+    .login-container .text h1{
+        margin-top: 6rem;
+        bottom: 0;
+        font-size: 10px;
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .login-container .text p{
+        color: #fff;
+    }
+
+    .login-container .input-box{
+        width: 100%;
+        height: 100%;
+    }
+
+    .login-container .row{
+        max-width:420px;
+    }
+
+    .login-container .right{
+        padding: 0;
+    }
+
+    footer{
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .login-container .right{
+        clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0% 100%);
+      }
+}
+
+@media (min-width: 1024px) {
+    .login-container .row{
+        backdrop-filter: blur(20px) saturate(168%);
+      }
+}
