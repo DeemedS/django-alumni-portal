@@ -30,3 +30,25 @@ jobs:
         python manage.py test
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DEBUG: "False"
+
+        RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+        RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
+
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        POSTGRES_PORT=: ${{ secrets.POSTGRES_PORT }}
+        DB_SSLMODE: ${{ secrets.DB_SSLMODE }}
+
+        EMAIL_HOSTL: ${{ secrets.EMAIL_HOST }}
+        EMAIL_PORT : ${{ secrets.EMAIL_PORT }}
+        EMAIL_USE_TLS : ${{ secrets.EMAIL_USE_TLS }}
+        EMAIL_HOST_USER : ${{ secrets.EMAIL_HOST_USER }}
+        EMAIL_HOST_PASSWORD : ${{ secrets.EMAIL_HOST_PASSWORD }}
+        DEFAULT_FROM_EMAIL : ${{ secrets.DEFAULT_FROM_EMAIL }}
+
+
+
+
