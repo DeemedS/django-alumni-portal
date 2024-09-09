@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% load static %} 
+
+{% block title %} Alumni Portal | Login {% endblock %} 
+
+{% block content %}
+<div class="login-container">
+  <div class="wrapper">
+    <div class="container main">
+      <div class="row">
+        <div class="col side-image">
+          <div class="logos">
+            <img src="{% static 'images/PUPLogo.png' %}" alt="pup-logo" />
+            <img src="{% static 'images/arcdologo.jpg' %}" alt="pup-image" />
+          </div>
+
+          <div class="text">
+            <h1>POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</h1>
+            <p>Alumni Relations & Carreer Development</p>
+          </div>
+        </div>
+
+        <div class="col-md-7 right">
+          <div class="input-box">
+            <header>Verify Email</header>
+            <div class="alert alert-success text-center" role="alert">
+            <p>Thank you for registering! Please check your email to verify your account.</p>
+            <p>Didn't receive an email? <a href="/resend-email">Resend Email</a></p>
+            <p>Already verified your account? <a href="/login">Login</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

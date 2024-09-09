@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% load static %} 
+
+{% block title %} Alumni Portal | Login {% endblock %} 
+
+{% block content %}
+<div class="login-container">
+  <div class="wrapper">
+    <div class="container main">
+      <div class="row">
+        <div class="col side-image">
+          <div class="logos">
+            <img src="{% static 'images/PUPLogo.png' %}" alt="pup-logo" />
+            <img src="{% static 'images/arcdologo.jpg' %}" alt="pup-image" />
+          </div>
+
+          <div class="text">
+            <h1>POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</h1>
+            <p>Alumni Relations & Carreer Development</p>
+          </div>
+        </div>
+
+        <div class="col-md-7 right">
+          <div class="input-box">
+            {% if status == 200 %}
+                <header>Verification Successfull</header>
+                <div class="alert alert-success text-center" role="alert">
+                <p>Your account has been successfully verified. You can now login to your account.</p>
+                <p>Click <a href="/login">here</a> to login.</p>
+                </div>
+            {% elif status == 400 %}
+                <header>Verification Failed</header>
+                <div class="alert alert-danger text-center" role="alert">
+                <p>Invalid verification link. Please check your email for the correct link.</p>
+                <p>Didn't receive an email? <a href="/resend-email">Resend Email</a></p>
+                </div>
+            {% else %}
+                <header>Verification Failed</header>
+                <div class="alert alert-danger text-center" role="alert">
+                <p>Invalid verification link. Please check your email for the correct link.</p>
+                <p>Didn't receive an email? <a href="/resend-email">Resend Email</a></p>
+                </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
