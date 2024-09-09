@@ -11,4 +11,4 @@ boto3
 Pillow
 markdown
 django-filter
-djangorestframework-jwt
+rest_framework_simplejwt
