@@ -43,7 +43,7 @@ jobs:
         POSTGRES_PORT=: ${{ secrets.POSTGRES_PORT }}
         DB_SSLMODE: ${{ secrets.DB_SSLMODE }}
 
-        EMAIL_HOSTL: ${{ secrets.EMAIL_HOST }}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
         EMAIL_PORT : ${{ secrets.EMAIL_PORT }}
         EMAIL_USE_TLS : ${{ secrets.EMAIL_USE_TLS }}
         EMAIL_HOST_USER : ${{ secrets.EMAIL_HOST_USER }}
