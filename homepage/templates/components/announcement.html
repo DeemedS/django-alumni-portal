@@ -6,9 +6,14 @@
 
     <div class="container">
     
+    {% if featured_article %}
     <div class="featured">
-    <div class="card text-bg-dark">
-        <img src={% static "images/pup-image.webp" %} class="card-img" alt="...">
+      <div class="card text-bg-dark">
+        {% if featured_article.banner %}
+        <img src="{{ featured_article.banner.url }}" class="card-img" alt="...">
+        {% else %}
+        <img src={% static "images/default_image.png" %} class="card-img" alt="...">
+        {% endif %}
         <div class="card-img-overlay">
           <h5 class="card-title">{{ featured_article.title }}</h5>
           <p class="card-text-featured">{{ featured_article.body|truncatewords:70 }}</p>
@@ -17,18 +22,29 @@
         </div>
       </div>
     </div>
+    {% else %}
+    <div class="featured">
+      <div class="card text-bg-dark">
+        <img src="{% static "images/default_image.png" %}" class="card-img" alt="...">
+        <div class="card-img-overlay">
+          <h5 class="card-title">No Featured Article</h5>
+          <p class="card-text-featured">There are no featured articles at the moment.</p>
+          <p class="card-text-mobile">There are no featured articles at the moment.</p>
+          <a href="{% url 'articles:articles_list' %}" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    {% endif %}
 
     <div class="articles">
       <div class="row row-cols-1 row-cols-md-2 g-4">
 
-        
         {% for article in news_articles %}
         <div class="col">
           <div class="card">
             {% if article.banner %}
                 <img src="{{ article.banner.url }}" class="card-img-top" alt="...">
             {% else %}
-                <img src="{% static 'images/pup-image-2.jpg' %}" class="card-img-top" alt="...">
+                <img src="{% static 'images/default_image.png' %}" class="card-img-top" alt="...">
             {% endif %}
             <div class="card-body">
               <h5 class="card-title">{{ article.title }}</h5>
@@ -37,7 +53,29 @@
             </div>
           </div>
         </div>
+        {% empty %}
+        <div class="col">
+          <div class="card">
+            <img src="{% static 'images/default_image.png' %}" class="card-img-top" alt="No Articles">
+            <div class="card-body">
+              <h5 class="card-title">No News Articles</h5>
+              <p class="card-text">There are no news articles at the moment.</p>
+              <a href="{% url 'articles:articles_list' %}" class="card-link">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="{% static 'images/default_image.png' %}" class="card-img-top" alt="No Articles">
+            <div class="card-body">
+              <h5 class="card-title">No News Articles</h5>
+              <p class="card-text">There are no news articles at the moment.</p>
+              <a href="{% url 'articles:articles_list' %}" class="card-link">Read More</a>
+            </div>
+          </div>
+        </div>
         {% endfor %}
+
 
       </div>
     </div>
