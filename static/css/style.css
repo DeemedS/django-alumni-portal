@@ -210,6 +210,10 @@ ul li.h-item a:hover {
 
 /* Styles for the footer section */
 
+.map {
+    filter: invert(95%) contrast(105%) hue-rotate(-324deg);
+}
+
 footer {
     font-family: 'Poppins';
     font-weight: 400;
