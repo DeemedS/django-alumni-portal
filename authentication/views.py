@@ -23,16 +23,6 @@ def login(request):
 
     access_token = request.COOKIES.get('access_token')
 
-    if access_token:
-        api_url = request.build_absolute_uri(reverse('api:token_verify'))
-        data = {'token': access_token}
-        response = requests.post(api_url, data=data)
-
-        if response.status_code == 200:
-            return redirect('/dashboard/')
-        else:
-            return render(request, 'login.html')
-
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -63,6 +53,16 @@ def login(request):
             return response
         else:
             messages.error(request, 'Invalid email or password')
+
+    if access_token:
+        api_url = request.build_absolute_uri(reverse('api:token_verify'))
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            return redirect('/dashboard/')
+        else:
+            return render(request, 'login.html')
 
     return render(request, 'login.html')
 
