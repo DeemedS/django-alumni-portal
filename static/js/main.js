@@ -1,12 +1,13 @@
 // Load default image if image not found
 document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(() => {
-    document.querySelectorAll("img").forEach((img) => {
-      img.onerror = function () {
-        console.error(`Failed to load image: ${this.src}`);
+  document.querySelectorAll("img").forEach((img) => {
+    img.onerror = function () {
+      console.error(`Failed to load image: ${this.src}`);
+      setTimeout(() => {
         this.src = '/static/images/default_image.png';
-      };
-    });
-  }, 2000);
+      }, 1000);
+    };
+  });
 });
+
   
