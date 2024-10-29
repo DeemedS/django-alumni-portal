@@ -1,0 +1,152 @@
+.about {
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.underline {
+    width: 150px;
+    height: 2px;
+    background: #FCBF15;
+    margin: 5px auto 0;
+}
+
+.about .title h2{
+    font-weight: 700;
+    color: #800000;
+}
+
+.about p{
+    margin: 0;
+}
+
+.arcdo-img {
+    border-radius: 100% !important;
+}
+
+.about .main-content {
+    background-color: #800000;
+    color: #fff;
+    padding: 4rem 0;
+    text-align: justify;
+}
+
+.about .mission {
+    display: flex;
+    text-align: justify;
+    height: 300px;
+    align-items: center;
+}
+
+.about .mission h2 {
+    font-weight: 700;
+    color: #800000;
+}
+
+.about .vision {
+    display: flex;
+    background: #2D2926;
+    height: 300px;
+    text-align: justify;
+    color: #fff;
+    align-items: center;
+}
+
+.about .vision h2{
+    font-weight: 700;
+}
+
+.about .functions {
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.about .functions h2{
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #800000;
+}
+
+.about .functions li{
+    padding: 0.5rem 0;
+}
+
+.about .values {
+    display: flex;
+    background: #2D2926;
+    height: 200px;
+    text-align: justify;
+    color: #fff;
+    align-items: center;
+}
+
+.about .values h2{
+    font-weight: 700;
+}
+
+.org img {
+    height: 320px;
+    width: 300px;
+    object-fit: cover;
+    border-radius: 25%;
+}
+
+.org {
+    margin: 5rem 0;
+}
+
+.org-heading h2 {
+    font-weight: 700;
+    color: #800000;
+}
+
+
+
+@media screen and (min-width: 1024px) {
+    .about .functions ul{
+        padding-left: 100px;
+    }
+}
+
+
+
+@media screen and (min-width: 768px) {
+    .about .main-content p {
+        text-indent: 50px;
+    }
+
+    .about .mission {
+        height: 185px;
+    }
+
+    .about .vision {
+        height: 185px;
+    }
+
+    .about .values {
+        max-height: 180px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .about .mission .row > .d-flex {
+        justify-content: center;
+        margin: 5px 0 10px 0;
+    }
+
+    .about .vision .row > .d-flex {
+        justify-content: center;
+        margin: 5px 0 10px 0;
+    }
+
+    .about .functions .row > .d-flex {
+        justify-content: center;
+        margin: 5px 0 10px 0;
+    }
+
+    .about .values .row > .d-flex {
+        justify-content: center;
+        margin: 5px 0 10px 0;
+    }
+    
+}

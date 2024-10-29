@@ -9,10 +9,11 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container">
+    
     <div class="row justify-content-center">
         <!-- Main content -->
-        <div class="article-content col-xl-8">
+        <div class="article-content">
                     
             <article>
                 {% if article.banner %}
@@ -27,7 +28,6 @@
                 <div class="more-info">
 
                     <pre>{{ article.body }}</pre> 
-
                     {% for item in content_order %}
                         {% if item.type == 'subtitle' %}
                             <h1>{{ item.object.subtitle }}</h1>
@@ -59,31 +59,19 @@
                     {% endfor %}
                 </div>
 
+                <!-- Gallery -->
+                <div class="gallery mt-3">
+                    <h2>Gallery</h2>
+                
+                    {% include "components/article_gallery.html" %}
+                
+                </div>
+                
             </article>
-
         </div>
-        <!-- Sidebar -->
-        <div class="sidebar col-xl-3">
-            <div class="sidebar-content">
-                <div class="sidebar-search">
-                    <h2>Search Article</h2>
-                    <form action="" method="GET">
-                        <input type="text" name="q" placeholder="Search...">
-                        <button type="submit">Search</button>
-                    </form>
-                </div>
-
-                <div class="sidebar-archive">
-                    <h2>Archive</h2>
-                    <ul>
-                        {% for article in articles %}
-                            <li><a href="{% url 'article_page' article.id %}">{{ article.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
+
+
+
 
 {% endblock %}

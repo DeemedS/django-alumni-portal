@@ -136,41 +136,16 @@ article .more-info img {
   object-fit: contain;
 }
 
-
-/* SIDEBAR */
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-content {
-  display: flex;
-  flex-direction: column;
-  margin: 1rem 0;
-  width: 100%;
-  height: 100vh;
-  gap: 1rem;
-  align-items: end;
-}
-
-.sidebar-search {
-  background-color: #fff;
-  height: 20%;
-  width: 90%;
-  padding: 1rem;
-}
-
-.sidebar-archive {
-  background-color: #fff;
-  height: 80%;
-  width: 90%;
-  padding: 1rem;
-}
-
 .article-content {
   padding: 1rem;
 }
+
+
+/* SIDEBAR */
+
+
+
+
 
 @media screen and (max-width: 1199px) {
 
@@ -182,15 +157,6 @@ article .more-info img {
     margin: 0 3rem;
   }
 
-  .sidebar-content {
-    margin: 1rem 0;
-    height: 50vh;
-    align-items: center;
-  }
-
-  .sidebar-search {
-    height: 30%;
-  }
 
 }
 
@@ -201,14 +167,6 @@ article .more-info img {
 
   article {
     margin: 0;
-  }
-
-  .sidebar-search {
-    width: 100%;
-  }
-
-  .sidebar-archive {
-    width: 100%;
   }
 
 }

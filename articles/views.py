@@ -93,7 +93,8 @@ def edit_article(request, slug):
             for form in bodytext_formset:
                 if form.cleaned_data:
                     bodytext_id = form.cleaned_data.get('id')
-                    if bodytext_id:
+                    bodytext = BodyText.objects.filter(id=bodytext_id, article=article).first()
+                    if bodytext:
                         bodytext = get_object_or_404(BodyText, id=bodytext_id, article=article)
                         bodytext.bodytext = form.instance.bodytext
                         bodytext.quoted = form.instance.quoted
@@ -102,19 +103,27 @@ def edit_article(request, slug):
                         bodytext.fontsize = form.instance.fontsize
                         bodytext.order = 'bodytext-' + str(bodytext_id)
                     else:
-                        id = BodyText.objects.latest('id').id + 1
+                        id = (BodyText.objects.latest('id').id + 1) if BodyText.objects.exists() else 0
                         article.order.append('bodytext-' + str(id))
-                        bodytext = form.save(commit=False)
+                        newBodyText = BodyText()
+                        newBodyText.id = id
+                        newBodyText.bodytext = form.instance.bodytext
+                        newBodyText.quoted = form.instance.quoted
+                        newBodyText.bold = form.instance.bold
+                        newBodyText.italic = form.instance.italic
+                        newBodyText.fontsize = form.instance.fontsize
+                        newBodyText.order = 'bodytext-' + str(id)
+                        newBodyText.article = article
+                        newBodyText.save()
                         article.save()
-                    bodytext.article = article
-                    bodytext.save()
                     
 
             # Handle BodyImage forms
             for form in bodyimage_formset:
                 if form.cleaned_data:
                     bodyimage_id = form.cleaned_data.get('id')
-                    if bodyimage_id:
+                    bodyimage = BodyImage.objects.filter(id=bodyimage_id, article=article).first()
+                    if bodyimage:
                         bodyimage = get_object_or_404(BodyImage, id=bodyimage_id, article=article)
                         if form.instance.image:
                             bodyimage.image = form.instance.image
@@ -123,12 +132,18 @@ def edit_article(request, slug):
                         bodyimage.date = form.instance.date
                         bodyimage.order = 'bodyimage-' + str(bodyimage_id)
                     else:
-                        id = BodyImage.objects.latest('id').id + 1
+                        id = (BodyImage.objects.latest('id').id + 1) if BodyImage.objects.exists() else 1
                         article.order.append('bodyimage-' + str(id))
-                        bodyimage = form.save(commit=False)
+                        newBodyImage = BodyImage()
+                        newBodyImage.id = id
+                        newBodyImage.alt = form.instance.alt
+                        newBodyImage.image = form.instance.image
+                        newBodyImage.caption = form.instance.caption
+                        newBodyImage.date = form.instance.date
+                        newBodyImage.order = 'bodyimage-' + str(id)
+                        newBodyImage.article = article
+                        newBodyImage.save()
                         article.save()
-                    bodyimage.article = article
-                    bodyimage.save()
 
             # Handle SubTitle forms
             for form in subtitle_formset:
@@ -141,7 +156,7 @@ def edit_article(request, slug):
                         subtitle.article = article
                         subtitle.save()
                     else:
-                        id = SubTitle.objects.latest('id').id + 1
+                        id = SubTitle.objects.latest('id').id + 1 if SubTitle.objects.exists() else 1
                         article.order.append('subtitle-' + str(id))
                         newsubtitle = SubTitle()
                         newsubtitle.id = id
