@@ -11,11 +11,14 @@ function setImageErrorHandling() {
 
 setImageErrorHandling();
 
-const observer = new MutationObserver(setImageErrorHandling);
-observer.observe(document.body, {
-  childList: true,
-  subtree: true,
-});
-
-document.addEventListener('DOMContentLoaded', setImageErrorHandling);
+document.addEventListener('DOMContentLoaded', function() {
+  const observerTarget = document.body; 
   
+  if (observerTarget instanceof Node) {
+    const observer = new MutationObserver(setImageErrorHandling);
+    observer.observe(observerTarget, {
+      childList: true,  // Observe direct children
+      subtree: true,    // Observe all descendants
+    });
+  }
+});
