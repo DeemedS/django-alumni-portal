@@ -1,0 +1,41 @@
+/* Scrollable container styles */
+#job-container {
+    height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.job-description {
+    margin: 10px 0;
+    padding: 15px;
+    background-color: #fff;
+}
+
+/* Job card styles */
+.job-card {
+    padding: 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    height: 150px;
+}
+
+.job-card h5 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.job-card p {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Loader styles */
+#loader {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#loader p {
+    font-size: 1rem;
+}
