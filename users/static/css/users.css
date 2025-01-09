@@ -259,3 +259,24 @@
         backdrop-filter: blur(20px) saturate(168%);
       }
 }
+
+
+/* Sidebar*/
+.user-info img {
+    width: 200px;
+    height: 150px;
+    margin: 0 auto;
+    display: block;
+}
+
+.sidebar-text {
+    color: #800000;
+}
+
+@media screen and (max-width: 576px) {
+    .sidebar-text {
+        display: none !important;
+    }
+}
+/* User Dashboard */
+

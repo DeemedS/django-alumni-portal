@@ -20,12 +20,14 @@
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </head>
 <body>
-    
-    {% block content %}
 
-    {% endblock %}
+    {% include "components/nav.html" %}
 
-    {% include "components/footer.html" %}
+    <main>
+        {% block content %}
+
+        {% endblock %}
+    </main>
     
 </body>
 </html>
