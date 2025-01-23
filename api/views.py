@@ -7,6 +7,10 @@ from articles.models import Article
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 
 # Create your views here.
 class FilteredEventsAPIView(APIView):
@@ -65,3 +69,23 @@ class FilteredArticlesAPIView(APIView):
         serializer = ArticleSerializer(result_page, many=True)
         
         return paginator.get_paginated_response(serializer.data)
+    
+
+@api_view(['GET'])
+def get_user_info(request):
+    """
+    API View to get the user's first name and last name.
+    """
+    if request.user.is_authenticated:
+
+        user = request.user
+
+        user_info = {
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'student_number': user.student_number
+        }
+        return Response(user_info, status=200)
+    else:
+        return Response({"detail": "Authentication credentials were not provided."}, status=401)

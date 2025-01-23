@@ -1,0 +1,137 @@
+{% extends "user_page_layout.html" %}
+{% load static %}
+
+{% block title %}
+    Alumni Portal | User Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+    {% include "components/top_nav.html" %}
+
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+
+            {% include "components/sidebar.html" %}
+
+            <div class="col mb-3">
+
+                <div class="user-header mt-3">
+                    <h3>Edit Profile</h3>
+                </div>
+
+                <div class="p-3 bg-light">
+
+                    <h3>Profile Photo</h3>
+                    <div class="container mt-3">
+                        <div class="row profile-photo-details">
+                            <!-- Profile Photo Section -->
+                            <div class="col-md-6 text-center mb-3 mb-md-0">
+                                <div class="profile-photo">
+                                    <img src="{% static 'images/arcdologo.jpg' %}" class="img-fluid rounded-circle mb-3" alt="PUP Logo" />
+                                    <!-- Align buttons using flexbox -->
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a href="" class="btn btn-outline-primary">Change Photo</a>
+                                        <a href="" class="btn btn-outline-danger">Remove Photo</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Image Requirements Section -->
+                            <div class="requirements col-md-6 mt-3 mt-md-0">
+                                <h5>Image requirements:</h5>
+                                <p>1. min. 400x400 pixels</p>
+                                <p>2. max. 2MB</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h3>Basic Information Profile</h3>
+                    <div class="container mt-3">
+                        <form class="edit-user-form mb-3">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="email" name="email" value="{{ email }}" disabled>
+                                        <label for="email" class="form-label">Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="student_number" name="student_number" value="{{ student_number }}" disabled>
+                                        <label for="student_number" class="form-label">Student Number</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ first_name }}">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ last_name }}">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="middle_name" name="middle_name" value="{{ middle_name }}">
+                                        <label for="middle_name" class="form-label">Middle Name</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="birthday" name="birthday" value="{{ birthday }}">
+                                        <label for="birthday" class="form-label">Birthday</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="address" name="address" value="{{ address }}">
+                                        <label for="address" class="form-label">Address</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="telephone" name="telephone" value="{{ telephone }}">
+                                        <label for="telephone" class="form-label">Telephone Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="mobile" name="mobile" value="{{ mobile }}">
+                                        <label for="mobile" class="form-label">Mobile Number</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="civil" name="civil" value="{{ civil }}">
+                                        <label for="civil" class="form-label">Civil Status</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="sex" name="sex" value="{{ sex }}">
+                                        <label for="sex" class="form-label">Sex</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="btn">Save</a>
+                        </form>
+                    </div>        
+                </div>       
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock %}

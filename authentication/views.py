@@ -47,7 +47,7 @@ def login(request):
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
-            response = redirect('/dashboard/')
+            response = redirect('/myaccount/')
             response.set_cookie('access_token', str(refresh.access_token), httponly=True)
             response.set_cookie('refresh_token', str(refresh), httponly=True)
             return response
@@ -60,7 +60,7 @@ def login(request):
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            return redirect('/dashboard/')
+            return redirect('/myaccount/')
         else:
             return render(request, 'login.html')
 

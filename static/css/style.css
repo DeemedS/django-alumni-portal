@@ -136,14 +136,6 @@ button.navbar-toggler img {
     color: #800000;
 }
 
-ul li.h-item {
-    display: none;
-} 
-
-ul li.h-item a:hover {
-    color: #464543;
-}
-
 
 @media (max-width: 576px) {
 
@@ -209,6 +201,9 @@ ul li.h-item a:hover {
         font-family: 'Sansation';
         font-weight: 500;
         letter-spacing: 2px;
+    }
+    ul li.h-item a:hover {
+        color: #464543;
     }
 
     

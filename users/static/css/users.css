@@ -1,3 +1,6 @@
+:root{
+    --red: #800000;
+}
 /* POPPINS FONT */
 .login-container{
     font-family: 'Poppins', sans-serif;
@@ -263,20 +266,75 @@
 
 /* Sidebar*/
 .user-info img {
-    width: 200px;
+    width: 180px;
     height: 150px;
     margin: 0 auto;
     display: block;
+    border: 1px solid #800000;
 }
 
 .sidebar-text {
     color: #800000;
+    text-decoration: none;
+}
+
+.side-bar a {
+    margin: 7px;
+}
+
+.side-bar i {
+    margin-right: 10px;
 }
 
 @media screen and (max-width: 576px) {
-    .sidebar-text {
-        display: none !important;
-    }
+    .side-bar {
+        display: none;
+    }   
+    
 }
+
 /* User Dashboard */
 
+/*User Edit Profile*/
+.user-header{
+    background-color: #800000;
+    color:#ececec;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 200px;
+}
+.profile-photo-details{
+    display: flex;
+}
+.profile-photo{
+    margin-bottom: 20px;  
+    padding: 10px;
+    margin-right: 10px;
+    max-width: 30rem;
+}
+.profile-photo img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid #800000;
+}
+.edit-user-form a{
+    background-color: var(--red);
+    color:#ececec;
+}
+
+.top-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+    .top-nav{
+     display: none !important;
+    }   
+}
+
+.requirements  {
+    border-left: 2px solid #800000;
+}
