@@ -1,15 +1,16 @@
-from .serializers import EventSerializer , ArticleSerializer
+from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer
 
 from django.utils.timezone import now
 from events.models import Event
 from articles.models import Article
+from careers.models import JobPost
 
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import RetrieveAPIView
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
@@ -89,3 +90,36 @@ def get_user_info(request):
         return Response(user_info, status=200)
     else:
         return Response({"detail": "Authentication credentials were not provided."}, status=401)
+    
+class FilteredJobPostsAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        job_post_filter = request.GET.get('job_post_filter', 'all')
+        month = request.GET.get('month')
+        year = request.GET.get('year')
+        
+        job_posts = JobPost.objects.all()
+
+        if job_post_filter == 'internship':
+            job_posts = job_posts.filter(category='internship').order_by('-created_at')
+        elif job_post_filter == 'job':
+            job_posts = job_posts.filter(category='job').order_by('-created_at')
+        else:
+            job_posts = job_posts.order_by('-created_at')
+        
+        if month and month != 0:
+            job_posts = job_posts.filter(date__month=month)
+
+        if year:
+            job_posts = job_posts.filter(date__year=year)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = request.GET.get('page_size')
+        result_page = paginator.paginate_queryset(job_posts, request)
+        serializer = JobPostSerializer(result_page, many=True)
+        
+        return paginator.get_paginated_response(serializer.data)
+    
+class JobPostDetailView(RetrieveAPIView):
+    queryset = JobPost.objects.all()
+    serializer_class = JobPostSerializer
+    lookup_field = 'id'
