@@ -85,10 +85,12 @@
 }
 
 .org img {
-    height: 320px;
-    width: 300px;
-    object-fit: cover;
+    height: 300px;
+    width: 300px;;
     border-radius: 25%;
+    object-position: top;
+    border: #2D2926 3px solid;
+    padding: 0;
 }
 
 .org {

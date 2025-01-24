@@ -82,13 +82,13 @@ $(document).ready(function () {
     
 
     const scrollableContainer = document.getElementById("jobs-container");
+
     scrollableContainer.addEventListener("scroll", () => {
-
-
-        if (
+        const isAtBottom =
             scrollableContainer.scrollTop + scrollableContainer.clientHeight >=
-            scrollableContainer.scrollHeight && currentIndex < maxJobs
-        ) {
+            scrollableContainer.scrollHeight - 1; // Use a small margin for precision errors
+    
+        if (isAtBottom && currentIndex < maxJobs) {
             loadJobs();
         }
     });
