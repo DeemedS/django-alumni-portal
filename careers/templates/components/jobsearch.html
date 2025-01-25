@@ -1,13 +1,32 @@
 <div class="search-container">
-    <form>
-      <input type="text" placeholder="keyword" required>
-      <input type="text" placeholder="City" required>
-      <select>
-        <option value="" disabled selected>Job Type</option>
-        <option value="full-time">Full-Time</option>
-        <option value="part-time">Part-Time</option>
-        <option value="freelance">Freelance</option>
-      </select>
-      <button type="submit">Search</button>
-    </form>
-  </div>
+  <form id="job-search-form">
+    <!-- Keyword Input -->
+    <input 
+      type="text" 
+      id="keyword" 
+      name="keyword" 
+      placeholder="Keyword (e.g., Developer, Designer)"
+    >
+
+    <!-- Location Input -->
+    <input 
+      type="text" 
+      id="location" 
+      name="location" 
+      placeholder="City or Location"
+    >
+
+    <!-- Job Type Dropdown -->
+    <select id="job_type" name="job_type">
+      <option value="" disabled selected>Job Type</option>
+      <option value="">All</option>
+      <option value="FT">Full-Time</option>
+      <option value="PT">Part-Time</option>
+      <option value="IN">Internship</option>
+      <option value="CT">Contract</option>
+    </select>
+
+    <!-- Submit Button -->
+    <button type="submit">Search</button>
+  </form>
+</div>

@@ -12,6 +12,7 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from django.db.models import Q
 
 # Create your views here.
 class FilteredEventsAPIView(APIView):
@@ -96,6 +97,9 @@ class FilteredJobPostsAPIView(APIView):
         job_post_filter = request.GET.get('job_post_filter', 'all')
         month = request.GET.get('month')
         year = request.GET.get('year')
+        keyword = request.GET.get('keyword', '')
+        location = request.GET.get('location', '')
+        job_type = request.GET.get('job_type', '')
         
         job_posts = JobPost.objects.all()
 
@@ -111,6 +115,16 @@ class FilteredJobPostsAPIView(APIView):
 
         if year:
             job_posts = job_posts.filter(date__year=year)
+
+        #search by keyword and location
+        if keyword:
+            job_posts = job_posts.filter(Q(title__icontains=keyword) | Q(description__icontains=keyword) | Q(responsibilities__icontains=keyword))
+        if location:
+            job_posts = job_posts.filter(location__icontains=location)
+
+        #filter by jobtype
+        if job_type:
+            job_posts = job_posts.filter(job_type=job_type)
 
         paginator = PageNumberPagination()
         paginator.page_size = request.GET.get('page_size')
