@@ -14,6 +14,7 @@
         <div class="row flex-nowrap">
 
             {% include "components/sidebar.html" %}
+            
 
             <div class="col mb-3">
 
@@ -47,8 +48,22 @@
                     </div>
                     <hr>
                     <h3>Basic Information Profile</h3>
+
+                {% if form.errors %}
+                    <div class="errors">
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            
+                <!-- Render the form -->
                     <div class="container mt-3">
-                        <form class="edit-user-form mb-3">
+                        <form class="edit-user-form mb-3" method="post">
+                            {% csrf_token %}
+
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
@@ -125,7 +140,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="btn">Save</a>
+
+                            <button type="submit">Save Changes</button>
                         </form>
                     </div>        
                 </div>       

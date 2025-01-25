@@ -3,16 +3,23 @@
 {% block title %}
     {{ event.title }}
 {% endblock %}
-
 {% block content %}
-    <article>
-        <h1>{{ event.title }}</h1>
 
-        {% if event.banner %}
-            <img src="{{ event.banner.url }}" alt="Banner for {{ article.title }}">
-        {% endif %}
+<div class="container">
+    <div class="row justify-content-center">
+        
+        <div class="arcticle-content my-3">
+            <article class="py-3">
+                        
 
-        <p>{{ event.body }}</p>
-        <p>Published on: {{ event.date }}</p>
-    </article>
-{% endblock %}
+                        {% if event.banner %}
+                            <img src="{{ event.banner.url }}" alt="Banner for {{ article.title }}">
+                        {% endif %}
+                        <h1>{{ event.title }}</h1>
+                        <p>Published on: {{ event.date }}</p>
+                        <p>{{ event.body }}</p>
+                </article>
+        </div>
+    </div>
+</div>
+    {% endblock %} 

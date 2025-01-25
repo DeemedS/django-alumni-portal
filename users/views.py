@@ -1,6 +1,7 @@
 import requests
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from authentication.forms import UserForm
 
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
@@ -59,10 +60,24 @@ def user_edit(request):
             last_name = user_data.get('last_name')
             email = user_data.get('email')
             student_number = user_data.get('student_number')
+            
+            # Initialize the form with user data
+            form = UserForm(initial={
+                    'first_name': user_data.get('first_name', ''),
+                    'last_name': user_data.get('last_name', ''),
+                    'email': user_data.get('email', ''),
+                    'student_number': user_data.get('student_number', '')
+                })
 
 
             # Now, render the dashboard template and pass the user info
-            return render(request, 'user_edit.html', {'first_name': first_name, 'last_name': last_name, 'email': email, 'student_number': student_number})
+            return render(request, 'user_edit.html', {
+                'form': form,
+                'first_name': first_name,
+                'last_name': last_name,
+                'email': email,
+                'student_number': student_number
+            })
         
         elif response.status_code == 401 and refresh_token:
             refresh_url = request.build_absolute_uri(reverse('api:token_refresh'))
