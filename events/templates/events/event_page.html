@@ -7,19 +7,18 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        
         <div class="arcticle-content my-3">
+            <a href="javascript:history.back()" class="btn btn-secondary my-3">Back</a>
             <article class="py-3">
-                        
-
-                        {% if event.banner %}
-                            <img src="{{ event.banner.url }}" alt="Banner for {{ article.title }}">
-                        {% endif %}
-                        <h1>{{ event.title }}</h1>
-                        <p>Published on: {{ event.date }}</p>
-                        <p>{{ event.body }}</p>
-                </article>
+                {% if event.banner %}
+                    <img src="{{ event.banner.url }}" alt="Banner for {{ event.title }}">
+                {% endif %}
+                <h1>{{ event.title }}</h1>
+                <p>Published on: {{ event.date }}</p>
+                <p>{{ event.body }}</p>
+            </article>
         </div>
     </div>
 </div>
-    {% endblock %} 
+
+{% endblock %}
