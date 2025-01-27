@@ -5,21 +5,64 @@
     Alumni Portal | User Dashboard
 {% endblock %}
 
-
 {% block content %}
 {% include "components/top_nav.html" %}
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
 
-            {% include "components/sidebar.html" %}
-
-            <div class="col my-3 m-3 bg-light">
-                <div class="">
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/sidebar.html" %}
+        
+        <div class="col my-3 m-3 bg-light">
+            <div class="card p-4">
+                <h2>Welcome, {{ first_name }} {{ last_name }}!</h2>
+                <p>We're glad to have you back on the Alumni Portal.</p>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Your Profile</h5>
+                                <p class="card-text">Update your contact information and view your alumni profile.</p>
+                                <a href="/myaccount/edit/" class="btn btn-primary">Go to Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Recent Activities</h5>
+                                <p class="card-text">View your recent interactions and updates in the alumni community.</p>
+                                <a href="/activities" class="btn btn-primary">View Activities</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Upcoming Events</h5>
+                                <p class="card-text">Check out upcoming alumni events and opportunities to connect.</p>
+                                <a href="/myaccount/saved_events/" class="btn btn-primary">See Events</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                Hello, {{ first_name }} {{ last_name }}
+            </div>
+
+            <div class="my-4">
+                <h3>Alumni Network</h3>
+                <p>Stay connected with fellow alumni, share news, and explore networking opportunities.</p>
+                <a href="#" class="btn btn-info">Join the Network</a>
+            </div>
+
+            <div class="my-4">
+                <h3>Support and Donations</h3>
+                <p>Give back to your alma mater or support current students in need.</p>
+                <a href="#" class="btn btn-success">Make a Donation</a>
             </div>
         </div>
-        
     </div>
+</div>
 
 {% endblock %}

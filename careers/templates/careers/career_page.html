@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ job.title }}
+{% endblock %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    article {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        color: #800000;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+    
+    .job-details p {
+        margin-bottom: 10px;
+    }
+    
+    .job-details p strong {
+        color: #333;
+    }
+    
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.5rem;
+        }
+    
+        .job-details p {
+            font-size: 0.9rem;
+        }
+    }
+    
+</style>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 my-3">
+            <article class="p-3 bg-white shadow-sm rounded">
+                
+                    <h1  style="color: #800000">{{ job.title.title }}</h1>
+                    <p class="text-muted small">Published on: {{ job.created_at }}</p>
+                
+                <div class="mb-3">
+                    <pre class="lead">{{ job.description }}</pre>
+                </div>
+                <div class="job-details mb-4">
+                    <pre><strong>Requirements:</strong> {{ job.requirements }}</pre>
+                    <p><strong>Location:</strong> {{ job.location }}</p>
+                    <p><strong>Salary:</strong> {{ job.salary }}</p>
+                    <p><strong>Company:</strong> {{ job.company }}</p>
+                    <pre><strong>Responsibilities:<br></strong> {{ job.responsibilities }}</pre>
+                    <pre><strong>Benefits:</br></strong> {{ job.benefits }}</pre>
+                    <pre><strong>Qualifications:<br></strong> {{ job.qualifications }}</pre>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <button class="btn btn-success" onclick=applied()>Apply</button>
+            </article>
+        </div>
+    </div>
+</div>
+<script>
+    function applied() {
+        alert("You have successfully applied for this job.");
+        document.querySelector('.btn-success').innerText = 'Applied';
+    }
+</script>
+    {% endblock %} 

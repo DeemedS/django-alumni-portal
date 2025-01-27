@@ -13,26 +13,49 @@
 
             {% include "components/sidebar.html" %}
 
-            <div class="col my-3 m-3 bg-light">
-                <div class="">
+            <div class="col mb-3">
+
+                <div class="user-header mt-3">
+                    <h3>Saved Jobs</h3>
                 </div>
-                <div class="container">
+
+                <div class="container bg-light p-3 min-vh-100">
                     <div class="row">
-                        <div class="col">
-                            <h2 class="h4 my-4">Saved Jobs</h2>
-                            <div class="card">
+
+                        <div class="col gap-3">
+
+                            <div class="card mb-3">
                                 <div class="card-body">
                                     <h5 class="card-title
-                                    ">Job Title</h5>
-                                    <p class="card-text">Job Description</p>
-                                    <a href="#" class="btn btn-primary">View Job</a>
+                                    ">Full Stack Developer (Python & Javascript)</h5>
+                                    <p class="card-text">CoDev</p>
+                                    <a href="/careers/1" class="btn btn-primary">View Job</a>
                                 </div>
                             </div>
+
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title
+                                    ">Web Developer</h5>
+                                    <p class="card-text">CodeMasters Solutions</p>
+                                    <a href="/careers/3" class="btn btn-primary">View Job</a>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title
+                                    ">DevOps Engineer</h5>
+                                    <p class="card-text">ING</p>
+                                    <a href="/careers/2" class="btn btn-primary">View Job</a>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+                </div>
+
             </div>
         </div>
-        
     </div>
 
 {% endblock %}

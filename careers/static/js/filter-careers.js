@@ -220,7 +220,7 @@ $(document).on("click", ".job-card", function (e) {
 
                         <!-- Action Buttons -->
                         <div class="d-flex justify-content-start gap-3">
-                            <a href="#" class="btn" style="background-color: #800000; color: white;">Apply Now</a>
+                            <a href="/careers/${data.id}" class="btn" style="background-color: #800000; color: white;">Apply Now</a>
                             <a href="#" class="btn btn-outline-danger">Save Job</a>
                         </div>
                     </div>
