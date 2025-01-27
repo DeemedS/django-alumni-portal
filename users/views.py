@@ -133,3 +133,65 @@ def user_logout(request):
     response.delete_cookie('access_token')
     response.delete_cookie('refresh_token')
     return response
+
+def saved_jobs(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+
+    if access_token:
+        api_url = request.build_absolute_uri(reverse('api:token_verify'))
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            # Now, render the dashboard template and pass the user info
+            return render(request, 'saved_jobs.html')
+
+        elif response.status_code == 401 and refresh_token:
+            refresh_url = request.build_absolute_uri(reverse('api:token_refresh'))
+            refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
+
+            if refresh_response.status_code == 200:
+                new_tokens = refresh_response.json()
+                access_token = new_tokens.get('access')
+                response = redirect('/myaccount/')
+                response.set_cookie('access_token', access_token, httponly=True)
+                return response
+            
+            else:
+                return redirect('/login/')
+        else:
+            return redirect('/login/')
+    else:
+        return redirect('/login/')
+    
+def saved_events(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+
+    if access_token:
+        api_url = request.build_absolute_uri(reverse('api:token_verify'))
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            # Now, render the dashboard template and pass the user info
+            return render(request, 'saved_events.html')
+
+        elif response.status_code == 401 and refresh_token:
+            refresh_url = request.build_absolute_uri(reverse('api:token_refresh'))
+            refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
+
+            if refresh_response.status_code == 200:
+                new_tokens = refresh_response.json()
+                access_token = new_tokens.get('access')
+                response = redirect('/myaccount/')
+                response.set_cookie('access_token', access_token, httponly=True)
+                return response
+            
+            else:
+                return redirect('/login/')
+        else:
+            return redirect('/login/')
+    else:
+        return redirect('/login/')
