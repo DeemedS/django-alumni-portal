@@ -118,7 +118,7 @@ class FilteredJobPostsAPIView(APIView):
 
         #search by keyword and location
         if keyword:
-            job_posts = job_posts.filter(Q(title__icontains=keyword) | Q(description__icontains=keyword) | Q(responsibilities__icontains=keyword))
+            job_posts = job_posts.filter(Q(title__icontains=keyword))
         if location:
             job_posts = job_posts.filter(location__icontains=location)
 
