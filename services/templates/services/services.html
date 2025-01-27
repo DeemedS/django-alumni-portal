@@ -1,8 +1,80 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block title %}PUP Alumni Website | Services{% endblock %}
 
 {% block content %}
-    <h1>Services</h1>
-    <p>This is the services page.</p>
+
+<div class="services coming-soon">
+    <!-- Semi-transparent overlay -->
+    <div class="overlay">
+        <div class="coming-soon-text">
+            <h1>Coming Soon</h1>
+            <p>Our services are being prepared and will be available soon. Thank you for your patience!</p>
+        </div>
+    </div>
+
+    <!-- Original content (hidden by the overlay) -->
+    <h1 class="body-title">SERVICES</h1>
+
+    <div class="container">
+        <div class="row service-cards">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-4 service-image">
+                        <img src={% static '/images/id-card.png' %} class="img-fluid" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">ALUMNI ID</h5>
+                            <p class="card-text">Apply for your very own PUP Alumni ID. Just register and log in here on our website to request an ID.</p>
+                            <p>For requirements, please refer <a href="#" class="">here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-4 service-image">
+                        <img src={% static '/images/notebook.png' %} class="img-fluid" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">YEARBOOK</h5>
+                            <p class="card-text">Get a copy of your yearbook. Just register and log in here on our website and apply for yearbook claiming.</p>
+                            <p>For claiming, please refer <a href="#" class="">here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col service-cards">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-4 service-image">
+                        <img src={% static '/images/cv.png' %} class="img-fluid" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">CREATE RESUME</h5>
+                            <p class="card-text">Create your resume here on our website and download it for free.</p>
+                            <p>For more information, please refer <a href="#" class="">here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <p class="text-center">To get full access to our online services, please register and log in to the alumni portal.</p>
+
+        <div class="btn-container">
+            <button type="button" class="btn btn-ann" onclick="window.location.href='/portal'">ALUMNI PORTAL</button>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
