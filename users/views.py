@@ -72,19 +72,41 @@ def user_edit(request):
                     last_name = form.cleaned_data.get('last_name')
                     email = user_data.get('email')
                     student_number = user_data.get('student_number')
+                    middle_name = form.cleaned_data.get('middle_name')
+                    birthday = form.cleaned_data.get('birthday')
+                    address = form.cleaned_data.get('address')
+                    telephone = form.cleaned_data.get('telephone')
+                    mobile = form.cleaned_data.get('mobile')
+                    civil_status = form.cleaned_data.get('civil_status')
+                    sex = form.cleaned_data.get('sex')
 
-            else:   
+            else: 
+                
                 first_name = user_data.get('first_name')
                 last_name = user_data.get('last_name')
                 email = user_data.get('email')
                 student_number = user_data.get('student_number')
-                
+                middle_name = user_data.get('middle_name')
+                birthday = user_data.get('birthday')
+                address = user_data.get('address')
+                telephone = user_data.get('telephone')
+                mobile = user_data.get('mobile')
+                civil_status = user_data.get('civil_status')
+                sex = user_data.get('sex')
+                             
             # Now, render the dashboard template and pass the user info
             return render(request, 'user_edit.html', {
                 'first_name': first_name,
                 'last_name': last_name,
                 'email': email,
-                'student_number': student_number
+                'student_number': student_number,
+                'middle_name': middle_name,
+                'birthday': birthday,
+                'address': address,
+                'telephone': telephone,
+                'mobile': mobile,
+                'civil_status': civil_status,
+                'sex': sex
             })
         
         elif response.status_code == 401 and refresh_token:

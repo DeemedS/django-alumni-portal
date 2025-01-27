@@ -86,7 +86,15 @@ def get_user_info(request):
             'first_name': user.first_name,
             'last_name': user.last_name,
             'email': user.email,
-            'student_number': user.student_number
+            'student_number': user.student_number,
+            'middle_name': user.middle_name,
+            'birthday': user.birthday,
+            'address': user.address,
+            'telephone': user.telephone,
+            'mobile': user.mobile,
+            'civil_status': user.civil_status,
+            'sex' : user.sex
+
         }
         return Response(user_info, status=200)
     else:

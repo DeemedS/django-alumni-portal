@@ -72,6 +72,7 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm-pass')
+        
 
         # Validate form data
         if password != confirm_password:
