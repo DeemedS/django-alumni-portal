@@ -39,6 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
+    jobs = models.JSONField(default=list, blank=True)
 
     objects = UserManager()
 

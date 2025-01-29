@@ -221,7 +221,7 @@ $(document).on("click", ".job-card", function (e) {
                         <!-- Action Buttons -->
                         <div class="d-flex justify-content-start gap-3">
                             <a href="/careers/${data.id}" class="btn" style="background-color: #800000; color: white;">Apply Now</a>
-                            <a href="#" class="btn btn-outline-danger">Save Job</a>
+                            <button class="btn btn-outline-danger save-job-btn" data-id="${data.id}">Save Job</button>
                         </div>
                     </div>
                 </div>
@@ -234,3 +234,49 @@ $(document).on("click", ".job-card", function (e) {
         },
     });
 });
+
+// Handle Save Job Button Click
+$(document).on("click", ".save-job-btn", function () {
+    const jobId = $(this).attr("data-id");
+
+    $.ajax({
+        url: `/careers/save_job/${jobId}/`,
+        method: "POST",
+        headers: {
+            "X-CSRFToken": getCsrfToken()
+        },
+        success: function (response, status, xhr) {
+            let message = "";
+            if (xhr.status === 201) {
+                showToast('Success', 'Job saved successfully!', 'success');  
+            } else if (xhr.status === 200) {
+                message = `<p class="text-info">.</p>`;
+                showToast('Success', 'Job is already saved', 'success');  
+            }
+
+            $("#save-job-message").html(message);
+        },
+        error: function (xhr) {
+            if (xhr.status === 401) {
+                showToast('No User Found', 'You need to log in to save jobs.', 'warning');  
+            } else if (xhr.status === 403) {
+                showToast('No User Found', 'Please try logging in again.', 'warning');  
+            } else if (xhr.status === 404) {
+                showToast('Job not found', 'Job not found.', 'danger');  
+            } else if (xhr.status === 500) {
+                showToast('ServerError', 'Server error. Please try again later.', 'danger');  
+            }
+
+            $("#save-job-message").html(message);
+        }
+    });
+});
+
+function getCsrfToken() {
+    const cookieValue = document.cookie
+        .split("; ")
+        .find(row => row.startsWith("csrftoken="))
+        ?.split("=")[1];
+    return cookieValue || "";
+}
+
