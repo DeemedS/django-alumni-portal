@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-
+{% load static %}
 {% block title %}
     {{ event.title }}
 {% endblock %}
@@ -16,9 +16,15 @@
                 <h1>{{ event.title }}</h1>
                 <p>Published on: {{ event.date }}</p>
                 <p>{{ event.body }}</p>
+                <button class="btn btn-outline-danger save-event-btn" data-id="{{ event.id }}">Save Event</button>
             </article>
         </div>
     </div>
 </div>
 
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+<script src="{% static 'js/save-events.js' %}"></script>
 {% endblock %}

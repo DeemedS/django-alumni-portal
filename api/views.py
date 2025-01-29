@@ -93,7 +93,8 @@ def get_user_info(request):
             'telephone': user.telephone,
             'mobile': user.mobile,
             'civil_status': user.civil_status,
-            'sex' : user.sex
+            'sex' : user.sex,
+            'events': user.events,
 
         }
         return Response(user_info, status=200)
