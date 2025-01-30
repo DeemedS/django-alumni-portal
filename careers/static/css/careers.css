@@ -8,7 +8,6 @@
 }
 
 .job-description {
-    margin: 10px 0;
     padding: 15px;
     background-color: #fff;
 }
@@ -22,7 +21,6 @@
     padding: 1rem;
     background-color: #fff;
     border-bottom: 1px solid #dee2e6;
-    height: 150px;
 }
 
 .job-card h5 {
@@ -95,6 +93,15 @@
   .search-container form {
       flex-direction: column;
   }
+  .search-container input[type="text"],
+  .search-container select {
+    min-width: 70vw;
+  }
 }
 
+@media (max-width: 576px) {
+  .job-description {
+    display: none;
+  }
+}
 

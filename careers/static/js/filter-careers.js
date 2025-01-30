@@ -142,7 +142,10 @@ $(document).on("click", ".job-card", function (e) {
 
     const jobId = $(this).attr("data");
 
-    console.log(jobId)
+    if ($(window).width() <= 576) {
+        window.location.href = `/careers/${jobId}`;
+        return;
+    }
 
     // Fetch saved jobs first
     $.ajax({
