@@ -60,7 +60,7 @@ def save_job(request, id):
     except ObjectDoesNotExist:
         return JsonResponse({"error": "User not found"}, status=404)  # Not Found
 
-    if id in user.jobs:
+    if any(job["id"] == id for job in user.jobs):
         return JsonResponse({"message": "Job already saved"}, status=200)
 
     user.jobs.append({"id": id, "saved_at": now().isoformat()})

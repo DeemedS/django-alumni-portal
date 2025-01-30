@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="card-body">
                         <h5 class="card-title">${jobDetails.title}</h5>
                         <p class="card-text">${jobDetails.company}</p>
+                        <p class="card-text">${jobDetails.description}</p>
                         <a href="/careers/${jobDetails.id}" class="btn btn-primary">View Job</a>
                     </div>
                 `;

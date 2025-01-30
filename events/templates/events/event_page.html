@@ -16,7 +16,25 @@
                 <h1>{{ event.title }}</h1>
                 <p>Published on: {{ event.date }}</p>
                 <p>{{ event.body }}</p>
-                <button class="btn btn-outline-danger save-event-btn" data-id="{{ event.id }}">Save Event</button>
+
+                {% load custom_filters %}
+
+                {% if user_events is not None and user_events|length > 0 %}
+                {% if user_events|contains_event:event.id %}
+                    <button class="btn btn-danger unsave-event-btn d-flex align-self-end ms-auto" data-id="{{ event.id }}">
+                        Unsave Event
+                    </button>
+                {% else %}
+                    <button class="btn btn-outline-danger save-event-btn d-flex align-self-end ms-auto" data-id="{{ event.id }}">
+                        Save Event
+                    </button>
+                {% endif %}
+                {% else %}
+                    <button class="btn btn-outline-danger save-event-btn d-flex align-self-end ms-auto" data-id="{{ event.id }}">
+                        Save Event
+                    </button>
+                {% endif %}
+                
             </article>
         </div>
     </div>
@@ -26,5 +44,5 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script src="{% static 'js/save-events.js' %}"></script>
+<script src="{% static 'js/handle-events.js' %}"></script>
 {% endblock %}

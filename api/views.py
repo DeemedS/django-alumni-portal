@@ -147,3 +147,8 @@ class JobPostDetailView(RetrieveAPIView):
     queryset = JobPost.objects.all()
     serializer_class = JobPostSerializer
     lookup_field = 'id'
+
+class EventsDetailView(RetrieveAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    lookup_field = 'id'
