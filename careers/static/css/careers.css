@@ -11,6 +11,11 @@
     padding: 15px;
     background-color: #fff;
 }
+
+.job-description > .card {
+  border: 0;
+}
+
 .job-description pre {
     white-space: pre-wrap;
     word-wrap: break-word;

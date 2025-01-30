@@ -100,12 +100,16 @@ $(document).ready(function () {
                             
                             <!-- Company Name -->
                             <p class="card-text">
-                                <i class="bi bi-building me-2"></i>${job.company}
+                                <i class="bi bi-building"></i>${job.company}
+                            </p>
+
+                                                        <p class="card-text">
+                                <i class="bi bi-building"></i>${job.description}
                             </p>
 
                             <!-- Job Location -->
                             <p class="card-text text-muted mb-1">
-                                <i class="bi bi-geo-alt-fill me-2"></i>${job.location}
+                                <i class="bi bi-geo-alt-fill"></i>${job.location}
                             </p>
                         </div>
                     </div>
@@ -173,16 +177,19 @@ $(document).on("click", ".job-card", function (e) {
                     const saveButtonClass = isSaved ? "btn-danger unsave-job-btn" : "btn-outline-danger save-job-btn";
 
                     $(".job-description").html(`
-                        <div class="card border-0 shadow-sm mb-4">
+                        <div class="card mb-4">
                             <div class="card-body">
                                 <h3 class="card-title fw-bold mb-4" style="color: #800000;">${data.title}</h3>
                                 
                                 <div class="row mb-4">
                                     <div class="col-md-6">
-                                        <p class="mb-0 text-muted"><strong>Company:</strong> ${data.company}</p>
-                                    </div>
-                                    <div class="col-md-6 text-md-end">
                                         <p class="mb-0 text-muted"><strong>Posted:</strong> ${data.created_at}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <p class="mb-0 text-muted"><strong>Company:</strong> ${data.company}</p>
                                     </div>
                                 </div>
 
