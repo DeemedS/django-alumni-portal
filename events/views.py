@@ -33,8 +33,8 @@ def events(request):
         'current_year': current_year,
     })
 
-def event_page(request, slug, id):
-    event = Event.objects.get(slug=slug , id=id)
+def event_page(request, slug):
+    event = Event.objects.get(slug=slug)
     return render(request, 'events/event_page.html', {'event': event})
 
 def signup_event(request, id):
