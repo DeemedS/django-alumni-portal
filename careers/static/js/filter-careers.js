@@ -138,106 +138,115 @@ $(document).ready(function () {
 
 
 $(document).on("click", ".job-card", function (e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const jobId = $(this).attr("data");
 
+    console.log(jobId)
+
+    // Fetch saved jobs first
     $.ajax({
-        url: `/api/job-details/${jobId}/`, // API endpoint to fetch job details
+        url: "/careers/userjobs/",
         method: "GET",
-        success: function (data) {
-            const date = new Date(data.created_at);
-            data.created_at = date.toDateString();
+        success: function (savedJobsData) {
+            const savedJobIds = savedJobsData.jobs.map(job => job.id); 
 
-            const salary = data.salary; // Example: 50000
+            // Now fetch job details after getting saved jobs
+            $.ajax({
+                url: `/api/job-details/${jobId}/`,
+                method: "GET",
+                success: function (data) {
+                    const date = new Date(data.created_at);
+                    data.created_at = date.toDateString();
 
-            // Format the salary with commas
-            const formattedSalary = new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 0, // Optional: no decimal places
-            }).format(salary);
-            
-            $(".job-description").html(` <!-- Inject job details into the .job-description div -->
-                
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-body">
-                        <!-- Job Title -->
-                        <h3 class="card-title fw-bold mb-4" style="color: #800000;">${data.title}</h3>
+                    // Format salary
+                    const formattedSalary = new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: 0,
+                    }).format(data.salary);
 
-                        <!-- Company and Posted Date -->
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <p class="mb-0 text-muted"><strong>Company:</strong> ${data.company}</p>
+                    // Check if the job is saved
+                    const isSaved = savedJobIds.includes(data.id);
+                    const saveButtonText = isSaved ? "Unsave Job" : "Save Job";
+                    const saveButtonClass = isSaved ? "btn-danger unsave-job-btn" : "btn-outline-danger save-job-btn";
+
+                    $(".job-description").html(`
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <h3 class="card-title fw-bold mb-4" style="color: #800000;">${data.title}</h3>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <p class="mb-0 text-muted"><strong>Company:</strong> ${data.company}</p>
+                                    </div>
+                                    <div class="col-md-6 text-md-end">
+                                        <p class="mb-0 text-muted"><strong>Posted:</strong> ${data.created_at}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-4 mb-3 mb-md-0">
+                                        <p class="mb-0"><i class="bi bi-geo-alt"></i> <strong>Location:</strong> ${data.location}</p>
+                                    </div>
+                                    <div class="col-md-4 mb-3 mb-md-0">
+                                        <p class="mb-0"><strong>Salary:</strong> <span>${formattedSalary}</span> PHP</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="mb-0"><i class="bi bi-briefcase"></i> <strong>Job Type:</strong> ${data.job_type}</p>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row mb-4">
+                                    <h4 class="fw-semibold">Job Description</h4>
+                                    <pre class="text-secondary">${data.description}</pre>
+                                </div>
+
+                                ${data.responsibilities ? `
+                                <div class="row mb-4">
+                                    <h4 class="fw-semibold">Job Responsibilities</h4>
+                                    <pre class="text-secondary">${data.responsibilities}</pre>
+                                </div>
+                                ` : ''}
+
+                                ${data.qualifications ? `
+                                <div class="row mb-4">
+                                    <h4 class="fw-semibold">Job Qualifications</h4>
+                                    <pre class="text-secondary">${data.qualifications}</pre>
+                                </div>
+                                ` : ''}
+
+                                ${data.benefits ? `
+                                <div class="row mb-4">
+                                    <h4 class="fw-semibold">Job Benefits</h4>
+                                    <pre class="text-secondary">${data.benefits}</pre>
+                                </div>
+                                ` : ''}
+
+                                <div class="d-flex justify-content-start gap-3">
+                                    <a href="/careers/${data.id}" class="btn" style="background-color: #800000; color: white;">Apply Now</a>
+                                    <button class="btn ${saveButtonClass}" data-id="${data.id}">${saveButtonText}</button>
+                                </div>
                             </div>
-                            <div class="col-md-6 text-md-end">
-                                <p class="mb-0 text-muted"><strong>Posted:</strong> ${data.created_at}</p>
-                            </div>
                         </div>
-
-                        <!-- Job Details -->
-                        <div class="row mb-4">
-                            <div class="col-md-4 mb-3 mb-md-0">
-                                <p class="mb-0"><i class="bi bi-geo-alt"></i> <strong>Location:</strong> ${data.location}</p>
-                            </div>
-                            <div class="col-md-4 mb-3 mb-md-0">
-                                <p class="mb-0"><strong>Salary:</strong> <span>${formattedSalary}</span> PHP</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="mb-0"><i class="bi bi-briefcase"></i> <strong>Job Type:</strong> ${data.job_type}</p>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <!-- Job Description -->
-                        <div class="row mb-4">
-                            <h4 class="fw-semibold">Job Description</h4>
-                            <pre class="text-secondary">${data.description}</pre>
-                        </div>
-
-                        <!-- Job Responsibilities -->
-                        ${data.responsibilities ? `
-                        <div class="row mb-4">
-                            <h4 class="fw-semibold">Job Responsibilities</h4>
-                            <pre class="text-secondary">${data.responsibilities}</pre>
-                        </div>
-                        ` : ''}
-
-                        <!-- Job Qualifications -->
-                        ${data.qualifications ? `
-                        <div class="row mb-4">
-                            <h4 class="fw-semibold">Job Qualifications</h4>
-                            <pre class="text-secondary">${data.qualifications}</pre>
-                        </div>
-                        ` : ''}
-
-                        <!-- Job Benefits -->
-                        ${data.benefits ? `
-                        <div class="row mb-4">
-                            <h4 class="fw-semibold">Job Benefits</h4>
-                            <pre class="text-secondary">${data.benefits}</pre>
-                        </div>
-                        ` : ''}
-
-                        <!-- Action Buttons -->
-                        <div class="d-flex justify-content-start gap-3">
-                            <a href="/careers/${data.id}" class="btn" style="background-color: #800000; color: white;">Apply Now</a>
-                            <button class="btn btn-outline-danger save-job-btn" data-id="${data.id}">Save Job</button>
-                        </div>
-                    </div>
-                </div>
-
-
-            `);
+                    `);
+                },
+                error: function () {
+                    $(".job-description").html("<p>Failed to load job details. Please try again.</p>");
+                },
+            });
         },
         error: function () {
-            $(".job-description").html("<p>Failed to load job details. Please try again.</p>");
-        },
+            console.error("Failed to load saved jobs.");
+        }
     });
 });
+
 
 // Handle Save Job Button Click
 $(document).on("click", ".save-job-btn", function () {
     const jobId = $(this).attr("data-id");
+    const button = $(this);
 
     $.ajax({
         url: `/careers/save_job/${jobId}/`,
@@ -246,15 +255,13 @@ $(document).on("click", ".save-job-btn", function () {
             "X-CSRFToken": getCsrfToken()
         },
         success: function (response, status, xhr) {
-            let message = "";
             if (xhr.status === 201) {
-                showToast('Success', 'Job saved successfully!', 'success');  
+                showToast('Success', 'Job saved successfully!', 'success');
+                button.text("Unsave Job").removeClass("btn-outline-danger save-job-btn").addClass("btn-danger unsave-job-btn");
             } else if (xhr.status === 200) {
                 message = `<p class="text-info">.</p>`;
                 showToast('Success', 'Job is already saved', 'success');  
             }
-
-            $("#save-job-message").html(message);
         },
         error: function (xhr) {
             if (xhr.status === 401) {
@@ -266,8 +273,6 @@ $(document).on("click", ".save-job-btn", function () {
             } else if (xhr.status === 500) {
                 showToast('ServerError', 'Server error. Please try again later.', 'danger');  
             }
-
-            $("#save-job-message").html(message);
         }
     });
 });
@@ -280,3 +285,33 @@ function getCsrfToken() {
     return cookieValue || "";
 }
 
+
+$(document).on("click", ".unsave-job-btn", function () {
+    const jobId = $(this).attr("data-id");
+    const button = $(this);
+
+    $.ajax({
+        url: `/careers/unsave_job/${jobId}/`,
+        method: "POST",
+        headers: {
+            "X-CSRFToken": getCsrfToken()
+        },
+        success: function (response, status, xhr) {
+            if (xhr.status === 200) { 
+                showToast('Success', 'Job removed successfully!', 'success');
+                button.text("Save Job").removeClass("btn-danger unsave-job-btn").addClass("btn-outline-danger save-job-btn");
+            } 
+        },
+        error: function (xhr) {
+            if (xhr.status === 401) {
+                showToast('No User Found', 'You need to log in to save jobs.', 'warning');  
+            } else if (xhr.status === 403) {
+                showToast('No User Found', 'Please try logging in again.', 'warning');  
+            } else if (xhr.status === 404) {
+                showToast('Job not found', 'Job not found.', 'danger');  
+            } else if (xhr.status === 500) {
+                showToast('ServerError', 'Server error. Please try again later.', 'danger');  
+            }
+        }
+    });
+});

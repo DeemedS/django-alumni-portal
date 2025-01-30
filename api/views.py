@@ -95,6 +95,7 @@ def get_user_info(request):
             'civil_status': user.civil_status,
             'sex' : user.sex,
             'events': user.events,
+            'jobs' : user.jobs
 
         }
         return Response(user_info, status=200)
