@@ -60,7 +60,7 @@ $(document).ready(function() {
                                                 <div class="card-body">
                                                     <h5 class="card-title">${event.title}</h5>
                                                     <p class="card-text">${event.body}</p>
-                                                    <a href="/events/view/${event.slug}/${event.id}" class="btn btn-primary">Learn More</a>
+                                                    <a href="/events/view/${event.slug}" class="btn btn-primary">Learn More</a>
                                                 </div>
                                             </div>`;
                             $('#event-cards-container').append(cardHtml);
