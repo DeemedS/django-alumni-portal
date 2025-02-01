@@ -1,0 +1,69 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Faculty Dashboard{% endblock %}
+
+{% block content %}
+<style>
+  
+</style>
+{% include 'components/faculty_topnav.html' %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/faculty_sidebar.html" %}
+
+        <div class="col mb-3">
+
+            <div class="greeting-bar mt-3">
+                GREETINGS, {{first_name}} {{last_name}}!
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- Grid Layout for Cards -->
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="card-custom p-3">
+                            <i class="icon fa-solid fa-graduation-cap"></i>
+                            <h5>ALUMNI</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-custom p-3">
+                            <i class="icon fa-solid fa-briefcase"></i>
+                            <h5>CAREERS</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-custom p-3">
+                            <i class="icon fa-solid fa-calendar-days"></i>
+                            <h5>EVENTS</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-custom p-3">
+                            <i class="icon fa-solid fa-newspaper"></i>
+                            <h5>ARTICLE</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-custom p-3">
+                            <i class="icon fa-solid fa-users"></i>
+                            <h5>OFFICIALS</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card-custom p-3">
+                            <i class="icon fa-solid fa-cogs"></i>
+                            <h5>SERVICES</h5>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

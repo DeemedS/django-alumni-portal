@@ -1,0 +1,74 @@
+/* Sidebar*/
+.user-info img {
+    width: 180px;
+    height: 150px;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid #800000;
+}
+.sidebar-title{
+    color:black;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-left: solid 5px #800000;
+    padding-left: 3px;
+    margin:5px;
+}
+.sidebar-text {
+    color: #800000;
+    text-decoration: none;
+}
+
+.side-bar a {
+    margin: 7px;
+}
+
+.side-bar i {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 576px) {
+    .side-bar {
+        display: none;
+    }   
+    
+}
+.top-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+    .top-nav{
+     display: none !important;
+    }   
+}
+
+/* Greeting Bar */
+.greeting-bar {
+    background-color: #600;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    border-radius: 8px;
+    text-transform: uppercase;
+}
+
+/* Card Styles */
+.card-custom {
+    background-color: #600;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+.card-custom:hover {
+    transform: scale(1.05);
+}
+.icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
