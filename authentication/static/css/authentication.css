@@ -135,7 +135,7 @@
  }
  
  .login-container .submit{
-    border: none;
+    border: rgb(201, 200, 200) 1px solid;
     outline: none;
     height: 45px;
     background: #ececec;
@@ -187,11 +187,17 @@
     width: 70%;
 }
 
-.login-container .right .btn {
+.login-container .right .cust-btn {
     background: #5e0000;
     width: 100%;
     border-radius: 0%;
     color: #fff;
+}
+
+.login-container .right .back-btn {
+    border-radius: 0; 
+    background-color: darkcyan; 
+    color: white; width: 50%;
 }
 
 .form-control {

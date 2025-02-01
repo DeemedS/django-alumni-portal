@@ -1,5 +1,5 @@
 import requests
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect, render
@@ -12,6 +12,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
+from django.contrib.auth import login
+
 
 User = get_user_model()
 
@@ -19,7 +21,7 @@ User = get_user_model()
 def portal(request):
     return render(request, 'portal.html')
 
-def login(request):
+def user_login(request):
 
     access_token = request.COOKIES.get('access_token')
 
@@ -103,6 +105,37 @@ def register(request):
     return render(request, 'signup.html')
 
 def faculty(request):
+
+    if request.user.is_authenticated:
+        
+        return redirect('/faculty/dashboard')
+    
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=email, password=password)
+
+        if user is not None:
+            if user.is_active:
+                if user.is_staff:
+                    login(request, user)
+
+                    context = {
+                        'first_name': request.user.first_name,
+                        'last_name': request.user.last_name,
+                    }
+
+                    return render(request, 'faculty_dashboard.html', context)
+                else:
+                    messages.error(request, "Access denied. You are not a faculty member.")
+            else:
+                messages.error(request, "Your account is inactive. Contact admin for support.")
+        else:
+            messages.error(request, "Invalid email or password.")
+
+        return render(request, 'faculty.html')
+
     return render(request, 'faculty.html')
 
 
