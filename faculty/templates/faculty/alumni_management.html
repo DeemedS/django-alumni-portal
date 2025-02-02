@@ -1,0 +1,93 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Alumni Management{% endblock %}
+
+{% block content %}
+<style>
+     
+        
+       
+        
+        
+        
+       
+</style>
+{% include 'components/faculty_topnav.html' %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/faculty_sidebar.html" %}
+
+        <div class="col mb-3">
+
+            <div class="greeting-bar mt-3">
+                Alumni Management
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                <div class="container-fluid p-4">
+                    <h4 class="fw-bold title-text">ALUMNI LIST</h4>
+                    <div class="d-flex flex-column gap-2">
+                        <div class="search-container">
+                            <input type="text" class="form-control search-bar" placeholder="Search">
+                            <i class="fa-regular fa-bell fs-4"></i>
+                            <button class="add-alumni-btn">ADD NEW ALUMNI</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-3 ">
+                        <table class="table table-bordered align-middle table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Active</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Course</th>
+                                    <th>Date Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- loop for list -->
+                                <tr>
+                                    <td data-label="Active"><div class="status-indicator active"></div></td>
+                                    <td data-label="Name">user</td>
+                                    <td data-label="Email">user@gmail.com</td>
+                                    <td data-label="Phone">09######</td>
+                                    <td data-label="Course">BSCpE</td>
+                                    <td data-label="Date Created">February 01, 2025</td>
+                                    <td data-label="Actions" class="action-icons">
+                                        <a href="#"><i class="fas fa-eye"></i></a>
+                                        <a href="#"><i class="fas fa-edit"></i></a>
+                                        <a href="#"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Active"><div class="status-indicator inactive"></div></td>
+                                    <td data-label="Name">user</td>
+                                    <td data-label="Email">user@gmail.com</td>
+                                    <td data-label="Phone">09######</td>
+                                    <td data-label="Course">BSCpE</td>
+                                    <td data-label="Date Created">February 01, 2025</td>
+                                    <td data-label="Actions" class="action-icons">
+                                        <a href="#"><i class="fas fa-eye"></i></a>
+                                        <a href="#"><i class="fas fa-edit"></i></a>
+                                        <a href="#"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                <!-- end of loop -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- end of content -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

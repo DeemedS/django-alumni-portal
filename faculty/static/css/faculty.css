@@ -1,21 +1,39 @@
+:root{
+    --pupred: #800000;
+}
 /* Sidebar*/
+.nav-pills .sidebar-text {
+    padding: 10px;
+}
+.nav-pills .sidebar-text.active {
+    background-color: #FEAF00;
+    color: #600;
+}
+
+@media (max-width: 768px) {
+    .nav-pills {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+}
+
 .user-info img {
     width: 180px;
     height: 150px;
     margin: 0 auto;
     display: block;
-    border: 1px solid #800000;
+    border: 1px solid var(--pupred);
 }
 .sidebar-title{
     color:black;
     font-size: 1.5em;
     font-weight: bold;
-    border-left: solid 5px #800000;
+    border-left: solid 5px var(--pupred);
     padding-left: 3px;
     margin:5px;
 }
 .sidebar-text {
-    color: #800000;
+    color: var(--pupred);
     text-decoration: none;
 }
 
@@ -65,10 +83,105 @@
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
 }
+.card-custom a{
+    text-decoration: none;
+    color: #fff;
+}
 .card-custom:hover {
     transform: scale(1.05);
 }
 .icon {
     font-size: 30px;
     margin-bottom: 10px;
+}
+
+/* Alumni management css */
+.title-text{
+    color:#600;
+}
+.table th, .table td {
+    vertical-align: middle;
+    border: none;
+}
+.alumni-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--pupred);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.action-icons a {
+    margin-right: 10px;
+    color: var(--pupred);
+}
+.search-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+.search-bar {
+    max-width: 200px;
+}
+.add-alumni-btn{
+    margin-left:10px;
+    background-color: var(--pupred);
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-indicator.active {
+    background-color: green; /* Active status color */
+}
+
+.status-indicator.inactive {
+    background-color: red; /* Inactive status color */
+}
+@media (max-width: 768px) {
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .search-bar {
+        width: 100%;
+    }
+    .add-alumni-btn {
+        width: 100%;
+        margin-left: 0;
+    }
+    .table thead {
+        display: none;
+    }
+    .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+    .table tr {
+        margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+        padding: 10px;
+    }
+    .table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+    }
 }

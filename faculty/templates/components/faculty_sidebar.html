@@ -12,13 +12,16 @@
         </div>
 
         <div class="nav flex-column nav-pills w-100 mt-3 gap-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="sidebar-text" href=""><i class="fa-solid fa-house"></i> Home </a>
-            <a class="sidebar-text" href=""><i class="fa-solid fa-user-graduate"></i> Alumni </a>
-            <a class="sidebar-text" href=""><i class="fa-solid fa-briefcase"></i> Careers </a>
-            <a class="sidebar-text" href=""><i class="fa-solid fa-calendar-days"></i> Events </a>
-            <a class="sidebar-text" href=""><i class="fa-solid fa-newspaper"></i> Articles </a>
+            <a class="sidebar-text {% if request.path == '/faculty/dashboard' %}active{% endif %}" href="/faculty/dashboard"><i class="fa-solid fa-house"></i> Home </a>
+            <a class="sidebar-text {% if request.path == '/faculty/alumni-management' %}active{% endif %}" href="/faculty/alumni-management"><i class="fa-solid fa-user-graduate"></i> Alumni </a>
+            <a class="sidebar-text {% if request.path == '/faculty/careers' %}active{% endif %}" href=""><i class="fa-solid fa-briefcase"></i> Careers </a>
+            <a class="sidebar-text {% if request.path == '/faculty/events' %}active{% endif %}" href=""><i class="fa-solid fa-calendar-days"></i> Events </a>
+            <a class="sidebar-text {% if request.path == '/faculty/articles' %}active{% endif %}" href=""><i class="fa-solid fa-newspaper"></i> Articles </a>
             <a class="sidebar-text" href="/faculty/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout </a>
         </div>
 
     </div>
 </div>
+<script>
+    
+</script>
