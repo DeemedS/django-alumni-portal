@@ -247,7 +247,7 @@
                     if (deleteField) {
                         console.log(deleteField)
                         deleteField.checked = true;
-                        {% comment %} formGroup.style.display = 'none';   {% endcomment %}
+                        formGroup.style.display = 'none';
                     } else {
                         formGroup.remove();
                         const prefix = event.target.closest('.formset-row').querySelector('input').name.split('-')[0];

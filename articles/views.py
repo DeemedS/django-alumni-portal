@@ -89,30 +89,27 @@ def edit_article(request, slug):
         bodyimage_formset = BodyImageFormSet(request.POST, request.FILES, prefix='bodyimage')
         subtitle_formset = SubTitleFormSet(request.POST, prefix='subtitle')
 
-
-        print("Formset Valid:", bodytext_formset.is_valid())  
-        print("Formset Errors:", bodytext_formset.errors)  
-        print("Non-form Errors:", bodytext_formset.non_form_errors())
-
         if article_form.is_valid() and bodytext_formset.is_valid() and bodyimage_formset.is_valid() and subtitle_formset.is_valid():
             article = article_form.save()
-
-            deleted_bodytext_ids = [
-                form.cleaned_data["id"] for form in bodytext_formset.deleted_forms 
-                if "id" in form.cleaned_data and form.cleaned_data.get("DELETE") == True
-            ]
-
-            print(deleted_bodytext_ids)
             
-            # BodyText.objects.filter(id__in=filtered_ids).delete()
+            deleted_bodytext_ids = []
+
+            for form in bodytext_formset:
+                if form.cleaned_data.get('DELETE') == True:
+                    deleted_bodytext_ids.append(form.cleaned_data.get('id'))
 
             # Handle BodyText forms
             for form in bodytext_formset:
-                print("Form Data:", form.cleaned_data)
                 if form.cleaned_data:
                     bodytext_id = form.cleaned_data.get('id')
                     bodytext = BodyText.objects.filter(id=bodytext_id, article=article).first()
-                    if bodytext:
+
+                    if bodytext_id in deleted_bodytext_ids:
+                        BodyText.objects.filter(id=bodytext_id).delete()
+                        if f"bodytext-{bodytext_id}" in article.order:
+                            article.order.remove(f"bodytext-{bodytext_id}")
+                        article.save()
+                    elif bodytext:
                         bodytext = get_object_or_404(BodyText, id=bodytext_id, article=article)
                         bodytext.bodytext = form.instance.bodytext
                         bodytext.quoted = form.instance.quoted
