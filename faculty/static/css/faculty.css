@@ -185,3 +185,9 @@
         font-weight: bold;
     }
 }
+
+@media (min-width: 768px) {
+    .center-dot{    
+        text-align: center;
+    }
+}
