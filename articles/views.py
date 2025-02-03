@@ -80,17 +80,35 @@ def edit_article(request, slug):
 
     content_order = get_ordered_content(article)
 
+    print(request.method)
+
     if request.method == 'POST': 
+
         article_form = ArticleForm(request.POST, request.FILES, instance=article)
         bodytext_formset = BodyTextFormSet(request.POST, request.FILES, prefix='bodytext')
         bodyimage_formset = BodyImageFormSet(request.POST, request.FILES, prefix='bodyimage')
         subtitle_formset = SubTitleFormSet(request.POST, prefix='subtitle')
 
+
+        print("Formset Valid:", bodytext_formset.is_valid())  
+        print("Formset Errors:", bodytext_formset.errors)  
+        print("Non-form Errors:", bodytext_formset.non_form_errors())
+
         if article_form.is_valid() and bodytext_formset.is_valid() and bodyimage_formset.is_valid() and subtitle_formset.is_valid():
             article = article_form.save()
 
-             # Handle BodyText forms
+            deleted_bodytext_ids = [
+                form.cleaned_data["id"] for form in bodytext_formset.deleted_forms 
+                if "id" in form.cleaned_data and form.cleaned_data.get("DELETE") == True
+            ]
+
+            print(deleted_bodytext_ids)
+            
+            # BodyText.objects.filter(id__in=filtered_ids).delete()
+
+            # Handle BodyText forms
             for form in bodytext_formset:
+                print("Form Data:", form.cleaned_data)
                 if form.cleaned_data:
                     bodytext_id = form.cleaned_data.get('id')
                     bodytext = BodyText.objects.filter(id=bodytext_id, article=article).first()
@@ -102,22 +120,16 @@ def edit_article(request, slug):
                         bodytext.italic = form.instance.italic
                         bodytext.fontsize = form.instance.fontsize
                         bodytext.order = 'bodytext-' + str(bodytext_id)
+                        bodytext.save()
                     else:
-                        id = (BodyText.objects.latest('id').id + 1) if BodyText.objects.exists() else 0
-                        article.order.append('bodytext-' + str(id))
-                        newBodyText = BodyText()
-                        newBodyText.id = id
-                        newBodyText.bodytext = form.instance.bodytext
-                        newBodyText.quoted = form.instance.quoted
-                        newBodyText.bold = form.instance.bold
-                        newBodyText.italic = form.instance.italic
-                        newBodyText.fontsize = form.instance.fontsize
-                        newBodyText.order = 'bodytext-' + str(id)
-                        newBodyText.article = article
-                        newBodyText.save()
+                        new_bodytext = form.save(commit=False)
+                        new_bodytext.article = article
+                        new_bodytext.save() 
+                        new_bodytext.order = f'bodytext-{new_bodytext.id}'
+                        new_bodytext.save()
+                        article.order.append(new_bodytext.order)
                         article.save()
-                    
-
+                        
             # Handle BodyImage forms
             for form in bodyimage_formset:
                 if form.cleaned_data:
@@ -132,22 +144,18 @@ def edit_article(request, slug):
                         bodyimage.date = form.instance.date
                         bodyimage.order = 'bodyimage-' + str(bodyimage_id)
                     else:
-                        id = (BodyImage.objects.latest('id').id + 1) if BodyImage.objects.exists() else 1
-                        article.order.append('bodyimage-' + str(id))
-                        newBodyImage = BodyImage()
-                        newBodyImage.id = id
-                        newBodyImage.alt = form.instance.alt
-                        newBodyImage.image = form.instance.image
-                        newBodyImage.caption = form.instance.caption
-                        newBodyImage.date = form.instance.date
-                        newBodyImage.order = 'bodyimage-' + str(id)
-                        newBodyImage.article = article
-                        newBodyImage.save()
+                        new_bodyimage = form.save(commit=False)
+                        new_bodyimage.article = article
+                        new_bodyimage.save()
+                        new_bodyimage.order = f'bodyimage-{new_bodyimage.id}'
+                        new_bodyimage.save()
+                        article.order.append(new_bodyimage.order)
                         article.save()
 
             # Handle SubTitle forms
             for form in subtitle_formset:
                 if form.cleaned_data:
+                    print(form.cleaned_data)
                     subtitle_id = form.cleaned_data.get('id')
                     subtitle = SubTitle.objects.filter(id=subtitle_id, article=article).first()
                     if subtitle:
@@ -156,14 +164,12 @@ def edit_article(request, slug):
                         subtitle.article = article
                         subtitle.save()
                     else:
-                        id = SubTitle.objects.latest('id').id + 1 if SubTitle.objects.exists() else 1
-                        article.order.append('subtitle-' + str(id))
-                        newsubtitle = SubTitle()
-                        newsubtitle.id = id
-                        newsubtitle.article = article
-                        newsubtitle.subtitle = form.instance.subtitle
-                        newsubtitle.order = 'subtitle-' + str(id)
-                        newsubtitle.save()
+                        new_subtitle = form.save(commit=False)
+                        new_subtitle.article = article
+                        new_subtitle.save()
+                        new_subtitle.order = f'subtitle-{new_subtitle.id}'
+                        new_subtitle.save()
+                        article.order.append(new_subtitle.order)
                         article.save()
                 else:
                     print(form.cleaned_data, 'is empty')

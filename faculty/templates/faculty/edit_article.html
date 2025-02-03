@@ -64,7 +64,13 @@
                 {% for form in bodytext_formset %}
                     <div class="formset-row sortable-item" data-id="bodytext-{{ form.id.value }}">
                     <input type="hidden" name="bodytext-{{ forloop.counter0 }}-order" value="bodytext-{{ form.id.value }}">
-                    {{ form.as_p }}
+                    {{ form.id }}
+                    {{ form.bodytext }}
+                    {{ form.quoted }}
+                    {{ form.bold }}
+                    {{ form.italic }}
+                    {{ form.fontsize }}
+                    <input type="checkbox" name="bodytext-{{ forloop.counter0 }}-DELETE" id="id_bodytext-{{ form.id.value }}-DELETE" style="display: none;">
                     <button type="button" class="remove-form-button">Remove</button>
                     </div>
                 {% endfor %}
@@ -231,13 +237,23 @@
                 }
             });
     
-            formContainer.addEventListener('click', function(event) {
+            formContainer.addEventListener('click', function (event) {
                 if (event.target.classList.contains('remove-form-button')) {
                     const formGroup = event.target.closest('.formset-row');
-                    formGroup.remove();
-                    const prefix = event.target.closest('.formset-row').querySelector('input').name.split('-')[0];
-                    formCounts[prefix]--;
-                    updateManagementForm(prefix);
+                    const deleteField = formGroup.querySelector('input[name$="-DELETE"]');
+
+                    
+            
+                    if (deleteField) {
+                        console.log(deleteField)
+                        deleteField.checked = true;
+                        {% comment %} formGroup.style.display = 'none';   {% endcomment %}
+                    } else {
+                        formGroup.remove();
+                        const prefix = event.target.closest('.formset-row').querySelector('input').name.split('-')[0];
+                        formCounts[prefix]--;
+                        updateManagementForm(prefix);
+                    }
                 }
             });
         });

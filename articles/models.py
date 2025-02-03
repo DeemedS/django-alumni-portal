@@ -1,13 +1,15 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import post_delete, pre_delete
+from django.dispatch import receiver
+
 
 class Article(models.Model):
-
-    category_choices = [ ('news', 'News'), ('Ann', 'Announcement')]
+    CATEGORY_CHOICES = [('news', 'News'), ('ann', 'Announcement')]
 
     title = models.CharField(max_length=120)
     body = models.TextField()
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     banner = models.ImageField(blank=True, null=True, upload_to='banners/')
     thumbnail = models.ImageField(blank=True, null=True, upload_to='thumbnails/')
     author = models.CharField(max_length=120, default='Admin')
@@ -15,11 +17,40 @@ class Article(models.Model):
     featured = models.BooleanField(default=False)
 
     order = models.JSONField(default=list, blank=True)
-    
-    category = models.CharField(max_length=10, choices=category_choices, default='news')
-     
+    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default='news')
+
     def __str__(self):
         return self.title
+
+    def delete(self, *args, **kwargs):
+        self.delete_files()
+        super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            old_article = Article.objects.filter(pk=self.pk).first()
+            if old_article:
+                if old_article.banner and old_article.banner != self.banner:
+                    self.delete_file(old_article.banner)
+                if old_article.thumbnail and old_article.thumbnail != self.thumbnail:
+                    self.delete_file(old_article.thumbnail)
+        super().save(*args, **kwargs)
+
+    def delete_files(self):
+        if self.banner:
+            self.delete_file(self.banner)
+
+        if self.thumbnail:
+            self.delete_file(self.thumbnail)
+
+    @staticmethod
+    def delete_file(file_field):
+        if file_field and file_field.storage.exists(file_field.path):
+            file_field.storage.delete(file_field.path)
+
+@receiver(pre_delete, sender=Article)
+def delete_article_images(sender, instance, **kwargs):
+    instance.delete_files()
 
 class BodyText(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
@@ -28,12 +59,29 @@ class BodyText(models.Model):
     bold = models.BooleanField(default=False)
     italic = models.BooleanField(default=False)
     fontsize = models.IntegerField()
-
-    order = models.CharField(("Order Name"), max_length=50, default='')
+    order = models.CharField("Order Name", max_length=50, default='')
 
     def __str__(self):
         return self.bodytext
-    
+
+    def delete(self, *args, **kwargs):
+
+        self.save()
+
+        if self.id:
+            article = self.article
+            bodytext_id = str(self.order)
+
+            print(f"Current article order (type: {type(article.order)}): {article.order}")
+
+            if isinstance(article.order, list):
+                if bodytext_id in article.order:
+                    article.order.remove(bodytext_id)
+                    article.save(update_fields=['order'])
+
+        super().delete(*args, **kwargs)
+
+
 class BodyImage(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     alt = models.CharField(max_length=120)
@@ -41,16 +89,38 @@ class BodyImage(models.Model):
     caption = models.CharField(max_length=120)
     date = models.DateTimeField(default=timezone.now)
 
-    order = models.CharField(("Order Name"), max_length=50, default='')
+    order = models.CharField("Order Name", max_length=50, default='')
 
     def __str__(self):
         return self.alt
-    
+
+    def delete(self, *args, **kwargs):
+        self.delete_file()
+        super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            old_image = BodyImage.objects.filter(pk=self.pk).first()
+            if old_image and old_image.image and old_image.image != self.image:
+                self.delete_file(old_image.image)
+        super().save(*args, **kwargs)
+
+    def delete_file(self, file_field=None):
+        if file_field is None:
+            file_field = self.image
+
+        if file_field and file_field.storage.exists(file_field.path):
+            file_field.storage.delete(file_field.path)
+
+@receiver(post_delete, sender=BodyImage)
+def delete_image_file(sender, instance, **kwargs):
+    instance.delete_file()
+
 class SubTitle(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     subtitle = models.CharField(max_length=120)
 
-    order = models.CharField(("Order Name"), max_length=50, default='')
+    order = models.CharField("Order Name", max_length=50, default='')
 
     def __str__(self):
         return self.subtitle

@@ -1,6 +1,7 @@
 # forms.py
 from django import forms
 from .models import Article, BodyText, BodyImage, SubTitle
+from django.forms import modelformset_factory
 
 class ArticleForm(forms.ModelForm):
     class Meta:
@@ -12,14 +13,15 @@ class ArticleForm(forms.ModelForm):
         }
         
 class BodyTextForm(forms.ModelForm):
-
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    
+    DELETE = forms.BooleanField(required=False)
 
     class Meta:
         model = BodyText
-        fields = ['id', 'bodytext', 'quoted', 'bold', 'italic', 'fontsize']
+        fields = ['id', 'bodytext', 'quoted', 'bold', 'italic', 'fontsize', 'DELETE']
         widgets = {
-            'fontzize': forms.NumberInput(attrs={'min': 1, 'max': 100}),
+            'fontsize': forms.NumberInput(attrs={'min': 1, 'max': 100}),
         }
 
 class BodyImageForm(forms.ModelForm):
@@ -33,6 +35,10 @@ class BodyImageForm(forms.ModelForm):
         widgets = {
             'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
+
+BodyTextFormSet = modelformset_factory(
+    BodyText, form=BodyTextForm, extra=1, can_delete=True
+)
 
 class SubTitleForm(forms.ModelForm):
 
