@@ -1,0 +1,20 @@
+.sortable-container {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+.sortable-item {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: move;
+}
+
+article pre {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    tab-size: 0;
+  }

@@ -72,8 +72,6 @@ class BodyText(models.Model):
             article = self.article
             bodytext_id = str(self.order)
 
-            print(f"Current article order (type: {type(article.order)}): {article.order}")
-
             if isinstance(article.order, list):
                 if bodytext_id in article.order:
                     article.order.remove(bodytext_id)
