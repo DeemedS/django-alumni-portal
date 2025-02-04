@@ -6,9 +6,17 @@ from django.forms import modelformset_factory
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'body','slug', 'banner', 'thumbnail', 'author', 'featured', 'category']
+        fields = ['title','slug',  'category', 'author',  'body' , 'banner', 'thumbnail', 'featured',]
 
         widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control'}),
+            'banner': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'thumbnail': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'author': forms.TextInput(attrs={'class': 'form-control'}),
+            'featured': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
             'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
         
@@ -21,7 +29,12 @@ class BodyTextForm(forms.ModelForm):
         model = BodyText
         fields = ['id', 'bodytext', 'quoted', 'bold', 'italic', 'fontsize', 'DELETE']
         widgets = {
-            'fontsize': forms.NumberInput(attrs={'min': 1, 'max': 100}),
+            'fontsize': forms.NumberInput(attrs={'min': 1, 'max': 100, 'class': 'form-control mb-3'}),
+            'bodytext': forms.Textarea(attrs={'class': 'form-control mb-3'}),
+            'quoted': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'bold': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'italic': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'DELETE': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
 class BodyImageForm(forms.ModelForm):
@@ -34,6 +47,9 @@ class BodyImageForm(forms.ModelForm):
         fields = ['id', 'alt', 'image', 'caption', 'date']
         widgets = {
             'date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'alt': forms.TextInput(attrs={'class': 'form-control mb-3'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control mb-3'}),
+            'caption': forms.TextInput(attrs={'class': 'form-control mb-3'}),
         }
 
 BodyTextFormSet = modelformset_factory(
@@ -47,6 +63,9 @@ class SubTitleForm(forms.ModelForm):
     class Meta:
         model = SubTitle
         fields = ['id', 'subtitle']
+        widgets = {
+            'subtitle': forms.TextInput(attrs={'class': 'form-control mb-3'}),
+        }
 
 
     

@@ -18,3 +18,44 @@ article pre {
     word-wrap: break-word;
     tab-size: 0;
   }
+  .title-bar{
+    display: flex;
+    justify-content: space-between;
+    background-color: #600;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.title-bar a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+  }
+  .preview {
+    padding: 10px;
+    margin: 10px 0;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  .edit-forms {
+    margin-bottom: 10px;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  .edit-forms button {
+    background-color: #600;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+  }
+.edit-forms button:hover {
+        background-color: #dc3545;
+}
+
