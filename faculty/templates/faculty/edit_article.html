@@ -3,114 +3,117 @@
  {% load static %}
 
  {% block content %}
-<body>
-    <h1>Edit Article</h1>
+    <div class="title-bar mb-3">
+        <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+        <h3 class="text-center">Edit Article</h3>
+    </div>
     
     <div class="container-fluid">
         <div class="row">
-        <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ article_form.as_p }}
-            
-            <div>
-                <label for="form-select">Select Form to Add:</label>
-                <select id="form-select">
-                    <option value="">--Choose an option--</option>
-                    <option value="bodytext">Body Text</option>
-                    <option value="bodyimage">Body Image</option>
-                    <option value="subtitle">Sub Title</option>
-                </select>
-                <button type="button" id="add-form-button">Add Form</button>
+            <div class="col-md-4 edit-forms">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ article_form.as_p }}
+                    
+                    <div>
+                        <label for="form-select">Select Form to Add:</label>
+                        <select id="form-select" class="form-select mb-2">
+                            <option value="">--Choose an option--</option>
+                            <option value="bodytext">Body Text</option>
+                            <option value="bodyimage">Body Image</option>
+                            <option value="subtitle">Sub Title</option>
+                        </select>
+                        <button type="button" id="add-form-button">Add Form</button>
+                    </div>
+                    {{ subtitle_formset.management_form.as_p }}
+                    {{ bodytext_formset.management_form.as_p }}
+                    {{ bodyimage_formset.management_form.as_p }}
+                    
+                    <div class="sortable-container" id="form-container">
+
+                        {% for form in bodytext_formset %}
+                            <div class="formset-row sortable-item" data-id="bodytext-{{ form.id.value }}">
+                            <input type="hidden" name="bodytext-{{ forloop.counter0 }}-order" value="bodytext-{{ form.id.value }}">
+                            {{ form.id }}
+                            {{ form.bodytext }}
+                            {{ form.quoted }}
+                            {{ form.bold }}
+                            {{ form.italic }}
+                            {{ form.fontsize }}
+                            <input type="checkbox" name="bodytext-{{ forloop.counter0 }}-DELETE" id="id_bodytext-{{ form.id.value }}-DELETE" style="display: none;">
+                            <button type="button" class="remove-form-button">Remove</button>
+                            </div>
+                        {% endfor %}
+
+                        {% for form in bodyimage_formset %}
+                            <div class="formset-row sortable-item" data-id="bodyimage-{{ form.id.value }}" >
+                            <input type="hidden" name="bodyimage-{{ forloop.counter0 }}-order" value="bodyimage-{{ form.id.value }}">
+                            {{ form.as_p }}
+                            <button type="button" class="remove-form-button">Remove</button>
+                            </div>
+                        {% endfor %}
+
+                        {% for form in subtitle_formset %}
+                            <div class="formset-row sortable-item" data-id="subtitle-{{ form.id.value }}">
+                            <input type="hidden" name="subtitle-{{ forloop.counter0 }}-order" value="subtitle-{{ form.id.value }}">
+                            {{ form.as_p }}
+                            <button type="button" class="remove-form-button">Remove</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                
+                    <button type="submit">Save</button>
+                </form>
             </div>
-            {{ subtitle_formset.management_form.as_p }}
-            {{ bodytext_formset.management_form.as_p }}
-            {{ bodyimage_formset.management_form.as_p }}
+            <!-- Preview Start -->
+                <article class="col-md-8 preview">
+                    {% if article.banner %}
+                    <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
+                    {% else %}
+                        <img src="{% static 'images/default_image.png' %}" alt="Default banner">
+                    {% endif %}
+
+                    <h1>{{ article.title }}</h1>
+                    <p>Published on: {{ article.date }}</p>
+
+                    <pre>{{ article.body }}</pre> 
             
-            <div class="sortable-container" id="form-container">
+                    <div id="sorted-content">
 
-                {% for form in bodytext_formset %}
-                    <div class="formset-row sortable-item" data-id="bodytext-{{ form.id.value }}">
-                    <input type="hidden" name="bodytext-{{ forloop.counter0 }}-order" value="bodytext-{{ form.id.value }}">
-                    {{ form.id }}
-                    {{ form.bodytext }}
-                    {{ form.quoted }}
-                    {{ form.bold }}
-                    {{ form.italic }}
-                    {{ form.fontsize }}
-                    <input type="checkbox" name="bodytext-{{ forloop.counter0 }}-DELETE" id="id_bodytext-{{ form.id.value }}-DELETE" style="display: none;">
-                    <button type="button" class="remove-form-button">Remove</button>
+                        {% for item in content_order %}
+                            {% if item.type == 'subtitle' %}
+                                <div class="" data-id="subtitle-{{ item.object.id}}">
+                                    <h1>{{ item.object.subtitle }}</h1>
+                                </div>
+                            {% elif item.type == 'bodytext' %}
+                                <div class="" data-id="bodytext-{{ item.object.id}}">
+                                {% if item.object.quoted %}
+                                    <pre class="text-center px-5" 
+                                    style="font-size:{{ item.object.fontsize }}px;
+                                    {% if item.object.bold %}font-weight:bold;{% endif %}
+                                    {% if item.object.italic %}font-style:italic;{% endif %}"><q>{{ item.object.bodytext }}</q></pre>
+                                {% else %}
+                                    <pre style="font-size:{{ item.object.fontsize }}px;
+                                    {% if item.object.bold %}font-weight:bold;{% endif %}
+                                    {% if item.object.italic %}font-style:italic;{% endif %}">{{ item.object.bodytext }}</pre>
+                                {% endif %}
+                                </div>
+                            {% elif item.type == 'bodyimage' %}
+                                <div class="" data-id="bodyimage-{{ item.object.id}}">
+                                    <figure>
+                                        {% if item.object.image %}
+                                        <img src="{{ item.object.image.url }}" alt="{{ item.object.alt }}">
+                                        {% else %}
+                                        <img src="{% static 'images/default_image.png' %}" alt="Default image">
+                                        {% endif %}
+                                        <figcaption>{{ item.object.caption }}</figcaption>
+                                    </figure>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
-                {% endfor %}
-
-                {% for form in bodyimage_formset %}
-                    <div class="formset-row sortable-item" data-id="bodyimage-{{ form.id.value }}" >
-                    <input type="hidden" name="bodyimage-{{ forloop.counter0 }}-order" value="bodyimage-{{ form.id.value }}">
-                    {{ form.as_p }}
-                    <button type="button" class="remove-form-button">Remove</button>
-                    </div>
-                {% endfor %}
-
-                {% for form in subtitle_formset %}
-                    <div class="formset-row sortable-item" data-id="subtitle-{{ form.id.value }}">
-                    <input type="hidden" name="subtitle-{{ forloop.counter0 }}-order" value="subtitle-{{ form.id.value }}">
-                    {{ form.as_p }}
-                    <button type="button" class="remove-form-button">Remove</button>
-                    </div>
-                {% endfor %}
-            </div>
-        
-            <button type="submit">Save</button>
-        </form>
-        </div>
-
-        <article class="col-md-8">
-        {% if article.banner %}
-        <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
-        {% else %}
-            <img src="{% static 'images/default_image.png' %}" alt="Default banner">
-        {% endif %}
-
-        <h1>{{ article.title }}</h1>
-        <p>Published on: {{ article.date }}</p>
-
-        <pre>{{ article.body }}</pre> 
-    
-        <div id="sorted-content">
-
-        {% for item in content_order %}
-            {% if item.type == 'subtitle' %}
-                <div class="" data-id="subtitle-{{ item.object.id}}">
-                    <h1>{{ item.object.subtitle }}</h1>
-                </div>
-            {% elif item.type == 'bodytext' %}
-                <div class="" data-id="bodytext-{{ item.object.id}}">
-                {% if item.object.quoted %}
-                    <pre class="text-center px-5" 
-                    style="font-size:{{ item.object.fontsize }}px;
-                    {% if item.object.bold %}font-weight:bold;{% endif %}
-                    {% if item.object.italic %}font-style:italic;{% endif %}"><q>{{ item.object.bodytext }}</q></pre>
-                {% else %}
-                    <pre style="font-size:{{ item.object.fontsize }}px;
-                    {% if item.object.bold %}font-weight:bold;{% endif %}
-                    {% if item.object.italic %}font-style:italic;{% endif %}">{{ item.object.bodytext }}</pre>
-                {% endif %}
-                </div>
-            {% elif item.type == 'bodyimage' %}
-                <div class="" data-id="bodyimage-{{ item.object.id}}">
-                    <figure>
-                        {% if item.object.image %}
-                        <img src="{{ item.object.image.url }}" alt="{{ item.object.alt }}">
-                        {% else %}
-                        <img src="{% static 'images/default_image.png' %}" alt="Default image">
-                        {% endif %}
-                        <figcaption>{{ item.object.caption }}</figcaption>
-                    </figure>
-                </div>
-            {% endif %}
-        {% endfor %}
-        </div>
-        </article>
+                </article>
+            <!-- end of preview -->
         </div>
     </div>
 
