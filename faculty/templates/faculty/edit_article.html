@@ -126,24 +126,6 @@
 
     <script>
         $(document).ready(function() {
-                // Function to show Bootstrap toast
-            function showToast(title, message, type) {
-                var toastHtml = `
-                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header">
-                            <strong class="me-auto text-${type}">${title}</strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                        <div class="toast-body">
-                            ${message}
-                        </div>
-                    </div>
-                    `;
-                    $('.toast-container').append(toastHtml);
-                    var toast = new bootstrap.Toast($('.toast').last()[0]);
-                    toast.show();
-            }
-
             const sortable = new Sortable(document.getElementById('form-container'), {
                 animation: 150,
                 onEnd: function(evt) {
@@ -162,7 +144,7 @@
                         }),
                         contentType: 'application/json',
                         headers: {
-                            'X-CSRFToken': '{{ csrf_token }}'
+                            'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val()
                         },
                         success: function(response) {
                             console.log('Order updated:', response);
@@ -178,59 +160,6 @@
         });
     </script>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let formSelect = document.getElementById('form-select');
-            let addFormButton = document.getElementById('add-form-button');
-            let formContainer = document.getElementById('form-container');
-    
-            let formCounts = {
-                bodytext: document.querySelector(`input[name="bodytext-INITIAL_FORMS"]`).value,
-                bodyimage: document.querySelector(`input[name="bodyimage-INITIAL_FORMS"]`).value,
-                subtitle: document.querySelector(`input[name="subtitle-INITIAL_FORMS"]`).value,
-            };
-    
-            function updateManagementForm(prefix) {
-                const totalFormsInput = document.querySelector(`input[name="${prefix}-TOTAL_FORMS"]`);
-                totalFormsInput.value = formCounts[prefix];
-            }
-    
-            addFormButton.addEventListener('click', function() {
-                const selectedValue = formSelect.value;
-                if (selectedValue) {
-                    const prefix = selectedValue;
-                    const formTemplate = document.getElementById(`${prefix}-template`);
-                    if (formTemplate) {
-                        formCounts[prefix]++;
-                        const formHtml = formTemplate.innerHTML.replace(/__prefix__/g, formCounts[prefix] - 1);
-                        formContainer.insertAdjacentHTML('beforeend', formHtml);
-                        updateManagementForm(prefix);
-                    }
-                }
-            });
-    
-            formContainer.addEventListener('click', function (event) {
-                if (event.target.classList.contains('remove-form-button')) {
-                    const formGroup = event.target.closest('.formset-row');
-                    const deleteField = formGroup.querySelector('input[name$="-DELETE"]');
-
-                    
-            
-                    if (deleteField) {
-                        console.log(deleteField)
-                        deleteField.checked = true;
-                        formGroup.style.display = 'none';
-                    } else {
-                        formGroup.remove();
-                        const prefix = event.target.closest('.formset-row').querySelector('input').name.split('-')[0];
-                        formCounts[prefix]--;
-                        updateManagementForm(prefix);
-                    }
-                }
-            });
-        });
-    </script>
-
     <script>
         function updateContainerOrder(containerId, order, itemSelector, dataIdAttr) {
             const container = document.getElementById(containerId);
