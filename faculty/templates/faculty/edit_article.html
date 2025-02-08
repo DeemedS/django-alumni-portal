@@ -35,11 +35,31 @@
                             <div class="formset-row sortable-item" data-id="bodytext-{{ form.id.value }}">
                             <input type="hidden" name="bodytext-{{ forloop.counter0 }}-order" value="bodytext-{{ form.id.value }}">
                             {{ form.id }}
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-bodytext">Bodytext:</label>
                             {{ form.bodytext }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-quoted">Quoted:</label>
                             {{ form.quoted }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-bold">Bold:</label>
                             {{ form.bold }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-italic">Italic:</label>
                             {{ form.italic }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-fontsize">Fontsize:</label>
                             {{ form.fontsize }}
+                            </p>
+
                             <input type="checkbox" name="bodytext-{{ forloop.counter0 }}-DELETE" id="id_bodytext-{{ form.id.value }}-DELETE" style="display: none;">
                             <button type="button" class="remove-form-button">Remove</button>
                             </div>
@@ -128,13 +148,24 @@
         $(document).ready(function() {
             const sortable = new Sortable(document.getElementById('form-container'), {
                 animation: 150,
-                onEnd: function(evt) {
-                    const order = Array.from(evt.from.children).map(child => {
-                        const dataId = child.getAttribute('data-id');
-                        return dataId ? dataId : null;
-                    }).filter(dataId => dataId !== null);
-                    console.log('Order:', order);
+                ghostClass: "sortable-ghost",
+                dragClass: "sortable-drag",
+                forceFallback: true,
+                onStart: function(evt) {
+                    evt.item.style.opacity = "0.5";
 
+                },
+                onEnd: function(evt) {
+                    evt.item.style.opacity = "1"
+        
+                    // Get new order of elements
+                    const order = Array.from(evt.from.children)
+                        .map(child => child.getAttribute('data-id'))
+                        .filter(dataId => dataId !== null);
+        
+                    console.log('Order:', order);
+        
+                    // Send updated order via AJAX
                     $.ajax({
                         url: '{% url "faculty:update_order" %}',
                         type: 'POST',
@@ -157,7 +188,7 @@
                     });
                 }
             });
-        });
+        });        
     </script>
     
     <script>

@@ -22,14 +22,16 @@ class ArticleForm(forms.ModelForm):
         
 class BodyTextForm(forms.ModelForm):
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-    
     DELETE = forms.BooleanField(required=False)
+    fontsize = forms.IntegerField(
+        initial=15,  # Set default value
+        widget=forms.NumberInput(attrs={'min': 1, 'max': 100, 'class': 'form-control mb-3'})
+    )
 
     class Meta:
         model = BodyText
         fields = ['id', 'bodytext', 'quoted', 'bold', 'italic', 'fontsize', 'DELETE']
         widgets = {
-            'fontsize': forms.NumberInput(attrs={'min': 1, 'max': 100, 'class': 'form-control mb-3'}),
             'bodytext': forms.Textarea(attrs={'class': 'form-control mb-3'}),
             'quoted': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'bold': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
