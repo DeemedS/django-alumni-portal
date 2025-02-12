@@ -1,8 +1,6 @@
 # forms.py
 from django import forms
 from .models import Article, BodyText, BodyImage, SubTitle
-from django.forms import modelformset_factory
-
 class ArticleForm(forms.ModelForm):
     class Meta:
         model = Article
@@ -22,7 +20,11 @@ class ArticleForm(forms.ModelForm):
         
 class BodyTextForm(forms.ModelForm):
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-    DELETE = forms.BooleanField(required=False)
+    DELETE = forms.BooleanField(
+    widget=forms.CheckboxInput(attrs={'class': 'd-none'}), 
+    required=False, 
+    label=''
+    )
     fontsize = forms.IntegerField(
         initial=15,  # Set default value
         widget=forms.NumberInput(attrs={'min': 1, 'max': 100, 'class': 'form-control mb-3'})
@@ -36,13 +38,18 @@ class BodyTextForm(forms.ModelForm):
             'quoted': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'bold': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'italic': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'DELETE': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
 class BodyImageForm(forms.ModelForm):
 
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     image = forms.ImageField(required=False)
+
+    DELETE = forms.BooleanField(
+    widget=forms.CheckboxInput(attrs={'class': 'd-none'}), 
+    required=False, 
+    label=''
+    )
 
     class Meta:
         model = BodyImage
@@ -54,20 +61,21 @@ class BodyImageForm(forms.ModelForm):
             'caption': forms.TextInput(attrs={'class': 'form-control mb-3'}),
         }
 
-BodyTextFormSet = modelformset_factory(
-    BodyText, form=BodyTextForm, extra=1, can_delete=True
-)
-
 class SubTitleForm(forms.ModelForm):
-
     id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    DELETE = forms.BooleanField(
+    widget=forms.CheckboxInput(attrs={'class': 'd-none'}), 
+    required=False, 
+    label=''
+    )
 
     class Meta:
         model = SubTitle
-        fields = ['id', 'subtitle']
+        fields = ['id', 'subtitle', 'DELETE']
         widgets = {
             'subtitle': forms.TextInput(attrs={'class': 'form-control mb-3'}),
         }
+
 
 
     

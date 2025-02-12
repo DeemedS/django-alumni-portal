@@ -70,3 +70,7 @@ article pre {
   opacity: 1 !important; 
   border: 2px solid;
 }
+
+input[type="checkbox"][id$="-clear_id"], label[for$="-clear_id"] {
+  display: none;
+}
