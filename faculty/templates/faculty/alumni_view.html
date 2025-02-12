@@ -1,0 +1,144 @@
+{% extends "edits_layout.html" %}
+{% load static %}
+{% block title %}Alumni Profile{% endblock %}
+
+{% block content %}
+<style>
+    .profile-section {
+      margin-bottom: 20px;
+    }
+    .profile-header {
+      background-color: #7b1919;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .profile-label {
+      font-weight: bold;
+      color: #6c757d;
+    }
+    .profile-value {
+      font-weight: 500;
+      color: #343a40;
+    }
+    .divider {
+      border-top: 1px solid #dee2e6;
+      margin: 20px 0;
+    }
+</style>
+<div class="title-bar mb-3">
+    <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 class="text-center">Alumni Profile</h3>
+</div>
+
+<div class="container mt-4">
+    <!-- Basic Information Profile -->
+    <div class="profile-section">
+      <h5 class="mb-3">Basic Information Profile</h5>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="profile-label">Last Name</div>
+          <div class="profile-value">Dela Cruz</div>
+        </div>
+        <div class="col-md-3">
+          <div class="profile-label">First Name</div>
+          <div class="profile-value">Juan</div>
+        </div>
+        <div class="col-md-3">
+          <div class="profile-label">Middle Name</div>
+          <div class="profile-value">N/A</div>
+        </div>
+        <div class="col-md-3">
+          <div class="profile-label">Birthday</div>
+          <div class="profile-value">August 05, 1999</div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <div class="profile-label">Address</div>
+          <div class="profile-value">Pureza St, Sta Mesa, Manila</div>
+        </div>
+        <div class="col-md-6">
+          <div class="profile-label">Email Address</div>
+          <div class="profile-value">pupalumni@gmail.com</div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-3">
+          <div class="profile-label">Telephone Number</div>
+          <div class="profile-value">+632 8xxxxxxx</div>
+        </div>
+        <div class="col-md-3">
+          <div class="profile-label">Mobile Number</div>
+          <div class="profile-value">+639xxxxxxxxx</div>
+        </div>
+        <div class="col-md-3">
+          <div class="profile-label">Civil Status</div>
+          <div class="profile-value">Single</div>
+        </div>
+        <div class="col-md-3">
+          <div class="profile-label">Sex</div>
+          <div class="profile-value">Male</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Education Profile -->
+    <div class="profile-section">
+      <h5 class="mb-3">Education Profile</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="profile-label">College where you Graduated</div>
+          <div class="profile-value">Bachelor of Science in Computer Engineering</div>
+        </div>
+        <div class="col-md-6">
+          <div class="profile-label">Year Graduated</div>
+          <div class="profile-value">2025</div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <div class="profile-label">License or Certificate Name</div>
+          <div class="profile-value">License or Certificate Name</div>
+        </div>
+        <div class="col-md-4">
+          <div class="profile-label">Organization Name</div>
+          <div class="profile-value">Organization Name</div>
+        </div>
+        <div class="col-md-4">
+          <div class="profile-label">Issue Date</div>
+          <div class="profile-value">2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Work Experience -->
+    <div class="profile-section">
+      <h5 class="mb-3">Work Experience</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="profile-label">Company Name</div>
+          <div class="profile-value">Tech Solutions Inc.</div>
+        </div>
+        <div class="col-md-6">
+          <div class="profile-label">Job Title</div>
+          <div class="profile-value">Software Developer</div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <div class="profile-label">Start Date</div>
+          <div class="profile-value">January 2022</div>
+        </div>
+        <div class="col-md-6">
+          <div class="profile-label">End Date</div>
+          <div class="profile-value">Present</div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

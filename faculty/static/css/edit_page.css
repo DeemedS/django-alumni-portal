@@ -10,7 +10,7 @@
     background-color: #f9f9f9;
     cursor: move;
 }
-
+/* edit article */
 article pre {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
@@ -69,4 +69,47 @@ article pre {
 .sortable-drag {
   opacity: 1 !important; 
   border: 2px solid;
+}
+/* use this as universal button for submit and cancel*/
+.submit-btn {
+  background-color: var(--pupred);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.cancel-btn {
+  background-color: white;
+  color: var(--pupred);
+  border: 2px solid var(--pupred);
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+/* alumni edit */
+.form-header {
+  background-color: var(--pupred);
+  color: white;
+  padding: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.form-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+.add-more-btn {
+  background-color: var(--pupred);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.section-title{
+  font-weight: bold;
 }
