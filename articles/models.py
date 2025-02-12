@@ -122,3 +122,18 @@ class SubTitle(models.Model):
 
     def __str__(self):
         return self.subtitle
+    
+    def delete(self, *args, **kwargs):
+
+        self.save()
+
+        if self.id:
+            article = self.article
+            subtitle_id = str(self.order)
+
+            if isinstance(article.order, list):
+                if subtitle_id in article.order:
+                    article.order.remove(subtitle_id)
+                    article.save(update_fields=['order'])
+
+        super().delete(*args, **kwargs)

@@ -32,5 +32,15 @@ class BodyImageAdmin(admin.ModelAdmin):
 class SubTitleAdmin(admin.ModelAdmin):
     list_display = ('subtitle', 'order') 
     search_fields = ('subtitle',)
+
+    def delete_model(self, request, obj):
+        obj.delete()
+        super().delete_model(request, obj)
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
     
 admin.site.register(Article, ArticleAdmin)

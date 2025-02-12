@@ -70,6 +70,7 @@ article pre {
   opacity: 1 !important; 
   border: 2px solid;
 }
+
 /* use this as universal button for submit and cancel*/
 .submit-btn {
   background-color: var(--pupred);
@@ -112,4 +113,8 @@ article pre {
 
 .section-title{
   font-weight: bold;
+}
+
+input[type="checkbox"][id$="-clear_id"], label[for$="-clear_id"] {
+  display: none;
 }
