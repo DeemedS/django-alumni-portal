@@ -1,0 +1,71 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Careers Management{% endblock %}
+
+{% block content %}
+
+{% include 'components/faculty_topnav.html' %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/faculty_sidebar.html" %}
+
+        <div class="col mb-3">
+
+            <div class="greeting-bar mt-3">
+                Careers Management
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                <div class="container-fluid p-4">
+                    <h4 class="fw-bold title-text">JOB LIST</h4>
+                    <div class="d-flex flex-column gap-2">
+                        <div class="search-container">
+                            <input type="text" class="form-control search-bar" placeholder="Search">
+                            <i class="fa-regular fa-bell fs-4"></i>
+                            <button class="add-alumni-btn">ADD JOB</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-3 ">
+                        <table class="table table-bordered align-middle table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-center">Active</th>
+                                    <th>Job Title</th>
+                                    <th>Company Name</th>
+                                    <th>Location</th>
+                                    <th>Job Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- loop for list -->
+                                {% for job in job_posts %}
+                                <tr>
+                                    <td class="center-dot" data-label="Active"><div class="status-indicator {% if job.is_active %}active{% else %}inactive{% endif %}"></div></td>
+                                    <td data-label="Job Title">{{job.title}}</td>
+                                    <td data-label="Company Name">{{job.company}}</td>
+                                    <td data-label="Location">{{job.location}}<td>
+                                    <td data-label="Job Type">{{job.job_type}}</td>
+                                    <td data-label="Actions" class="action-icons">
+                                        <a href="#"><i class="fas fa-eye"></i></a>
+                                        <a href="#"><i class="fas fa-edit"></i></a>
+                                        <a href="#"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <!-- end of loop -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- end of content -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
