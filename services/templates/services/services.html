@@ -5,21 +5,19 @@
 
 {% block content %}
 
-<div class="services coming-soon">
-    <!-- Semi-transparent overlay -->
-    <div class="overlay">
-        <div class="coming-soon-text">
-            <h1>Coming Soon</h1>
-            <p>Our services are being prepared and will be available soon. Thank you for your patience!</p>
-        </div>
-    </div>
+<div class="services service-page">
+    
+  <h1 class="body-title">SERVICES</h1>
 
-    <!-- Original content (hidden by the overlay) -->
-    <h1 class="body-title">SERVICES</h1>
+  <div class="container">
+      <div class="row service-cards">
 
-    <div class="container">
-        <div class="row service-cards">
-
+      <div class="services coming-soon">
+        <div class="overlay">
+            <div class="coming-soon-text">
+              <img src="{% static '/images/coming-soon.png' %}" class="img-fluid" alt="Coming Soon">
+            </div>
+        </div>     
         <div class="card">
             <div class="row">
               <div class="col-md-4 service-image">
@@ -34,7 +32,14 @@
               </div> 
             </div>
         </div>
+      </div>
 
+      <div class="services coming-soon">
+        <div class="overlay">
+            <div class="coming-soon-text">
+              <img src="{% static '/images/coming-soon.png' %}" class="img-fluid" alt="Coming Soon">
+            </div>
+        </div>
         <div class="card">
             <div class="row">
               <div class="col-md-4 service-image">
@@ -49,10 +54,34 @@
               </div> 
             </div>
         </div>
+      </div>
 
+      </div>
+
+      <div class="row service-cards">
+
+        <div class="card">
+            <div class="row">
+              <div class="col-md-4 service-image">
+                <img src={% static '/images/doc.png' %} class="img-fluid" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">REQUEST DOCUMENTS</h5>
+                  <p class="card-text">Request documents online like,<br> Transcript of Records, Diploma etc.</p>
+                    <p>For more information, please refer <a href="#" class="">here</a></p>
+                </div>
+              </div> 
+            </div>
         </div>
 
-        <div class="col service-cards">
+        <div class="services coming-soon">
+          <div class="overlay">
+              <div class="coming-soon-text">
+                <img src="{% static '/images/coming-soon.png' %}" class="img-fluid" alt="Coming Soon">
+              </div>
+          </div>
+
           <div class="card">
               <div class="row">
                 <div class="col-md-4 service-image">
@@ -60,30 +89,17 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card-body">
-                    <h5 class="card-title">REQUEST DOCUMENTS</h5>
-                    <p class="card-text">Request documents online like, Transcript of Records, Diploma etc.</p>
+                    <h5 class="card-title">CREATE RESUME</h5>
+                    <p class="card-text">Create your resume here in our website and download it for free</p>
                       <p>For more information, please refer <a href="#" class="">here</a></p>
                   </div>
                 </div> 
               </div>
           </div>
-
-            <div class="card">
-                <div class="row">
-                  <div class="col-md-4 service-image">
-                    <img src={% static '/images/cv.png' %} class="img-fluid" alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title">CREATE RESUME</h5>
-                      <p class="card-text">Create your resume here in our website and download it for free</p>
-                        <p>For more information, please refer <a href="#" class="">here</a></p>
-                    </div>
-                  </div> 
-                </div>
-            </div>
-          
         </div>
+        
+      </div>
+
 
         <hr>
 

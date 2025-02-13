@@ -37,3 +37,7 @@
     margin: 0 auto;
   }
   
+  .service-page {
+    min-height: 100vh;
+    padding-top: 5rem;
+  }

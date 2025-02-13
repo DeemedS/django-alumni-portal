@@ -473,7 +473,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.2);
     /* Dark overlay effect */
     display: flex;
     flex-direction: column;
@@ -484,11 +484,6 @@
     text-align: center;
 }
 
-.service-cards .coming-soon .coming-soon-text h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
 
 .service-cards .coming-soon .coming-soon-text p {
     font-size: 1.25rem;
