@@ -1,0 +1,58 @@
+{% extends "edits_layout.html" %}
+{% load static %}
+{% block title %} {{job_post.title}}{% endblock %}
+
+{% block content %}
+<div class="title-bar mb-3">
+    <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 class="text-center">{{job_post.title}}</h3>
+</div>
+<div class="container mt-4">
+    <div class="job-detail">
+        <h3 id="job-title">{{job_post.title}}</h3>
+        <p class="text-muted" id="company-name">{{job_post.company}}</p>
+        <div class="row mb-3">
+            {% if job_post.salary %}
+            <div class="col-md-6">
+                <p><span class="detail-label">Salary:</span> <span id="salary">₱{{job_post.salary}}</span></p>
+            </div>
+            {% endif %}
+            <div class="col-md-6">
+                <p><span class="detail-label">Location:</span> <span id="location">{{job_post.location}}</span></p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <p><span class="detail-label">Job Type:</span> <span id="job-type">{{job_post.job_type_label}}</span></p>
+            </div>
+            <div class="col-md-6">
+                <p><span class="detail-label">Status:</span> <span id="job-status" class="status-active">
+                    {% if job_post.is_active %}
+                        <span style="color: green;">Active</span>
+                    {% else %}
+                        <span style="color: red;">Inactive</span>
+                    {% endif %}
+                <span></p>
+            </div>
+        </div>
+        <hr>
+        {% if job_post.description %}
+        <h5>Description</h5>
+            <pre class="pre-wrap" id="description">{{job_post.description}}</pre>
+        {% endif %}
+        {% if job_post.responsibilities %}
+        <h5>Responsibilities</h5>
+            <pre class="pre-wrap" id="responsibilities">{{job_post.responsibilities}}</pre>
+        {% endif %}
+        {% if job_post.qualifications %}
+        <h5>Qualifications</h5>
+            <pre class="pre-wrap" id="qualifications">{{job_post.qualifications}}</pre>
+        {% endif %}
+        {% if job_post.benefits %}
+        <h5>Benefits</h5>
+            <pre class="pre-wrap" id="benefits">{{job_post.benefits}}</pre>
+        {% endif %}
+        <hr>
+    </div>
+</div>
+{% endblock %}

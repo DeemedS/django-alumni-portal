@@ -4,4 +4,19 @@ from .models import JobPost
 class CareerForm(forms.ModelForm):
     class Meta:
         model = JobPost
-        fields = '__all__' 
+        fields = [
+            'title', 'company', 'location', 'job_type', 'description',
+            'responsibilities', 'qualifications', 'benefits', 'salary', 'is_active'
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'company': forms.TextInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'job_type': forms.Select(attrs={'class': 'form-select'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'responsibilities': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'qualifications': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'benefits': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'salary': forms.NumberInput(attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }

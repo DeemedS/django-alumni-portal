@@ -1,0 +1,69 @@
+{% extends "edits_layout.html" %}
+{% load static %}
+{% block title %}Add Job{% endblock %}
+
+{% block content %}
+<div class="title-bar mb-3">
+    <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 class="text-center">Add  Job</h3>
+</div>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col mb-3">
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                <form class="form-container add-form" method="post">
+                  {% csrf_token %}
+                  <div class="mb-3 col-md-6">
+                      <label for="title" class="form-label">Title</label>
+                      {{ form.title }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="company" class="form-label">Company</label>
+                      {{ form.company }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="salary" class="form-label">Salary</label>
+                      {{ form.salary }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="location" class="form-label">Location</label>
+                      {{ form.location }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="job-type" class="form-label">Job Type</label>
+                      {{ form.job_type }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="description" class="form-label">Description</label>
+                      {{ form.description }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="responsibilities" class="form-label">Responsibilities</label>
+                      {{ form.responsibilities }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="qualifications" class="form-label">Qualifications</label>
+                      {{ form.qualifications }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="benefits" class="form-label">Benefits</label>
+                      {{ form.benefits }}
+                  </div>
+                  <div class="mb-3 col">
+                      <div class="form-check">
+                          {{ form.is_active }}
+                          <label class="form-check-label" for="is_active">Active</label>
+                      </div>
+                  </div>
+                  <div class="text-end mt-4">
+                      <button type="button" class="cancel-btn" onclick="discardChanges()">Discard</button>
+                      <button type="submit" class="submit-btn">Add</button>
+                  </div>
+              </form>
+                <!--End of content-->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends "edits_layout.html" %}
+{% load static %}
+{% block title %}Edit {{job_post.title}}{% endblock %}
+
+{% block content %}
+<div class="title-bar mb-3">
+    <a href="{% url 'faculty:careers_management' %}"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 class="text-center">Edit Job</h3>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- start of edit job form -->
+        <div class="col-md-4 edit-forms">
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <form class="form-container" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3 col">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ job_post.title }}" placeholder="Enter job title">
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="company" class="form-label">Company</label>
+                        <input type="text" class="form-control" id="company" name="company" value="{{ job_post.company }}" placeholder="Enter company name">
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="text" class="form-control" id="salary" name="salary" value="{{ job_post.salary }}" placeholder="Enter salary">
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" value="{{ job_post.location }}" placeholder="Enter job location">
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="job-type" class="form-label">Job Type</label>
+                        <select class="form-select" id="job-type" name="job_type">
+                          <option disabled>Select job type</option>
+                          <option value="FT" {% if job_post.job_type == 'FT' %}selected{% endif %}>Full-Time</option>
+                          <option value="PT" {% if job_post.job_type == 'PT' %}selected{% endif %}>Part-Time</option>
+                          <option value="CT" {% if job_post.job_type == 'CT' %}selected{% endif %}>Contract</option>
+                          <option value="IN" {% if job_post.job_type == 'IN' %}selected{% endif %}>Internship</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter job description">{{ job_post.description }}</textarea>
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="responsibilities" class="form-label">Responsibilities</label>
+                        <textarea class="form-control" id="responsibilities" name="responsibilities" rows="3" placeholder="Enter responsibilities">{{ job_post.responsibilities }}</textarea>
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="qualifications" class="form-label">Qualifications</label>
+                        <textarea class="form-control" id="qualifications" name="qualifications" rows="3" placeholder="Enter qualifications">{{ job_post.qualifications }}</textarea>
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="benefits" class="form-label">Benefits</label>
+                        <textarea class="form-control" id="benefits" name="benefits" rows="3" placeholder="Enter benefits">{{ job_post.benefits }}</textarea>
+                    </div>
+                    <div class="mb-3 col">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="is_active" name="is_active" {% if job_post.is_active %}checked{% endif %}>
+                            <label class="form-check-label" for="is_active">Active</label>
+                        </div>
+                    </div>
+                    <div class="text-end mt-4">
+                        <button type="button" class="cancel-btn" onclick="discardChanges()">Discard</button>
+                        <button type="submit" class="submit-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--End of edit job form-->
+        <!-- Start of job preview -->
+        <article class="col-md-8 preview">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title fw-bold mb-4" style="color: #800000;"> {{ job_post.title }}</h3>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p class="mb-0 text-muted"><strong>Posted:</strong> {{job_post.created_at}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p class="mb-0 text-muted"><strong>Company:</strong> {{ job_post.company }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <p class="mb-0"><i class="bi bi-geo-alt"></i> <strong>Location:</strong> {{ job_post.location }}</p>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <p class="mb-0"><strong>Salary:</strong> <span> {{job_post.salary}}</span> PHP</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="mb-0"><i class="bi bi-briefcase"></i> <strong>Job Type:</strong> {{ job_post.job_type }}</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row mb-4">
+                        <h4 class="fw-semibold">Job Description</h4>
+                        <pre class="text-secondary">{{ job_post.description }}</pre>
+                    </div>
+                    <div class="row mb-4">
+                        <h4 class="fw-semibold">Job Responsibilities</h4>
+                        <pre class="text-secondary">{{ job_post.responsibilities }}</pre>
+                    </div>
+
+                    <div class="row mb-4">
+                        <h4 class="fw-semibold">Job Qualifications</h4>
+                        <pre class="text-secondary">{{ job_post.qualifications }}</pre>
+                    </div>
+                    
+
+                    <div class="row mb-4">
+                        <h4 class="fw-semibold">Job Benefits</h4>
+                        <pre class="text-secondary">{{ job_post.benefits }}</pre>
+                    </div>
+                  
+                </div>
+            </div>
+        </article>
+        <!-- End of job preview -->
+    </div>
+</div>
+<!-- Bootstrap Toast -->
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        showToast("success","Job post updated successfully", "success");
+        setTimeout(() => this.submit(), 2000);
+    });
+</script>
+
+
+{% endblock %}

@@ -24,9 +24,11 @@
                     <h4 class="fw-bold title-text">JOB LIST</h4>
                     <div class="d-flex flex-column gap-2">
                         <div class="search-container">
-                            <input type="text" class="form-control search-bar" placeholder="Search">
+                            <form id="search-form" method="GET" action="{% url 'faculty:careers_management' %}">
+                                <input type="text" id="search-input" name="q" class="form-control search-bar" placeholder="Search job posts..." value="{{ request.GET.q }}">
+                            </form>
                             <i class="fa-regular fa-bell fs-4"></i>
-                            <button class="add-alumni-btn">ADD JOB</button>
+                            <a href="/faculty/careers-add" class="add-alumni-btn">ADD JOB</a>
                         </div>
                     </div>
                     <div class="table-responsive mt-3 ">
@@ -42,22 +44,28 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% if no_results %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No job posts found.</td>
+                                    </tr>
+                                {% else %}
                                 <!-- loop for list -->
                                 {% for job in job_posts %}
                                 <tr>
-                                    <td class="center-dot" data-label="Active"><div class="status-indicator {% if job.is_active %}active{% else %}inactive{% endif %}"></div></td>
-                                    <td data-label="Job Title">{{job.title}}</td>
-                                    <td data-label="Company Name">{{job.company}}</td>
-                                    <td data-label="Location">{{job.location}}<td>
-                                    <td data-label="Job Type">{{job.job_type}}</td>
-                                    <td data-label="Actions" class="action-icons">
-                                        <a href="#"><i class="fas fa-eye"></i></a>
-                                        <a href="#"><i class="fas fa-edit"></i></a>
+                                    <td class="center-dot"><div class="status-indicator {% if job.is_active %}active{% else %}inactive{% endif %}"></div></td>
+                                    <td data-label="Job Title"  class="text-wrap">{{job.title}}</td>
+                                    <td data-label="Company Name"  class="text-wrap">{{job.company}}</td>
+                                    <td data-label="Location"  class="text-wrap">{{job.location}}</td>
+                                    <td data-label="Job Type"  class="text-nowrap">{{job.job_type_label}}</td>
+                                    <td data-label="Actions" class="action-icons text-nowrap">
+                                        <a href="/faculty/careers-view/{{job.id}}"><i class="fas fa-eye"></i></a>
+                                        <a href="/faculty/careers-edit/{{ job.id }}"><i class="fas fa-edit"></i></a>
                                         <a href="#"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 <!-- end of loop -->
+                                {% endif %}
                             </tbody>
                         </table>
                     </div>
@@ -68,4 +76,27 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const searchForm = document.getElementById('search-form');
+
+        let timeout = null;
+
+        function debounce(func, delay) {
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
+        const submitForm = debounce(function() {
+            searchForm.submit();
+        }, 1000); // Adjust the delay as needed (e.g., 1000ms = 1 second)
+
+        searchInput.addEventListener('input', submitForm);
+    });
+</script>
 {% endblock %}

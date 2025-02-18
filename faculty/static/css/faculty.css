@@ -149,6 +149,9 @@
     background-color: red; /* Inactive status color */
 }
 @media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
     .search-container {
         flex-direction: column;
         align-items: stretch;
@@ -172,18 +175,31 @@
         border: 1px solid #dee2e6;
         padding: 10px;
     }
-    .table td {
+    /* .table td { //old design
         text-align: right;
         padding-left: 50%;
         position: relative;
+        white-space: normal; 
+        word-wrap: break-word;
+    } */
+    .table td {
+        text-align: left; /* Align text to the left */
+        padding-left: 10px; /* Adjust padding */
+        position: relative;
+        white-space: normal; /* Allow text wrapping */
+        word-wrap: break-word; /* Break long words */
     }
     .table td::before {
         content: attr(data-label);
-        position: absolute;
-        left: 10px;
-        width: 45%;
-        text-align: left;
+        display: block; /* Display label as block element */
         font-weight: bold;
+        margin-bottom: 5px; /* Add space between label and value */
+        white-space: normal; /* Allow label text to wrap */
+        word-wrap: break-word; /* Break long words in label */
+    }
+    .text-wrap {
+        white-space: normal;
+        word-wrap: break-word;
     }
 }
 
@@ -191,4 +207,62 @@
     .center-dot{    
         text-align: center;
     }
+}
+
+.text-wrap {
+    white-space: normal;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+
+.action-icons a {
+    margin-right: 10px;
+}
+/* alumni view */
+.profile-section {
+    margin-bottom: 20px;
+  }
+  .profile-header {
+    background-color: #7b1919;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  .profile-label {
+    font-weight: bold;
+    color: #6c757d;
+  }
+  .profile-value {
+    font-weight: 500;
+    color: #343a40;
+  }
+  .divider {
+    border-top: 1px solid #dee2e6;
+    margin: 20px 0;
+  }
+/* careers view */
+.job-detail {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .detail-label {
+    font-weight: bold;
+    color: #6c757d;
+  }
+  .status-active {
+    color: green;
+    font-weight: bold;
+  }
+  .status-inactive {
+    color: red;
+    font-weight: bold;
+  }
+  .pre-wrap {
+  white-space: pre-wrap;
+  word-wrap: break-word; /* Ensures long words wrap */
 }
