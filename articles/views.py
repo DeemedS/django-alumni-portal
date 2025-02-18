@@ -10,7 +10,7 @@ from django.conf import settings
 from .forms import BodyTextForm, BodyImageForm, SubTitleForm, ArticleForm
 from django.forms import formset_factory
 from alumniwebsite.utils.ordered_content_utils import get_ordered_content
-
+from django.contrib.auth.decorators import login_required
 def articles_list(request):
     current_year = now().year
 
@@ -68,6 +68,7 @@ def update_order(request):
     
     return JsonResponse({'status': 'success'})
 
+@login_required(login_url='/faculty/')
 def edit_article(request, slug):
     article = get_object_or_404(Article, slug=slug)
     bodytexts = article.bodytext_set.all()
