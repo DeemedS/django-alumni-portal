@@ -68,7 +68,28 @@
                         {% for form in bodyimage_formset %}
                             <div class="formset-row sortable-item" data-id="bodyimage-{{ form.id.value }}" >
                             <input type="hidden" name="bodyimage-{{ forloop.counter0 }}-order" value="bodyimage-{{ form.id.value }}">
-                            {{ form.as_p }}
+                            {{ form.id }}
+                            <p>
+                            <label for="id_bodyimage-{{ form.id.value }}-image">Body Image:</label>
+                            {{ form.image }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodyimage-{{ form.id.value }}-alt">Alt:</label>
+                            {{ form.alt }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodyimage-{{ form.id.value }}-caption">Caption:</label>
+                            {{ form.caption }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodyimage-{{ form.id.value }}-date">date:</label>
+                            {{ form.date }}
+                            </p>
+
+                            <input type="checkbox" name="bodyimage-{{ forloop.counter0 }}-DELETE" id="id_bodyimage-{{ form.id.value }}-DELETE" style="display: none;">
                             <button type="button" class="remove-form-button">Remove</button>
                             </div>
                         {% endfor %}
@@ -76,7 +97,12 @@
                         {% for form in subtitle_formset %}
                             <div class="formset-row sortable-item" data-id="subtitle-{{ form.id.value }}">
                             <input type="hidden" name="subtitle-{{ forloop.counter0 }}-order" value="subtitle-{{ form.id.value }}">
-                            {{ form.as_p }}
+                            {{ form.id }}
+                            <p>
+                                <label for="id_subtitle-{{ form.id.value }}-subtitle">Subtitle:</label>
+                                {{ form.subtitle }}
+                            </p>
+                            <input type="checkbox" name="subtitle-{{ forloop.counter0 }}-DELETE" id="id_subtitle-{{ form.id.value }}-DELETE" style="display: none;">
                             <button type="button" class="remove-form-button">Remove</button>
                             </div>
                         {% endfor %}

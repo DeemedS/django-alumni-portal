@@ -27,6 +27,10 @@ class Article(models.Model):
         super().delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
+        if self.featured:
+            # Unset the featured flag on all other articles
+            Article.objects.exclude(pk=self.pk).update(featured=False)
+        
         if self.pk:
             old_article = Article.objects.filter(pk=self.pk).first()
             if old_article:
@@ -34,6 +38,7 @@ class Article(models.Model):
                     self.delete_file(old_article.banner)
                 if old_article.thumbnail and old_article.thumbnail != self.thumbnail:
                     self.delete_file(old_article.thumbnail)
+    
         super().save(*args, **kwargs)
 
     def delete_files(self):
@@ -122,3 +127,18 @@ class SubTitle(models.Model):
 
     def __str__(self):
         return self.subtitle
+    
+    def delete(self, *args, **kwargs):
+
+        self.save()
+
+        if self.id:
+            article = self.article
+            subtitle_id = str(self.order)
+
+            if isinstance(article.order, list):
+                if subtitle_id in article.order:
+                    article.order.remove(subtitle_id)
+                    article.save(update_fields=['order'])
+
+        super().delete(*args, **kwargs)

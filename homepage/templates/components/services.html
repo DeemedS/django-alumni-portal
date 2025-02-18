@@ -1,12 +1,19 @@
 {% load static %}
 
+
 <div class="services">
     
-    <h1 class="body-title">SERVICES</h1>
+  <h1 class="body-title">SERVICES</h1>
 
-    <div class="container">
-        <div class="row service-cards">
+  <div class="container">
+      <div class="row service-cards">
 
+      <div class="services coming-soon">
+        <div class="overlay">
+            <div class="coming-soon-text">
+              <img src="{% static '/images/coming-soon.png' %}" class="img-fluid" alt="Coming Soon">
+            </div>
+        </div>     
         <div class="card">
             <div class="row">
               <div class="col-md-4 service-image">
@@ -21,7 +28,14 @@
               </div> 
             </div>
         </div>
+      </div>
 
+      <div class="services coming-soon">
+        <div class="overlay">
+            <div class="coming-soon-text">
+              <img src="{% static '/images/coming-soon.png' %}" class="img-fluid" alt="Coming Soon">
+            </div>
+        </div>
         <div class="card">
             <div class="row">
               <div class="col-md-4 service-image">
@@ -36,33 +50,59 @@
               </div> 
             </div>
         </div>
+      </div>
 
-        </div>
+      </div>
 
-        <div class="col service-cards">
-            <div class="card">
-                <div class="row">
-                  <div class="col-md-4 service-image">
-                    <img src={% static '/images/cv.png' %} class="img-fluid" alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title">CREATE RESUME</h5>
-                      <p class="card-text">Create your resume here in our website and download it for free</p>
-                        <p>For more information, please refer <a href="#" class="">here</a></p>
-                    </div>
-                  </div> 
+      <div class="row service-cards">
+
+        <div class="card">
+            <div class="row">
+              <div class="col-md-4 service-image">
+                <img src={% static '/images/doc.png' %} class="img-fluid" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">REQUEST DOCUMENTS</h5>
+                  <p class="card-text">Request documents online like,<br> Transcript of Records, Diploma etc.</p>
+                    <p>For more information, please refer <a href="#" class="">here</a></p>
                 </div>
+              </div> 
             </div>
         </div>
 
+        <div class="services coming-soon">
+          <div class="overlay">
+              <div class="coming-soon-text">
+                <img src="{% static '/images/coming-soon.png' %}" class="img-fluid" alt="Coming Soon">
+              </div>
+          </div>
+
+          <div class="card">
+              <div class="row">
+                <div class="col-md-4 service-image">
+                  <img src={% static '/images/cv.png' %} class="img-fluid" alt="...">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">CREATE RESUME</h5>
+                    <p class="card-text">Create your resume here in our website and download it for free</p>
+                      <p>For more information, please refer <a href="#" class="">here</a></p>
+                  </div>
+                </div> 
+              </div>
+          </div>
+        </div>
+        
+      </div>
+
+
         <hr>
 
-        <p class="text-center">To get full access of our online services, please register and login to alumni portal.</p>
+        <p class="text-center">To get full access to our online services, please register and log in to the alumni portal.</p>
 
         <div class="btn-container">
-            <button type="button" class="btn btn-ann" onClick = window.location.href='/portal' >ALUMNI PORTAL</i></button>
+            <button type="button" class="btn btn-ann" onclick="window.location.href='/portal'">ALUMNI PORTAL</button>
         </div>
-
     </div>
 </div>

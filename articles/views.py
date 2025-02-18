@@ -81,8 +81,6 @@ def edit_article(request, slug):
 
     content_order = get_ordered_content(article)
 
-    print(request.method)
-
     if request.method == 'POST': 
 
         article_form = ArticleForm(request.POST, request.FILES, instance=article)
@@ -90,14 +88,30 @@ def edit_article(request, slug):
         bodyimage_formset = BodyImageFormSet(request.POST, request.FILES, prefix='bodyimage')
         subtitle_formset = SubTitleFormSet(request.POST, prefix='subtitle')
 
+        print(article_form.is_valid())
+        print(bodytext_formset.is_valid())
+        print(bodyimage_formset.is_valid())
+        print(subtitle_formset.is_valid())
+        print(bodyimage_formset.errors)
+
         if article_form.is_valid() and bodytext_formset.is_valid() and bodyimage_formset.is_valid() and subtitle_formset.is_valid():
             article = article_form.save()
             
             deleted_bodytext_ids = []
+            deleted_bodyimage_ids = []
+            deleted_subtitle_ids = []
 
             for form in bodytext_formset:
                 if form.cleaned_data.get('DELETE') == True:
                     deleted_bodytext_ids.append(form.cleaned_data.get('id'))
+            
+            for form in bodyimage_formset:
+                if form.cleaned_data.get('DELETE') == True:
+                    deleted_bodyimage_ids.append(form.cleaned_data.get('id'))
+            
+            for form in subtitle_formset:
+                if form.cleaned_data.get('DELETE') == True:
+                    deleted_subtitle_ids.append(form.cleaned_data.get('id'))
 
             # Handle BodyText forms
             for form in bodytext_formset:
@@ -133,14 +147,21 @@ def edit_article(request, slug):
                 if form.cleaned_data:
                     bodyimage_id = form.cleaned_data.get('id')
                     bodyimage = BodyImage.objects.filter(id=bodyimage_id, article=article).first()
-                    if bodyimage:
+
+                    if bodyimage_id in deleted_bodyimage_ids:
+                        BodyImage.objects.filter(id=bodyimage_id).delete()
+                        if f"bodyimage-{bodyimage_id}" in article.order:
+                            article.order.remove(f"bodyimage-{bodyimage_id}")
+                        article.save()
+
+                    elif bodyimage:
                         bodyimage = get_object_or_404(BodyImage, id=bodyimage_id, article=article)
-                        if form.instance.image:
-                            bodyimage.image = form.instance.image
+                        bodyimage.image = form.instance.image
                         bodyimage.alt = form.instance.alt
                         bodyimage.caption = form.instance.caption
                         bodyimage.date = form.instance.date
                         bodyimage.order = 'bodyimage-' + str(bodyimage_id)
+                        bodyimage.save()
                     else:
                         new_bodyimage = form.save(commit=False)
                         new_bodyimage.article = article
@@ -153,10 +174,16 @@ def edit_article(request, slug):
             # Handle SubTitle forms
             for form in subtitle_formset:
                 if form.cleaned_data:
-                    print(form.cleaned_data)
                     subtitle_id = form.cleaned_data.get('id')
                     subtitle = SubTitle.objects.filter(id=subtitle_id, article=article).first()
-                    if subtitle:
+
+                    if subtitle_id in deleted_subtitle_ids:
+                        SubTitle.objects.filter(id=subtitle_id).delete()
+                        if f"subtitle-{subtitle_id}" in article.order:
+                            article.order.remove(f"subtitle-{subtitle_id}")
+                        article.save()
+
+                    elif subtitle:
                         subtitle.subtitle = form.instance.subtitle
                         subtitle.order = 'subtitle-' + str(subtitle_id)
                         subtitle.article = article
