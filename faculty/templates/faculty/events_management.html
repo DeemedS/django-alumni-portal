@@ -1,0 +1,96 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Events Management{% endblock %}
+
+{% block content %}
+
+{% include 'components/faculty_topnav.html' %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/faculty_sidebar.html" %}
+
+        <div class="col mb-3">
+
+            <div class="greeting-bar mt-3">
+                Events Management
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                <div class="container-fluid p-4">
+                    <h4 class="fw-bold title-text">EVENT LIST</h4>
+                    <div class="d-flex flex-column gap-2">
+                        <div class="search-container">
+                            <form id="search-form" method="GET" action="{% url 'faculty:events_management' %}">
+                                <input type="text" id="search-input" name="q" class="form-control search-bar" placeholder="Search Event..." value="{{ request.GET.q }}">
+                            </form>
+                            <i class="fa-regular fa-bell fs-4"></i>
+                            <a href="/faculty/events-add" class="add-alumni-btn">ADD EVENT</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-3 ">
+                        <table class="table table-bordered align-middle table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if no_results %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No Event found.</td>
+                                    </tr>
+                                {% else %}
+                                <!-- loop for list -->
+                                {% for event in events %}
+                                <tr>
+                                    <td data-label="Event">{{ event.title }}</td>
+                                    <td data-label="Date">{{ event.date }}</td>
+                                    <td data-label="Actions" class="action-icons text-nowrap">
+                                        <a href="/events/view/{{event.slug}}/"><i class="fas fa-eye"></i></a>
+                                        <a href="/faculty/events-edit/{{event.slug}}"><i class="fas fa-edit"></i></a>
+                                        <a href="#"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <!-- end of loop -->
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- end of content -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const searchForm = document.getElementById('search-form');
+
+        let timeout = null;
+
+        function debounce(func, delay) {
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
+        const submitForm = debounce(function() {
+            searchForm.submit();
+        }, 1000); // Adjust the delay as needed (e.g., 1000ms = 1 second)
+
+        searchInput.addEventListener('input', submitForm);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "edits_layout.html" %}
+{% load static %}
+{% block title %}Add Event{% endblock %}
+
+{% block content %}
+<div class="title-bar mb-3">
+    <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 class="text-center">Add  Event</h3>
+</div>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col mb-3">
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                <form class="form-container add-form" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="mb-3 col-md-6">
+                      <label for="title" class="form-label">Title</label>
+                      {{ form.title }}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="slug" class="form-label">Slug</label>
+                      {{form.slug}}
+                  </div>
+                  <div class="mb-3 col-md-6">
+                      <label for="body" class="form-label">Body</label>
+                      {{ form.body }}
+                  </div>
+                  <div class="mb-3 col-md-4">
+                      <label for="banner" class="form-label">Banner</label>
+                      {{ form.banner }}
+                  </div>
+                  <div class="mb-3 col-md-4">
+                      <label for="thumbnail" class="form-label">Thumbnail</label>
+                      {{ form.thumbnail }}
+                  </div>
+                  <div class="mb-3 col-md-3">
+                      <label for="date" class="form-label">Date</label>
+                      {{ form.date }}
+                      <label for="time" class="form-label">Time</label>
+                      {{ form.time }}
+                  </div>
+                  <div class="text-end mt-4">
+                      <button type="button" class="cancel-btn" onclick="discardChanges()">Discard</button>
+                      <button type="submit" class="submit-btn">Add</button>
+                  </div>
+              </form>
+                <!--End of content-->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
