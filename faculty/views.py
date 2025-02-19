@@ -1,7 +1,6 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect,render, get_object_or_404
 import requests
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.messages import get_messages
@@ -9,6 +8,10 @@ from django.contrib.auth import logout
 from careers.models import JobPost
 from careers.forms import CareerForm
 from django.db.models import Q
+from events.models import Event
+from events.forms import EventForm
+from django.db.models.functions import ExtractMonth
+
 
 @login_required(login_url='/faculty/')
 def faculty_dashboard(request):
@@ -259,3 +262,99 @@ def careers_view(request, id):
         'job_post': job_post_with_label,
     }
     return render(request, 'faculty/careers_view.html', context)
+
+@login_required(login_url='/faculty/')
+def events_management(request):
+    # Mapping of month abbreviations to month numbers
+    MONTHS = {
+        'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4,
+        'may': 5, 'jun': 6, 'jul': 7, 'aug': 8,
+        'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12
+    }
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    query = request.GET.get('q')
+    if query:
+        query_lower = query.lower()
+        month_query = MONTHS.get(query_lower[:3]) # Get the month number from the first three letters of the query
+        if month_query:
+            events = Event.objects.annotate(
+                month=ExtractMonth('date')
+            ).filter(
+                Q(title__icontains=query) |
+                Q(month=month_query)
+            )
+        else:
+            events = Event.objects.filter(
+                Q(title__icontains=query)
+            )
+    else:
+        events = Event.objects.all()
+    
+    context = {
+        'active_page':'events',
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'events': events,
+        'no_results': not events.exists(),
+    }
+    return render(request, 'faculty/events_management.html', context)
+
+@login_required(login_url='/faculty/')
+def events_add(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Event added successfully.")
+            return redirect(reverse('faculty:events_management'))
+    else:
+        form = EventForm()
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'faculty/events_add.html', context)
+
+@login_required(login_url='/faculty/')
+def events_edit(request, slug):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    
+    event = get_object_or_404(Event, slug=slug)
+    
+    if request.method == 'POST':
+        form = EventForm(request.POST, request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Event updated successfully.")
+            return redirect(reverse('faculty:events_edit', kwargs={'slug': slug}))
+    else:
+        form = EventForm(instance=event)
+    
+    context = {
+        'event': event,
+        'form': form,
+    }
+    return render(request, 'faculty/events_edit.html', context)

@@ -1,0 +1,79 @@
+{% extends "edits_layout.html" %}
+{% load static %}
+{% block title %}Edit {{event.title}} {% endblock %}
+
+{% block content %}
+<div class="title-bar mb-3">
+    <a href="{% url 'faculty:events_management' %}"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 class="text-center">Edit {{event.title}}</h3>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- start of edit Event form -->
+        <div class="col-md-4 edit-forms">
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <form class="form-container add-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3 col">
+                        <label for="title" class="form-label">Title</label>
+                        {{form.title}}
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="slug" class="form-label">Slug</label>
+                        {{form.slug}}
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="body" class="form-label">Description</label>
+                        {{form.body}}
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="banner" class="form-label">Banner</label>
+                        {{form.banner}}
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="thumbnail" class="form-label">thumbnail</label>
+                        {{form.thumbnail}}
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="date" class="form-label">Date</label>
+                        {{form.date}}
+                        <label for="time" class="form-label">Time</label>
+                        {{form.time}}
+                    </div>
+                    <div class="text-end mt-4">
+                        <button type="button" class="cancel-btn" onclick="discardChanges()">Discard</button>
+                        <button type="submit" class="submit-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--End of edit event form-->
+        <!-- Start of event preview -->
+        <article class="col-md-8 preview">
+                {% if event.banner %}
+                    <img src="{{ event.banner.url }}" alt="Banner for {{ event.title }}">
+                {% else %}
+                    <img src="{% static 'images/default_image.png' %}" alt="Default banner">
+                {% endif %}
+                <h1>{{ event.title }}</h1>
+                <p>Date: {{ event.date }}</p>
+                <pre>{{ event.body }}</pre>                    
+        </article>
+        <!-- End of event preview -->
+    </div>
+</div>
+<!-- Bootstrap Toast -->
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        showToast("success","Event post updated successfully", "success");
+        setTimeout(() => this.submit(), 2000);
+    });
+</script>
+
+
+{% endblock %}

@@ -19,5 +19,7 @@ urlpatterns = [
     path('faculty/careers-add', faculty_views.careers_add, name='careers_add'),
     path('faculty/careers-edit/<int:id>/', faculty_views.careers_edit, name='careers_edit'),
     path('faculty/careers-view/<int:id>/', faculty_views.careers_view, name='careers_view'),
-    
+    path('faculty/events-management', faculty_views.events_management, name='events_management'),
+    path('faculty/events-add', faculty_views.events_add, name='events_add'),
+    path('faculty/events-edit/<slug:slug>/', faculty_views.events_edit, name='events_edit'),
 ] 
