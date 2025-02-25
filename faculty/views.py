@@ -73,7 +73,7 @@ def alumni_add(request):
     return render(request, 'faculty/alumni_add.html', context)
 
 @login_required(login_url='/faculty/')
-def alumni_edit(request):
+def alumni_edit(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
@@ -88,7 +88,7 @@ def alumni_edit(request):
     return render(request, 'faculty/alumni_edit.html', context)
 
 @login_required(login_url='/faculty/')
-def alumni_view(request):
+def alumni_view(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         

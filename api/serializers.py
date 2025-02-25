@@ -3,6 +3,7 @@ from events.models import Event
 from articles.models import Article
 from django.utils.timezone import now
 from careers.models import JobPost
+from authentication.models import User
 
 class EventSerializer(serializers.ModelSerializer):
 
@@ -26,3 +27,8 @@ class JobPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobPost
         fields = '__all__'
+
+class ALumniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'is_active', 'email', 'first_name', 'last_name', 'middle_name', 'mobile', 'course', 'date_created']

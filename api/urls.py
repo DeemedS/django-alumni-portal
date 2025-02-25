@@ -25,4 +25,5 @@ urlpatterns = [
     path('filtered-jobposts/', views.FilteredJobPostsAPIView.as_view(), name='filtered_jobposts_api'),
     path('job-details/<int:id>/', views.JobPostDetailView.as_view(), name='job-details'),
     path('event-details/<int:id>/', views.EventsDetailView.as_view(), name='event-details'),
+    path('alumni-list/', views.AlumniListView.as_view(), name='event-details'),
 ]

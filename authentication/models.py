@@ -36,11 +36,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     mobile = models.CharField(max_length=15, blank=True)
     civil_status = models.CharField(max_length=15, blank=True)
     sex = models.CharField(max_length=10, blank=True)
+    course = models.CharField(max_length=10, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
     jobs = models.JSONField(default=list, blank=True)
     events = models.JSONField(default=list, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
     objects = UserManager()
 

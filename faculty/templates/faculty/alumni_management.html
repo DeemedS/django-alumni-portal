@@ -42,43 +42,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- loop for list -->
-                                <tr>
-                                    <td class="center-dot" data-label="Active"><div class="status-indicator active"></div></td>
-                                    <td data-label="Name">user</td>
-                                    <td data-label="Email">user@gmail.com</td>
-                                    <td data-label="Phone">09######</td>
-                                    <td data-label="Course">BSCpE</td>
-                                    <td data-label="Date Created">February 01, 2025</td>
-                                    <td data-label="Actions" class="action-icons">
-                                        <a href="/faculty/alumni-view"><i class="fas fa-eye"></i></a>
-                                        <a href="/faculty/alumni-edit"><i class="fas fa-edit"></i></a>
-                                        <a href="#"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="center-dot" data-label="Active"><div class="status-indicator inactive"></div></td>
-                                    <td data-label="Name">user</td>
-                                    <td data-label="Email">user@gmail.com</td>
-                                    <td data-label="Phone">09######</td>
-                                    <td data-label="Course">BSCpE</td>
-                                    <td data-label="Date Created">February 01, 2025</td>
-                                    <td data-label="Actions" class="action-icons">
-                                        <a href="/faculty/alumni-view"><i class="fas fa-eye"></i></a>
-                                        <a href="/faculty/alumni-edit"><i class="fas fa-edit"></i></a>
-                                        <a href="#"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                <!-- end of loop -->
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <!-- end of content -->
             </div>
+            <div class="pagination-controls d-flex justify-content-center mt-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="pagination">
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>
+
+
+
+
+<script src="{% static 'js/get_alumni.js' %}"></script>
+<script src="{% static 'js/faculty_pagination.js' %}"></script>
 
 
 {% endblock %}
