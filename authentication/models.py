@@ -24,6 +24,24 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
+class Course(models.Model):
+    course_code = models.CharField(max_length=10, unique=True)
+    course_name = models.CharField(max_length=120)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.course_code} - {self.course_name}"
+
+
+class Section(models.Model):
+    section_code = models.CharField(max_length=10, unique=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="sections")
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.section_code} - {self.course.course_code}"
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     student_number = models.CharField(max_length=15, blank=True, unique=True)
@@ -36,12 +54,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     mobile = models.CharField(max_length=15, blank=True)
     civil_status = models.CharField(max_length=15, blank=True)
     sex = models.CharField(max_length=10, blank=True)
-    course = models.CharField(max_length=10, blank=True)
+
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
+    section = models.CharField(max_length=20, null=True, blank=True)
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
-    jobs = models.JSONField(default=list, blank=True)
-    events = models.JSONField(default=list, blank=True)
+    licenses = models.JSONField(default=dict, blank=True)
+    certifications = models.JSONField(default=dict, blank=True)
+    jobs = models.JSONField(default=dict, blank=True)
+    events = models.JSONField(default=dict, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     objects = UserManager()
