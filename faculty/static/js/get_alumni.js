@@ -21,8 +21,9 @@ $(document).ready(function () {
                             <td data-label="Name">${alumni.first_name}</td>
                             <td data-label="Email">${alumni.email}</td>
                             <td data-label="Phone">${alumni.mobile || "N/A"}</td>
-                            <td data-label="Course">${alumni.course || "N/A"}</td>
-                            <td data-label="Date Created">${new Date(alumni.date_created).toLocaleDateString()}</td>
+                            <td data-label="Course">${alumni.course_code || "N/A"}</td>
+                            <td data-label="Section">${alumni.section_code || "N/A"}</td>
+                            <td data-label="School Year">${alumni.school_year || "N/A"}</td>
                             <td data-label="Actions" class="action-icons">
                                 <a href="/faculty/alumni-view/${alumni.id}"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/alumni-edit/${alumni.id}"><i class="fas fa-edit"></i></a>

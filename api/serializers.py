@@ -29,6 +29,9 @@ class JobPostSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ALumniSerializer(serializers.ModelSerializer):
+
+    course_code = serializers.CharField(source="course.course_code", read_only=True)
+    section_code = serializers.CharField(source="section.section_code", read_only=True)
     class Meta:
         model = User
-        fields = ['id', 'is_active', 'email', 'first_name', 'last_name', 'middle_name', 'mobile', 'course', 'date_created']
+        fields = ['id', 'is_active', 'email', 'first_name', 'last_name', 'middle_name', 'mobile', 'course_code', 'section_code', 'school_year']
