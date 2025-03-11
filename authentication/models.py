@@ -54,20 +54,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     mobile = models.CharField(max_length=15, blank=True)
     civil_status = models.CharField(max_length=15, blank=True)
     sex = models.CharField(max_length=10, blank=True)
-
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
     section = models.CharField(max_length=20, null=True, blank=True)
 
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
+    education = models.JSONField(default=dict, blank=True)
     licenses = models.JSONField(default=dict, blank=True)
     certifications = models.JSONField(default=dict, blank=True)
+    work_experience = models.JSONField(default=dict, blank=True)
     jobs = models.JSONField(default=dict, blank=True)
     events = models.JSONField(default=dict, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
-
     objects = UserManager()
+
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

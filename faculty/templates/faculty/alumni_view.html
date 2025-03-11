@@ -15,49 +15,61 @@
       <div class="row">
         <div class="col-md-3">
           <div class="profile-label">Last Name</div>
-          <div class="profile-value">Dela Cruz</div>
+          <div class="profile-value">{{ alumni.last_name }}</div>
         </div>
         <div class="col-md-3">
           <div class="profile-label">First Name</div>
-          <div class="profile-value">Juan</div>
+          <div class="profile-value">{{ alumni.first_name }}</div>
         </div>
         <div class="col-md-3">
           <div class="profile-label">Middle Name</div>
-          <div class="profile-value">N/A</div>
+          <div class="profile-value">{{ alumni.middle_name }}</div>
         </div>
         <div class="col-md-3">
           <div class="profile-label">Birthday</div>
-          <div class="profile-value">August 05, 1999</div>
+          <div class="profile-value">{{ alumni.birthday }}</div>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-md-6">
           <div class="profile-label">Address</div>
-          <div class="profile-value">Pureza St, Sta Mesa, Manila</div>
+          <div class="profile-value">{{ alumni.address }}</div>
         </div>
         <div class="col-md-6">
           <div class="profile-label">Email Address</div>
-          <div class="profile-value">pupalumni@gmail.com</div>
+          <div class="profile-value">{{ alumni.email }}</div>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-md-3">
           <div class="profile-label">Telephone Number</div>
-          <div class="profile-value">+632 8xxxxxxx</div>
+          <div class="profile-value">{{ alumni.telephone }}</div>
         </div>
         <div class="col-md-3">
           <div class="profile-label">Mobile Number</div>
-          <div class="profile-value">+639xxxxxxxxx</div>
+          <div class="profile-value">{{ alumni.mobile }}</div>
         </div>
         <div class="col-md-3">
           <div class="profile-label">Civil Status</div>
-          <div class="profile-value">Single</div>
+          <div class="profile-value">{{ alumni.civil_status }}</div>
         </div>
         <div class="col-md-3">
           <div class="profile-label">Sex</div>
-          <div class="profile-value">Male</div>
+          <div class="profile-value">{{ alumni.sex }}</div>
         </div>
       </div>
+
+      <div class="row mt-3">
+        <div class="col-md-3">
+          <div class="profile-label">Course</div>
+          <div class="profile-value">{{ alumni.course }}</div>
+        </div>
+        <div class="col-md-3">
+          <div class="profile-label">Section</div>
+          <div class="profile-value">{{ alumni.section }}</div>
+        </div>
+      </div>
+
     </div>
 
     <div class="divider"></div>

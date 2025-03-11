@@ -11,6 +11,7 @@ from django.db.models import Q
 from events.models import Event
 from events.forms import EventForm
 from django.db.models.functions import ExtractMonth
+from authentication.models import User
 
 
 @login_required(login_url='/faculty/')
@@ -82,8 +83,11 @@ def alumni_edit(request, id):
         print("Messages before redirect:", list(storage))
 
         return redirect(reverse('authentication:faculty'))
+    
+    alumni = get_object_or_404(User, id=id)
+
     context = {
-        
+        "alumni": alumni
     }
     return render(request, 'faculty/alumni_edit.html', context)
 
@@ -97,8 +101,11 @@ def alumni_view(request, id):
         print("Messages before redirect:", list(storage))
 
         return redirect(reverse('authentication:faculty'))
+    
+    alumni = get_object_or_404(User, id=id)
+
     context = {
-        
+        "alumni": alumni
     }
     return render(request, 'faculty/alumni_view.html', context)
 
