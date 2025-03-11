@@ -23,7 +23,6 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-
 class Course(models.Model):
     course_code = models.CharField(max_length=10, unique=True)
     course_name = models.CharField(max_length=120)
@@ -35,7 +34,6 @@ class Course(models.Model):
 
 class Section(models.Model):
     section_code = models.CharField(max_length=10, unique=True)
-    school_year = models.CharField(max_length=10)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="sections")
     date_created = models.DateTimeField(auto_now_add=True)
 
@@ -57,6 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     sex = models.CharField(max_length=10, blank=True)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
     section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True, blank=True)
+    school_year = models.CharField(max_length=10, blank=True)
     email_verified = models.BooleanField(default=False)
     education = models.JSONField(default=dict, blank=True)
     licenses = models.JSONField(default=dict, blank=True)
