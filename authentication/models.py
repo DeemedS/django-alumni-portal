@@ -55,8 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     civil_status = models.CharField(max_length=15, blank=True)
     sex = models.CharField(max_length=10, blank=True)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
-    section = models.CharField(max_length=20, null=True, blank=True)
-
+    section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True, blank=True)
     email_verified = models.BooleanField(default=False)
     education = models.JSONField(default=dict, blank=True)
     licenses = models.JSONField(default=dict, blank=True)
