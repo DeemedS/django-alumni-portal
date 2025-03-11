@@ -8,7 +8,7 @@ class UserAdmin(UserAdmin):
     list_filter = ('email', 'student_number', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password', 'student_number', 'first_name', 'last_name', 
-                        'middle_name', 'birthday', 'address', 'telephone', 'mobile', 'civil_status', 'sex', 'course', 'section',
+                        'middle_name', 'birthday', 'address', 'telephone', 'mobile', 'civil_status', 'sex', 'course', 'section', 'school_year',
                         'education', 'licenses', 'certifications', 'work_experience',
                         'jobs', 'events', 
                         'email_verified')}),

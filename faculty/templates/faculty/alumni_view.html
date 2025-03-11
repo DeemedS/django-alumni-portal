@@ -62,11 +62,15 @@
       <div class="row mt-3">
         <div class="col-md-3">
           <div class="profile-label">Course</div>
-          <div class="profile-value">{{ alumni.course }}</div>
+          <div class="profile-value">{{ alumni.course.course_code }}</div>
         </div>
         <div class="col-md-3">
           <div class="profile-label">Section</div>
-          <div class="profile-value">{{ alumni.section }}</div>
+          <div class="profile-value">{{ alumni.section.year }} - {{ alumni.section.section_code }}</div>
+        </div>
+        <div class="col-md-3">
+          <div class="profile-label">School Year (Graduated) </div>
+          <div class="profile-value">{{ alumni.school_year }}</div>
         </div>
       </div>
 
