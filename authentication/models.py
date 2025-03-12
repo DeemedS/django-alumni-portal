@@ -33,7 +33,7 @@ class Course(models.Model):
 
 
 class Section(models.Model):
-    section_code = models.CharField(max_length=10, unique=True)
+    section_code = models.CharField(max_length=10)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="sections")
     date_created = models.DateTimeField(auto_now_add=True)
 
