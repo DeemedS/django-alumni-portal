@@ -9,7 +9,7 @@ from .permissions import IsStaffUser
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import RetrieveAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import NotFound
 
 from rest_framework.decorators import api_view
@@ -19,6 +19,9 @@ from django.db.models import Q
 
 # Create your views here.
 class FilteredEventsAPIView(APIView):
+
+    permission_classes = [AllowAny]
+
     def get(self, request, *args, **kwargs):
         event_filter = request.GET.get('event_filter', 'all')
         month = request.GET.get('month')
@@ -48,6 +51,9 @@ class FilteredEventsAPIView(APIView):
     
 
 class FilteredArticlesAPIView(APIView):
+
+    permission_classes = [AllowAny]
+
     def get(self, request, *args, **kwargs):
         article_filter = request.GET.get('article_filter', 'all')
         month = request.GET.get('month')
@@ -106,6 +112,9 @@ def get_user_info(request):
         return Response({"detail": "Authentication credentials were not provided."}, status=401)
     
 class FilteredJobPostsAPIView(APIView):
+
+    permission_classes = [AllowAny]
+    
     def get(self, request, *args, **kwargs):
         job_post_filter = request.GET.get('job_post_filter', 'all')
         month = request.GET.get('month')

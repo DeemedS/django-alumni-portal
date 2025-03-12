@@ -51,7 +51,10 @@ $(document).ready(function() {
                             var badgeClass = event.status === "Upcoming Event" ? "text-bg-success" : "text-bg-secondary";
                             var cardHtml = `<div class="card col-md-4 mb-4">
                                                 <div class="position-relative">
-                                                    <img src="${event.thumbnail || '/static/images/default_image.png'}" class="card-img-top" alt="${event.title}">
+                                                    <img src="${event.thumbnail || '/static/images/default_image.png'}" 
+                                                    class="card-img-top" 
+                                                    alt="${event.title}"
+                                                    onerror="this.onerror=null; this.src='/static/images/default_image.png';">
                                                     <div class="overlay">
                                                         <div class="badge text-bg-warning">${eventDate}</div>
                                                         <span class="badge ${badgeClass}">${event.status}</span>

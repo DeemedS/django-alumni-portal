@@ -5,7 +5,7 @@ from .models import User, Course, Section
 class UserAdmin(UserAdmin):
     model = User
     list_display = ('email', 'student_number', 'is_staff', 'is_active',)
-    list_filter = ('email', 'student_number', 'is_staff', 'is_active',)
+    list_filter = ('course', 'section', 'school_year', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password', 'student_number', 'first_name', 'last_name', 
                         'middle_name', 'birthday', 'address', 'telephone', 'mobile', 'civil_status', 'sex', 'course', 'section', 'school_year',
