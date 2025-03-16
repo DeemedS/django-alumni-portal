@@ -1,8 +1,13 @@
 import requests
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.messages import get_messages
 from django.urls import reverse
 from authentication.forms import UserForm
-from authentication.models import User
+from authentication.models import User, Course, Section
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.http import JsonResponse
+import json
 
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
@@ -93,8 +98,7 @@ def user_edit(request):
                 mobile = user_data.get('mobile')
                 civil_status = user_data.get('civil_status')
                 sex = user_data.get('sex')
-                             
-            # Now, render the dashboard template and pass the user info
+
             return render(request, 'user_edit.html', {
                 'first_name': first_name,
                 'last_name': last_name,
@@ -195,3 +199,45 @@ def saved_events(request):
             return redirect('/login/')
     else:
         return redirect('/login/')
+    
+@login_required(login_url='/faculty/')
+def alumni_edit(request, id):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    
+    alumni = get_object_or_404(User, id=id)
+    courses = Course.objects.all()
+    sections = Section.objects.all()
+
+    if request.method == 'POST':
+        try:
+
+            data = json.loads(request.body)
+
+            basic_info = data.get('basicInfo', {})
+            education = data.get('education', [])
+            licenses = data.get('licenses', [])
+            work_experience = data.get('workExperience', [])
+
+            print("Basic Info:", basic_info)
+            print("Education:", education)
+            print("Licenses:", licenses)
+            print("Work Experience:", work_experience)
+
+            return JsonResponse({"message": "Alumni updated successfully!"})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+
+    context = {
+        "alumni": alumni,
+        "courses": courses,
+        "sections": sections,
+    }
+
+    return render(request, 'faculty/alumni_edit.html', context)

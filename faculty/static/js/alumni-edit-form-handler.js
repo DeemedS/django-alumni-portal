@@ -1,88 +1,96 @@
-document.addEventListener("DOMContentLoaded", function () {
-    function getEducationData() {
-        let educationEntries = document.querySelectorAll("#educationSection .entry");
-        let educationData = [];
+$(document).ready(function () {
+    let alumniId = $("#alumniForm").data("alumni-id");
 
-        educationEntries.forEach(entry => {
-            let school = entry.querySelector(".school").value.trim();
-            let degree = entry.querySelector(".degree").value.trim();
-            let year = entry.querySelector(".yearGraduated").value;
-            
-            if (school && degree && year) {
-                educationData.push({ school, degree, year });
-            }
-        });
-
-        return educationData;
-    }
-
-    function getLicenseData() {
-        let licenseEntries = document.querySelectorAll("#licenseSection .entry");
-        let licenseData = [];
-
-        licenseEntries.forEach(entry => {
-            let name = entry.querySelector(".license").value.trim();
-            let org = entry.querySelector(".org").value.trim();
-            let issueDate = entry.querySelector(".issueDate").value;
-            let expirationDate = entry.querySelector(".expirationDate").value;
-
-            if (name && org && issueDate) {
-                licenseData.push({ name, org, issueDate, expirationDate });
-            }
-        });
-
-        return licenseData;
-    }
-
-    function getWorkData() {
-        let workEntries = document.querySelectorAll("#workSection .entry");
-        let workData = [];
-
-        workEntries.forEach(entry => {
-            let company = entry.querySelector(".company").value.trim();
-            let position = entry.querySelector(".position").value.trim();
-            let startDate = entry.querySelector(".startDate").value;
-            let endDate = entry.querySelector(".endDate").value;
-
-            if (company && position && startDate) {
-                workData.push({ company, position, startDate, endDate });
-            }
-        });
-
-        return workData;
-    }
-
-    // Handle form submission
-    document.querySelector("#alumniForm").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent actual form submission
+    $("#alumniForm").submit(function (event) {
+        event.preventDefault();
 
         let formData = {
             basicInfo: {
-                lastName: document.querySelector("#lastName").value,
-                firstName: document.querySelector("#firstName").value,
-                middleName: document.querySelector("#middleName").value,
-                suffix: document.querySelector("#suffix").value,
-                birthday: document.querySelector("#birthday").value,
-                address: document.querySelector("#address").value,
-                email: document.querySelector("#email").value,
-                telephone: document.querySelector("#telephone").value,
-                mobile: document.querySelector("#mobile").value,
-                civilStatus: document.querySelector("#civilStatus").value,
-                sex: document.querySelector("#sex").value,
-                course: document.querySelector("#selectedCourse").value,
-                section: document.querySelector("#section").value,
-                schoolYear: document.querySelector("#school_year").value
+                id: alumniId,
+                lastName: $("#lastName").val().trim(),
+                firstName: $("#firstName").val().trim(),
+                middleName: $("#middleName").val().trim(),
+                suffix: $("#suffix").val().trim(),
+                birthday: $("#birthday").val(),
+                address: $("#address").val().trim(),
+                email: $("#email").val().trim(),
+                telephone: $("#telephone").val().trim(),
+                mobile: $("#mobile").val().trim(),
+                civilStatus: $("#civilStatus").val(),
+                sex: $("#sex").val(),
+                course: $("#selectedCourse").val(),
+                section: $("#section").val(),
+                schoolYear: $("#school_year").val()
             },
             education: getEducationData(),
             licenses: getLicenseData(),
             workExperience: getWorkData()
         };
 
-        console.log(formData)
+        console.log("Submitting Data:", formData);
 
-        // Optionally: Send data to server via AJAX
-        // fetch('/submit', { method: 'POST', body: JSON.stringify({ education, licenses, work }), headers: { 'Content-Type': 'application/json' } });
-
-        alert("Form submitted! Check the console for data.");
+        $.ajax({
+            url: `/faculty/alumni-edit/${alumniId}/`,
+            type: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json",
+            headers: { "X-CSRFToken": getCSRFToken() },
+            success: function (response) {
+                console.log("Success:", response);
+                alert("Form submitted successfully!");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error:", error);
+                alert("Error submitting the form!");
+            }
+        });
     });
+
+    function getEducationData() {
+        let educationData = [];
+        $("#educationSection .entry").each(function () {
+            let school = $(this).find(".school").val().trim();
+            let degree = $(this).find(".degree").val().trim();
+            let year = $(this).find(".yearGraduated").val();
+
+            if (school && degree && year) {
+                educationData.push({ school, degree, year });
+            }
+        });
+        return educationData;
+    }
+
+    function getLicenseData() {
+        let licenseData = [];
+        $("#licenseSection .entry").each(function () {
+            let name = $(this).find(".license").val().trim();
+            let org = $(this).find(".org").val().trim();
+            let issueDate = $(this).find(".issueDate").val();
+            let expirationDate = $(this).find(".expirationDate").val();
+
+            if (name && org && issueDate) {
+                licenseData.push({ name, org, issueDate, expirationDate });
+            }
+        });
+        return licenseData;
+    }
+
+    function getWorkData() {
+        let workData = [];
+        $("#workSection .entry").each(function () {
+            let company = $(this).find(".company").val().trim();
+            let position = $(this).find(".position").val().trim();
+            let startDate = $(this).find(".startDate").val();
+            let endDate = $(this).find(".endDate").val();
+
+            if (company && position && startDate) {
+                workData.push({ company, position, startDate, endDate });
+            }
+        });
+        return workData;
+    }
+
+    function getCSRFToken() {
+        return $("input[name=csrfmiddlewaretoken]").val();
+    }
 });

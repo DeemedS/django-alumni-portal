@@ -12,7 +12,10 @@
         <div class="col mb-3">
             <div class="bg-light p-3 min-vh-100 d-flex flex-column">
                 <!-- start of content -->
-                <form id="alumniForm" class="form-container">
+                <form id="alumniForm" class="form-container" data-alumni-id="{{ alumni.id }}">
+
+                    {% csrf_token %}
+                    
                     <h5 class="section-title">Basic Information Profile</h5> 
                     <div class="row g-3">
                         <div class="col-md-3">
@@ -101,16 +104,85 @@
                     </div>
                     
                     <h5 class="section-title mt-5">Education Profile</h5>
-                    <div id="educationSection"></div>
+                    <div id="educationSection">
+                        {% for edu in alumni.education %}
+                        <div class="row g-3 mt-3 entry">
+                            <div class="col-md-3">
+                                <label class="form-label">School Graduated</label>
+                                <input type="text" class="form-control school" placeholder="School Graduated" value="{{ edu.school }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Degree/Course</label>
+                                <input type="text" class="form-control degree" placeholder="Degree/Course" value="{{ edu.degree }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Year Graduated</label>
+                                <select class="form-select yearGraduated" data-selected-year="{{ edu.year }}"></select>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="button" class="btn btn-danger remove-btn">Remove</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
 
                     <button type="button" class="add-more-btn" id="addEducation">+ Add Education</button>
                     
                     <h5 class="mt-5">License and Certifications</h5>
-                    <div id="licenseSection"></div>
+                    <div id="licenseSection">
+                        {% for license in alumni.licenses %}
+                        <div class="row g-3 mt-3 entry">
+                            <div class="col-md-3">
+                                <label class="form-label">License or Certification Name</label>
+                                <input type="text" class="form-control license" placeholder="License or Certification Name" value="{{license.name}}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Issuing Organization</label>
+                                <input type="text" class="form-control org" placeholder="Issuing Organization" value="{{license.org}}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Issue Date</label>
+                                <input type="date" class="form-control issueDate" value="{{license.issueDate}}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Expiration Date</label>
+                                <input type="date" class="form-control expirationDate" value="{{license.expirationDate}}">
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="button" class="btn btn-danger remove-btn">Remove</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
                     <button type="button" class="add-more-btn" id="addLicense">+ Add License and Certifications</button>
                     
                     <h5 class="section-title mt-5">Work Experience</h5>
-                    <div id="workSection"></div>
+                    <div id="workSection">
+                        {% for work in alumni.work_experience %}
+                        <div class="row g-3 mt-3 entry">
+                            <div class="col-md-3">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-control company" placeholder="Company Name (e.g., Google, Microsoft)" value="{{work.company}}">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Position</label>
+                                <input type="text" class="form-control position" placeholder="(e.g., Software Engineer)" value="{{work.position}}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Start Date</label>
+                                <input type="date" class="form-control startDate" value="{{work.startDate}}">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">End Date</label>
+                                <input type="date" class="form-control endDate" value="{{work.endDate}}">
+                            </div>
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button type="button" class="btn btn-danger remove-btn">Remove</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                     <button type="button" class="add-more-btn" id="addWork">+ Add Work Experience</button>
                     
                     <div class="text-end mt-4">

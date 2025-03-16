@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let workContainer = document.createElement("div");
         workContainer.classList.add("row", "g-3", "mt-3", "entry");
         workContainer.innerHTML = `
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label class="form-label">Company Name</label>
                 <input type="text" class="form-control company" placeholder="Company Name (e.g., Google, Microsoft)">
             </div>
