@@ -94,6 +94,7 @@ def alumni_edit(request, id):
         "sections": sections,
     }
 
+
     return render(request, 'faculty/alumni_edit.html', context)
 
 @login_required(login_url='/faculty/')
