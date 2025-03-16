@@ -1,4 +1,4 @@
-from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer
+from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, CareersSerializer
 
 from django.utils.timezone import now
 from events.models import Event
@@ -10,7 +10,6 @@ from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.exceptions import NotFound
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -178,6 +177,26 @@ class AlumniListView(APIView):
 
         # Serialize paginated results
         serializer = ALumniSerializer(result_page, many=True)
+
+        # Return paginated response
+        return paginator.get_paginated_response(serializer.data)
+    
+
+class CareersListView(APIView):
+    permission_classes = [IsAuthenticated, IsStaffUser]
+
+    def get(self, request, *args, **kwargs):
+
+        careers = JobPost.objects.all()
+
+        paginator = PageNumberPagination()
+        paginator.page_size = request.GET.get('page_size', 10)
+
+        # Paginate queryset
+        result_page = paginator.paginate_queryset(careers, request)
+
+        # Serialize paginated results
+        serializer = CareersSerializer(result_page, many=True)
 
         # Return paginated response
         return paginator.get_paginated_response(serializer.data)

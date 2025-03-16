@@ -12,7 +12,7 @@
         
         {% include "components/faculty_sidebar.html" %}
 
-        <div class="col mb-3">
+        <div class="bg-light col mb-3 px-0 m-2 mt-3">
 
             <div class="greeting-bar mt-3">
                 Careers Management
@@ -44,33 +44,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if no_results %}
-                                    <tr>
-                                        <td colspan="6" class="text-center">No job posts found.</td>
-                                    </tr>
-                                {% else %}
-                                <!-- loop for list -->
-                                {% for job in job_posts %}
-                                <tr>
-                                    <td class="center-dot"><div class="status-indicator {% if job.is_active %}active{% else %}inactive{% endif %}"></div></td>
-                                    <td data-label="Job Title"  class="text-wrap">{{job.title}}</td>
-                                    <td data-label="Company Name"  class="text-wrap">{{job.company}}</td>
-                                    <td data-label="Location"  class="text-wrap">{{job.location}}</td>
-                                    <td data-label="Job Type"  class="text-nowrap">{{job.job_type_label}}</td>
-                                    <td data-label="Actions" class="action-icons text-nowrap">
-                                        <a href="/faculty/careers-view/{{job.id}}"><i class="fas fa-eye"></i></a>
-                                        <a href="/faculty/careers-edit/{{ job.id }}"><i class="fas fa-edit"></i></a>
-                                        <a href="#"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                <!-- end of loop -->
-                                {% endif %}
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <!-- end of content -->
+            </div>
+            <div class="pagination-controls d-flex justify-content-center mt-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="pagination">
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -99,4 +83,7 @@
         searchInput.addEventListener('input', submitForm);
     });
 </script>
+
+<script src="{% static 'js/get_careers.js' %}"></script>
+<script src="{% static 'js/faculty_pagination.js' %}"></script>
 {% endblock %}

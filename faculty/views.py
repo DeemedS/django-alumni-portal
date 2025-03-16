@@ -101,46 +101,11 @@ def careers_management(request):
         storage = get_messages(request)
         print("Messages before redirect:", list(storage))
         return redirect(reverse('authentication:faculty'))
-    query = request.GET.get('q')
-    if query:
-        job_posts = JobPost.objects.filter(
-            Q(title__icontains=query) |
-            Q(company__icontains=query) |
-            Q(location__icontains=query)
-        )
-    else:
-        job_posts = JobPost.objects.all()
-        
-    # Dictionary to map job type abbreviations to full labels
-    job_type_labels = {
-        'FT': 'Full-Time',
-        'PT': 'Part-Time',
-        'CT': 'Contract',
-        'IN': 'Internship',
-        # Add other job types here
-    }
-    
-    # Add full job type label to each job post
-    job_posts_with_labels = [
-        {
-            'id': job_post.id,
-            'date_posted': job_post.created_at,
-            'is_active': job_post.is_active,
-            'title': job_post.title,
-            'company': job_post.company,
-            'description': job_post.description,
-            'location': job_post.location,
-            'job_type_label': job_type_labels.get(job_post.job_type, job_post.job_type),
-            # Add other fields as needed
-        }
-        for job_post in job_posts
-    ]
+
     context = {
         'active_page':'careers',
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
-        'job_posts': job_posts_with_labels,
-        'no_results': not job_posts.exists(),
     }
     return render(request, 'faculty/careers_management.html', context)
 
