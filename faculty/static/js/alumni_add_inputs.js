@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
         educationContainer.innerHTML = `
             <div class="col-md-3">
                 <label class="form-label">School Graduated</label>
-                <input type="text" class="form-control school" placeholder="School Graduated">
+                <input type="text" class="form-control school" placeholder="School Graduated" required>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Degree/Course</label>
-                <input type="text" class="form-control degree" placeholder="Degree/Course">
+                <input type="text" class="form-control degree" placeholder="Degree/Course" required>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Year Graduated</label>
@@ -43,19 +43,19 @@ document.addEventListener("DOMContentLoaded", function () {
         licenseContainer.innerHTML = `
             <div class="col-md-3">
                 <label class="form-label">License or Certification Name</label>
-                <input type="text" class="form-control license" placeholder="License or Certification Name">
+                <input type="text" class="form-control license" placeholder="License or Certification Name" required>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Issuing Organization</label>
-                <input type="text" class="form-control org" placeholder="Issuing Organization">
+                <input type="text" class="form-control org" placeholder="Issuing Organization" required>
             </div>
             <div class="col-md-2">
                 <label class="form-label">Issue Date</label>
-                <input type="date" class="form-control issueDate">
+                <input type="date" class="form-control issueDate" required>
             </div>
             <div class="col-md-2">
                 <label class="form-label">Expiration Date</label>
-                <input type="date" class="form-control expirationDate">
+                <input type="date" class="form-control expirationDate" required>
             </div>
             <div class="col-md-2 d-flex align-items-end">
                 <button type="button" class="btn btn-danger remove-btn">Remove</button>
@@ -71,14 +71,14 @@ document.addEventListener("DOMContentLoaded", function () {
         workContainer.innerHTML = `
             <div class="col-md-3">
                 <label class="form-label">Company Name</label>
-                <input type="text" class="form-control company" placeholder="Company Name (e.g., Google, Microsoft)">
+                <input type="text" class="form-control company" placeholder="Company Name (e.g., Google, Microsoft)" required>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Position</label>
-                <input type="text" class="form-control position" placeholder="(e.g., Software Engineer)">
+                <input type="text" class="form-control position" placeholder="(e.g., Software Engineer)" required>
             </div>
             <div class="col-md-2">
-                <label class="form-label">Start Date</label>
+                <label class="form-label">Start Date</label  required>
                 <input type="date" class="form-control startDate">
             </div>
             <div class="col-md-2">

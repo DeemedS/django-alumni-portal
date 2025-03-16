@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 import json
+from django.utils.dateparse import parse_date
 
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
@@ -225,10 +226,28 @@ def alumni_edit(request, id):
             licenses = data.get('licenses', [])
             work_experience = data.get('workExperience', [])
 
-            print("Basic Info:", basic_info)
-            print("Education:", education)
-            print("Licenses:", licenses)
-            print("Work Experience:", work_experience)
+            course = get_object_or_404(Course, id=basic_info.get('course')) if basic_info.get('course') else None
+            section = get_object_or_404(Section, id=basic_info.get('section')) if basic_info.get('section') else None
+
+            alumni.first_name = basic_info.get('firstName', alumni.first_name)
+            alumni.last_name = basic_info.get('lastName', alumni.last_name)
+            alumni.middle_name = basic_info.get('middleName', alumni.middle_name)
+            alumni.suffix = basic_info.get('suffix', alumni.suffix) 
+            alumni.email = basic_info.get('email', alumni.email)
+            alumni.address = basic_info.get('address', alumni.address)
+            alumni.birthday = parse_date(basic_info.get('birthday')) if basic_info.get('birthday') else None
+            alumni.telephone = basic_info.get('telephone', alumni.telephone)
+            alumni.mobile = basic_info.get('mobile', alumni.mobile)
+            alumni.civil_status = basic_info.get('civilStatus')
+            alumni.sex = basic_info.get('sex', alumni.sex)
+            alumni.course = course
+            alumni.section = section
+            
+            alumni.education = education
+            alumni.licenses = licenses
+            alumni.work_experience = work_experience
+
+            alumni.save()
 
             return JsonResponse({"message": "Alumni updated successfully!"})
         except json.JSONDecodeError:
