@@ -167,7 +167,7 @@ class AlumniListView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        users = User.objects.all()
+        users = User.objects.all().order_by("last_name", "first_name")
 
         paginator = PageNumberPagination()
         paginator.page_size = request.GET.get('page_size', 10)

@@ -18,7 +18,7 @@ $(document).ready(function () {
                             <td class="center-dot" data-label="Active">
                                 <div class="status-indicator ${isActive}"></div>
                             </td>
-                            <td data-label="Name">${alumni.first_name}</td>
+                            <td data-label="Name">${alumni.last_name} ${alumni.first_name}</td>
                             <td data-label="Email">${alumni.email}</td>
                             <td data-label="Phone">${alumni.mobile || "N/A"}</td>
                             <td data-label="Course">${alumni.course_code || "N/A"}</td>
