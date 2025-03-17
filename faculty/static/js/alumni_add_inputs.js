@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (event.target.matches("#addWork")) {
             addWorkEntry();
         } else if (event.target.matches(".remove-btn")) {
+            let section = event.target.closest(".entry").parentNode;
             event.target.closest(".entry").remove();
+            checkEmptySection(section);
         }
     });
 
-    // Function to add a new education entry
     function addEducationEntry() {
+        removeNoRecordMessage("#educationSection");
         let educationContainer = document.createElement("div");
         educationContainer.classList.add("row", "g-3", "mt-3", "entry");
         educationContainer.innerHTML = `
@@ -36,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector("#educationSection").appendChild(educationContainer);
     }
 
-    // Function to add a new license entry
     function addLicenseEntry() {
+        removeNoRecordMessage("#licenseSection");
         let licenseContainer = document.createElement("div");
         licenseContainer.classList.add("row", "g-3", "mt-3", "entry");
         licenseContainer.innerHTML = `
@@ -64,8 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector("#licenseSection").appendChild(licenseContainer);
     }
 
-    // Function to add a new work experience entry
     function addWorkEntry() {
+        removeNoRecordMessage("#workSection");
         let workContainer = document.createElement("div");
         workContainer.classList.add("row", "g-3", "mt-3", "entry");
         workContainer.innerHTML = `
@@ -78,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <input type="text" class="form-control position" placeholder="(e.g., Software Engineer)" required>
             </div>
             <div class="col-md-2">
-                <label class="form-label">Start Date</label  required>
+                <label class="form-label">Start Date</label>
                 <input type="date" class="form-control startDate">
             </div>
             <div class="col-md-2">
@@ -90,5 +92,30 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
         document.querySelector("#workSection").appendChild(workContainer);
+    }
+
+    function removeNoRecordMessage(sectionSelector) {
+        let section = document.querySelector(sectionSelector);
+        let noRecordMessage = section.querySelector(".no-record");
+        if (noRecordMessage) {
+            noRecordMessage.remove();
+        }
+    }
+
+    function checkEmptySection(section) {
+        if (!section.querySelector(".entry")) {
+            let message = document.createElement("p");
+            message.classList.add("text-muted", "no-record");
+
+            if (section.id === "educationSection") {
+                message.textContent = "No education records found.";
+            } else if (section.id === "licenseSection") {
+                message.textContent = "No license records found.";
+            } else if (section.id === "workSection") {
+                message.textContent = "No work experience records found.";
+            }
+
+            section.appendChild(message);
+        }
     }
 });

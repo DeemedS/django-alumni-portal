@@ -105,32 +105,37 @@
                     
                     <h5 class="section-title mt-5">Education Profile</h5>
                     <div id="educationSection">
+                    {% if alumni.education %}
                         {% for edu in alumni.education %}
-                        <div class="row g-3 mt-3 entry">
-                            <div class="col-md-3">
-                                <label class="form-label">School Graduated</label>
-                                <input type="text" class="form-control school" placeholder="School Graduated" value="{{ edu.school }}" required>
+                            <div class="row g-3 mt-3 entry">
+                                <div class="col-md-3">
+                                    <label class="form-label">School Graduated</label>
+                                    <input type="text" class="form-control school" placeholder="School Graduated" value="{{ edu.school }}" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Degree/Course</label>
+                                    <input type="text" class="form-control degree" placeholder="Degree/Course" value="{{ edu.degree }}" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Year Graduated</label>
+                                    <select class="form-select yearGraduated" data-selected-year="{{ edu.year }}" required>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger remove-btn">Remove</button>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Degree/Course</label>
-                                <input type="text" class="form-control degree" placeholder="Degree/Course" value="{{ edu.degree }}" required>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Year Graduated</label>
-                                <select class="form-select yearGraduated" data-selected-year="{{ edu.year }}" required>
-                                </select>
-                            </div>
-                            <div class="col-md-3 d-flex align-items-end">
-                                <button type="button" class="btn btn-danger remove-btn">Remove</button>
-                            </div>
-                        </div>
                         {% endfor %}
+                    {% else %}
+                        <p class="text-muted no-record">No education records found.</p>
+                    {% endif %}
                     </div>
 
                     <button type="button" class="add-more-btn" id="addEducation">+ Add Education</button>
-                    
+
                     <h5 class="mt-5">License and Certifications</h5>
                     <div id="licenseSection">
+                    {% if alumni.licenses %}
                         {% for license in alumni.licenses %}
                         <div class="row g-3 mt-3 entry">
                             <div class="col-md-3">
@@ -154,12 +159,16 @@
                             </div>
                         </div>
                         {% endfor %}
+                    {% else %}
+                        <p class="text-muted no-record">No license records found.</p>
+                    {% endif %}
                     </div>
 
                     <button type="button" class="add-more-btn" id="addLicense">+ Add License and Certifications</button>
                     
                     <h5 class="section-title mt-5">Work Experience</h5>
                     <div id="workSection">
+                    {% if alumni.work_experience %}
                         {% for work in alumni.work_experience %}
                         <div class="row g-3 mt-3 entry">
                             <div class="col-md-3">
@@ -183,6 +192,9 @@
                             </div>
                         </div>
                         {% endfor %}
+                    {% else %}
+                        <p class="text-muted no-record">No work experience records found.</p>
+                    {% endif %}
                     </div>
                     <button type="button" class="add-more-btn" id="addWork">+ Add Work Experience</button>
                     
