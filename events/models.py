@@ -10,6 +10,7 @@ class Event(models.Model):
     banner = models.ImageField(blank=True, null=True)
     thumbnail = models.ImageField(blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

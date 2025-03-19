@@ -15,6 +15,7 @@ class Article(models.Model):
     author = models.CharField(max_length=120, default='Admin')
     date = models.DateTimeField(default=timezone.now)
     featured = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
 
     order = models.JSONField(default=list, blank=True)
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default='news')
