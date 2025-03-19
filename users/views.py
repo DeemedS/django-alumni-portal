@@ -260,3 +260,23 @@ def alumni_edit(request, id):
     }
 
     return render(request, 'faculty/alumni_edit.html', context)
+
+@login_required(login_url='/faculty/')
+def alumni_add(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    
+    courses = Course.objects.all()
+    sections = Section.objects.all()
+
+    context = {
+        "courses": courses,
+        "sections": sections,
+    }
+    return render(request, 'faculty/alumni_add.html', context)

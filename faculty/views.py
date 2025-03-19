@@ -59,22 +59,6 @@ def alumni_management(request):
     return render(request, 'faculty/alumni_management.html', context)
 
 @login_required(login_url='/faculty/')
-def alumni_add(request):
-    if not request.user.is_staff or not request.user.is_active:
-        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
-        return redirect(reverse('authentication:faculty'))
-    context = {
-        
-    }
-    return render(request, 'faculty/alumni_add.html', context)
-
-
-@login_required(login_url='/faculty/')
 def alumni_view(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
