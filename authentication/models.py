@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+import os
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -42,6 +42,7 @@ class Section(models.Model):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    profile_image = models.ImageField(upload_to='user/profile_pics/', default='user/profile_pics/default.jpg', blank=True, null=True)
     email = models.EmailField(_('email address'), unique=True)
     student_number = models.CharField(max_length=15, blank=True, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
@@ -75,3 +76,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+    def delete(self, *args, **kwargs):
+        if self.profile_image and self.profile_image.name != 'user/profile_pics/default.jpg':
+            if os.path.isfile(self.profile_image.path):
+                os.remove(self.profile_image.path)
+        super().delete(*args, **kwargs)

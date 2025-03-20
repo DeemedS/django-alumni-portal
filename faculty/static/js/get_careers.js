@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     function fetchCareers(page) {
         $.ajax({
-            url: `/api/careers-list/?page=${page}&page_size=${pageSize}`,
+            url: `/api/filtered-jobposts/?page=${page}&page_size=${pageSize}`,
             type: "GET",
             success: function (response) {
                 let careersTable = $("tbody");

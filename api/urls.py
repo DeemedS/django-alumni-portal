@@ -27,5 +27,4 @@ urlpatterns = [
     path('event-details/<int:id>/', views.EventsDetailView.as_view(), name='event-details'),
 
     path('alumni-list/', views.AlumniListView.as_view(), name='alumni-list'),
-    path('careers-list/', views.CareersListView.as_view(), name='career-list'),
 ]

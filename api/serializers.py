@@ -35,8 +35,3 @@ class ALumniSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'is_active', 'email', 'first_name', 'last_name', 'middle_name', 'mobile', 'course_code', 'section_code', 'school_year']
-
-class CareersSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = JobPost
-        fields = ['id', 'is_active', 'title', 'company', 'location', 'job_type']

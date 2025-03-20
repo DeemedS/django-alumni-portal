@@ -1,4 +1,4 @@
-from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, CareersSerializer
+from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer
 
 from django.utils.timezone import now
 from events.models import Event
@@ -115,37 +115,21 @@ class FilteredJobPostsAPIView(APIView):
     permission_classes = [AllowAny]
     
     def get(self, request, *args, **kwargs):
-        job_post_filter = request.GET.get('job_post_filter', 'all')
-        month = request.GET.get('month')
-        year = request.GET.get('year')
         keyword = request.GET.get('keyword', '')
         location = request.GET.get('location', '')
         job_type = request.GET.get('job_type', '')
         
-        job_posts = JobPost.objects.all()
-
-        if job_post_filter == 'internship':
-            job_posts = job_posts.filter(category='internship').order_by('-created_at')
-        elif job_post_filter == 'job':
-            job_posts = job_posts.filter(category='job').order_by('-created_at')
-        else:
-            job_posts = job_posts.order_by('-created_at')
-        
-        if month and month != 0:
-            job_posts = job_posts.filter(date__month=month)
-
-        if year:
-            job_posts = job_posts.filter(date__year=year)
+        job_posts = JobPost.objects.all().order_by('-created_at')
 
         #search by keyword and location
         if keyword:
-            job_posts = job_posts.filter(Q(title__icontains=keyword))
+            job_posts = job_posts.filter(Q(title__icontains=keyword)).order_by('-created_at')
         if location:
-            job_posts = job_posts.filter(location__icontains=location)
+            job_posts = job_posts.filter(location__icontains=location).order_by('-created_at')
 
         #filter by jobtype
         if job_type:
-            job_posts = job_posts.filter(job_type=job_type)
+            job_posts = job_posts.filter(job_type=job_type).order_by('-created_at')
 
         paginator = PageNumberPagination()
         paginator.page_size = request.GET.get('page_size')
@@ -177,26 +161,6 @@ class AlumniListView(APIView):
 
         # Serialize paginated results
         serializer = ALumniSerializer(result_page, many=True)
-
-        # Return paginated response
-        return paginator.get_paginated_response(serializer.data)
-    
-
-class CareersListView(APIView):
-    permission_classes = [IsAuthenticated, IsStaffUser]
-
-    def get(self, request, *args, **kwargs):
-
-        careers = JobPost.objects.all()
-
-        paginator = PageNumberPagination()
-        paginator.page_size = request.GET.get('page_size', 10)
-
-        # Paginate queryset
-        result_page = paginator.paginate_queryset(careers, request)
-
-        # Serialize paginated results
-        serializer = CareersSerializer(result_page, many=True)
 
         # Return paginated response
         return paginator.get_paginated_response(serializer.data)
