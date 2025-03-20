@@ -1,12 +1,9 @@
 $(document).ready(function () {
-    let alumniId = $("#alumniForm").data("alumni-id");
-
     $("#alumniForm").submit(function (event) {
         event.preventDefault();
 
         let formData = {
             basicInfo: {
-                id: alumniId,
                 lastName: $("#lastName").val().trim(),
                 firstName: $("#firstName").val().trim(),
                 middleName: $("#middleName").val().trim(),
@@ -28,13 +25,13 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: `/faculty/alumni-edit/${alumniId}/`,
+            url: `/faculty/alumni-add`,
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
             headers: { "X-CSRFToken": getCSRFToken() },
             success: function (response) {
-                showToast("Success", "Successfully Edited Alumni.", "success");
+                showToast("Success", "Successfully Added New Alumni.", "success");
             },
             error: function (xhr, status, error) {
                 console.error("Error:", error);

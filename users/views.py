@@ -9,6 +9,15 @@ from django.contrib import messages
 from django.http import JsonResponse
 import json
 from django.utils.dateparse import parse_date
+from django.core.exceptions import ValidationError
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.conf import settings
+import random
+import string
+
 
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
@@ -271,6 +280,80 @@ def alumni_add(request):
         print("Messages before redirect:", list(storage))
 
         return redirect(reverse('authentication:faculty'))
+    
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            basic_info = data.get('basicInfo', {})
+            education = data.get('education', [])
+            licenses = data.get('licenses', [])
+            work_experience = data.get('workExperience', [])
+
+            course = get_object_or_404(Course, id=basic_info.get('course')) if basic_info.get('course') else None
+            section = get_object_or_404(Section, id=basic_info.get('section')) if basic_info.get('section') else None
+
+            student_number = ''.join(random.choices(string.digits, k=15))
+            password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
+
+            if User.objects.filter(email=basic_info.get('email', "")).exists():
+                messages.error(request, "Email is already in use.")
+                return render(request, 'signup.html')
+
+            if User.objects.filter(student_number=student_number).exists():
+                messages.error(request, "Student number is already in use.")
+                return render(request, 'signup.html')
+
+            alumni = User.objects.create(
+                first_name=basic_info.get('firstName', ""),
+                last_name=basic_info.get('lastName', ""),
+                middle_name=basic_info.get('middleName', ""),
+                suffix=basic_info.get('suffix', ""),
+                email=basic_info.get('email', ""),
+                address=basic_info.get('address', ""),
+                birthday=parse_date(basic_info.get('birthday')) if basic_info.get('birthday') else None,
+                telephone=basic_info.get('telephone', ""),
+                mobile=basic_info.get('mobile', ""),
+                civil_status=basic_info.get('civilStatus', ""),
+                sex=basic_info.get('sex', ""),
+                course=course,
+                section=section,
+                education=education,
+                licenses=licenses,
+                work_experience=work_experience
+            )
+
+            alumni.set_password(password)
+
+            alumni.save()
+
+            # Generate verification token
+            token = default_token_generator.make_token(alumni)
+            uid = urlsafe_base64_encode(force_bytes(alumni.pk))
+            verification_url = f"{settings.DOMAIN_URL}/verify-email/{uid}/{token}/"
+
+            # Send email with credentials and verification link
+            subject = "Alumni Registration Successful - Verify Your Email"
+            message = (f"Hi {alumni.email},\n\n"
+                    f"Your temporary password: {password}\n\n"
+                    f"Please verify your email by clicking the link below:\n"
+                    f"{verification_url}")
+
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [alumni.email],
+                fail_silently=False,
+            )
+
+            return JsonResponse({"message": "Alumni added successfully!"})
+        
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except ValidationError as e:
+            return JsonResponse({"error": str(e)}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": "An unexpected error occurred."}, status=500)
     
     courses = Course.objects.all()
     sections = Section.objects.all()
