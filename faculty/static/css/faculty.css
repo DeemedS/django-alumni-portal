@@ -276,3 +276,14 @@
 .header-buttons a {
     margin-right: 8px;
   }
+
+.publish-btn {
+    background-color: rgb(13, 134, 13);
+    color: white;
+    border-radius: 5px;
+}
+.unpublish-btn {
+    background-color: rgb(122, 26, 26);
+    color: white;
+    border-radius: 5px;
+}

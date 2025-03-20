@@ -20,9 +20,6 @@ $(document).ready(function () {
 
                     let row = `
                         <tr>
-                            <td class="center-dot" data-label="Active">
-                                <div class="status-indicator ${isActive}"></div>
-                            </td>
                             <td data-label="Title">${truncatedTitle}</td>
                             <td data-label="Company">${careers.company}</td>
                             <td data-label="Location">${careers.location}</td>
@@ -31,6 +28,11 @@ $(document).ready(function () {
                                 <a href="/faculty/careers-view/${careers.id}"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/careers-edit/${careers.id}"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="delete-career" data-id="${careers.id}"><i class="fas fa-trash"></i></a>
+                            </td>
+                            <td class="text-center" data-label="Active">
+                                <button class="${isActive === 'active' ? 'unpublish-btn' : 'publish-btn'}">
+                                    ${isActive === 'active' ? 'Unpublish' : 'Publish'}
+                                </button>
                             </td>
                         </tr>
                     `;
