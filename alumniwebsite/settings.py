@@ -202,6 +202,9 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 }
 
+SESSION_COOKIE_AGE = 3600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = config('EMAIL_HOST')
