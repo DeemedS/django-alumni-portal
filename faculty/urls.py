@@ -26,4 +26,6 @@ urlpatterns = [
     path('faculty/events-management', faculty_views.events_management, name='events_management'),
     path('faculty/events-add', faculty_views.events_add, name='events_add'),
     path('faculty/events-edit/<slug:slug>/', faculty_views.events_edit, name='events_edit'),
+
+    path('faculty/articles-management', faculty_views.articles_management, name='articles_management'),
 ] 
