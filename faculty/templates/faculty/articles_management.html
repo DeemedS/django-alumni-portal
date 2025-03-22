@@ -1,0 +1,74 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Articles Management{% endblock %}
+
+{% block content %}
+{% include 'components/faculty_topnav.html' %}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/faculty_sidebar.html" %}
+
+        <div class="bg-light col mb-3 px-0 m-2 mt-3">
+
+            <div class="greeting-bar">
+                News & Announcements
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                <div class="container-fluid p-4">
+                    <div class="d-flex justify-content-end align-items-center mb-3 search-container">
+                        <div class="d-flex align-items-center">
+                                <input type="text" class="form-control search-bar" placeholder="Search">
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-3 search-container">
+                        <h4 class="fw-bold title-text mb-0">ARTICLE LIST</h4>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center gap-3">
+                                <a href="/faculty/articles-add" class="add-alumni-btn">ADD NEW ARTICLE</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                    <div class="table-responsive mt-3 ">
+                        <table class="table table-bordered align-middle table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Article Name</th>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- end of content -->
+            </div>
+            <div class="pagination-controls d-flex justify-content-center mt-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="pagination">
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="{% static 'js/get_articles.js' %}"></script>
+<script src="{% static 'js/faculty_pagination.js' %}"></script>
+
+
+{% endblock %}
