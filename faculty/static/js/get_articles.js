@@ -39,7 +39,7 @@ $(document).ready(function () {
                             <td data-label="Actions" class="action-icons">
                                 <a href="/articles/view/${articles.slug}/"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/articles/${articles.slug}/edit"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="delete-article" data-id="${articles.id}"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="delete-article" data-id="${articles.id}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                             <td class="text-center" data-label="Active">
                                 <button class="${isActive === 'active' ? 'unpublish-btn' : 'publish-btn'}">
