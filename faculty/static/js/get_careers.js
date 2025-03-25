@@ -27,7 +27,7 @@ $(document).ready(function () {
                             <td data-label="Actions" class="action-icons">
                                 <a href="/faculty/careers-view/${careers.id}"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/careers-edit/${careers.id}"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="delete-career" data-id="${careers.id}"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="delete-career" data-id="${careers.id}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                             <td class="text-center" data-label="Active">
                                 <button class="${isActive === 'active' ? 'unpublish-btn' : 'publish-btn'}">
