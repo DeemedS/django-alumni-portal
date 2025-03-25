@@ -5,6 +5,7 @@ from django.urls import reverse
 from authentication.forms import UserForm
 from authentication.models import User, Course, Section
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.http import JsonResponse
 import json
@@ -363,3 +364,20 @@ def alumni_add(request):
         "sections": sections,
     }
     return render(request, 'faculty/alumni_add.html', context)
+
+@csrf_exempt
+@login_required(login_url='/faculty/')
+def alumni_delete(request, id):
+    if request.method == "DELETE":
+        alumni = User.objects.filter(id=id).first()
+        
+        if not alumni:
+            return JsonResponse({"success": False, "message": "Alumni not found"}, status=404)
+        
+        try:
+            alumni.delete()
+            return JsonResponse({"success": True})
+        except Exception as e:
+            return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
+
+    return JsonResponse({"success": False, "message": "Invalid request"}, status=400)

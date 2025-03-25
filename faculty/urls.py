@@ -17,6 +17,7 @@ urlpatterns = [
     path('faculty/alumni-add', user_views.alumni_add, name='alumni_add'),
     path('faculty/alumni-edit/<int:id>/', user_views.alumni_edit, name='alumni_edit'),
     path('faculty/alumni-view/<int:id>/', faculty_views.alumni_view, name='alumni_view'),
+    path('faculty/alumni-delete/<int:id>/', user_views.alumni_delete, name='alumni_delete'),
 
     path('faculty/careers-management', faculty_views.careers_management, name='careers_management'),
     path('faculty/careers-add', faculty_views.careers_add, name='careers_add'),

@@ -27,7 +27,7 @@ $(document).ready(function () {
                             <td data-label="Actions" class="action-icons">
                                 <a href="/faculty/alumni-view/${alumni.id}"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/alumni-edit/${alumni.id}"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="delete-alumni" data-id="${alumni.id}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="delete-item" data-id="${alumni.id}" data-type="alumni" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     `;
