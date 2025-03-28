@@ -204,12 +204,6 @@ def careers_view(request, id):
 
 @login_required(login_url='/faculty/')
 def events_management(request):
-    # Mapping of month abbreviations to month numbers
-    MONTHS = {
-        'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4,
-        'may': 5, 'jun': 6, 'jul': 7, 'aug': 8,
-        'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12
-    }
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
@@ -218,30 +212,11 @@ def events_management(request):
         print("Messages before redirect:", list(storage))
 
         return redirect(reverse('authentication:faculty'))
-    query = request.GET.get('q')
-    if query:
-        query_lower = query.lower()
-        month_query = MONTHS.get(query_lower[:3]) # Get the month number from the first three letters of the query
-        if month_query:
-            events = Event.objects.annotate(
-                month=ExtractMonth('date')
-            ).filter(
-                Q(title__icontains=query) |
-                Q(month=month_query)
-            )
-        else:
-            events = Event.objects.filter(
-                Q(title__icontains=query)
-            )
-    else:
-        events = Event.objects.all()
     
     context = {
         'active_page':'events',
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
-        'events': events,
-        'no_results': not events.exists(),
     }
     return render(request, 'faculty/events_management.html', context)
 

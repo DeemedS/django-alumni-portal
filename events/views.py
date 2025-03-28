@@ -48,7 +48,7 @@ def user_events(request):
     user_data = user_response.json()
     userevents = user_data.get('events', [])  # Ensure it's an array
 
-    return JsonResponse({"events": userevents})
+    return JsonResponse({"events": userevents}) 
 
 def event_page(request, slug):
     event = Event.objects.get(slug=slug)
