@@ -164,3 +164,4 @@ class AlumniListView(APIView):
 
         # Return paginated response
         return paginator.get_paginated_response(serializer.data)
+    
