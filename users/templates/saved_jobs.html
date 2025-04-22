@@ -19,16 +19,18 @@
                 </div>
 
                 <!-- Scrollable Container (Only Y-axis) -->
-                <div class="bg-light p-3 min-vh-100 d-flex flex-column">
-                    <div class="row">
-                        <div class="col gap-3">
-                            <div id="jobs-container" class="overflow-y-auto" style="max-height: 100vh; overflow-x: hidden;">
-                                <!-- Jobs will be inserted here dynamically -->
-                            </div>
-                        </div>
+                <div class="bg-light p-4 min-vh-100">
+                    <div class="constainer-fluid">
+                      <div class="row overflow-y-auto" style="max-height: 100vh; overflow-x: hidden;" id="jobs-container">
+                        <!-- Job cards will be inserted here -->
+                      </div>
                     </div>
                 </div>
-
+                  
+                <script>
+                    const csrfToken = "{{ csrf_token }}";
+                    const accessToken = "{{ request.COOKIES.access_token }}";
+                </script>
                 <script src="{% static 'js/get_jobs.js' %}"></script>
 
             </div>

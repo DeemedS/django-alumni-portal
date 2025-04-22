@@ -27,6 +27,11 @@
                     </div>
                 </div>
 
+                <!--  -->
+                <script>
+                    const csrfToken = "{{ csrf_token }}";
+                    const accessToken = "{{ request.COOKIES.access_token }}";
+                </script>
                 <script src="{% static 'js/get_events.js' %}"></script>
 
             </div>

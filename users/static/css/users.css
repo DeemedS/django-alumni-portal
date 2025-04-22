@@ -352,3 +352,37 @@
     line-height: 1.5;
     max-height: 100px;
   }
+
+.alumni-btn {
+    background-color: #800000;
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+
+  .bookmark-icon {
+    cursor: pointer;
+  }
+  .job-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .job-info p {
+    margin: 0;
+  }
+  .job-info b {
+    font-weight: 600;
+  }
+  .job-card-btn {
+    background-color: #8B0000;
+    color: #fff;
+    border: none;
+    margin-top: 1rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+  }
