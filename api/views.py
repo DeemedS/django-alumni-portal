@@ -139,10 +139,12 @@ class FilteredJobPostsAPIView(APIView):
         return paginator.get_paginated_response(serializer.data)
     
 class JobPostDetailView(RetrieveAPIView):
+    permission_classes = [AllowAny]
     queryset = JobPost.objects.all()
     serializer_class = JobPostSerializer
     lookup_field = 'id'
 class EventsDetailView(RetrieveAPIView):
+    permission_classes = [AllowAny]
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     lookup_field = 'id'
