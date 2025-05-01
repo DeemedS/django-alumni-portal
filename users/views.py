@@ -48,7 +48,7 @@ def user_dashboard(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True, secure=True, domain='.guianalankem.com')
+                response.set_cookie('access_token', access_token, httponly=True)
                 return response
             
             else:
@@ -132,7 +132,7 @@ def user_edit(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True, secure=True, domain='.guianalankem.com')
+                response.set_cookie('access_token', access_token, httponly=True)
 
                 return response
             
@@ -171,7 +171,7 @@ def saved_jobs(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True, secure=True, domain='.guianalankem.com')
+                response.set_cookie('access_token', access_token, httponly=True)
                 return response
             
             else:
@@ -202,7 +202,7 @@ def saved_events(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True, secure=True, domain='.guianalankem.com')
+                response.set_cookie('access_token', access_token, httponly=True)
                 return response
             
             else:

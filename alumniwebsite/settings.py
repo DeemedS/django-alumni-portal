@@ -216,29 +216,22 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 DOMAIN_URL = config('DOMAIN_URL')
+
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_PATH = '/'
 
 
-CORS_ALLOW_ORIGINS = [
-    "https://alumniportal.guianalankem.com",
-]
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://alumniportal.guianalankem.com',
-]
+CORS_ALLOW_ORIGINS = config('CORS_ALLOW_ORIGINS', cast=Csv())
 
-if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-else:
-    SECURE_SSL_REDIRECT = False
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
+
 
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
 else:
-    SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
     SECURE_SSL_REDIRECT = False
 

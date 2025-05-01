@@ -51,8 +51,8 @@ def user_login(request):
             refresh = RefreshToken.for_user(user)
             access_token = AccessToken.for_user(user)
             response = redirect('/myaccount/')
-            response.set_cookie('access_token', str(access_token), httponly=True, secure=True, domain='.guianalankem.com')
-            response.set_cookie('refresh_token', str(refresh), httponly=True, secure=True, domain='.guianalankem.com')
+            response.set_cookie('access_token', str(access_token), httponly=True)
+            response.set_cookie('refresh_token', str(refresh), httponly=True)
             return response
         else:
             messages.error(request, 'Invalid email or password')
