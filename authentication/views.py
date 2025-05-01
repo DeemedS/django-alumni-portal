@@ -50,7 +50,7 @@ def user_login(request):
         if user is not None:
             refresh = RefreshToken.for_user(user)
             response = redirect('/myaccount/')
-            response.set_cookie('access_token', access_token, httponly=True, secure=True, domain='.guianalankem.com')
+            response.set_cookie('access_token', str(refresh.access_token), httponly=True, secure=True, domain='.guianalankem.com')
             response.set_cookie('refresh_token', str(refresh), httponly=True, secure=True, domain='.guianalankem.com')
             return response
         else:
