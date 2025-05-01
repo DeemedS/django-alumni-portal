@@ -225,5 +225,4 @@ CORS_ALLOW_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://alumniportal.guianalankem.com',
-    'https://www.alumniportal.guianalankem.com',
 ]
