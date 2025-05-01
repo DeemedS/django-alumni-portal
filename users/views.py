@@ -71,7 +71,7 @@ def user_edit(request):
         response = requests.post(api_url, data=data)
 
         user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
-        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+        user_response = requests.post(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
 
         method = request.method
 
