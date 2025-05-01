@@ -1,6 +1,6 @@
 # DJANGO ALUMNI PORTAL
 
-## View live website at http://alumniwebsite.guianalankem.works
+## View live website at https://alumniportal.guianalankem.com
 
 ## Table of Contents
 - Installation
