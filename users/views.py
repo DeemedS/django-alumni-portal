@@ -34,7 +34,7 @@ def user_dashboard(request):
 
         if response.status_code == 200:
             user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
-            user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+            user_response = requests.post(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
             user_data = user_response.json()
             first_name = user_data.get('first_name')
             last_name = user_data.get('last_name')
