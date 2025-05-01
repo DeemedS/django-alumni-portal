@@ -205,6 +205,9 @@ SIMPLE_JWT = {
 SESSION_COOKIE_AGE = 3600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_SAVE_EVERY_REQUEST = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -215,3 +218,12 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 DOMAIN_URL = config('DOMAIN_URL')
+
+CORS_ALLOW_ORIGINS = [
+    "https://alumniportal.guianalankem.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://alumniportal.guianalankem.com',
+    'https://www.alumniportal.guianalankem.com',
+]
