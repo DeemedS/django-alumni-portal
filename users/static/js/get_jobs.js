@@ -34,18 +34,32 @@ document.addEventListener("DOMContentLoaded", async function () {
             jobsContainer.innerHTML = `<p class="text-muted">No saved jobs found.</p>`;
             return;
         }
+        // Mapping of job type abbreviations to full forms
+        const jobTypeMapping = {
+            FT: "Full-Time",
+            PT: "Part-Time",
+            CT: "Contract",
+            IN: "Internship",
+            // Add more mappings as needed
+        };
+
         const jobDetailsList = await Promise.all(jobs.jobs.map(job => fetchJobDetails(job.id)));
     
         jobDetailsList.forEach(jobDetails => {
             if (jobDetails) {
                 const jobCard = document.createElement("div");
-                jobCard.className = "card mb-3";
+                jobCard.className = "col-md-4 mb-4";
                 jobCard.innerHTML = `
-                    <div class="card-body">
-                        <h5 class="card-title">${jobDetails.title}</h5>
-                        <p class="card-text">${jobDetails.company}</p>
-                        <p class="card-text">${jobDetails.description}</p>
-                        <a href="/careers/${jobDetails.id}" class="btn btn-primary">View Job</a>
+                    <div class="card h-100 border-0 shadow-sm position-relative p-3">
+                        <i class="fa-solid fa-bookmark bookmark-icon position-absolute top-0 end-0 m-3 fs-5 text-dark"></i>
+                        <h5 class="card-title fw-bold">${jobDetails.title}</h5>
+                        <p class="mb-1"><strong>Company:</strong> ${jobDetails.company}</p>
+                        <p class="mb-1"><strong>Job Type:</strong> ${jobTypeMapping[jobDetails.job_type] || jobDetails.job_type}</p>
+                        <p class="mb-1"><strong>Location:</strong> ${jobDetails.location}</p>
+                        ${jobDetails.salary ? `<p class="mb-3"><strong>Salary:</strong> ${jobDetails.salary} PHP</p>` : ""}
+                        <div class="mt-auto mb-2 pt-2">
+                            <a href="/careers/${jobDetails.id}" class="job-card-btn">View More</a>
+                        </div>
                     </div>
                 `;
                 jobsContainer.appendChild(jobCard);
