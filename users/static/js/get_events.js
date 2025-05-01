@@ -1,29 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const eventsContainer = document.getElementById("events-container");
-
-    // Function to get CSRF token from cookies
-    function getCSRFToken() {
-        const cookies = document.cookie.split("; ");
-        for (const cookie of cookies) {
-            const [name, value] = cookie.split("=");
-            if (name === "csrftoken") {
-                return value;
-            }
-        }
-        return null;
-    }
-
-    const csrfToken = getCSRFToken();
-
     async function fetchSavedEvents() {
         try {
-            const response = await fetch("/events/userevents/", {
-                method: "GET",
-                headers: {
-                    "X-CSRFToken": csrfToken,
-                },
-                credentials: "include", // Include cookies for authentication
-            });
+            const response = await fetch("/events/userevents/");
             if (!response.ok) {
                 throw new Error("Failed to fetch saved events.");
             }
@@ -36,14 +15,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function fetchEventsDetails(eventId) {
         try {
-            const response = await fetch(`/api/event-details/${eventId}/`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${accessToken}`, // Include the access token
-                    "X-CSRFToken": csrfToken,
-                },
-                credentials: "include", // Include cookies for authentication
-            });
+            const response = await fetch(`/api/event-details/${eventId}/`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch event details for ID: ${eventId}`);
             }
