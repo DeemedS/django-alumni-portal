@@ -29,13 +29,12 @@ def user_dashboard(request):
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
-        user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
-        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
-
         print(f"Token verify status: {response.status_code}")
         print(f"Token verify response: {response.text}")
 
         if response.status_code == 200:
+            user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+            user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
             user_data = user_response.json()
             first_name = user_data.get('first_name')
             last_name = user_data.get('last_name')
