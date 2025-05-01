@@ -1,29 +1,9 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const jobsContainer = document.getElementById("jobs-container");
 
-    // Function to get CSRF token from cookies
-    function getCSRFToken() {
-        const cookies = document.cookie.split("; ");
-        for (const cookie of cookies) {
-            const [name, value] = cookie.split("=");
-            if (name === "csrftoken") {
-                return value;
-            }
-        }
-        return null;
-    }
-
-    const csrfToken = getCSRFToken();
-
     async function fetchSavedJobs() {
         try {
-            const response = await fetch("/careers/userjobs/",{
-                method: "GET",
-                headers: {
-                    "X-CSRFToken": csrfToken,
-                },
-                credentials: "include", // Include cookies for authentication
-            });
+            const response = await fetch("/careers/userjobs/");
             if (!response.ok) {
                 throw new Error("Failed to fetch saved jobs.");
             }
@@ -36,14 +16,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function fetchJobDetails(jobId) {
         try {
-            const response = await fetch(`/api/job-details/${jobId}/`,{
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${accessToken}`, // Include the access token
-                    "X-CSRFToken": csrfToken,
-                },
-                credentials: "include", // Include cookies for authentication
-            });
+            const response = await fetch(`/api/job-details/${jobId}/`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch job details for ID: ${jobId}`);
             }
