@@ -44,8 +44,13 @@ def user_login(request):
 
         api_url = request.build_absolute_uri(reverse('api:token_obtain_pair'))
         response = requests.post(api_url, data={'email': email, 'password': password})
+        print('API login response:', response.status_code, response.text)
 
-        user = authenticate(request, email=email, password=password)
+        if response.status_code == 200:
+            user = authenticate(request, email=email, password=password)
+        else:
+            messages.error(request, 'Login failed. Please check your credentials.')
+
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
@@ -56,6 +61,7 @@ def user_login(request):
             return response
         else:
             messages.error(request, 'Invalid email or password')
+
 
     if access_token:
         api_url = request.build_absolute_uri(reverse('api:token_verify'))
