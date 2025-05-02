@@ -44,7 +44,10 @@ def user_login(request):
 
         api_url = request.build_absolute_uri(reverse('api:token_obtain_pair'))
         response = requests.post(api_url, data={'email': email, 'password': password})
-        print('API login response:', response.status_code, response.text)
+        print("API URL:", api_url)
+        print("Status:", response.status_code)
+        print("Response:", response.text)
+
 
         if response.status_code == 200:
             user = authenticate(request, email=email, password=password)
