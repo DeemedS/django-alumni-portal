@@ -13,6 +13,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.contrib.auth import login
+from django.conf import settings
 
 
 User = get_user_model()
@@ -42,18 +43,10 @@ def user_login(request):
             return render(request, 'login.html')
             
 
-        api_url = request.build_absolute_uri(reverse('api:token_obtain_pair'))
+        api_url = f"{settings.API_TOKEN_URL}/token/"
         response = requests.post(api_url, data={'email': email, 'password': password})
-        print("API URL:", api_url)
-        print("Status:", response.status_code)
-        print("Response:", response.text)
 
-
-        if response.status_code == 200:
-            user = authenticate(request, email=email, password=password)
-        else:
-            messages.error(request, 'Login failed. Please check your credentials.')
-
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             refresh = RefreshToken.for_user(user)
@@ -67,7 +60,7 @@ def user_login(request):
 
 
     if access_token:
-        api_url = request.build_absolute_uri(reverse('api:token_verify'))
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 

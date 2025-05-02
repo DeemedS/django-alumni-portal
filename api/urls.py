@@ -17,7 +17,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
-    path('api/user_info/', get_user_info, name='get_user_info'),
+    path('user_info/', get_user_info, name='get_user_info'),
 
     
     path('filtered-events/', views.FilteredEventsAPIView.as_view(), name='filtered_events_api'),

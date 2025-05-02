@@ -25,11 +25,11 @@ def user_dashboard(request):
     refresh_token = request.COOKIES.get('refresh_token')
 
     if access_token:
-        api_url = request.build_absolute_uri(reverse('api:token_verify'))
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
-        user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
 
         if response.status_code == 200:
@@ -64,11 +64,11 @@ def user_edit(request):
     refresh_token = request.COOKIES.get('refresh_token')
 
     if access_token:
-        api_url = request.build_absolute_uri(reverse('api:token_verify'))
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
-        user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
 
         method = request.method
@@ -125,7 +125,7 @@ def user_edit(request):
             })
         
         elif response.status_code == 401 and refresh_token:
-            refresh_url = request.build_absolute_uri(reverse('api:token_refresh'))
+            refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
             refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
 
             if refresh_response.status_code == 200:
@@ -155,7 +155,7 @@ def saved_jobs(request):
     refresh_token = request.COOKIES.get('refresh_token')
 
     if access_token:
-        api_url = request.build_absolute_uri(reverse('api:token_verify'))
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
@@ -186,7 +186,7 @@ def saved_events(request):
     refresh_token = request.COOKIES.get('refresh_token')
 
     if access_token:
-        api_url = request.build_absolute_uri(reverse('api:token_verify'))
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
