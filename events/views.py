@@ -6,6 +6,7 @@ from django.utils.timezone import now
 from django.http import JsonResponse
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 
 def events(request):
     current_year = now().year
@@ -39,7 +40,7 @@ def user_events(request):
     if not access_token:
         return JsonResponse({"events": []})
 
-    user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+    user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
     user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
     
     if user_response.status_code != 200:
@@ -58,7 +59,8 @@ def event_page(request, slug):
     if not access_token:
         return render(request, 'events/event_page.html', {'event': event})
     
-    user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+    user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
+    
 
     try:
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
@@ -89,7 +91,7 @@ def save_event(request, id):
         return JsonResponse({"error": "Access token is missing"}, status=401)  # Unauthorized
 
     # Fetch user information
-    user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+    user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
     try:
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
         if user_response.status_code != 200:
@@ -127,7 +129,7 @@ def unsave_event(request, id):
         return JsonResponse({"error": "Access token is missing"}, status=401)  # Unauthorized
 
 
-    user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+    user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
     try:
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
         if user_response.status_code != 200:

@@ -41,7 +41,7 @@ def user_dashboard(request):
             return render(request, 'user_dashboard.html', {'first_name': first_name, 'last_name': last_name})
         
         elif response.status_code == 401 and refresh_token:
-            refresh_url = request.build_absolute_uri(reverse('api:token_refresh'))
+            refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
             refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
 
             if refresh_response.status_code == 200:
@@ -164,7 +164,7 @@ def saved_jobs(request):
             return render(request, 'saved_jobs.html')
 
         elif response.status_code == 401 and refresh_token:
-            refresh_url = request.build_absolute_uri(reverse('api:token_refresh'))
+            refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
             refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
 
             if refresh_response.status_code == 200:
@@ -195,7 +195,7 @@ def saved_events(request):
             return render(request, 'saved_events.html')
 
         elif response.status_code == 401 and refresh_token:
-            refresh_url = request.build_absolute_uri(reverse('api:token_refresh'))
+            refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
             refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
 
             if refresh_response.status_code == 200:

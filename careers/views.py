@@ -6,6 +6,7 @@ import requests
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.timezone import now
+from django.conf import settings
 
 # Create your views here.
 
@@ -18,7 +19,7 @@ def user_jobs(request):
     if not access_token:
         return JsonResponse({"jobs": []})  # Return an empty array if unauthorized
 
-    user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+    user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
     user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
     
     if user_response.status_code != 200:
@@ -41,7 +42,7 @@ def save_job(request, id):
         return JsonResponse({"error": "Access token is missing"}, status=401)  # Unauthorized
 
     # Fetch user information
-    user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+    user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
     try:
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
         if user_response.status_code != 200:
@@ -78,7 +79,7 @@ def unsave_job(request, id):
         return JsonResponse({"error": "Access token is missing"}, status=401)  # Unauthorized
 
 
-    user_api_url = request.build_absolute_uri(reverse('api:get_user_info'))
+    user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
     try:
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
         if user_response.status_code != 200:
