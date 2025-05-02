@@ -89,13 +89,14 @@ def user_edit(request):
                     email = user_data.get('email')
                     student_number = user_data.get('student_number')
                     middle_name = form.cleaned_data.get('middle_name')
-                    birthday_str = form.cleaned_data.get('birthday')
-                    birthday = birthday_str.strftime('%Y-%m-%d') if birthday else None
+                    birthday = form.cleaned_data.get('birthday')
                     address = form.cleaned_data.get('address')
                     telephone = form.cleaned_data.get('telephone')
                     mobile = form.cleaned_data.get('mobile')
                     civil_status = form.cleaned_data.get('civil_status')
                     sex = form.cleaned_data.get('sex')
+
+                    return redirect('/myaccount/edit/')
 
             else: 
                 
