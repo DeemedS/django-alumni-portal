@@ -11,4 +11,4 @@ boto3
 Pillow
 markdown
 django-filter
-psycopg2-binary==2.9.9
+psycopg2
