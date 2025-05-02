@@ -96,7 +96,7 @@ def user_edit(request):
                     civil_status = form.cleaned_data.get('civil_status')
                     sex = form.cleaned_data.get('sex')
 
-                    return redirect('user_edit')
+                    return redirect('edit')
 
             else: 
                 
