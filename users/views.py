@@ -89,7 +89,8 @@ def user_edit(request):
                     email = user_data.get('email')
                     student_number = user_data.get('student_number')
                     middle_name = form.cleaned_data.get('middle_name')
-                    birthday = form.cleaned_data.get('birthday')
+                    birthday_str = form.cleaned_data.get('birthday')
+                    birthday = birthday_str.strftime('%Y-%m-%d') if birthday else None
                     address = form.cleaned_data.get('address')
                     telephone = form.cleaned_data.get('telephone')
                     mobile = form.cleaned_data.get('mobile')
