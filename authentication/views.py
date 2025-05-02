@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.urls import reverse
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth import get_user_model
