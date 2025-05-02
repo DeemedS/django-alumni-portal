@@ -96,6 +96,8 @@ def user_edit(request):
                     civil_status = form.cleaned_data.get('civil_status')
                     sex = form.cleaned_data.get('sex')
 
+                    return redirect('user_edit')
+
             else: 
                 
                 first_name = user_data.get('first_name')
