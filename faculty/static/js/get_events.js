@@ -37,10 +37,10 @@ $(document).ready(function () {
                             <td data-label="Actions" class="action-icons">
                                 <a href="/events/view/${events.slug}/"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/events-edit/${events.slug}"><i class="fas fa-edit"></i></a>
-                                <a href="#" data-id="${events.id}" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="delete-item" data-id="${events.id}" data-type="event" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                             <td class="text-center" data-label="Active">
-                                <button class="${isActive === 'active' ? 'unpublish-btn' : 'publish-btn'}">
+                                <button class="${isActive === 'active' ? 'unpublish-btn' : 'publish-btn'} toggle-status-btn" data-id="${events.id}">
                                     ${isActive === 'active' ? 'Unpublish' : 'Publish'}
                                 </button>
                             </td>
@@ -64,6 +64,32 @@ $(document).ready(function () {
             page = newPage;
             fetchEvents(page);
         }
+    });
+
+    // Handle publish/unpublish button click
+    $(document).on("click", ".toggle-status-btn", function () {
+        const button = $(this);
+        const eventId = button.data("id");
+
+        $.ajax({
+            url: `/events/toggle_status/${eventId}/`,
+            type: "POST",
+            headers: {
+                'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function () {
+                if (button.hasClass("publish-btn")) {
+                    button.removeClass("publish-btn").addClass("unpublish-btn").text("Unpublish");
+                } else {
+                    button.removeClass("unpublish-btn").addClass("publish-btn").text("Publish");
+                }
+
+                showToast("Success", "Event status updated successfully!", "success");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error toggling event status:", error);
+            }
+        });
     });
 
     fetchEvents(page);

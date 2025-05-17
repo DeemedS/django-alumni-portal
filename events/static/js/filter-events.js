@@ -24,7 +24,8 @@ $(document).ready(function() {
         var data = {
             event_filter: eventFilter,
             page: page,
-            page_size: pageSize
+            page_size: pageSize,
+            is_active: true
         };
 
         if (monthFilter !== "0") {

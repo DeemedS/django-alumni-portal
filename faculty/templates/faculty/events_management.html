@@ -5,6 +5,8 @@
 
 {% block content %}
 
+{% csrf_token %}
+
 {% include 'components/faculty_topnav.html' %}
 
 <div class="container-fluid">
@@ -68,6 +70,11 @@
     </div>
 </div>
 
-<script src="{% static 'js/get_event.js'%}"></script>
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+<script src="{% static 'js/get_events.js'%}"></script>
 <script src="{% static 'js/faculty_pagination.js' %}"></script>
+<script src="{% static 'js/delete_handler.js' %}"></script>
 {% endblock %}

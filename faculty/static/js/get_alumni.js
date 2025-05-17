@@ -24,7 +24,7 @@ $(document).ready(function () {
                             <td data-label="Course">${alumni.course_code || "N/A"}</td>
                             <td data-label="Section">${alumni.section_code || "N/A"}</td>
                             <td data-label="School Year">${alumni.school_year || "N/A"}</td>
-                            <td data-label="Actions" class="action-icons">
+                            <td data-label="Actions" class="action-icons text-nowrap">
                                 <a href="/faculty/alumni-view/${alumni.id}"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/alumni-edit/${alumni.id}"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="delete-item" data-id="${alumni.id}" data-type="alumni" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>

@@ -4,9 +4,12 @@ from authentication.models import User
 import requests
 from django.utils.timezone import now
 from django.http import JsonResponse
-from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.messages import get_messages
+from django.urls import reverse
 
 def events(request):
     current_year = now().year
@@ -164,3 +167,46 @@ def unsave_event(request, id):
     except Exception as e:
         return JsonResponse({"error": f"Error removing event: {str(e)}"}, status=500)  
 
+@login_required(login_url='/faculty/')
+def toggle_event_status(request, id):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))  # Check if message exists
+
+        return redirect(reverse('authentication:faculty'))
+    
+    if request.method == 'POST':
+        try:
+            event = Event.objects.get(id=id)
+            event.is_active = not event.is_active
+            event.save()
+            return JsonResponse({"message": "Event status updated successfully"}, status=200)
+        except Event.DoesNotExist:
+            return JsonResponse({"error": "Event not found"}, status=404)  # Not Found
+        except Exception as e:
+            return JsonResponse({"error": f"Error updating Event status: {str(e)}"}, status=500)
+    else:
+        messages.error(request, "Invalid request method.")
+        return redirect(reverse('authentication:faculty'))
+
+@login_required(login_url='/faculty/')
+def event_delete(request, id):
+    event = Event.objects.filter(id=id).first()
+
+    if not event:
+        return JsonResponse({"success": False, "message": "Event not found"}, status=404)
+
+    try:
+        # Delete job from all users' saved events list
+        users_with_events = User.objects.filter(events__contains=[{"id": id}])
+        for user in users_with_events:
+            user.events = [event for event in user.events if event.get("id") != id]
+            user.save()
+
+        # Delete the event itself
+        event.delete()
+        return JsonResponse({"success": True}, status=200)
+    except Exception as e:
+        return JsonResponse({"success": False, "message": "Internal server error"}, status=500)

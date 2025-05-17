@@ -4,6 +4,9 @@
 {% block title %}Alumni Management{% endblock %}
 
 {% block content %}
+
+{% csrf_token %}
+
 {% include 'components/faculty_topnav.html' %}
 <div class="container-fluid">
     <div class="row flex-nowrap">
