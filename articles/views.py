@@ -11,6 +11,9 @@ from .forms import BodyTextForm, BodyImageForm, SubTitleForm, ArticleForm
 from django.forms import formset_factory
 from alumniwebsite.utils.ordered_content_utils import get_ordered_content
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.messages import get_messages
+
 def articles_list(request):
     current_year = now().year
 
@@ -225,3 +228,41 @@ def edit_article(request, slug):
     }
 
     return render(request, 'faculty/edit_article.html', context)
+
+@login_required(login_url='/faculty/')
+def toggle_article_status(request, id):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))  # Check if message exists
+
+        return redirect(reverse('authentication:faculty'))
+    
+    if request.method == 'POST':
+        try:
+            article = Article.objects.get(id=id)
+            article.is_active = not article.is_active
+            article.save()
+            return JsonResponse({"message": "Article status updated successfully"}, status=200)
+        except Article.DoesNotExist:
+            return JsonResponse({"error": "Article not found"}, status=404)  # Not Found
+        except Exception as e:
+            return JsonResponse({"error": f"Error updating article status: {str(e)}"}, status=500)
+    else:
+        messages.error(request, "Invalid request method.")
+        return redirect(reverse('authentication:faculty'))
+    
+@login_required(login_url='/faculty/')
+def article_delete(request, id):
+    career = Article.objects.filter(id=id).first()
+
+    if not career:
+        return JsonResponse({"success": False, "message": "Article not found"}, status=404)
+
+    try:
+        # Delete the article
+        career.delete()
+        return JsonResponse({"success": True}, status=200)
+    except Exception as e:
+        return JsonResponse({"success": False, "message": "Internal server error"}, status=500)

@@ -4,6 +4,9 @@
 {% block title %}Articles Management{% endblock %}
 
 {% block content %}
+
+{% csrf_token %}
+
 {% include 'components/faculty_topnav.html' %}
 {% include 'components/delete_modal.html' %}
 <div class="container-fluid">
@@ -65,11 +68,12 @@
     </div>
 </div>
 
-
-
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
 
 <script src="{% static 'js/get_articles.js' %}"></script>
 <script src="{% static 'js/faculty_pagination.js' %}"></script>
-
+<script src="{% static 'js/delete_handler.js' %}"></script>
 
 {% endblock %}
