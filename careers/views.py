@@ -121,7 +121,7 @@ def unsave_job(request, id):
     
 
 @login_required(login_url='/faculty/')
-def toggle_status(request, id):
+def toggle_career_status(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
@@ -143,3 +143,23 @@ def toggle_status(request, id):
     else:
         messages.error(request, "Invalid request method.")
         return redirect(reverse('authentication:faculty'))
+    
+@login_required(login_url='/faculty/')
+def career_delete(request, id):
+    career = JobPost.objects.filter(id=id).first()
+
+    if not career:
+        return JsonResponse({"success": False, "message": "Career not found"}, status=404)
+
+    try:
+        # Delete job from all users' saved jobs list
+        users_with_job = User.objects.filter(jobs__contains=[{"id": id}])
+        for user in users_with_job:
+            user.jobs = [job for job in user.jobs if job.get("id") != id]
+            user.save()
+
+        # Delete the job post itself
+        career.delete()
+        return JsonResponse({"success": True}, status=200)
+    except Exception as e:
+        return JsonResponse({"success": False, "message": "Internal server error"}, status=500)

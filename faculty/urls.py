@@ -2,6 +2,8 @@ from django.urls import path
 from . import views as faculty_views
 from articles import views as article_views
 from users import views as user_views
+from careers import views as careers_views
+from events import views as events_views
 
 app_name = 'faculty'
 
@@ -23,10 +25,13 @@ urlpatterns = [
     path('faculty/careers-add', faculty_views.careers_add, name='careers_add'),
     path('faculty/careers-edit/<int:id>/', faculty_views.careers_edit, name='careers_edit'),
     path('faculty/careers-view/<int:id>/', faculty_views.careers_view, name='careers_view'),
+    path('faculty/career-delete/<int:id>/', careers_views.career_delete, name='career_delete'),
     
     path('faculty/events-management', faculty_views.events_management, name='events_management'),
     path('faculty/events-add', faculty_views.events_add, name='events_add'),
     path('faculty/events-edit/<slug:slug>/', faculty_views.events_edit, name='events_edit'),
+    path('faculty/event-delete/<int:id>/', events_views.event_delete, name='event_delete'),
 
     path('faculty/articles-management', faculty_views.articles_management, name='articles_management'),
+    path('faculty/article-delete/<int:id>/', article_views.article_delete, name='article_delete'),
 ] 

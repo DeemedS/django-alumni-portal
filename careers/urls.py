@@ -9,5 +9,5 @@ urlpatterns = [
     path('careers/save_job/<int:id>/', views.save_job, name='save_job'),
     path('careers/unsave_job/<int:id>/', views.unsave_job, name='unsave_job'),
     path('careers/userjobs/', views.user_jobs, name='user_jobs'),
-    path('careers/toggle_status/<int:id>/', views.toggle_status, name='toggle_status'),
+    path('careers/toggle_status/<int:id>/', views.toggle_career_status, name='toggle_career_status'),
 ]
