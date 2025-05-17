@@ -1,5 +1,6 @@
 :root{
     --red: #800000;
+    --pupred: #800000;
 }
 /* POPPINS FONT */
 .login-container{
@@ -274,10 +275,18 @@
 }
 
 .sidebar-text {
-    color: #800000;
+    color: var(--pupred);
     text-decoration: none;
 }
 
+.nav-pills .sidebar-text {
+    padding: 10px;
+}
+
+.nav-pills .sidebar-text.active {
+    background-color: #FEAF00;
+    color: #600;
+}
 .side-bar a {
     margin: 7px;
 }
@@ -386,3 +395,94 @@
     border-radius: 6px;
     text-decoration: none;
   }
+
+  /* Newsfeed Css */
+  .card-custom {
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  }
+  .card-profile-img  img{
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background-color: #dee2e6;
+  }
+  .hashtags {
+    color: #0a66c2;
+    text-decoration: none;
+  }
+  .see-translation {
+    color: #0a66c2;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .interaction-bar div {
+    cursor: pointer;
+  }
+  .reaction-icons i {
+    font-size: 18px;
+    margin-right: 5px;
+  }
+  .card-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+
+  .job-card-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .job-card-content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 2rem;
+
+  }
+
+  .job-card-company img {
+    min-width: none;
+    max-width: 300px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-left: 1rem;
+
+    @media screen and (max-width: 576px) {
+        width: 100px;
+        height: 100px;
+    }
+  }
+
+.job-card-details {
+    line-height: 0.5;
+    font-size: 0.9rem;
+
+    @media screen and (max-width: 576px) {
+        line-height: 1;
+        
+    }
+}
+
+  .job-card-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+.job-card-button a {
+    background-color: var(--pupred);
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+
+    @media screen and (max-width: 576px) {
+        display: none;
+    }
+}

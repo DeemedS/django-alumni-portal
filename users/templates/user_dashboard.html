@@ -8,7 +8,7 @@
 {% block content %}
 {% include "components/top_nav.html" %}
 
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <div class="row flex-nowrap">
         
         {% include "components/sidebar.html" %}
@@ -63,6 +63,24 @@
             </div>
         </div>
     </div>
+</div> -->
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/sidebar.html" %}
+        <!-- <div class="col my-3 m-3 p-6 bg-light">
+            
+        </div> -->
+        <div class="col my-3 bg-light mt-3">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {% include "components/newsAnn_card.html" %}
+                    {% include "components/event_card.html" %}
+                    {% include "components/job_card.html" %}
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </div>
-
 {% endblock %}

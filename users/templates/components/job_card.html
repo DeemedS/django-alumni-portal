@@ -1,0 +1,41 @@
+{% load static %}
+<div class="card card-custom mb-3 mt-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <div class="card-profile-img">
+            <img src="{% static 'images/arcdologo.jpg' %}" alt="">
+          </div>
+          <div>
+            <h6 class="mb-0">ARCDO</h6> <!-- author user -->
+            <small class="text-muted">Jobs</small> <!-- type -->
+          </div>
+        </div>
+      </div>
+
+      <div class="job-card-content">
+        <div class="job-card-company">
+            <img src="{% static 'images/arcdologo.jpg' %}" alt="">
+        </div>
+        <div class="job-card-details">
+            <h3 class="job-card-title">Software Engineer</h3>
+            <p><i class="fa-solid fa-building me-1"></i>Manpower (Philippines)</p>
+            <p><i class="fa-solid fa-location-dot me-1"></i>Taguig, National Captal Region, Philippines</p>
+            <p><i class="fa-solid fa-briefcase me-1"></i>Job Type: Full-time</p>
+            <p><i class="fa-solid fa-dollar-sign me-1"></i>Salary: 50000 PHP</p>
+            
+        </div>
+        <div class="job-card-button">
+            <a href="">Apply Now</a>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="border-top d-flex justify-content-around text-muted py-2 interaction-bar">
+      <div><i class="fa-regular fa-heart me-1"></i>Like</div>
+      <div><i class="fa-regular fa-bookmark me-1"></i>Save Job</div>
+      <div><i class="fa fa-paper-plane me-1"></i>Send</div>
+    </div>
+  </div>

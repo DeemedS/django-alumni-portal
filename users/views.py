@@ -23,6 +23,7 @@ import string
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
+    
 
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
@@ -34,11 +35,14 @@ def user_dashboard(request):
 
         if response.status_code == 200:
             user_data = user_response.json()
-            first_name = user_data.get('first_name')
-            last_name = user_data.get('last_name')
+            context = {
+                'active_page': 'dashboard',
+                'first_name' : user_data.get('first_name'),
+                'last_name' : user_data.get('last_name'),
+            }
 
             # Now, render the dashboard template and pass the user info
-            return render(request, 'user_dashboard.html', {'first_name': first_name, 'last_name': last_name})
+            return render(request, 'user_dashboard.html', context)
         
         elif response.status_code == 401 and refresh_token:
             refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
@@ -123,7 +127,8 @@ def user_edit(request):
                 'telephone': telephone,
                 'mobile': mobile,
                 'civil_status': civil_status,
-                'sex': sex
+                'sex': sex,
+                'active_page': 'edit',
             })
         
         elif response.status_code == 401 and refresh_token:
@@ -163,7 +168,11 @@ def saved_jobs(request):
 
         if response.status_code == 200:
             # Now, render the dashboard template and pass the user info
-            return render(request, 'saved_jobs.html')
+            
+            context = {
+                'active_page': 'saved_jobs',
+            }
+            return render(request, 'saved_jobs.html',context)
 
         elif response.status_code == 401 and refresh_token:
             refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
@@ -194,7 +203,10 @@ def saved_events(request):
 
         if response.status_code == 200:
             # Now, render the dashboard template and pass the user info
-            return render(request, 'saved_events.html')
+            context = {
+                'active_page': 'saved_events',
+            }
+            return render(request, 'saved_events.html',context)
 
         elif response.status_code == 401 and refresh_token:
             refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
