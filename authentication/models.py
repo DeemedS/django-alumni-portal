@@ -63,8 +63,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     licenses = models.JSONField(default=dict, blank=True)
     certifications = models.JSONField(default=dict, blank=True)
     work_experience = models.JSONField(default=dict, blank=True)
-    jobs = models.JSONField(default=dict, blank=True)
-    events = models.JSONField(default=dict, blank=True)
+    jobs = models.JSONField(default=list, blank=True)
+    events = models.JSONField(default=list, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     objects = UserManager()
 
