@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 fetch(`/faculty/${deleteItemType}-delete/${deleteItemId}/`, {
                     method: "DELETE",
                     headers: {
-                        "X-CSRFToken": document.querySelector('meta[name="csrf-token"]')?.content || "",
+                        'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
                     },
                     credentials: "same-origin"
                 })

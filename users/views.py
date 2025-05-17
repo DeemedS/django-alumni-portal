@@ -368,7 +368,6 @@ def alumni_add(request):
     }
     return render(request, 'faculty/alumni_add.html', context)
 
-@csrf_exempt
 @login_required(login_url='/faculty/')
 def alumni_delete(request, id):
     if request.method == "DELETE":
