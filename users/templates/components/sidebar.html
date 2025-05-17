@@ -8,12 +8,14 @@
             <h1 class="h5 mt-3 p-2 bg-light"> {{first_name}} {{last_name}}</h1>
         </div>
 
-        <div class="nav flex-column nav-pills w-100 mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="sidebar-text" href="/myaccount"><i class="fa-solid fa-house"></i> Home </a>
-            <a class="sidebar-text" href="/myaccount/edit"><i class="fa-solid fa-pen-to-square"></i> Edit Profile </a>
-            <a class="sidebar-text" href="/myaccount/saved_events" ><i class="fa-solid fa-calendar-days"></i> Saved Events </a>
-            <a class="sidebar-text"  href="/myaccount/saved_jobs" ><i class="fa-solid fa-briefcase"></i> Saved Jobs </a>
-            <a class="sidebar-text" href="/myaccount/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout </a>
+        <div class="nav flex-column nav-pills w-100 mt-3 gap-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="sidebar-text {% if active_page == 'dashboard' %}active{% endif %}" href="/myaccount"><i class="fa-solid fa-house"></i> HOME </a>
+            <a class="sidebar-text {% if active_page == 'edit' %}active{% endif %}" href="/myaccount/edit"><i class="fa-solid fa-pen-to-square"></i> EDIT PROFILE </a>
+            <a class="sidebar-text {% if active_page == 'saved_events' %}active{% endif %}" href="/myaccount/saved_events" ><i class="fa-solid fa-calendar-days"></i> SAVED EVENTS </a>
+            <a class="sidebar-text {% if active_page == 'saved_jobs' %}active{% endif %}"  href="/myaccount/saved_jobs" ><i class="fa-solid fa-briefcase"></i> SAVED JOBS </a>
+            <a class="sidebar-text {% if active_page == 'my_story' %}active{% endif %}" href="#"><i class="fa-solid fa-book-open-reader"></i> MY STORY </a>
+            <a class="sidebar-text {% if active_page == 'my_story' %}active{% endif %}" href="#"><i class="fa-solid fa-hand-holding-heart"></i> DONATION </a>
+            <a class="sidebar-text" href="/myaccount/logout">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
 
     </div>
