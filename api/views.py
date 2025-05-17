@@ -25,8 +25,14 @@ class FilteredEventsAPIView(APIView):
         event_filter = request.GET.get('event_filter', 'all')
         month = request.GET.get('month')
         year = request.GET.get('year')
-        
+        is_active = request.GET.get('is_active', 'all')
+
         events = Event.objects.all()
+
+        if is_active.lower() in ['true', '1']:
+            events = events.filter(is_active=True)
+        elif is_active.lower() in ['false', '0']:
+            events = events.filter(is_active=False)
 
         if event_filter == 'upcoming':
             events = events.filter(date__gte=now()).order_by('-date')
