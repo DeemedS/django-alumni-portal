@@ -127,15 +127,14 @@ $(document).ready(function () {
 
     const scrollableContainer = document.getElementById("jobs-container");
     scrollableContainer.addEventListener("scroll", () => {
-
-
+        const threshold = 10; // pixels from bottom
         if (
-            scrollableContainer.scrollTop + scrollableContainer.clientHeight >=
-            scrollableContainer.scrollHeight && currentIndex < maxJobs
+          scrollableContainer.scrollTop + scrollableContainer.clientHeight >=
+          scrollableContainer.scrollHeight - threshold
         ) {
-            loadJobs();
+          loadJobs();
         }
-    });
+      });
 
     document.addEventListener("DOMContentLoaded", loadJobs);
 });

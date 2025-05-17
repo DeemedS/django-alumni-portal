@@ -7,6 +7,9 @@ from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.timezone import now
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.messages import get_messages
 
 # Create your views here.
 
@@ -115,3 +118,28 @@ def unsave_job(request, id):
 
     except Exception as e:
         return JsonResponse({"error": f"Error removing job: {str(e)}"}, status=500)
+    
+
+@login_required(login_url='/faculty/')
+def toggle_status(request, id):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))  # Check if message exists
+
+        return redirect(reverse('authentication:faculty'))
+    
+    if request.method == 'POST':
+        try:
+            job = JobPost.objects.get(id=id)
+            job.is_active = not job.is_active
+            job.save()
+            return JsonResponse({"message": "Job status updated successfully"}, status=200)
+        except JobPost.DoesNotExist:
+            return JsonResponse({"error": "Job not found"}, status=404)  # Not Found
+        except Exception as e:
+            return JsonResponse({"error": f"Error updating job status: {str(e)}"}, status=500)
+    else:
+        messages.error(request, "Invalid request method.")
+        return redirect(reverse('authentication:faculty'))

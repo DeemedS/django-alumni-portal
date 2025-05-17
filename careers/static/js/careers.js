@@ -58,12 +58,13 @@
 
     const scrollableContainer = document.getElementById("job-container");
     scrollableContainer.addEventListener("scroll", () => {
+        const threshold = 10; // pixels from bottom
         if (
-            scrollableContainer.scrollTop + scrollableContainer.clientHeight >=
-            scrollableContainer.scrollHeight
+          scrollableContainer.scrollTop + scrollableContainer.clientHeight >=
+          scrollableContainer.scrollHeight - threshold
         ) {
-            loadJobs();
+          loadJobs();
         }
-    });
+      });
 
     document.addEventListener("DOMContentLoaded", loadJobs);
