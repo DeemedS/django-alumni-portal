@@ -33,7 +33,7 @@
                     <div class="mb-3 col">
                         <label for="job-type" class="form-label">Job Type</label>
                         <select class="form-select" id="job-type" name="job_type">
-                            <option disabled>Select job type</option>
+                            <option selected disabled value="">Select job type</option>
                             <option value="FT">Full-Time</option>
                             <option value="PT">Part-Time</option>
                             <option value="CT">Contract</option>
@@ -56,12 +56,6 @@
                         <label for="benefits" class="form-label">Benefits</label>
                         <textarea class="form-control" id="benefits" name="benefits" rows="3" placeholder="Enter benefits"></textarea>
                     </div>
-                    <div class="mb-3 col">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="is_active" name="is_active">
-                            <label class="form-check-label" for="is_active">Active</label>
-                        </div>
-                    </div>
                     <div class="text-end mt-4">
                         <button type="button" class="cancel-btn" onclick="discardChanges()">Discard</button>
                         <button type="submit" class="submit-btn">Save</button>
@@ -74,54 +68,52 @@
         <article class="col-md-8 preview">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h3 class="card-title fw-bold mb-4" style="color: #800000;"></h3>
+                    <h3 class="card-title fw-bold mb-4 preview-title" style="color: #800000;"></h3>
                     
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-created-at">
                         <div class="col-md-6">
-                            <p class="mb-0 text-muted"><strong>Posted:</strong></p>
+                            <p class="mb-0 text-muted"><strong>Created At:</strong> <span class="created-at-text"></span></p>
                         </div>
                     </div>
-
-                    <div class="row mb-4">
+        
+                    <div class="row mb-4 preview-company">
                         <div class="col-md-6">
-                            <p class="mb-0 text-muted"><strong>Company:</strong></p>
+                            <p class="mb-0"><strong>Company:</strong> <span class="company-text"></span></p>
                         </div>
                     </div>
-
-                    <div class="row mb-4">
-                        <div class="col-md-4 mb-3 mb-md-0">
-                            <p class="mb-0"><i class="bi bi-geo-alt"></i> <strong>Location:</strong></p>
+        
+                    <div class="row mb-4 preview-meta">
+                        <div class="col-md-4 mb-3 mb-md-0 preview-location">
+                            <p class="mb-0"><i class="bi bi-geo-alt"></i> <strong>Location:</strong> <span class="location-text"></span></p>
                         </div>
-                        <div class="col-md-4 mb-3 mb-md-0">
-                            <p class="mb-0"><strong>Salary:</strong> <span></span> PHP</p>
+                        <div class="col-md-4 mb-3 mb-md-0 preview-salary">
+                            <p class="mb-0"><strong>Salary:</strong> <span class="salary-text"></span> <span class="currency">PHP</span></p>
                         </div>
-                        <div class="col-md-4">
-                            <p class="mb-0"><i class="bi bi-briefcase"></i> <strong>Job Type:</strong></p>
+                        <div class="col-md-4 preview-job-type">
+                            <p class="mb-0"><i class="bi bi-briefcase"></i> <strong>Job Type:</strong> <span class="job-type-text"></span></p>
                         </div>
                     </div>
-
+        
                     <hr>
-
-                    <div class="row mb-4">
+        
+                    <div class="row mb-4 preview-description">
                         <h4 class="fw-semibold">Job Description</h4>
-                        <pre class="text-secondary"></pre>
+                        <pre class="text-secondary description-text"></pre>
                     </div>
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-responsibilities">
                         <h4 class="fw-semibold">Job Responsibilities</h4>
-                        <pre class="text-secondary"></pre>
+                        <pre class="text-secondary responsibilities-text"></pre>
                     </div>
-
-                    <div class="row mb-4">
+        
+                    <div class="row mb-4 preview-qualifications">
                         <h4 class="fw-semibold">Job Qualifications</h4>
-                        <pre class="text-secondary"></pre>
+                        <pre class="text-secondary qualifications-text"></pre>
                     </div>
-                    
-
-                    <div class="row mb-4">
+        
+                    <div class="row mb-4 preview-benefits">
                         <h4 class="fw-semibold">Job Benefits</h4>
-                        <pre class="text-secondary"></pre>
+                        <pre class="text-secondary benefits-text"></pre>
                     </div>
-                  
                 </div>
             </div>
         </article>
@@ -132,6 +124,8 @@
 <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
     <!-- Toast template will be added dynamically -->
 </div>
+
+<script src="{% static 'js/careers_preview.js' %}"></script>
 
 
 {% endblock %}
