@@ -1,9 +1,9 @@
-let combined = [];  // 1. Declare combined in the outer scope
+let combined = [];
 
 $(document).ready(function () {
-    const articleUrl = "/api/filtered-articles/?page_size=10";
-    const eventUrl = "/api/filtered-events/?page_size=10";
-    const jobUrl = "/api/filtered-jobposts/?page_size=10";
+    const articleUrl = "/api/filtered-articles/?page_size=10&is_active=true";
+    const eventUrl = "/api/filtered-events/?page_size=10&is_active=true";
+    const jobUrl = "/api/filtered-jobposts/?page_size=10&is_active=true";
 
     $.when($.get(articleUrl), $.get(eventUrl), $.get(jobUrl))
         .done(function (articleResponse, eventResponse, jobResponse) {
