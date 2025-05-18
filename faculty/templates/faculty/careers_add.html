@@ -12,7 +12,7 @@
         <!-- start of edit job form -->
         <div class="col-md-4 edit-forms">
             <div class="bg-light p-3 min-vh-100 d-flex flex-column">
-                <form class="form-container" method="post">
+                <form id="careerForm" class="form-container">
                     {% csrf_token %}
                     <div class="mb-3 col">
                         <label for="title" class="form-label">Title</label>
@@ -126,6 +126,7 @@
 </div>
 
 <script src="{% static 'js/careers_preview.js' %}"></script>
+<script src="{% static 'js/career-add-form-handler.js' %}"></script>
 
 
 {% endblock %}

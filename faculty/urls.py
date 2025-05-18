@@ -22,8 +22,8 @@ urlpatterns = [
     path('faculty/alumni-delete/<int:id>/', user_views.alumni_delete, name='alumni_delete'),
 
     path('faculty/careers-management', faculty_views.careers_management, name='careers_management'),
-    path('faculty/careers-add', faculty_views.careers_add, name='careers_add'),
-    path('faculty/careers-edit/<int:id>/', faculty_views.careers_edit, name='careers_edit'),
+    path('faculty/career-add', careers_views.career_add, name='career_add'),
+    path('faculty/careers-edit/<int:id>/', faculty_views.careers_edit, name='career_edit'),
     path('faculty/careers-view/<int:id>/', faculty_views.careers_view, name='careers_view'),
     path('faculty/career-delete/<int:id>/', careers_views.career_delete, name='career_delete'),
     
