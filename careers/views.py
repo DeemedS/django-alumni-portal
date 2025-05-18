@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import JobPost
@@ -10,6 +11,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import get_messages
+from careers.models import JobPost
 
 # Create your views here.
 
@@ -163,3 +165,55 @@ def career_delete(request, id):
         return JsonResponse({"success": True}, status=200)
     except Exception as e:
         return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
+    
+@login_required(login_url='/faculty/')
+def career_add(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            title = data.get("title", "")
+            company = data.get("company", "")
+            salary = data.get("salary", "")
+            location = data.get("location", "")
+            job_type = data.get("job_type", "")
+            description = data.get("description", "")
+            responsibilities = data.get("responsibilities", "")
+            qualifications = data.get("qualifications", "")
+            benefits = data.get("benefits", "")
+
+            # Save to database
+            career = JobPost.objects.create(
+                title=title,
+                company=company,
+                salary=salary,
+                location=location,
+                job_type=job_type,
+                description=description,
+                responsibilities=responsibilities,
+                qualifications=qualifications,
+                benefits=benefits,
+            )
+            
+            career.save()
+
+            edit_url = reverse('faculty:career_edit', args=[career.id])
+            
+            return JsonResponse({
+                "message": "Career added successfully!",
+                "redirect_url": edit_url,
+            })
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            print("Unexpected error:", e)
+            return JsonResponse({"error": "An unexpected error occurred."}, status=500)
+        
+    return render(request, 'faculty/careers_add.html')
