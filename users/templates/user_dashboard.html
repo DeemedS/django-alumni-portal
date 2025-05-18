@@ -30,13 +30,13 @@
                             <li><a class="dropdown-item" href="#">Most Popular</a></li>
                         </ul>
                     </div>
-                    {% include "components/newsAnn_card.html" %}
-                    {% include "components/event_card.html" %}
-                    {% include "components/job_card.html" %}
+                    <div id="news-feed-container"></div>
                 </div>
             </div>
         </div>
         
     </div>
 </div>
+
+<script src="{% static 'js/load_feed_content.js' %}"></script>
 {% endblock %}

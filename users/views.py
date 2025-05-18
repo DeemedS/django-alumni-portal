@@ -90,6 +90,7 @@ def user_edit(request):
 
                     first_name = form.cleaned_data.get('first_name')
                     last_name = form.cleaned_data.get('last_name')
+                    suffix = form.cleaned_data.get('suffix')
                     email = user_data.get('email')
                     student_number = user_data.get('student_number')
                     middle_name = form.cleaned_data.get('middle_name')
@@ -106,6 +107,7 @@ def user_edit(request):
                 
                 first_name = user_data.get('first_name')
                 last_name = user_data.get('last_name')
+                suffix = form.cleaned_data.get('suffix')
                 email = user_data.get('email')
                 student_number = user_data.get('student_number')
                 middle_name = user_data.get('middle_name')
@@ -119,6 +121,7 @@ def user_edit(request):
             return render(request, 'user_edit.html', {
                 'first_name': first_name,
                 'last_name': last_name,
+                'suffix': suffix,
                 'email': email,
                 'student_number': student_number,
                 'middle_name': middle_name,

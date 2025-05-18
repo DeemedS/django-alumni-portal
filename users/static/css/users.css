@@ -634,4 +634,16 @@
     width: auto;
     min-width: 0;
     white-space: nowrap;
-  }
+}
+
+.see-more {
+    display: inline;       /* keep inline */
+    color: blue;
+    cursor: pointer;
+    font-size: 0.9rem; /* smaller font size */
+}
+
+.body-text {
+    font-size: 0.9rem; /* smaller font size */
+    tab-size: 0;
+}
