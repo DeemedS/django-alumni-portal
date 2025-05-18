@@ -332,6 +332,12 @@
     color:#ececec;
 }
 
+.edit-user-form input:focus, .edit-user-form select:focus{
+    border: 1px solid var(--red);
+    box-shadow: 0 0 5px var(--red);
+}
+    
+
 .top-nav{
     display: flex;
     justify-content: center;
@@ -371,6 +377,22 @@
     text-decoration: none;
 }
 
+.add-more-btn {
+  background-color: var(--pupred);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  background-color: var(--pupred);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
 
   .bookmark-icon {
     cursor: pointer;

@@ -12,18 +12,12 @@
 
     <div class="container-fluid">
         <div class="row flex-nowrap">
-
             {% include "components/sidebar.html" %}
-            
-
             <div class="col mb-3">
-
                 <div class="user-header mt-3">
                     <h3>Edit Profile</h3>
                 </div>
-
                 <div class="p-3 bg-light">
-
                     <h3>Profile Photo</h3>
                     <div class="container mt-3">
                         <div class="row profile-photo-details">
@@ -65,85 +59,235 @@
                             {% csrf_token %}
 
                             <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="email" name="email" value="{{ email }}" readonly>
-                                        <label for="email" class="form-label">Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="student_number" name="student_number" value="{{ student_number }}" readonly>
-                                        <label for="student_number" class="form-label">Student Number</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ first_name }}">
-                                        <label for="first_name" class="form-label">First Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="last_name" name="last_name" value="{{ last_name }}">
                                         <label for="last_name" class="form-label">Last Name</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ first_name }}">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="middle_name" name="middle_name" value="{{ middle_name }}" >
                                         <label for="middle_name" class="form-label">Middle Name</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-4">
+                                <div class="col-md-1">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control" id="birthday" name="birthday" value="{{ birthday }}" >
-                                        <label for="birthday" class="form-label">Birthday</label>
+                                        <input type="text" class="form-control" id="suffix" name="suffix" value="{{ suffix }}" >
+                                        <label for="suffix" class="form-label">Suffix</label>
                                     </div>
                                 </div>
-                                <div class="col-md-8">
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-5">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="address" name="address" value="{{ address }}" >
+                                        <input type="text" class="form-control" id="address" placeholder="Address" value="{{ address }}" required>
                                         <label for="address" class="form-label">Address</label>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" placeholder="Email" value="{{ email }}" required>
+                                        <label for="email" class="form-label">Email Address</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="birthday" value="{{ birthday }}" required>
+                                        <label for="birthday" class="form-label">Birthday</label>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="telephone" name="telephone" value="{{ telephone }}" >
                                         <label for="telephone" class="form-label">Telephone Number</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="mobile" name="mobile" value="{{ mobile }}" >
                                         <label for="mobile" class="form-label">Mobile Number</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-2">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="civil_status" name="civil_status" value="{{ civil_status }}" >
-                                        <label for="civil_status" class="form-label">Civil Status</label>
+                                         <select class="form-select" id="civilStatus" name="civil_status" required>
+                                            <option value="" disabled {% if not civil_status %}selected{% endif %}>Select Civil Status</option>
+                                            <option value="Single" {% if civil_status == "Single" %}selected{% endif %}>Single</option>
+                                            <option value="Married" {% if civil_status == "Married" %}selected{% endif %}>Married</option>
+                                            <option value="Widowed" {% if civil_status == "Widowed" %}selected{% endif %}>Widowed</option>
+                                            <option value="Divorced" {% if civil_status == "Divorced" %}selected{% endif %}>Divorced</option>
+                                            <option value="Separated" {% if civil_status == "Separated" %}selected{% endif %}>Separated</option>
+                                            <option value="Annulled" {% if civil_status == "Annulled" %}selected{% endif %}>Annulled</option>
+                                            <option value="Common-Law" {% if civil_status == "Common-Law" %}selected{% endif %}>Common-Law</option>
+                                         </select>
+                                         <label for="civilStatus" class="form-label">Civil Status</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-2">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="sex" name="sex" value="{{ sex }}" >
+                                        <select class="form-select" id="sex" name="sex" required>
+                                            <option value="" disabled {% if not sex %}selected{% endif %}>Select Sex</option>
+                                            <option value="Male" {% if sex == "Male" %}selected{% endif %}>Male</option>
+                                            <option value="Female" {% if sex == "Female" %}selected{% endif %}>Female</option>
+                                        </select>
                                         <label for="sex" class="form-label">Sex</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                            <!-- Course Section -->
+                            <div class="row mb-3">
+                                <div class="col-md-6 position-relative">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="{{ course }}" >
+                                        <label for="courseSearch" class="form-label">Course</label>
+                                        <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
+                                        <input type="hidden" id="selectedCourse" name="course">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="section" name="section" value="{{ section.code }}">
+                                            <option value="" disabled selected>Select Section</option>
+                                        </select>
+                                        <label for="section" class="form-label">Section</label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row mb-3 mt-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="student_number" name="student_number" value="{{ student_number }}" readonly>
+                                        <label for="student_number" class="form-label">Student Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="school_year" name="school_year" data-selected-year="{{ school_year }}">
+                                            <option selected disabled>Select School Year</option>
+                                        </select>
+                                        <label for="school_year" class="form-label">School Year (Graduated)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="section-title mt-5">Education Profile</h5>
+                            <div id="educationSection">
+                            {% if alumni.education %}
+                                {% for edu in alumni.education %}
+                                    <div class="row g-3 mt-3 entry">
+                                        <div class="col-md-3">
+                                            <label class="form-label">School Graduated</label>
+                                            <input type="text" class="form-control school" placeholder="School Graduated" value="{{ edu.school }}" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Degree/Course</label>
+                                            <input type="text" class="form-control degree" placeholder="Degree/Course" value="{{ edu.degree }}" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Year Graduated</label>
+                                            <select class="form-select yearGraduated" data-selected-year="{{ edu.year }}" required>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 d-flex align-items-end">
+                                            <button type="button" class="btn btn-danger remove-btn">Remove</button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted no-record">No education records found.</p>
+                            {% endif %}
+                            </div>
+
+                            <button type="button" class="add-more-btn" id="addEducation">+ Add Education</button>
+
+                            <h5 class="mt-5">License and Certifications</h5>
+                            <div id="licenseSection">
+                            {% if alumni.licenses %}
+                                {% for license in alumni.licenses %}
+                                <div class="row g-3 mt-3 entry">
+                                    <div class="col-md-3">
+                                        <label class="form-label">License or Certification Name</label>
+                                        <input type="text" class="form-control license" placeholder="License or Certification Name" value="{{license.name}}" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Issuing Organization</label>
+                                        <input type="text" class="form-control org" placeholder="Issuing Organization" value="{{license.org}}" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Issue Date</label>
+                                        <input type="date" class="form-control issueDate" value="{{license.issueDate}}" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Expiration Date</label>
+                                        <input type="date" class="form-control expirationDate" value="{{license.expirationDate}}">
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-end">
+                                        <button type="button" class="btn btn-danger remove-btn">Remove</button>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted no-record">No license records found.</p>
+                            {% endif %}
+                            </div>
+
+                            <button type="button" class="add-more-btn" id="addLicense">+ Add License and Certifications</button>
+                            
+                            <h5 class="section-title mt-5">Work Experience</h5>
+                            <div id="workSection">
+                            {% if alumni.work_experience %}
+                                {% for work in alumni.work_experience %}
+                                <div class="row g-3 mt-3 entry">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Company Name</label>
+                                        <input type="text" class="form-control company" placeholder="Company Name (e.g., Google, Microsoft)" value="{{work.company}}" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">Position</label>
+                                        <input type="text" class="form-control position" placeholder="(e.g., Software Engineer)" value="{{work.position}}" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">Start Date</label>
+                                        <input type="date" class="form-control startDate" value="{{work.startDate}}" required>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="form-label">End Date</label>
+                                        <input type="date" class="form-control endDate" value="{{work.endDate}}">
+                                    </div>
+                                    <div class="col-md-1 d-flex align-items-end">
+                                        <button type="button" class="btn btn-danger remove-btn">Remove</button>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted no-record">No work experience records found.</p>
+                            {% endif %}
+                            </div>
+                            <button type="button" class="add-more-btn" id="addWork">+ Add Work Experience</button>
+                            
+
+                            <div class="text-end mt-4">
+                                <button class="submit-btn" type="submit">Save Changes</button>
+                            </div>
                         </form>
-                    </div>        
+                    </div>    
+                    <!-- End of Form  -->
+
+
                 </div>       
             </div>
         </div>
