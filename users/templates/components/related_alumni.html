@@ -1,45 +1,75 @@
 {% load static %}
-<div class="card card-custom mb-3 mt-3">
-    <div class="alumni-slider m-3">
+<div class="p-0 mb-3 mt-3 alumni-cards">
+    <div class="alumni-slider p-0">
         <div class="splide" role="group" aria-label="Splide Basic HTML Example">
           <div class="splide__track">
             <ul class="splide__list">
-              <li class="splide__slide">
-                <img src={% static 'images/grad.jpg' %} alt="...">
-                  <div class="carousel-caption">
-                    <H1>THESIS DEFENSE</H1> 
-                    <p>We are hopeful that our group will successfully pass the thesis defense for Design Project 2. After months of hard work and research, we look forward to the committee's feedback and are excited about the next steps. Thank you to everyone who has supported us along the way.</p>
-                    <div class="row caption-content">
-                        <div class="col-md-2">
-                            <p><span><i class="fa-regular fa-calendar"></i></span> January 28, 2025</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><span><i class="fa-solid fa-clock"></i></span> 1:00 PM</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><span><i class="fa-solid fa-location-dot"></i></span> CEA ROOM 300</p>
-                        </div>
-                    </div>
+              <li class="splide__slide" onclick="location.href='#'">
+                <div class="alumni-card">
+                  <div class="alumni-card-background blue-background">
+                  </div>
+                  <div class="alumni-card-body">
+                    <img src={% static 'images/main.jpg' %} alt="...">
+                    <h6 class="mt-3 mb-1 alumni-name">Juan Dela Cruz</h6>
+                    <p class="mb-3">President - BDO Corporation</p>
+                    <p>BSCPE</p>
+                    <p>Batch 2025</p>
+                  </div>
                 </div>
               </li>
-              <li class="splide__slide">
-                <img src={% static 'images/main.jpg' %} alt="...">
+              <li class="splide__slide" onclick="location.href='#'">
+                <div class="alumni-card">
+                  <div class="alumni-card-background pastel-wine-background">
+                  </div>
+                  <div class="alumni-card-body">
+                    <img src={% static 'images/main.jpg' %} alt="...">
+                    <h6 class="mt-3 mb-1 alumni-name">Juan Dela Cruz</h6>
+                    <p class="mb-3">President - BDO Corporation</p>
+                    <p>BSCPE</p>
+                    <p>Batch 2025</p>
+                  </div>
+                </div>
               </li>
-              <li class="splide__slide">
-                <img src={% static 'images/lagoon.jpg' %} alt="...">
+              <li class="splide__slide" onclick="location.href='#'">
+                <div class="alumni-card">
+                  <div class="alumni-card-background pastel-ochre-background">
+                  </div>
+                  <div class="alumni-card-body">
+                    <img src={% static 'images/main.jpg' %} alt="...">
+                    <h6 class="mt-3 mb-1 alumni-name">Juan Dela Cruz</h6>
+                    <p class="mb-3">President - BDO Corporation</p>
+                    <p>BSCPE</p>
+                    <p>Batch 2025</p>
+                  </div>
+                </div>
               </li>
-              <li class="splide__slide">
-                <img src={% static 'images/main.jpg' %} alt="...">
+              <li class="splide__slide" onclick="location.href='#'">
+                <div class="alumni-card">
+                  <div class="alumni-card-background pastel-powder-blue-background">
+                  </div>
+                  <div class="alumni-card-body">
+                    <img src={% static 'images/main.jpg' %} alt="...">
+                    <h6 class="mt-3 mb-1 alumni-name">Juan Dela Cruz</h6>
+                    <p class="mb-3">President - BDO Corporation</p>
+                    <p>BSCPE</p>
+                    <p>Batch 2025</p>
+                  </div>
+                </div>
               </li>
-              <li class="splide__slide">
-                <img src={% static 'images/lagoon.jpg' %} alt="...">
+              <li class="splide__slide" onclick="location.href='#'">
+                <div class="alumni-card">
+                  <div class="alumni-card-background pastel-indigo-background">
+                  </div>
+                  <div class="alumni-card-body">
+                    <img src={% static 'images/main.jpg' %} alt="...">
+                    <h6 class="mt-3 mb-1 alumni-name">Juan Dela Cruz</h6>
+                    <p class="mb-3">President - BDO Corporation</p>
+                    <p>BSCPE</p>
+                    <p>Batch 2025</p>
+                  </div>
+                </div>
               </li>
-              <li class="splide__slide">
-                <img src={% static 'images/main.jpg' %} alt="...">
-              </li>
-              <li class="splide__slide">
-                <img src={% static 'images/lagoon.jpg' %} alt="...">
-              </li>
+
             </ul>
           </div>
         </div>
