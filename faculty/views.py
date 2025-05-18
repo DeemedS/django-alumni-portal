@@ -94,31 +94,6 @@ def careers_management(request):
     return render(request, 'faculty/careers_management.html', context)
 
 @login_required(login_url='/faculty/')
-def careers_add(request):
-    if not request.user.is_staff or not request.user.is_active:
-        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
-        return redirect(reverse('authentication:faculty'))
-    
-    if request.method == 'POST':
-        form = CareerForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Job post added successfully.")
-            return redirect(reverse('faculty:careers_management'))
-    else:
-        form = CareerForm()
-    
-    context = {
-        'form': form,
-    }
-    return render(request, 'faculty/careers_add.html', context)
-
-@login_required(login_url='/faculty/')
 def careers_edit(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
@@ -148,7 +123,7 @@ def careers_edit(request, id):
         job_post.is_active = 'is_active' in request.POST
         job_post.save()
         messages.success(request, "Job post updated successfully.")
-        return redirect(reverse('faculty:careers_edit', kwargs={'id': id}))
+        return redirect(reverse('faculty:career_edit', kwargs={'id': id}))
     
     context = {
         'job_post': job_post,
