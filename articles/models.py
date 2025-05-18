@@ -15,6 +15,7 @@ class Article(models.Model):
     thumbnail = models.ImageField(blank=True, null=True, upload_to='article/thumbnails/')
     author = models.CharField(max_length=120, default='Admin')
     date = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
     featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
 
