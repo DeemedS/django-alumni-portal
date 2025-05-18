@@ -78,7 +78,7 @@ $(document).ready(function () {
                 } else if (item.type === "job") {
                     const companyLogo = item.company_logo || "/static/images/arcdologo.jpg";
                     const jobTitle = item.title || "Untitled Job";
-                    const companyName = item.company_name || "Unknown Company";
+                    const companyName = item.company || "Unknown Company";
                     const location = item.location || "Location not specified";
                     const jobType = item.job_type || "N/A";
                     const salary = item.salary ? item.salary + " PHP" : "Not specified";
