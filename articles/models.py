@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.db.models.signals import post_delete, pre_delete
 from django.dispatch import receiver
+from authentication.models import User
 
 
 class Article(models.Model):
@@ -17,8 +18,14 @@ class Article(models.Model):
     featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
 
+    liked_by = models.ManyToManyField(User, blank=True, related_name='liked_articles')
+
     order = models.JSONField(default=list, blank=True)
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default='news')
+
+    @property
+    def likes_count(self):
+        return self.liked_by.count()
 
     def __str__(self):
         return self.title
