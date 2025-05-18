@@ -10,19 +10,19 @@ $(document).ready(function () {
             const articles = articleResponse[0]?.results.map(item => ({
                 ...item,
                 type: "article",
-                created_at: new Date(item.created_at || item.date),
+                created_at: new Date(item.created_at),
             })) || [];
 
             const events = eventResponse[0]?.results.map(item => ({
                 ...item,
                 type: "event",
-                created_at: new Date(item.created_at || item.date),
+                created_at: new Date(item.created_at),
             })) || [];
 
             const jobs = jobResponse[0]?.results.map(item => ({
                 ...item,
                 type: "job",
-                created_at: new Date(item.created_at || item.date),
+                created_at: new Date(item.created_at),
             })) || [];
 
             combined = [...articles, ...events, ...jobs]  // 2. Assign combined here
@@ -105,7 +105,7 @@ $(document).ready(function () {
                                     <div class="job-card-details">
                                         <h3 class="job-card-title">${jobTitle}</h3>
                                         <p><i class="fa-solid fa-building me-1"></i>${companyName}</p>
-                                        <p><i class="fa-solid fa-location-dot me-1"></i>${location}</p>
+                                        <p class="job-card-location"><i class="fa-solid fa-location-dot me-1"></i>${location}</p>
                                         <p><i class="fa-solid fa-briefcase me-1"></i>Job Type: ${jobType}</p>
                                         <p><i class="fa-solid fa-dollar-sign me-1"></i>Salary: ${salary}</p>
                                     </div>

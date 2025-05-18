@@ -107,7 +107,7 @@ def user_edit(request):
                 
                 first_name = user_data.get('first_name')
                 last_name = user_data.get('last_name')
-                suffix = user_data.get('suffix')
+                suffix = user_data.get('suffix') or ""
                 email = user_data.get('email')
                 student_number = user_data.get('student_number')
                 middle_name = user_data.get('middle_name')
