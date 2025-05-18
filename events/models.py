@@ -11,6 +11,7 @@ class Event(models.Model):
     banner = models.ImageField(blank=True, null=True, upload_to='events/banners/')
     thumbnail = models.ImageField(blank=True, null=True, upload_to='events/thumbnail/')
     date = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     liked_by = models.ManyToManyField(User, blank=True, related_name='liked_events')
 
