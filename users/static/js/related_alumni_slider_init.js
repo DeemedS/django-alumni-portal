@@ -1,7 +1,8 @@
 
 var splide = new Splide( '.splide', {
-    perPage: 3,
+    perPage: 1,
     perMove: 1,
+    autoWidth: true,
     autoplay: false,
     speed: 1000,
     arrows: true,
@@ -10,6 +11,7 @@ var splide = new Splide( '.splide', {
     mediaQuery: 'max',
     pagination: false,
     type: 'slide',
+    trimSpace: 'false',
   },
    );
   

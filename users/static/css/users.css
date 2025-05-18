@@ -487,8 +487,82 @@
     }
 }
 
-.splide__slide img {
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
+/* myday css */
+
+.alumni-card {
+    min-width: 150px;
+    max-width: 150px;
+    display: flex;
+    justify-content: center;
+    font-size: 0.8rem;
+    text-align: center;    
+    color: #000;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    align-content: center;
+}
+
+.alumni-card-body {
+    min-width: 150px;
+    max-width: 150px;
+    background-color: transparent;
+    border: 1px solid rgb(124, 124, 124);
+    border-radius: 5px;
+    position: relative;
+    z-index: 1;
+    padding: 10px;
+}
+
+.alumni-card-background {
+    border-radius: 5px;
+    clip-path: polygon(0 0, 100% 0, 100% 27%, 0 27%);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+
+.blue-background {
+    background-color: rgb(40, 197, 197);
+}
+
+.pastel-ochre-background {
+    background-color: #D69759;
+}
+.pastel-wine-background {
+    background-color: #c25964;
+}
+
+.pastel-powder-blue-background {
+    background-color: #B2C9E2;
+}
+
+.pastel-indigo-background {
+    background-color: #8686AF;
+}
+.alumni-card-body img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: 0.8rem;
+}
+
+ .splide__list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+ }
+
+ .alumni-card-body p {
+    line-height: 0.8rem;
+    margin-bottom: 0.3rem;
+    margin-top: 0;
+ }
+
+ .splide__arrow--prev {
+    display: none;
+ 
 }
