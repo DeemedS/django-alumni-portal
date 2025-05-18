@@ -1,14 +1,15 @@
-:root{
+:root {
     --red: #800000;
     --pupred: #800000;
 }
+
 /* POPPINS FONT */
-.login-container{
+.login-container {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
 }
 
-.login-container .wrapper{
+.login-container .wrapper {
     padding: 0 20px 0 20px;
     background-image: url('/static/images/pup-image-2.jpg');
     background-repeat: no-repeat;
@@ -18,24 +19,25 @@
     background-size: cover;
 }
 
-.login-container .main{
+.login-container .main {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
-.login-container .side-image{
+
+.login-container .side-image {
     position: relative;
     align-items: center;
     justify-content: center;
     min-height: 140px;
 }
 
-.login-container .row{
-  width:  900px;
-  min-height:550px;
-  box-shadow: 5px 5px 10px 1px rgba(0,0,0,0.5);
-  background: rgba(255, 255, 255, 0.8);
+.login-container .row {
+    width: 900px;
+    min-height: 550px;
+    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .login-container .logos {
@@ -52,57 +54,60 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: #800000;
-    
+
 }
 
-.login-container .text h1{
+.login-container .text h1 {
     font-weight: 700;
     font-size: 35px;
 }
 
-.login-container .text p{
+.login-container .text p {
     color: #000000;
-    font-size: 10px; 
+    font-size: 10px;
 }
 
-.login-container i{
+.login-container i {
     font-weight: 400;
     font-size: 15px;
 }
 
-.login-container .right{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  background: linear-gradient(to bottom, #800000 0%, #710000 100%);
+.login-container .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(to bottom, #800000 0%, #710000 100%);
 }
 
-.login-container .input-box{
-  width: 330px;
-  box-sizing: border-box;
-  padding: 40px;
-  background: #fff;
+.login-container .input-box {
+    width: 330px;
+    box-sizing: border-box;
+    padding: 40px;
+    background: #fff;
 }
 
-.login-container img{
+.login-container img {
     border-radius: 100%;
     width: 90px;
     height: 90px;
     margin: 5px;
 }
-.login-container .input-box header{
+
+.login-container .input-box header {
     font-weight: 700;
     text-align: center;
     margin-bottom: 45px;
 }
-.login-container .input-field{
+
+.login-container .input-field {
     display: flex;
     flex-direction: column;
     position: relative;
     padding: 0 10px 0 10px;
 }
-.login-container .input{
+
+.login-container .input {
     height: 45px;
     width: 100%;
     background: transparent;
@@ -112,65 +117,66 @@
     margin-bottom: 20px;
     color: #40414a;
 }
-.login-container .input-box .input-field label{
+
+.login-container .input-box .input-field label {
     position: absolute;
     top: 10px;
     left: 10px;
     pointer-events: none;
     transition: .5s;
 }
-.login-container .input-field input:focus ~ label
-   {
+
+.login-container .input-field input:focus~label {
     top: -10px;
     font-size: 13px;
-  }
-  
-.login-container .input-field input:valid ~ label
-  {
-   top: -10px;
-   font-size: 13px;
-   color: #5d5076;
- }
+}
 
-.login-container .input-field .input:focus, .input-field .input:valid{
+.login-container .input-field input:valid~label {
+    top: -10px;
+    font-size: 13px;
+    color: #5d5076;
+}
+
+.login-container .input-field .input:focus,
+.input-field .input:valid {
     border-bottom: 1px solid #743ae1;
- }
- 
- .login-container .submit{
+}
+
+.login-container .submit {
     border: none;
     outline: none;
     height: 45px;
     background: #ececec;
     border-radius: 5px;
     transition: .4s;
- }
+}
 
- .login-container .submit:hover{
+.login-container .submit:hover {
     background: #5e0000;
     color: #fff;
     border: #fff 1px solid;
- }
+}
 
- .login-container .signup{
+.login-container .signup {
     text-align: center;
     font-size: small;
     margin-top: 25px;
 }
 
-.login-container .signup p{
+.login-container .signup p {
     margin: 0;
     line-height: 1.5rem;
 }
 
 
-.login-container .signup p a{
+.login-container .signup p a {
     text-decoration: none;
     font-weight: 700;
     color: #000;
     transition: .5s;
 }
 
-.login-container .signup p a:hover{
+.login-container .signup p a:hover {
     text-decoration: underline;
     color: #000;
 }
@@ -196,8 +202,8 @@
     color: #fff;
 }
 
-@media only screen and (max-width: 576px){
-    .login-container .side-image{
+@media only screen and (max-width: 576px) {
+    .login-container .side-image {
         border-radius: 0;
         background: linear-gradient(to bottom, #800000 0%, #710000 100%);
     }
@@ -206,22 +212,22 @@
         min-height: 400px;
     }
 
-    .login-container .logos{
+    .login-container .logos {
         padding: 0;
         margin-top: 1rem;
     }
 
-    .login-container img{
+    .login-container img {
         width: 50px;
         height: 50px;
     }
 
-    .login-container .text{
+    .login-container .text {
         width: 100%;
         text-align: center;
     }
 
-    .login-container .text h1{
+    .login-container .text h1 {
         margin-top: 6rem;
         bottom: 0;
         font-size: 10px;
@@ -230,38 +236,38 @@
         letter-spacing: 1px;
     }
 
-    .login-container .text p{
+    .login-container .text p {
         color: #fff;
     }
 
-    .login-container .input-box{
+    .login-container .input-box {
         width: 100%;
         height: 100%;
     }
 
-    .login-container .row{
-        max-width:420px;
+    .login-container .row {
+        max-width: 420px;
     }
 
-    .login-container .right{
+    .login-container .right {
         padding: 0;
     }
 
-    footer{
+    footer {
         display: none;
     }
 }
 
 @media (min-width: 768px) {
-    .login-container .right{
+    .login-container .right {
         clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0% 100%);
-      }
+    }
 }
 
 @media (min-width: 1024px) {
-    .login-container .row{
+    .login-container .row {
         backdrop-filter: blur(20px) saturate(168%);
-      }
+    }
 }
 
 
@@ -287,6 +293,7 @@
     background-color: #FEAF00;
     color: #600;
 }
+
 .side-bar a {
     margin: 7px;
 }
@@ -295,56 +302,60 @@
     margin-right: 10px;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 1024px) {
     .side-bar {
         display: none;
-    }   
-    
+    }
+
 }
 
 /* User Dashboard */
 
 /*User Edit Profile*/
-.user-header{
+.user-header {
     background-color: #800000;
-    color:#ececec;
+    color: #ececec;
     padding: 10px;
     border-radius: 5px;
     max-height: 200px;
 }
-.profile-photo-details{
+
+.profile-photo-details {
     display: flex;
 }
-.profile-photo{
-    margin-bottom: 20px;  
+
+.profile-photo {
+    margin-bottom: 20px;
     padding: 10px;
     margin-right: 10px;
     max-width: 30rem;
 }
-.profile-photo img{
+
+.profile-photo img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     border: 1px solid #800000;
 }
-.edit-user-form a{
+
+.edit-user-form a {
     background-color: var(--red);
-    color:#ececec;
+    color: #ececec;
 }
 
-.top-nav{
+.top-nav {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-@media screen and (min-width: 768px) {
-    .top-spacer{
-     display: none !important;
-    }   
+@media screen and (min-width: 1025px) {
+    .top-spacer {
+        display: none !important;
+    }
 }
 
-.requirements  {
+.requirements {
     border-left: 2px solid #800000;
 }
 
@@ -360,7 +371,7 @@
     text-overflow: ellipsis;
     line-height: 1.5;
     max-height: 100px;
-  }
+}
 
 .alumni-btn {
     background-color: #800000;
@@ -372,21 +383,25 @@
 }
 
 
-  .bookmark-icon {
+.bookmark-icon {
     cursor: pointer;
-  }
-  .job-title {
+}
+
+.job-title {
     font-weight: 700;
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-  }
-  .job-info p {
+}
+
+.job-info p {
     margin: 0;
-  }
-  .job-info b {
+}
+
+.job-info b {
     font-weight: 600;
-  }
-  .job-card-btn {
+}
+
+.job-card-btn {
     background-color: #8B0000;
     color: #fff;
     border: none;
@@ -394,57 +409,63 @@
     padding: 0.5rem 1.25rem;
     border-radius: 6px;
     text-decoration: none;
-  }
+}
 
-  /* Newsfeed Css */
-  .card-custom {
+/* Newsfeed Css */
+.card-custom {
     border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  }
-  .card-profile-img  img{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-profile-img img {
     width: 48px;
     height: 48px;
     border-radius: 10px;
     background-color: #dee2e6;
-  }
-  .hashtags {
+}
+
+.hashtags {
     color: #0a66c2;
     text-decoration: none;
-  }
-  .see-translation {
+}
+
+.see-translation {
     color: #0a66c2;
     font-weight: 500;
     cursor: pointer;
-  }
-  .interaction-bar div {
+}
+
+.interaction-bar div {
     cursor: pointer;
-  }
-  .reaction-icons i {
+}
+
+.reaction-icons i {
     font-size: 18px;
     margin-right: 5px;
-  }
-  .card-img img {
+}
+
+.card-img img {
     width: 100%;
     height: auto;
     border-radius: 10px;
     margin-top: 10px;
-  }
+}
 
-  .job-card-title {
+.job-card-title {
     font-weight: 700;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-  }
+}
 
-  .job-card-content {
+.job-card-content {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     gap: 2rem;
 
-  }
+}
 
-  .job-card-company img {
+.job-card-company img {
     min-width: none;
     max-width: 300px;
     width: 120px;
@@ -456,7 +477,7 @@
         width: 100px;
         height: 100px;
     }
-  }
+}
 
 .job-card-details {
     line-height: 0.5;
@@ -464,15 +485,15 @@
 
     @media screen and (max-width: 576px) {
         line-height: 1;
-        
+
     }
 }
 
-  .job-card-title {
+.job-card-title {
     font-weight: 700;
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-  }
+}
 
 .job-card-button a {
     background-color: var(--pupred);
@@ -495,13 +516,16 @@
     display: flex;
     justify-content: center;
     font-size: 0.8rem;
-    text-align: center;    
+    text-align: center;
     color: #000;
     cursor: pointer;
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
     align-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px) saturate(168%);
+    border-radius: 5px;
 }
 
 .alumni-card-body {
@@ -531,6 +555,7 @@
 .pastel-ochre-background {
     background-color: #D69759;
 }
+
 .pastel-wine-background {
     background-color: #c25964;
 }
@@ -542,6 +567,7 @@
 .pastel-indigo-background {
     background-color: #8686AF;
 }
+
 .alumni-card-body img {
     border-radius: 50%;
     width: 50px;
@@ -549,20 +575,63 @@
     margin-top: 0.8rem;
 }
 
- .splide__list {
+.splide__list {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 1rem;
- }
+}
 
- .alumni-card-body p {
+.alumni-card-body p {
     line-height: 0.8rem;
     margin-bottom: 0.3rem;
     margin-top: 0;
- }
-
- .splide__arrow--prev {
-    display: none;
- 
 }
+
+.splide__arrow--prev {
+    display: none;
+}
+
+/*  */
+.line-divider {
+    border: 1px solid #800000;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.no-border-btn {
+    border: none;
+    box-shadow: none;
+}
+
+.no-border-btn:focus,
+.no-border-btn:active,
+.no-border-btn.show {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.small-dropdown .dropdown-item {
+    font-size: 0.75rem;
+    /* Extra small text */
+    padding: 0.25rem 0.75rem;
+}
+
+.small-dropdown .dropdown-item:hover {
+    background-color: #e0f0ff;
+    /* Light blue, customize as needed */
+    color: #0056b3;
+}
+
+.small-dropdown .dropdown-item.active {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.fit-to-text {
+    width: auto;
+    min-width: 0;
+    white-space: nowrap;
+  }

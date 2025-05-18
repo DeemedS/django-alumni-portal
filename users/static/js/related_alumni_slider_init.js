@@ -10,7 +10,7 @@ var splide = new Splide( '.splide', {
     pauseOnFocus: true,
     mediaQuery: 'max',
     pagination: false,
-    type: 'slide',
+    type: 'loop',
     trimSpace: 'false',
   },
    );
