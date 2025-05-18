@@ -1,6 +1,7 @@
 # Create your models here.
 from django.db import models
 from django.utils import timezone
+from authentication.models import User
 
 # Create your models here.
 class Event(models.Model):
@@ -10,7 +11,14 @@ class Event(models.Model):
     banner = models.ImageField(blank=True, null=True, upload_to='events/banners/')
     thumbnail = models.ImageField(blank=True, null=True, upload_to='events/thumbnail/')
     date = models.DateTimeField(default=timezone.now)
+
+    liked_by = models.ManyToManyField(User, blank=True, related_name='liked_events')
+
     is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
+
+    @property
+    def likes_count(self):
+        return self.liked_by.count()
