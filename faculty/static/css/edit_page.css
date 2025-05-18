@@ -1,3 +1,7 @@
+:root{
+    --red: #800000;
+    --pupred: #800000;
+}
 .sortable-container {
     margin: 20px 0;
     padding: 10px;
@@ -134,4 +138,9 @@ article pre {
 
 input[type="checkbox"][id$="-clear_id"], label[for$="-clear_id"] {
   display: none;
+}
+
+.alumni-edit-form input:focus, .alumni-edit-form select:focus {
+  border: 1px solid var(--red);
+  box-shadow: 0 0 5px var(--red);
 }
