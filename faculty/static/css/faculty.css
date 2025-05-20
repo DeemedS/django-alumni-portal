@@ -297,3 +297,87 @@
     border-radius: 5px;
     text-decoration: none;
 }
+
+/* import expor alumni  */
+.import-export-modal {
+    width: fit-content;
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: 100%;
+   display: flex; 
+   justify-content: center; 
+   align-items: center;
+}
+.import-export-file {
+    border: 2px dotted var(--pupred);
+    padding: 20px;
+    text-align: center;
+    cursor:pointer;
+}
+.import-export-file .form-check {
+    text-align: start;
+}
+
+.import-export-file select:focus, 
+.import-export-file [type="checkbox"].form-check-input:focus, 
+.full-download input[type="checkbox"].form-check-input {
+    border: 1px solid var(--pupred);
+    box-shadow: 0 0 5px var(--pupred);
+}
+
+.import-export-file select.form-select option:hover{
+    background-color: rgba(128, 0, 0, 0.5);
+}
+
+
+.import-export-file [type="checkbox"].form-check-input:checked {
+      accent-color: maroon !important;
+      background-color: #800000;
+      border: 1px solid var(--pupred);
+}
+.import-btn {
+    margin-left:10px;
+    background-color: var(--pupred);
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 15px;
+    text-decoration: none;
+}
+.cancel-btn {
+  background-color: white;
+  color: var(--pupred);
+  border: none;
+  border: 2px solid var(--pupred);
+  padding: 10px 10px;
+  border-radius: 5px;
+}
+.file-reminder {
+    background-color: rgba(128, 0, 0, 0.2);
+    text-align: center;
+    color: var(--pupred);
+    font-size: 0.9em;
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 3px;
+    border-radius: 5px;
+    
+}
+.full-download {
+    width: 100%;
+    background-color: var(--pupred);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+}
+.full-download input[type="checkbox"].form-check-input {
+    transform: scale(1.5);
+}
+.full-download input[type="checkbox"].form-check-input:checked {
+    accent-color: maroon !important;
+    background-color: #FEAF00;
+    border: 1px solid var(--pupred);
+}
