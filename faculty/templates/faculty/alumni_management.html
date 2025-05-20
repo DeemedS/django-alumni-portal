@@ -35,8 +35,8 @@
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center gap-3">
                                 <a href="/faculty/alumni-add" class="add-alumni-btn">ADD NEW ALUMNI</a>
-                                <a href="#" class="alumni-btn-green">IMPORT FILE</a>
-                                <a href="#" class="alumni-btn-green">EXPORT FILE</a>
+                                <button class="alumni-btn-green" data-bs-toggle="modal" data-bs-target="#import-modal">IMPORT FILE</button>
+                                <button class="alumni-btn-green" data-bs-toggle="modal" data-bs-target="#export-modal">EXPORT FILE</button>
                             </div>
                         </div>
                     </div>
@@ -78,6 +78,132 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
+<!-- import modal -->
+ <!-- <div class="modal fade" id="import-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="import-modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Import Alumni</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="import-alumni-file">
+            <label for="import-file" class="form-label"><i class="fa-solid fa-file-import me-1"></i>Choose a file to import</label>
+            <input type="file" class="form-control" id="import-file" accept=".csv, .xlsx">
+        </div>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="add-alumni-btn">Import</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+<div class="modal fade" id="import-modal" tabindex="-1" aria-labelledby="import-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-danger import-export-modal">
+            <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                <div class="import-export-file">
+                    <h4>Import Alumni Data</h4>
+                    <label for="import-file" class="form-label"><i class="fa-solid fa-file-import me-1"></i>Choose a file to import</label>
+                    <input type="file" class="form-control" id="import-file" accept=".csv, .xlsx">
+                </div>
+                    <p class="file-reminder mt-2">* Only .csv or .xlsx files are allowed.</p>
+                <div class="d-flex justify-content-center mt-4 w-100 flex-column flex-sm-row">
+                    <button class="cancel-btn flex-fill me-sm-3 mb-2 mb-sm-0" data-bs-dismiss="modal">Cancel</button>
+                    <button class="add-alumni-btn btn-danger flex-fill">Export</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of import modal -->
+
+<!-- export modal -->
+<div class="modal fade" id="export-modal" tabindex="-1" aria-labelledby="export-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-danger import-export-modal">
+            <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                <div class="import-export-file">
+                    <h4>Export Alumni Data</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="name">
+                        <label class="form-check-label" for="name">Name</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="birthdate">
+                        <label class="form-check-label" for="birthdate">Birth Date</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="address">
+                        <label class="form-check-label" for="address">Address</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="telephone">
+                        <label class="form-check-label" for="telephone">Telephone No</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="mobile">
+                        <label class="form-check-label" for="mobile">Mobile No</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="email">
+                        <label class="form-check-label" for="email">Email Address</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="civil_status">
+                        <label class="form-check-label" for="civil_status">Civil Status</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gender">
+                        <label class="form-check-label" for="gender">Gender</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="year_graduated">
+                        <label class="form-check-label" for="year_graduated">Year Graduated</label>
+                    </div>
+                    <!-- ADD MORE YEAR -->
+                    <select class="form-select mb-3" id="yearSelect">
+                        <option selected>Select Year</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="course_name">
+                        <label class="form-check-label" for="course_name">Course Name</label>
+                    </div>
+                    <!-- ADD MORE COURSE -->
+                    <select class="form-select mb-3" id="courseSelect">
+                        <option selected>Select Course</option>
+                        <option>Bachelor of Science in Computer Engineering</option>
+                        <option>Bachelor of Science in Information Technology</option>
+                        <option>Bachelor of Science in Computer Science</option>
+                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="employment">
+                        <label class="form-check-label" for="employment">Current Employment</label>
+                    </div>
+                </div>
+                <div class="full-download mt-3">
+                    <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="download_all">
+                    <label class="form-check-label text-white" for="download_all">
+                        Download all the data available.
+                    </label>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-4 w-100 flex-column flex-sm-row">
+                    <button class="cancel-btn flex-fill me-sm-3 mb-2 mb-sm-0" data-bs-dismiss="modal">Cancel</button>
+                    <button class="add-alumni-btn btn-danger flex-fill">Export</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
 
 <script src="{% static 'js/get_alumni.js' %}"></script>
 <script src="{% static 'js/faculty_pagination.js' %}"></script>
