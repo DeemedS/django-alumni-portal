@@ -32,6 +32,8 @@ urlpatterns = [
     path('faculty/events-edit/<slug:slug>/', faculty_views.events_edit, name='events_edit'),
     path('faculty/event-delete/<int:id>/', events_views.event_delete, name='event_delete'),
 
+    path('faculty/story-management', faculty_views.story_management, name='story_management'),
+
     path('faculty/articles-management', faculty_views.articles_management, name='articles_management'),
     path('faculty/article-delete/<int:id>/', article_views.article_delete, name='article_delete'),
 ] 

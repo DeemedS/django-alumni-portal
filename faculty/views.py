@@ -265,3 +265,21 @@ def articles_management(request):
         'last_name': request.user.last_name,
     }
     return render(request, 'faculty/articles_management.html', context)
+
+@login_required(login_url='/faculty/')
+def story_management(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    
+    context = {
+        'active_page':'alumni_stories',
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+    }
+    return render(request, 'faculty/story_management.html', context)
