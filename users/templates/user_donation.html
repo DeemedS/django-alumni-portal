@@ -1,0 +1,96 @@
+{% extends "user_page_layout.html" %}
+{% load static %}
+
+{% block title %}
+    Alumni Portal | User Dashboard
+{% endblock %}
+
+{% block content %}
+{% include "components/top_nav.html" %}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        {% include "components/sidebar.html" %}
+        <div class="col mb-3">
+
+                <div class="user-header mt-3">
+                    <h3>DONATE</h3>
+                </div>
+
+                <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                    <div class="row">
+                        <div class="col gap-3">
+                            
+                            <!-- start of donation -->
+
+                            <!-- Bank Transfer Section -->
+                             <div class="card mb-3">
+                                <div class="card-body">
+                                <h5 class="card-title">Directly Bank Transfer</h5>
+                                <p><strong>Account Number:</strong> 222333000456987</p>
+                                <p><strong>Account Name:</strong> Polytechnic University of the Philippines</p>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                <h5 class="card-title">Directly Bank Transfer</h5>
+                                <p><strong>Account Number:</strong> 222333000456987</p>
+                                <p><strong>Account Name:</strong> Polytechnic University of the Philippines</p>
+                                </div>
+                            </div>
+
+                            <!-- QR Code Section -->
+                            <div class="row qr-section text-center mb-4">
+                                <div class="col-md-4">
+                                    <div class="qr-box gcash">
+                                        <div class="qr-title text-white">GCASH</div>
+                                        <img src="" alt="GCASH QR" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="qr-box maya">
+                                        <div class="qr-title text-white">MAYA</div>
+                                        <img src="" alt="MAYA QR" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="qr-box paypal">
+                                        <div class="qr-title text-white">PAYPAL</div>
+                                        <img src="" alt="PAYPAL QR" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contact Details Section -->
+                            <div class="card contact-section">
+                                <div class="card-body">
+                                    <h5 class="card-title">Contact Details</h5>
+                                    <div class="row">
+                                        <div class="col-md-3 fw-bold">Name</div>
+                                        <div class="col-md-9">Polytechnic University of the Philippines</div>
+
+                                        <div class="col-md-3 fw-bold">Address</div>
+                                        <div class="col-md-9">PUP A. Mabini Campus Anonas Street, Sta. Mesa, Manila Philippines 1016</div>
+
+                                        <div class="col-md-3 fw-bold">Contact</div>
+                                        <div class="col-md-9">(+63 2) 5335-1PUP (5335-1787) or 5335-1777</div>
+
+                                        <div class="col-md-3 fw-bold">Email</div>
+                                        <div class="col-md-9">inquire@pup.edu.ph</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <!-- end of donation-->
+                        </div>
+                    </div>
+                </div>
+
+                
+                
+
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Articles Management{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+
+{% include 'components/faculty_topnav.html' %}
+{% include 'components/delete_modal.html' %}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/faculty_sidebar.html" %}
+
+        <div class="bg-light col mb-3 px-0 m-2 mt-3">
+
+            <div class="greeting-bar">
+                News & Announcements
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                <div class="container-fluid p-4">
+                    
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-3 search-container">
+                        <h4 class="fw-bold title-text mb-0">LIST OF STORIES</h4>
+                        <input type="text" class="form-control search-bar" placeholder="Search">
+                    </div>
+                    
+
+
+                    <div class="table-responsive mt-3 ">
+                        <table class="table table-bordered align-middle table-striped">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Story Title</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Actions</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Title">Kwentong Bayan</td>
+                                    <td data-label="Name">Gil Daniel Acollador</td>
+                                    <td data-label="Course">BSCPE</td>
+                                    <td data-label="Actions" class="action-icons text-nowrap">
+                                        <a href="#"><i class="fas fa-eye"></i></a>
+                                        <a href="#"><i class="fas fa-edit"></i></a>
+                                        <a href="#" class="delete-item" data-id="" data-type="" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                    <td class="text-center" data-label="Active">
+                                        <button class="publish-btn toggle-status-btn" data-id="${articles.id}">
+                                            Publish
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Title">Star City Love Story</td>
+                                    <td data-label="Name">Jeffrey Eguillon</td>
+                                    <td data-label="Course">BSCPE</td>
+                                    <td data-label="Actions" class="action-icons text-nowrap">
+                                        <a href="#"><i class="fas fa-eye"></i></a>
+                                        <a href="#"><i class="fas fa-edit"></i></a>
+                                        <a href="#" class="delete-item" data-id="${articles.id}" data-type="article" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                    <td class="text-center" data-label="Active">
+                                        <button class="unpublish-btn toggle-status-btn" data-id="${articles.id}">
+                                            Unpublish
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- end of content -->
+            </div>
+
+            <!-- <div class="pagination-controls d-flex justify-content-center mt-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="pagination">
+                    </ul>
+                </nav>
+            </div> -->
+
+        </div>
+    </div>
+</div>
+
+<!-- <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    Toast template will be added dynamically
+</div> -->
+
+
+
+{% endblock %}
