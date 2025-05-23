@@ -677,3 +677,10 @@
     font-size: 0.9rem; /* smaller font size */
     tab-size: 0;
 }
+
+.top-spacer {
+  position: sticky;
+  top: 0;
+  z-index: 999; /* ensure it stays above other elements */
+  background-color: white; /* add background so content under doesn’t bleed through */
+}
