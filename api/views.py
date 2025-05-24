@@ -1,4 +1,4 @@
-from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer
+from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer
 
 from django.utils.timezone import now
 from events.models import Event
@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.db.models import Q
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -173,3 +174,26 @@ class AlumniListView(APIView):
         # Return paginated response
         return paginator.get_paginated_response(serializer.data)
     
+class RelatedAlumniListView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        course_code = request.GET.get('course_code', None)
+
+        base_queryset = User.objects.exclude(Q(first_name="") | Q(last_name=""))
+
+        if course_code:
+            users = base_queryset.filter(course__course_code=course_code)\
+                .select_related('course')\
+                .order_by("?")
+        else:
+            users = base_queryset.select_related('course')\
+            .order_by("?")
+
+        paginator = PageNumberPagination()
+        paginator.page_size = request.GET.get('page_size', 10)
+
+        result_page = paginator.paginate_queryset(users, request)
+        serializer = RelatedALumniSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+

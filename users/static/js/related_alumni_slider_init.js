@@ -1,5 +1,5 @@
-
-var splide = new Splide( '.splide', {
+$(document).ready(function () {
+  splide = new Splide('.splide', {
     perPage: 1,
     perMove: 1,
     autoWidth: true,
@@ -8,13 +8,10 @@ var splide = new Splide( '.splide', {
     arrows: true,
     gap: '0.5rem',
     pauseOnFocus: true,
-    mediaQuery: 'max',
     pagination: false,
     type: 'loop',
-    trimSpace: 'false',
-  },
-   );
-  
-  
-  
-  splide.mount();
+    trimSpace: false,
+  }).mount();
+
+  fetchRelatedAlumni(null, 10);
+});
