@@ -101,6 +101,7 @@ def user_edit(request):
                     civil_status = form.cleaned_data.get('civil_status')
                     sex = form.cleaned_data.get('sex')
 
+
                     return redirect('/myaccount/edit/')
 
             else: 
@@ -117,6 +118,7 @@ def user_edit(request):
                 mobile = user_data.get('mobile')
                 civil_status = user_data.get('civil_status')
                 sex = user_data.get('sex')
+                profile_image = user_data.get('profile_image')
 
             return render(request, 'user_edit.html', {
                 'first_name': first_name,
@@ -131,7 +133,8 @@ def user_edit(request):
                 'mobile': mobile,
                 'civil_status': civil_status,
                 'sex': sex,
-                'active_page': 'edit',
+                'profile_image': profile_image,
+                'active_page': 'edit'
             })
         
         elif response.status_code == 401 and refresh_token:
@@ -234,10 +237,6 @@ def alumni_edit(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     alumni = get_object_or_404(User, id=id)
@@ -293,10 +292,6 @@ def alumni_edit(request, id):
 def alumni_add(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
 
         return redirect(reverse('authentication:faculty'))
     

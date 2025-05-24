@@ -100,6 +100,8 @@ def get_user_info(request):
         user_info = {
             'first_name': user.first_name,
             'last_name': user.last_name,
+            'suffix': user.suffix,
+            'profile_image': user.profile_image.url if user.profile_image else None,
             'email': user.email,
             'student_number': user.student_number,
             'middle_name': user.middle_name,
@@ -111,8 +113,8 @@ def get_user_info(request):
             'sex' : user.sex,
             'events': user.events,
             'jobs' : user.jobs
-
         }
+
         return Response(user_info, status=200)
     else:
         return Response({"detail": "Authentication credentials were not provided."}, status=401)
