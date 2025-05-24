@@ -28,7 +28,14 @@ function fetchRelatedAlumni(courseCode = null, pageSize = 10) {
         } else {
             alumniList.forEach((alumnus, index) => {
             const backgroundClass = backgroundClasses[index % backgroundClasses.length];
-            const position = alumnus.work_experience?.position || '';
+            
+            let position = 'No Work Info';
+
+            if (Array.isArray(alumnus.work_experience) && alumnus.work_experience.length > 0) {
+                const sortedExperience = alumnus.work_experience.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+                position = sortedExperience[0]?.position || 'No Work Info';
+            }
+
             const slide = `
             <li class="splide__slide">
                 <div class="alumni-card">
