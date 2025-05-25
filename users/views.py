@@ -172,11 +172,16 @@ def saved_jobs(request):
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
+        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
+        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+
         if response.status_code == 200:
             # Now, render the dashboard template and pass the user info
-            
+            user_data = user_response.json()
             context = {
                 'active_page': 'saved_jobs',
+                'first_name' : user_data.get('first_name'),
+                'last_name' : user_data.get('last_name'),
             }
             return render(request, 'saved_jobs.html',context)
 
@@ -202,15 +207,22 @@ def saved_events(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
+
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
+        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
+        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+
         if response.status_code == 200:
             # Now, render the dashboard template and pass the user info
+            user_data = user_response.json()
             context = {
                 'active_page': 'saved_events',
+                'first_name' : user_data.get('first_name'),
+                'last_name' : user_data.get('last_name'),
             }
             return render(request, 'saved_events.html',context)
 
@@ -393,3 +405,84 @@ def alumni_delete(request, id):
             return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
 
     return JsonResponse({"success": False, "message": "Invalid request"}, status=400)
+
+
+def user_stories(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+
+    if access_token:
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
+        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+
+        if response.status_code == 200:
+            # Now, render the dashboard template and pass the user info
+            user_data = user_response.json()
+            context = {
+                'active_page': 'user_stories',
+                'first_name' : user_data.get('first_name'),
+                'last_name' : user_data.get('last_name'),
+            }
+            return render(request, 'user_stories.html',context)
+
+        elif response.status_code == 401 and refresh_token:
+            refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
+            refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
+
+            if refresh_response.status_code == 200:
+                new_tokens = refresh_response.json()
+                access_token = new_tokens.get('access')
+                response = redirect('/myaccount/')
+                response.set_cookie('access_token', access_token, httponly=True)
+                return response
+            
+            else:
+                return redirect('/login/')
+        else:
+            return redirect('/login/')
+    else:
+        return redirect('/login/')
+
+def user_donation(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+
+    if access_token:
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
+        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+
+        if response.status_code == 200:
+            # Now, render the dashboard template and pass the user info
+            user_data = user_response.json()
+            context = {
+                'active_page': 'user_donation',
+                'first_name' : user_data.get('first_name'),
+                'last_name' : user_data.get('last_name'),
+            }
+            return render(request, 'user_donation.html',context)
+
+        elif response.status_code == 401 and refresh_token:
+            refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
+            refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
+
+            if refresh_response.status_code == 200:
+                new_tokens = refresh_response.json()
+                access_token = new_tokens.get('access')
+                response = redirect('/myaccount/')
+                response.set_cookie('access_token', access_token, httponly=True)
+                return response
+            
+            else:
+                return redirect('/login/')
+        else:
+            return redirect('/login/')
+    else:
+        return redirect('/login/')

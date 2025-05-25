@@ -692,6 +692,71 @@
     tab-size: 0;
 }
 
+/* story css */
+.cancel-btn {
+    background-color: white;
+    color: var(--pupred);
+    border: 2px solid var(--pupred);
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.alumni-story .form-section {
+    padding: 2rem;
+}
+
+.alumni-story .form-control:focus {
+      box-shadow: none;
+      border-color: var(--pupred);
+}
+
+.alumni-story .file-label {
+      font-weight: 500;
+}
+
+.alumni-story .form-text {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: #555;
+      text-align: right;
+}
+
+/* Donation css */
+
+.qr-section .card {
+      border: none;
+}
+
+.qr-section .card-body {
+      text-align: center;
+}
+
+.qr-title {
+      font-weight: bold;
+      margin-bottom: 1rem;
+}
+
+.qr-box {
+      padding: 1rem;
+      border-radius: 10px;
+}
+
+.qr-box.gcash {
+      background-color: #3b82f6;
+}
+
+.qr-box.maya {
+      background-color: #22c55e;
+}
+
+.qr-box.paypal {
+      background-color: #2563eb;
+}
+
+.contact-section .row div {
+      margin-bottom: 0.5rem;
+}
+
 .top-spacer {
   position: sticky;
   top: 0;
