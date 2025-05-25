@@ -27,4 +27,5 @@ urlpatterns = [
     path('event-details/<int:id>/', views.EventsDetailView.as_view(), name='event-details'),
 
     path('alumni-list/', views.AlumniListView.as_view(), name='alumni-list'),
+    path('related-alumni/', views.RelatedAlumniListView.as_view(), name='related-alumni-list'),
 ]

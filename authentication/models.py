@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import os
+from django.core.files.storage import default_storage
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -40,9 +41,18 @@ class Section(models.Model):
     def __str__(self):
         return f"{self.section_code} - {self.course.course_code}"
 
+def get_default_profile_image():
+    from .models import UserSettings
+    try:
+        settings = UserSettings.objects.first()
+        if settings and settings.default_profile_image:
+            return settings.default_profile_image.name
+    except:
+        pass
+    return 'user/profile_pics/default.jpg'
 
 class User(AbstractBaseUser, PermissionsMixin):
-    profile_image = models.ImageField(upload_to='user/profile_pics/', default='user/profile_pics/default.jpg', blank=True, null=True)
+    profile_image = models.ImageField(upload_to='user/profile_pics/', default=get_default_profile_image, blank=True, null=True)
     email = models.EmailField(_('email address'), unique=True)
     student_number = models.CharField(max_length=15, blank=True, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
@@ -77,8 +87,50 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
     
+    def save(self, *args, **kwargs):
+        try:
+            old = User.objects.get(pk=self.pk)
+            if old.profile_image and self.profile_image and old.profile_image != self.profile_image:
+                if old.profile_image.name != 'user/profile_pics/default.jpg':
+                    if default_storage.exists(old.profile_image.name):
+                        default_storage.delete(old.profile_image.name)
+        except User.DoesNotExist:
+            pass
+
+        super().save(*args, **kwargs)
+    
     def delete(self, *args, **kwargs):
         if self.profile_image and self.profile_image.name != 'user/profile_pics/default.jpg':
             if os.path.isfile(self.profile_image.path):
                 os.remove(self.profile_image.path)
         super().delete(*args, **kwargs)
+
+
+class UserSettings(models.Model):
+    default_profile_image = models.ImageField(
+        upload_to='user/profile_pics/',
+        default='user/profile_pics/default.jpg'
+    )
+
+    def __str__(self):
+        return "User Settings"
+
+    class Meta:
+        verbose_name = "User Settings"
+        verbose_name_plural = "User Settings"
+
+    def save(self, *args, **kwargs):
+        try:
+            old = UserSettings.objects.get(pk=self.pk)
+            if (
+                old.default_profile_image
+                and self.default_profile_image
+                and old.default_profile_image.name != self.default_profile_image.name
+                and old.default_profile_image.name != 'user/profile_pics/default.jpg'
+            ):
+                if default_storage.exists(old.default_profile_image.name):
+                    default_storage.delete(old.default_profile_image.name)
+        except UserSettings.DoesNotExist:
+            pass  # first time creation
+
+        super().save(*args, **kwargs)
