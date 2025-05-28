@@ -13,6 +13,9 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.contrib.auth import login
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.http import JsonResponse
 
 
 User = get_user_model()
@@ -174,4 +177,57 @@ def verify_email(request, uidb64, token):
         status = 400
         return render(request, 'verify_email.html', {'status': status})
 
+def send_password_reset_email(user):
+    token = default_token_generator.make_token(user)
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    reset_url = f"{settings.DOMAIN_URL}/reset-password/{uid}/{token}/"
+
+    subject = 'Reset your Alumni Portal password'
+    message = f'Hi {user.email},\n\nPlease click the link below to reset your password:\n\n{reset_url}'
+
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user.email],
+        fail_silently=False,
+    )
+
+@csrf_exempt
+def forgot_password(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        email = data.get('email')
+
+        try:
+            user = User.objects.get(email=email)
+            send_password_reset_email(user)
+            return JsonResponse({'message': 'Password reset email sent.'})
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'No user with that email found.'}, status=404)
+
+    return render(request, 'forgot_password.html')
+
+@csrf_exempt
+def reset_password(request, uidb64, token):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        new_password = data.get('password')
+
+        try:
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+
+            if default_token_generator.check_token(user, token):
+                user.set_password(new_password)
+                user.save()
+                return JsonResponse({'message': 'Password reset successful.'})
+            else:
+                return JsonResponse({'error': 'Invalid or expired token.'}, status=400)
+
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return JsonResponse({'error': 'Invalid user.'}, status=400)
+
+    # return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    return render(request, 'reset_password.html')
 
