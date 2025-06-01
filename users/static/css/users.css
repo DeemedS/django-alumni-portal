@@ -617,6 +617,9 @@
     height: 75px;
     width: 75px;
     margin-top: 0.8rem;
+    border: 1px solid #dddddd;
+    background-color: #fff;
+    object-fit: cover;
 }
 
 .splide__list {
