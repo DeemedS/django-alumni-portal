@@ -88,7 +88,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-5">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="address" placeholder="Address" value="{{ address }}" required>
+                                        <input type="text" class="form-control" id="address" name="address" placeholder="Address" value="{{ address }}" required>
                                         <label for="address" class="form-label">Address</label>
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-floating">
-                                        <input type="date" class="form-control" id="birthday" value="{{ birthday }}" required>
+                                        <input type="date" class="form-control" id="birthday" name="birthday" value="{{ birthday }}" required>
                                         <label for="birthday" class="form-label">Birthday</label>
                                     </div>
                                 </div>
@@ -153,12 +153,12 @@
                                         <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="{{ course }}" >
                                         <label for="courseSearch" class="form-label">Course</label>
                                         <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
-                                        <input type="hidden" id="selectedCourse" name="course">
+                                        <input type="hidden" id="selectedCourse" name="course" value="{{ course_id }}">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-floating">
-                                        <select class="form-select" id="section" name="section" value="{{ section.code }}">
+                                        <select class="form-select" id="section" name="section" value="{{ section_id }}">
                                             <option value="" disabled selected>Select Section</option>
                                         </select>
                                         <label for="section" class="form-label">Section</label>
@@ -186,8 +186,8 @@
 
                             <h5 class="section-title mt-5">Education Profile</h5>
                             <div id="educationSection">
-                            {% if alumni.education %}
-                                {% for edu in alumni.education %}
+                            {% if education %}
+                                {% for edu in education %}
                                     <div class="row g-3 mt-3 entry">
                                         <div class="col-md-3">
                                             <label class="form-label">School Graduated</label>
@@ -216,8 +216,8 @@
 
                             <h5 class="mt-5">License and Certifications</h5>
                             <div id="licenseSection">
-                            {% if alumni.licenses %}
-                                {% for license in alumni.licenses %}
+                            {% if licenses %}
+                                {% for license in licenses %}
                                 <div class="row g-3 mt-3 entry">
                                     <div class="col-md-3">
                                         <label class="form-label">License or Certification Name</label>
@@ -249,8 +249,8 @@
                             
                             <h5 class="section-title mt-5">Work Experience</h5>
                             <div id="workSection">
-                            {% if alumni.work_experience %}
-                                {% for work in alumni.work_experience %}
+                            {% if work_experience %}
+                                {% for work in work_experience %}
                                 <div class="row g-3 mt-3 entry">
                                     <div class="col-md-3">
                                         <label class="form-label">Company Name</label>
@@ -319,11 +319,9 @@
         {% endfor %}
     
         function initializeFields() {
-            console.log("Alumni Course ID:", "{{ alumni.course.id }}");
-            console.log("Alumni Section ID:", "{{ alumni.section.id }}");
-            console.log("Alumni Course:", "{{ alumni.course | escapejs }}");
     
-            const selectedCourseId = "{{ alumni.course.id }}";
+            const selectedCourseId = "{{ course_id }}";
+            console.log("Selected Course ID:", selectedCourseId);
             selectedCourse.value = selectedCourseId;
     
             if (selectedCourseId) {
@@ -333,7 +331,8 @@
                 }
             }
     
-            const selectedSectionId = "{{ alumni.section.id }}";
+            const selectedSectionId = "{{ section_id }}";
+            console.log("Selected Section ID:", selectedSectionId);
             updateSections(selectedCourseId, selectedSectionId);
         }
     
@@ -362,6 +361,8 @@
             courseSearch.value = course.text;
             selectedCourse.value = course.id;
             courseSuggestions.style.display = "none";
+
+
             updateSections(course.id, null);
         }
     

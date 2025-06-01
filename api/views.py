@@ -110,9 +110,23 @@ def get_user_info(request):
             'telephone': user.telephone,
             'mobile': user.mobile,
             'civil_status': user.civil_status,
-            'sex' : user.sex,
+            'sex': user.sex,
             'events': user.events,
-            'jobs' : user.jobs
+            'jobs': user.jobs,
+            'work_experience': user.work_experience,
+            'education': user.education,  # ✅ Add this line
+            'licenses': user.licenses,
+            'certifications': user.certifications,
+            'course': {
+                'id': user.course.id if user.course else None,
+                'course_code': user.course.course_code if user.course else None,
+                'course_name': user.course.course_name if user.course else None,
+            },
+            'section': {
+                'id': user.section.id if user.section else None,
+                'section_code': user.section.section_code if user.section else None,
+            },
+            'school_year': user.school_year,
         }
 
         return Response(user_info, status=200)

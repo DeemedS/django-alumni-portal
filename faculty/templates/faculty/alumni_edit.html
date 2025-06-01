@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-md-1">
                             <label for="suffix" class="form-label">Suffix</label>
-                            <input type="text" class="form-control" id="suffix" placeholder="Suffix" value="{{ alumni.suffix }}">
+                            <input type="text" class="form-control" id="suffix" placeholder="Suffix" value="{{ alumni.suffix | default_if_none:'' }}">
                         </div>                   
                     </div>
                     <div class="row g-3 mt-3">

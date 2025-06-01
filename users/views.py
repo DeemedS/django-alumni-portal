@@ -1,11 +1,9 @@
 import requests
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.messages import get_messages
 from django.urls import reverse
 from authentication.forms import UserForm
 from authentication.models import User, Course, Section
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.http import JsonResponse
 import json
@@ -86,11 +84,15 @@ def user_edit(request):
                 form = UserForm(request.POST, instance=user_instance)
 
                 if form.is_valid():
+
+                    print(form.cleaned_data)
+
                     form.save()
 
                     first_name = form.cleaned_data.get('first_name')
                     last_name = form.cleaned_data.get('last_name')
                     suffix = form.cleaned_data.get('suffix')
+                    suffix = "" if suffix in (None, "None") else suffix
                     email = user_data.get('email')
                     student_number = user_data.get('student_number')
                     middle_name = form.cleaned_data.get('middle_name')
@@ -100,6 +102,10 @@ def user_edit(request):
                     mobile = form.cleaned_data.get('mobile')
                     civil_status = form.cleaned_data.get('civil_status')
                     sex = form.cleaned_data.get('sex')
+                    profile_image = form.cleaned_data.get('profile_image')
+                    work_experience = user_data.get('work_experience', [])
+                    education = user_data.get('education', [])
+                    licenses = user_data.get('licenses', [])
 
 
                     return redirect('/myaccount/edit/')
@@ -108,7 +114,8 @@ def user_edit(request):
                 
                 first_name = user_data.get('first_name')
                 last_name = user_data.get('last_name')
-                suffix = user_data.get('suffix') or ""
+                suffix = user_data.get('suffix')
+                suffix = "" if suffix in (None, "None") else suffix
                 email = user_data.get('email')
                 student_number = user_data.get('student_number')
                 middle_name = user_data.get('middle_name')
@@ -119,6 +126,17 @@ def user_edit(request):
                 civil_status = user_data.get('civil_status')
                 sex = user_data.get('sex')
                 profile_image = user_data.get('profile_image')
+                work_experience = user_data.get('work_experience', [])
+                education = user_data.get('education', [])
+                licenses = user_data.get('licenses', [])
+                course = user_data.get('course', {})
+                course_display = f"{course.get('course_code', '')} - {course.get('course_name', '')}" if course else ""
+                course_id = course.get('id') if course else None
+                section = user_data.get('section', {})
+                section_id = section.get('id') if section else None
+                section_code = section.get('section_code', '') if section else ""
+                school_year = user_data.get('school_year')
+                
 
             courses = Course.objects.all()
             sections = Section.objects.all()
@@ -139,7 +157,15 @@ def user_edit(request):
                 'civil_status': civil_status,
                 'sex': sex,
                 'profile_image': profile_image,
+                'work_experience': work_experience,
+                'education': education,
+                'licenses': licenses,
                 'active_page': 'edit',
+                'course' : course_display,
+                'course_id' : course_id,
+                'section_code' : section_code,
+                'section_id' : section_id,
+                'school_year' : school_year,
             }
 
             return render(request, 'user_edit.html', context)
