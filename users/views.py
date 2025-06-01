@@ -342,7 +342,7 @@ def alumni_add(request):
             
             def generate_student_number():
                 while True:
-                    years = [f"{i:04d}" for i in range(0, 2026)]
+                    years = [f"{i:04d}" for i in range(0, 9999)]
                     year = random.choice(years)
                     unique_number = str(random.randint(1, 99999)).zfill(5)
                     suffix = ''.join(random.choices(string.ascii_uppercase, k=2))
