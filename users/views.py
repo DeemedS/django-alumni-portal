@@ -339,6 +339,19 @@ def alumni_add(request):
             def generate_course_code(course_name, max_length=10):
                 acronym = ''.join(word[0] for word in course_name.split()).upper()
                 return acronym[:max_length]
+            
+            def generate_student_number():
+                while True:
+                    years = [f"{i:04d}" for i in range(0, 2026)]
+                    year = random.choice(years)
+                    unique_number = str(random.randint(1, 99999)).zfill(5)
+                    suffix = ''.join(random.choices(string.ascii_uppercase, k=2))
+                    random_digits = str(random.randint(0, 9)).zfill(1)
+
+                    student_number = f"{year}-{unique_number}-{suffix}-{random_digits}"
+
+                    if not User.objects.filter(student_number=student_number).exists():
+                        return student_number
 
             if not course and course_name:
                 course_code = generate_course_code(course_name)
@@ -347,7 +360,7 @@ def alumni_add(request):
             course = get_object_or_404(Course, id=course) if course else None
             section = get_object_or_404(Section, id=basic_info.get('section')) if basic_info.get('section') else None
 
-            student_number = ''.join(random.choices(string.digits, k=15))
+            student_number = generate_student_number()
             password = ''.join(random.choices(string.ascii_letters + string.digits, k=12))
 
             if User.objects.filter(email=basic_info.get('email', "")).exists():
