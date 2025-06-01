@@ -90,7 +90,7 @@
                                 <div class="row mb-2">
                                     <div class="col-md-8 position-relative">
                                         <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="" >
-                                        <input type="hidden" id="course_name" name="course_name " value=""> 
+                                        <input type="hidden" id="course_name" name="course_name" value=""> 
                                         <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
                                         <input type="hidden" id="selectedCourse" name="course">
                                     </div>
@@ -189,6 +189,8 @@
             selectedCourse.value = course.id;
             courseName.value = course.name;
             courseSuggestions.style.display = "none";
+
+            console.log(`Selected Course: ${course.text}, ID: ${course.id}, Name: ${course.name}`);
         }
     
 
