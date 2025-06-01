@@ -266,13 +266,24 @@ def alumni_edit(request, id):
         try:
 
             data = json.loads(request.body)
-
+    
             basic_info = data.get('basicInfo', {})
             education = data.get('education', [])
             licenses = data.get('licenses', [])
             work_experience = data.get('workExperience', [])
 
-            course = get_object_or_404(Course, id=basic_info.get('course')) if basic_info.get('course') else None
+            course_name = basic_info.get('course_name')
+            course = basic_info.get('course')
+
+            def generate_course_code(course_name, max_length=10):
+                acronym = ''.join(word[0] for word in course_name.split()).upper()
+                return acronym[:max_length]
+
+            if not course and course_name:
+                course_code = generate_course_code(course_name)
+                course = Course.objects.get_or_create(course_name=course_name, course_code=course_code)[0].id
+        
+            course = get_object_or_404(Course, id=course) if course else None
             section = get_object_or_404(Section, id=basic_info.get('section')) if basic_info.get('section') else None
 
             alumni.first_name = basic_info.get('firstName', alumni.first_name)
@@ -322,7 +333,18 @@ def alumni_add(request):
             licenses = data.get('licenses', [])
             work_experience = data.get('workExperience', [])
 
-            course = get_object_or_404(Course, id=basic_info.get('course')) if basic_info.get('course') else None
+            course_name = basic_info.get('course_name')
+            course = basic_info.get('course')
+
+            def generate_course_code(course_name, max_length=10):
+                acronym = ''.join(word[0] for word in course_name.split()).upper()
+                return acronym[:max_length]
+
+            if not course and course_name:
+                course_code = generate_course_code(course_name)
+                course = Course.objects.get_or_create(course_name=course_name, course_code=course_code)[0].id
+        
+            course = get_object_or_404(Course, id=course) if course else None
             section = get_object_or_404(Section, id=basic_info.get('section')) if basic_info.get('section') else None
 
             student_number = ''.join(random.choices(string.digits, k=15))
