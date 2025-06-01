@@ -75,12 +75,24 @@ def user_login(request):
 
 def register(request):
     if request.method == 'POST':
+        last_name = request.POST.get('last_name')
+        first_name = request.POST.get('first_name')
+        middle_name = request.POST.get('middle_name')
+        mobile = request.POST.get('mobile')
+        birthday = request.POST.get('birthday')
+        sex = request.POST.get('sex')
+        # add course, year_graduated, current position, company and etc
         student_number = request.POST.get('student_number')
         email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm-pass')
+        agree = request.POST.get('agree')
         
 
+        if not agree:
+            messages.error(request, "You must agree to the terms and conditions.")
+            return render(request, 'signup.html')
+        
         # Validate form data
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
@@ -95,7 +107,18 @@ def register(request):
             return render(request, 'signup.html')
 
         # Create the user
-        user = User.objects.create_user(student_number=student_number, email=email, password=password)
+        user = User.objects.create_user(
+            student_number=student_number, 
+            email=email, 
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            middle_name=middle_name,
+            mobile=mobile,
+            birthday=birthday,
+            sex = sex
+            # Add other fields as necessary
+            )
         user.save()
 
         if user is None:
