@@ -304,7 +304,6 @@ input:focus {
     flex: 1;
     background: rgba(255, 255, 255, 0.9);
     padding: 50px;
-    clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
     color: #800000;
     align-items: center;
     align-content: center;
@@ -362,12 +361,17 @@ input[type="checkbox"].form-check-input:checked {
     color: #DAA520;
 }
 
+.form-select {
+    border-radius: 0 !important;
+}
+
 .signup-right input, .signup-right select,.signup-right input::placeholder {
     font: .85rem Poppins, sans-serif;
 }
 @media screen and (max-width: 768px) {
     .signup-container .signup-row {
         flex-direction: column;
+        margin: 10px 0;
     }
     .signup-left, .signup-right {
         width: 100%;

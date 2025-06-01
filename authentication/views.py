@@ -2,7 +2,7 @@ import requests
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -16,6 +16,9 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
+import random
+import string
+from authentication.models import Course
 
 
 User = get_user_model()
@@ -74,21 +77,50 @@ def user_login(request):
     return render(request, 'login.html')
 
 def register(request):
+    
+    courses = Course.objects.all()
+
     if request.method == 'POST':
+
+        print(request.POST)
+        
         last_name = request.POST.get('last_name')
         first_name = request.POST.get('first_name')
         middle_name = request.POST.get('middle_name')
         mobile = request.POST.get('mobile')
         birthday = request.POST.get('birthday')
         sex = request.POST.get('sex')
-        # add course, year_graduated, current position, company and etc
+        course = request.POST.get('course')
+        course_name = request.POST.get('course_name')
+        school_year = request.POST.get('school_year')
+        company = request.POST.get('company')
+        position = request.POST.get('position')
+        start_date = request.POST.get('start_date')
         student_number = request.POST.get('student_number')
         email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm-pass')
         agree = request.POST.get('agree')
         
+        def generate_student_number():
+            while True:
+                years = [f"{i:04d}" for i in range(0, 2026)]
+                year = random.choice(years)
+                unique_number = str(random.randint(1, 99999)).zfill(5)
+                suffix = ''.join(random.choices(string.ascii_uppercase, k=2))
+                random_digits = str(random.randint(0, 9)).zfill(1)
 
+                student_number = f"{year}-{unique_number}-{suffix}-{random_digits}"
+
+                if not User.objects.filter(student_number=student_number).exists():
+                    return student_number
+            
+        def generate_course_code(course_name, max_length=10):
+            acronym = ''.join(word[0] for word in course_name.split()).upper()
+            return acronym[:max_length]
+        
+        # Check if the user agreed to the terms and conditions
+        
         if not agree:
             messages.error(request, "You must agree to the terms and conditions.")
             return render(request, 'signup.html')
@@ -105,7 +137,22 @@ def register(request):
         if User.objects.filter(student_number=student_number).exists():
             messages.error(request, "Student number is already in use.")
             return render(request, 'signup.html')
+        
+        #if not student_number is blank or ''
+        if not student_number:
+            student_number = generate_student_number()
 
+        if not course and course_name:
+            course_code = generate_course_code(course_name)
+            course = Course.objects.get_or_create(course_name=course_name, course_code=course_code)[0].id
+        
+        work_exp = [{
+            "company": company,
+            "position": position,
+            "startDate": start_date,
+            "endDate": None
+        }]
+            
         # Create the user
         user = User.objects.create_user(
             student_number=student_number, 
@@ -116,21 +163,27 @@ def register(request):
             middle_name=middle_name,
             mobile=mobile,
             birthday=birthday,
-            sex = sex
-            # Add other fields as necessary
+            sex = sex,
+            course = Course.objects.get(id=course) if course else None,
+            school_year=school_year,
+            work_experience = work_exp
             )
-        user.save()
 
         if user is None:
             messages.error(request, "An error occurred. Please try again.")
             return render(request, 'signup.html')
 
         # Send verification email
-        send_verification_email(user)
+        if send_verification_email(user):
+            user.save()
 
         return render(request, 'success_page.html')
     
-    return render(request, 'signup.html')
+    context = {
+        'courses': courses,
+    }
+    
+    return render(request, 'signup.html', context)
 
 def faculty(request):
 
