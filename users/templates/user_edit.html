@@ -294,4 +294,122 @@
         
     </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const courseSearch = document.getElementById("courseSearch");
+        const courseSuggestions = document.getElementById("courseSuggestions");
+        const selectedCourse = document.getElementById("selectedCourse");
+        const sectionSelect = document.getElementById("section");
+    
+        const courses = [
+            {% for course in courses %}
+                { id: "{{ course.id }}", text: "{{ course|escapejs }}" },
+            {% endfor %}
+        ];
+    
+        const sections = {};
+        {% for section in sections %}
+            if (!sections["{{ section.course.id }}"]) {
+                sections["{{ section.course.id }}"] = [];
+            }
+            sections["{{ section.course.id }}"].push({
+                id: "{{ section.id|escapejs }}",
+                section_code: "{{ section.section_code|escapejs }}"
+            });
+        {% endfor %}
+    
+        function initializeFields() {
+            console.log("Alumni Course ID:", "{{ alumni.course.id }}");
+            console.log("Alumni Section ID:", "{{ alumni.section.id }}");
+            console.log("Alumni Course:", "{{ alumni.course | escapejs }}");
+    
+            const selectedCourseId = "{{ alumni.course.id }}";
+            selectedCourse.value = selectedCourseId;
+    
+            if (selectedCourseId) {
+                const selectedCourseObj = courses.find(course => course.id === selectedCourseId);
+                if (selectedCourseObj) {
+                    courseSearch.value = selectedCourseObj.text;
+                }
+            }
+    
+            const selectedSectionId = "{{ alumni.section.id }}";
+            updateSections(selectedCourseId, selectedSectionId);
+        }
+    
+        function filterCourseSuggestions(query) {
+            const filtered = courses.filter(course =>
+                course.text.toLowerCase().includes(query.toLowerCase())
+            );
+    
+            courseSuggestions.innerHTML = "";
+            if (filtered.length > 0) {
+                filtered.forEach(course => {
+                    const div = document.createElement("div");
+                    div.className = "list-group-item list-group-item-action";
+                    div.textContent = course.text;
+                    div.dataset.id = course.id;
+                    div.addEventListener("click", () => selectCourse(course));
+                    courseSuggestions.appendChild(div);
+                });
+                courseSuggestions.style.display = "block";
+            } else {
+                courseSuggestions.style.display = "none";
+            }
+        }
+    
+        function selectCourse(course) {
+            courseSearch.value = course.text;
+            selectedCourse.value = course.id;
+            courseSuggestions.style.display = "none";
+            updateSections(course.id, null);
+        }
+    
+        function updateSections(courseId, selectedSectionId) {
+            sectionSelect.innerHTML = '<option value="" disabled selected>Select Section</option>';
+            if (sections[courseId]) {
+                sections[courseId].forEach(section => {
+                    const option = document.createElement("option");
+                    option.value = section.id;
+                    option.textContent = section.section_code;
+                    if (section.id == selectedSectionId) {
+                        option.selected = true;
+                    }
+                    sectionSelect.appendChild(option);
+                });
+            }
+        }
+    
+        function validateCourseInput() {
+            const enteredText = courseSearch.value.trim();
+            const matchedCourse = courses.find(course => course.text.toLowerCase() === enteredText.toLowerCase());
+    
+            if (matchedCourse) {
+                selectCourse(matchedCourse);
+            } else {
+                selectedCourse.value = "";
+                sectionSelect.innerHTML = '<option value="" disabled selected>Select Section</option>';
+            }
+        }
+    
+        courseSearch.addEventListener("input", () => filterCourseSuggestions(courseSearch.value));
+    
+        courseSearch.addEventListener("blur", validateCourseInput);
+    
+        document.addEventListener("click", (event) => {
+            if (!courseSearch.contains(event.target) && !courseSuggestions.contains(event.target)) {
+                courseSuggestions.style.display = "none";
+            }
+        });
+    
+        initializeFields();
+    });
+</script>
+
+
+
+<script src="{% static 'js/sy_gen.js' %}"></script>
+<script src="{% static 'js/year_gen.js' %}"></script>
+<script src="{% static 'js/alumni_add_inputs.js' %}"></script>
+
 {% endblock %}

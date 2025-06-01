@@ -120,7 +120,12 @@ def user_edit(request):
                 sex = user_data.get('sex')
                 profile_image = user_data.get('profile_image')
 
-            return render(request, 'user_edit.html', {
+            courses = Course.objects.all()
+            sections = Section.objects.all()
+
+            context = {
+                "courses": courses,
+                "sections": sections,
                 'first_name': first_name,
                 'last_name': last_name,
                 'suffix': suffix,
@@ -134,8 +139,10 @@ def user_edit(request):
                 'civil_status': civil_status,
                 'sex': sex,
                 'profile_image': profile_image,
-                'active_page': 'edit'
-            })
+                'active_page': 'edit',
+            }
+
+            return render(request, 'user_edit.html', context)
         
         elif response.status_code == 401 and refresh_token:
             refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
