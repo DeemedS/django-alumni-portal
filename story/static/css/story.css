@@ -1,0 +1,88 @@
+.story {
+    min-height: 100vh;
+    padding: 2rem 0;
+}
+
+.story .title h2{
+    font-weight: 700;
+    color: #800000;
+    text-transform: uppercase;
+}
+
+.story .underline {
+    width: 150px;
+    height: 2px;
+    background: #FCBF15;
+    margin: 5px auto 0;
+}
+.story .highlight {
+    background-color: #800000;
+    color: #fff;
+    padding: 4rem 0;
+    text-align: justify;
+}
+.story .story-readmore{
+    color: #fff;
+    text-decoration: none;
+    /* background-color: #DAA520; */
+    font-weight: 500;
+    color: #800000;
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid #DAA520;
+    border-radius: 5px;
+}
+
+.story .story-card {
+    max-width: 600px;
+    height: 450px; /* Fixed height for equal card sizes */
+    border-radius: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #800000;
+    color: #131516;
+    padding: 2rem;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+}
+
+.story .story-img {
+    object-fit: cover;    /* Fill the frame, crop if needed */
+    margin-bottom: 1rem;
+    max-width: 100%;
+    height: 200px;
+    width: 100%;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+.story .story-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #323232;
+    margin-bottom: 1rem;
+}
+.story .story-title {
+    text-transform: capitalize;
+}
+
+.story .story-title,
+.story .story-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show 3 lines, then ellipsis */
+    line-clamp: 3; /* Standard property for compatibility */
+    -webkit-box-orient: vertical;
+}
+
+.story-content {
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}

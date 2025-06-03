@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}
+    
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="story-content my-3">
+            <a href="javascript:history.back()" class="btn btn-secondary my-3">Back</a>
+            <article class="py-3">
+                
+                    <img src="{% static 'images/pylon2022.jpg' %}" alt="">
+                
+                <h1>Star City Love Story</h1>
+                <p>Published on: June 2 2025 </p>
+                <pre>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab reiciendis laborum enim iusto quam voluptatum accusantium ipsa omnis consequatur distinctio, officiis eius commodi architecto, ipsam, voluptate mollitia corrupti cumque.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nemo non, possimus consectetur ipsa libero mollitia ex dolor fugit tempore minus, sit magnam eius saepe ducimus obcaecati qui eligendi et.
+                </pre>
+                
+            </article>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

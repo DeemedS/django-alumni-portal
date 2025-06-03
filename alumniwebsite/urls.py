@@ -33,6 +33,7 @@ urlpatterns = [
     path('', include('about.urls')),
     path('', include('faculty.urls')),
     path('', include('users.urls')),
+    path('', include('story.urls')),
 
     path('home/', include('homepage.urls')),
     path('api-auth/', include('rest_framework.urls')),
