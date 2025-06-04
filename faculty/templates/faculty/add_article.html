@@ -4,7 +4,7 @@
 
  {% block content %}
     <div class="title-bar mb-3">
-        <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+        <a href="/faculty/articles-management"><i class="fa-solid fa-arrow-left"></i></a>
         <h3 class="text-center">Add Article</h3>
     </div>
     
@@ -31,81 +31,6 @@
                     
                     <div class="sortable-container" id="form-container">
 
-                        {% for form in bodytext_formset %}
-                            <div class="formset-row sortable-item" data-id="bodytext-{{ form.id.value }}">
-                            <input type="hidden" name="bodytext-{{ forloop.counter0 }}-order" value="bodytext-{{ form.id.value }}">
-                            {{ form.id }}
-                            <p>
-                            <label for="id_bodytext-{{ form.id.value }}-bodytext">Bodytext:</label>
-                            {{ form.bodytext }}
-                            </p>
-
-                            <p>
-                            <label for="id_bodytext-{{ form.id.value }}-quoted">Quoted:</label>
-                            {{ form.quoted }}
-                            </p>
-
-                            <p>
-                            <label for="id_bodytext-{{ form.id.value }}-bold">Bold:</label>
-                            {{ form.bold }}
-                            </p>
-
-                            <p>
-                            <label for="id_bodytext-{{ form.id.value }}-italic">Italic:</label>
-                            {{ form.italic }}
-                            </p>
-
-                            <p>
-                            <label for="id_bodytext-{{ form.id.value }}-fontsize">Fontsize:</label>
-                            {{ form.fontsize }}
-                            </p>
-
-                            <input type="checkbox" name="bodytext-{{ forloop.counter0 }}-DELETE" id="id_bodytext-{{ form.id.value }}-DELETE" style="display: none;">
-                            <button type="button" class="remove-form-button">Remove</button>
-                            </div>
-                        {% endfor %}
-
-                        {% for form in bodyimage_formset %}
-                            <div class="formset-row sortable-item" data-id="bodyimage-{{ form.id.value }}" >
-                            <input type="hidden" name="bodyimage-{{ forloop.counter0 }}-order" value="bodyimage-{{ form.id.value }}">
-                            {{ form.id }}
-                            <p>
-                            <label for="id_bodyimage-{{ form.id.value }}-image">Body Image:</label>
-                            {{ form.image }}
-                            </p>
-
-                            <p>
-                            <label for="id_bodyimage-{{ form.id.value }}-alt">Alt:</label>
-                            {{ form.alt }}
-                            </p>
-
-                            <p>
-                            <label for="id_bodyimage-{{ form.id.value }}-caption">Caption:</label>
-                            {{ form.caption }}
-                            </p>
-
-                            <p>
-                            <label for="id_bodyimage-{{ form.id.value }}-date">date:</label>
-                            {{ form.date }}
-                            </p>
-
-                            <input type="checkbox" name="bodyimage-{{ forloop.counter0 }}-DELETE" id="id_bodyimage-{{ form.id.value }}-DELETE" style="display: none;">
-                            <button type="button" class="remove-form-button">Remove</button>
-                            </div>
-                        {% endfor %}
-
-                        {% for form in subtitle_formset %}
-                            <div class="formset-row sortable-item" data-id="subtitle-{{ form.id.value }}">
-                            <input type="hidden" name="subtitle-{{ forloop.counter0 }}-order" value="subtitle-{{ form.id.value }}">
-                            {{ form.id }}
-                            <p>
-                                <label for="id_subtitle-{{ form.id.value }}-subtitle">Subtitle:</label>
-                                {{ form.subtitle }}
-                            </p>
-                            <input type="checkbox" name="subtitle-{{ forloop.counter0 }}-DELETE" id="id_subtitle-{{ form.id.value }}-DELETE" style="display: none;">
-                            <button type="button" class="remove-form-button">Remove</button>
-                            </div>
-                        {% endfor %}
                     </div>
                 
                     <button type="submit">Save</button>

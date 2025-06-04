@@ -278,7 +278,9 @@ def article_add(request):
 
     if request.method == 'POST': 
 
-        article_form = ArticleForm(request.POST, request.FILES, instance=article)
+        print(request.POST)
+
+        article_form = ArticleForm(request.POST, request.FILES, instance=None)
         bodytext_formset = BodyTextFormSet(request.POST, request.FILES, prefix='bodytext')
         bodyimage_formset = BodyImageFormSet(request.POST, request.FILES, prefix='bodyimage')
         subtitle_formset = SubTitleFormSet(request.POST, prefix='subtitle')
@@ -413,4 +415,4 @@ def article_add(request):
         'school_abv': settings.SCHOOL_ABV
     }
 
-    return render(request, 'faculty/edit_article.html', context)
+    return render(request, 'faculty/add_article.html', context)
