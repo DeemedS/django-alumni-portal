@@ -35,5 +35,6 @@ urlpatterns = [
     path('faculty/story-management', faculty_views.story_management, name='story_management'),
 
     path('faculty/articles-management', faculty_views.articles_management, name='articles_management'),
+    path('faculty/article-add', article_views.article_add, name='article_add'),
     path('faculty/article-delete/<int:id>/', article_views.article_delete, name='article_delete'),
 ] 

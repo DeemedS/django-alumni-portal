@@ -229,6 +229,7 @@ def edit_article(request, slug):
 
     return render(request, 'faculty/edit_article.html', context)
 
+
 @login_required(login_url='/faculty/')
 def toggle_article_status(request, id):
     if not request.user.is_staff or not request.user.is_active:
@@ -266,3 +267,150 @@ def article_delete(request, id):
         return JsonResponse({"success": True}, status=200)
     except Exception as e:
         return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
+    
+@login_required(login_url='/faculty/')
+def article_add(request):
+
+    BodyTextFormSet = formset_factory(BodyTextForm, extra=0)
+    BodyImageFormSet = formset_factory(BodyImageForm, extra=0)
+    SubTitleFormSet = formset_factory(SubTitleForm, extra=0)
+
+
+    if request.method == 'POST': 
+
+        article_form = ArticleForm(request.POST, request.FILES, instance=article)
+        bodytext_formset = BodyTextFormSet(request.POST, request.FILES, prefix='bodytext')
+        bodyimage_formset = BodyImageFormSet(request.POST, request.FILES, prefix='bodyimage')
+        subtitle_formset = SubTitleFormSet(request.POST, prefix='subtitle')
+
+        print(article_form.is_valid())
+        print(bodytext_formset.is_valid())
+        print(bodyimage_formset.is_valid())
+        print(subtitle_formset.is_valid())
+        print(bodyimage_formset.errors)
+
+        if article_form.is_valid() and bodytext_formset.is_valid() and bodyimage_formset.is_valid() and subtitle_formset.is_valid():
+            article = article_form.save()
+            
+            deleted_bodytext_ids = []
+            deleted_bodyimage_ids = []
+            deleted_subtitle_ids = []
+
+            for form in bodytext_formset:
+                if form.cleaned_data.get('DELETE') == True:
+                    deleted_bodytext_ids.append(form.cleaned_data.get('id'))
+            
+            for form in bodyimage_formset:
+                if form.cleaned_data.get('DELETE') == True:
+                    deleted_bodyimage_ids.append(form.cleaned_data.get('id'))
+            
+            for form in subtitle_formset:
+                if form.cleaned_data.get('DELETE') == True:
+                    deleted_subtitle_ids.append(form.cleaned_data.get('id'))
+
+            # Handle BodyText forms
+            for form in bodytext_formset:
+                if form.cleaned_data:
+                    bodytext_id = form.cleaned_data.get('id')
+                    bodytext = BodyText.objects.filter(id=bodytext_id, article=article).first()
+
+                    if bodytext_id in deleted_bodytext_ids:
+                        BodyText.objects.filter(id=bodytext_id).delete()
+                        if f"bodytext-{bodytext_id}" in article.order:
+                            article.order.remove(f"bodytext-{bodytext_id}")
+                        article.save()
+                    elif bodytext:
+                        bodytext = get_object_or_404(BodyText, id=bodytext_id, article=article)
+                        bodytext.bodytext = form.instance.bodytext
+                        bodytext.quoted = form.instance.quoted
+                        bodytext.bold = form.instance.bold
+                        bodytext.italic = form.instance.italic
+                        bodytext.fontsize = form.instance.fontsize
+                        bodytext.order = 'bodytext-' + str(bodytext_id)
+                        bodytext.save()
+                    else:
+                        new_bodytext = form.save(commit=False)
+                        new_bodytext.article = article
+                        new_bodytext.save() 
+                        new_bodytext.order = f'bodytext-{new_bodytext.id}'
+                        new_bodytext.save()
+                        article.order.append(new_bodytext.order)
+                        article.save()
+                        
+            # Handle BodyImage forms
+            for form in bodyimage_formset:
+                if form.cleaned_data:
+                    bodyimage_id = form.cleaned_data.get('id')
+                    bodyimage = BodyImage.objects.filter(id=bodyimage_id, article=article).first()
+
+                    if bodyimage_id in deleted_bodyimage_ids:
+                        BodyImage.objects.filter(id=bodyimage_id).delete()
+                        if f"bodyimage-{bodyimage_id}" in article.order:
+                            article.order.remove(f"bodyimage-{bodyimage_id}")
+                        article.save()
+
+                    elif bodyimage:
+                        bodyimage = get_object_or_404(BodyImage, id=bodyimage_id, article=article)
+                        bodyimage.image = form.instance.image
+                        bodyimage.alt = form.instance.alt
+                        bodyimage.caption = form.instance.caption
+                        bodyimage.date = form.instance.date
+                        bodyimage.order = 'bodyimage-' + str(bodyimage_id)
+                        bodyimage.save()
+                    else:
+                        new_bodyimage = form.save(commit=False)
+                        new_bodyimage.article = article
+                        new_bodyimage.save()
+                        new_bodyimage.order = f'bodyimage-{new_bodyimage.id}'
+                        new_bodyimage.save()
+                        article.order.append(new_bodyimage.order)
+                        article.save()
+
+            # Handle SubTitle forms
+            for form in subtitle_formset:
+                if form.cleaned_data:
+                    subtitle_id = form.cleaned_data.get('id')
+                    subtitle = SubTitle.objects.filter(id=subtitle_id, article=article).first()
+
+                    if subtitle_id in deleted_subtitle_ids:
+                        SubTitle.objects.filter(id=subtitle_id).delete()
+                        if f"subtitle-{subtitle_id}" in article.order:
+                            article.order.remove(f"subtitle-{subtitle_id}")
+                        article.save()
+
+                    elif subtitle:
+                        subtitle.subtitle = form.instance.subtitle
+                        subtitle.order = 'subtitle-' + str(subtitle_id)
+                        subtitle.article = article
+                        subtitle.save()
+                    else:
+                        new_subtitle = form.save(commit=False)
+                        new_subtitle.article = article
+                        new_subtitle.save()
+                        new_subtitle.order = f'subtitle-{new_subtitle.id}'
+                        new_subtitle.save()
+                        article.order.append(new_subtitle.order)
+                        article.save()
+                else:
+                    print(form.cleaned_data, 'is empty')
+        
+            return redirect(reverse('faculty:article_add'))
+        
+
+
+    else:
+
+        article_form = ArticleForm()
+        bodytext_formset = BodyTextFormSet(initial=[], prefix='bodytext')
+        bodyimage_formset = BodyImageFormSet(initial=[], prefix='bodyimage')
+        subtitle_formset = SubTitleFormSet(initial=[], prefix='subtitle')
+        
+    context = {
+        'article_form': article_form,
+        'bodytext_formset': bodytext_formset,
+        'bodyimage_formset': bodyimage_formset,
+        'subtitle_formset': subtitle_formset,
+        'school_abv': settings.SCHOOL_ABV
+    }
+
+    return render(request, 'faculty/edit_article.html', context)

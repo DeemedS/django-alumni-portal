@@ -1,0 +1,275 @@
+<!-- edit_article.html -->
+{% extends "edits_layout.html" %}
+ {% load static %}
+
+ {% block content %}
+    <div class="title-bar mb-3">
+        <a href="javascript:history.back()"><i class="fa-solid fa-arrow-left"></i></a>
+        <h3 class="text-center">Add Article</h3>
+    </div>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 edit-forms">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ article_form.as_p }}
+                    
+                    <div>
+                        <label for="form-select">Select Form to Add:</label>
+                        <select id="form-select" class="form-select mb-2">
+                            <option value="">--Choose an option--</option>
+                            <option value="bodytext">Body Text</option>
+                            <option value="bodyimage">Body Image</option>
+                            <option value="subtitle">Sub Title</option>
+                        </select>
+                        <button type="button" id="add-form-button">Add Form</button>
+                    </div>
+                    {{ subtitle_formset.management_form.as_p }}
+                    {{ bodytext_formset.management_form.as_p }}
+                    {{ bodyimage_formset.management_form.as_p }}
+                    
+                    <div class="sortable-container" id="form-container">
+
+                        {% for form in bodytext_formset %}
+                            <div class="formset-row sortable-item" data-id="bodytext-{{ form.id.value }}">
+                            <input type="hidden" name="bodytext-{{ forloop.counter0 }}-order" value="bodytext-{{ form.id.value }}">
+                            {{ form.id }}
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-bodytext">Bodytext:</label>
+                            {{ form.bodytext }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-quoted">Quoted:</label>
+                            {{ form.quoted }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-bold">Bold:</label>
+                            {{ form.bold }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-italic">Italic:</label>
+                            {{ form.italic }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodytext-{{ form.id.value }}-fontsize">Fontsize:</label>
+                            {{ form.fontsize }}
+                            </p>
+
+                            <input type="checkbox" name="bodytext-{{ forloop.counter0 }}-DELETE" id="id_bodytext-{{ form.id.value }}-DELETE" style="display: none;">
+                            <button type="button" class="remove-form-button">Remove</button>
+                            </div>
+                        {% endfor %}
+
+                        {% for form in bodyimage_formset %}
+                            <div class="formset-row sortable-item" data-id="bodyimage-{{ form.id.value }}" >
+                            <input type="hidden" name="bodyimage-{{ forloop.counter0 }}-order" value="bodyimage-{{ form.id.value }}">
+                            {{ form.id }}
+                            <p>
+                            <label for="id_bodyimage-{{ form.id.value }}-image">Body Image:</label>
+                            {{ form.image }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodyimage-{{ form.id.value }}-alt">Alt:</label>
+                            {{ form.alt }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodyimage-{{ form.id.value }}-caption">Caption:</label>
+                            {{ form.caption }}
+                            </p>
+
+                            <p>
+                            <label for="id_bodyimage-{{ form.id.value }}-date">date:</label>
+                            {{ form.date }}
+                            </p>
+
+                            <input type="checkbox" name="bodyimage-{{ forloop.counter0 }}-DELETE" id="id_bodyimage-{{ form.id.value }}-DELETE" style="display: none;">
+                            <button type="button" class="remove-form-button">Remove</button>
+                            </div>
+                        {% endfor %}
+
+                        {% for form in subtitle_formset %}
+                            <div class="formset-row sortable-item" data-id="subtitle-{{ form.id.value }}">
+                            <input type="hidden" name="subtitle-{{ forloop.counter0 }}-order" value="subtitle-{{ form.id.value }}">
+                            {{ form.id }}
+                            <p>
+                                <label for="id_subtitle-{{ form.id.value }}-subtitle">Subtitle:</label>
+                                {{ form.subtitle }}
+                            </p>
+                            <input type="checkbox" name="subtitle-{{ forloop.counter0 }}-DELETE" id="id_subtitle-{{ form.id.value }}-DELETE" style="display: none;">
+                            <button type="button" class="remove-form-button">Remove</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+            <!-- Preview Start -->
+                <article class="col-md-8 preview">
+                    {% if article.banner %}
+                    <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
+                    {% else %}
+                        <img src="{% static 'images/default_image.png' %}" alt="Default banner">
+                    {% endif %}
+
+                    <h1>{{ article.title }}</h1>
+                    <p>Published on: {{ article.date }}</p>
+
+                    <pre>{{ article.body }}</pre> 
+            
+                    <div id="sorted-content">
+
+                        {% for item in content_order %}
+                            {% if item.type == 'subtitle' %}
+                                <div class="" data-id="subtitle-{{ item.object.id}}">
+                                    <h1>{{ item.object.subtitle }}</h1>
+                                </div>
+                            {% elif item.type == 'bodytext' %}
+                                <div class="" data-id="bodytext-{{ item.object.id}}">
+                                {% if item.object.quoted %}
+                                    <pre class="text-center px-5" 
+                                    style="font-size:{{ item.object.fontsize }}px;
+                                    {% if item.object.bold %}font-weight:bold;{% endif %}
+                                    {% if item.object.italic %}font-style:italic;{% endif %}"><q>{{ item.object.bodytext }}</q></pre>
+                                {% else %}
+                                    <pre style="font-size:{{ item.object.fontsize }}px;
+                                    {% if item.object.bold %}font-weight:bold;{% endif %}
+                                    {% if item.object.italic %}font-style:italic;{% endif %}">{{ item.object.bodytext }}</pre>
+                                {% endif %}
+                                </div>
+                            {% elif item.type == 'bodyimage' %}
+                                <div class="" data-id="bodyimage-{{ item.object.id}}">
+                                    <figure>
+                                        {% if item.object.image %}
+                                        <img src="{{ item.object.image.url }}" alt="{{ item.object.alt }}">
+                                        {% else %}
+                                        <img src="{% static 'images/default_image.png' %}" alt="Default image">
+                                        {% endif %}
+                                        <figcaption>{{ item.object.caption }}</figcaption>
+                                    </figure>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </article>
+            <!-- end of preview -->
+        </div>
+    </div>
+
+    <!-- Bootstrap Toast -->
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+        <!-- Toast template will be added dynamically -->
+    </div>
+
+
+
+    <script>
+        $(document).ready(function() {
+            const sortable = new Sortable(document.getElementById('form-container'), {
+                animation: 150,
+                ghostClass: "sortable-ghost",
+                dragClass: "sortable-drag",
+                forceFallback: true,
+                onStart: function(evt) {
+                    evt.item.style.opacity = "0.5";
+
+                },
+                onEnd: function(evt) {
+                    evt.item.style.opacity = "1"
+        
+                    // Get new order of elements
+                    const order = Array.from(evt.from.children)
+                        .map(child => child.getAttribute('data-id'))
+                        .filter(dataId => dataId !== null);
+        
+                    console.log('Order:', order);
+        
+                    // Send updated order via AJAX
+                    $.ajax({
+                        url: '{% url "faculty:update_order" %}',
+                        type: 'POST',
+                        data: JSON.stringify({
+                            order: order,
+                            slug: '{{ article_form.slug.value }}'
+                        }),
+                        contentType: 'application/json',
+                        headers: {
+                            'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val()
+                        },
+                        success: function(response) {
+                            console.log('Order updated:', response);
+                            updateContainerOrder('sorted-content', order, '[data-id]', 'data-id');
+                            showToast('Success', 'Order updated successfully', 'success');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                }
+            });
+        });        
+    </script>
+    
+    <script>
+        function updateContainerOrder(containerId, order, itemSelector, dataIdAttr) {
+            const container = document.getElementById(containerId);
+            const items = Array.from(container.querySelectorAll(itemSelector));
+
+            // Create a map for quick lookup of items by their ID
+            const itemMap = new Map();
+            items.forEach(item => {
+                const id = item.getAttribute(dataIdAttr);
+                itemMap.set(id, item);
+            });
+
+            // Clear existing content
+            container.innerHTML = '';
+
+            // Append items in the order specified
+            order.forEach(id => {
+                const item = itemMap.get(id);
+                if (item) {
+                    container.appendChild(item);
+                }
+            });
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            const articleOrder = {{ article.order | safe }};
+            updateContainerOrder('form-container', articleOrder, '.formset-row', 'data-id');
+            updateContainerOrder('sorted-content', articleOrder, '[data-id]', 'data-id');
+        });
+    </script>
+    
+
+
+    <script type="text/template" id="bodytext-template">
+        <div class="formset-row sortable-item">
+            {{ bodytext_formset.empty_form.as_p }}
+            <button type="button" class="remove-form-button">Remove</button>
+        </div>
+    </script>
+    
+    <script type="text/template" id="bodyimage-template">
+        <div class="formset-row sortable-item">
+            {{ bodyimage_formset.empty_form.as_p }}
+            <button type="button" class="remove-form-button">Remove</button>
+        </div>
+    </script>
+    
+    <script type="text/template" id="subtitle-template">
+        <div class="formset-row sortable-item">
+            {{ subtitle_formset.empty_form.as_p }}
+            <button type="button" class="remove-form-button">Remove</button>
+        </div>
+    </script>
+
+    <script src="{% static 'js/add_form.js' %}"></script>
+    {% endblock %}
