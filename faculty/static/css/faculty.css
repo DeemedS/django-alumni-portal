@@ -4,6 +4,7 @@
 /* Sidebar*/
 .nav-pills .sidebar-text {
     padding: 10px;
+    text-transform: uppercase;
 }
 .nav-pills .sidebar-text.active {
     background-color: #FEAF00;
@@ -278,14 +279,37 @@
   }
 
 .publish-btn {
-    background-color: rgb(13, 134, 13);
+    /* background-color: rgb(13, 134, 13);
     color: white;
+    border-radius: 5px; */
+    background-color: #FEAF00 ; 
+    color: #800000;
     border-radius: 5px;
+    border:none;
+    letter-spacing: 0.2em;
+    font-family: inherit;
+    font-weight: 300;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-transform: uppercase;
+}
+.publish-btn:hover {
+ background-color: #d99400;
 }
 .unpublish-btn {
-    background-color: rgb(122, 26, 26);
-    color: white;
+    background-color: #800000;
+    color: #FEAF00;
     border-radius: 5px;
+    border:none;
+    letter-spacing: 0.2em;
+    font-family: inherit;
+    font-weight: 300;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-transform: uppercase;
+}
+.unpublish-btn:hover {
+    background-color: #5a0000 ;
 }
 
 .confirm-delete-btn{

@@ -314,7 +314,14 @@ footer .sec-2 .form-group {
 footer .sec-2 .form-control {
     border-radius: 0%;
 }
+.text-logo {
+    font-size: 1.2rem; 
+    font-weight: 500; 
+    letter-spacing: .6rem;
+    text-shadow: -.5px -.5px 0 #FFDF00, .5px -.5px 0 #FFDF00,
+          -.5px .5px 0 #FFDF00, .5px .5px 0 #FFDF00; color: white;
 
+}
 
 @media (max-width: 992px) {
 

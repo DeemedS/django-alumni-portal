@@ -318,6 +318,8 @@
     padding: 10px;
     border-radius: 5px;
     max-height: 200px;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .profile-photo-details {

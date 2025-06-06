@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 jobCard.className = "col-md-4 mb-4";
                 jobCard.innerHTML = `
                     <div class="card h-100 border-0 shadow-sm position-relative p-3">
-                        <i class="fa-solid fa-bookmark bookmark-icon position-absolute top-0 end-0 m-3 fs-5 text-dark"></i>
                         <h5 class="card-title fw-bold">${jobDetails.title}</h5>
                         <p class="mb-1"><strong>Company:</strong> ${jobDetails.company}</p>
                         <p class="mb-1"><strong>Job Type:</strong> ${jobTypeMapping[jobDetails.job_type] || jobDetails.job_type}</p>
