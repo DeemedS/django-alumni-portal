@@ -18,6 +18,9 @@ class WebsiteSettings(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()  # This triggers the clean() method
         super().save(*args, **kwargs)
+    class Meta:
+        verbose_name = "Website Setting"
+        verbose_name_plural = "Website Settings"
 
     def __str__(self):
         return "Website Settings"

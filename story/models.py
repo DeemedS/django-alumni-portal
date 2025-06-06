@@ -9,6 +9,10 @@ class stories(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = "Stories"
+        verbose_name_plural = "Stories"
+
     def __str__(self):
         return self.title
 
