@@ -12,3 +12,5 @@ Pillow
 markdown
 django-filter
 psycopg2
+openpyxl
+pandas
