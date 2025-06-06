@@ -4,11 +4,12 @@
     <div class="container-fluid navigation">
 
     <div class="banner navbar-brand">
-        <img src="{% static 'images/PUPLogo.png' %}" alt="PUP LOGO">
-        <img src="{% static 'images/arcdologo.jpg' %}" alt="ARCDO LOGO">
+        <!-- <img src="{% static 'images/PUPLogo.png' %}" alt="PUP LOGO"> -->
+        <!-- <img src="{% static 'images/arcdologo.jpg' %}" alt="ARCDO LOGO"> -->
         <div class="banner-text">
-            <p>POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</p>
-            <p>Alumni Relations & Career Development Office</p>
+            <!-- <p>POLYTECHNIC UNIVERSITY OF THE PHILIPPINES</p> -->
+            <h6 class="text-center" style="font-size: 1.2rem; font-weight: bold; letter-spacing: .6rem;">ALUMNI PORTAL</h6>
+            <p style="font-size: .8rem;">Alumni Relations & Career Development Office</p>
         </div>
         <div class="banner-md">
             <p>PUP-ARCDO</p>
@@ -32,7 +33,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'story:stories' %}">Stories</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'services:services'%}">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'about:about'%}">About</a></li>
-        <li class="nav-item h-item"><a class="nav-link" href="{% url 'auth:portal'%}">Alumni Portal</a></li>
+        <li class="nav-item h-item"><a class="nav-link" href="{% url 'auth:portal'%}">Login</a></li>
     </ul>
     </div>
 
