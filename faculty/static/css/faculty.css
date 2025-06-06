@@ -23,7 +23,6 @@
     height: 150px;
     margin: 0 auto;
     display: block;
-    border: 1px solid var(--pupred);
 }
 .sidebar-title{
     color:black;
@@ -32,6 +31,8 @@
     border-left: solid 5px var(--pupred);
     padding-left: 3px;
     margin:5px;
+    font-family: inherit;
+    letter-spacing: .15rem;
 }
 .sidebar-text {
     color: var(--pupred);
