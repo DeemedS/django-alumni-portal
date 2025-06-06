@@ -64,8 +64,14 @@ class FilteredArticlesAPIView(APIView):
         article_filter = request.GET.get('article_filter', 'all')
         month = request.GET.get('month')
         year = request.GET.get('year')
+        is_active = request.GET.get('is_active', 'all')
         
         articles = Article.objects.all()
+
+        if is_active.lower() in ['true', '1']:
+            articles = articles.filter(is_active=True)
+        elif is_active.lower() in ['false', '0']:
+            articles = articles.filter(is_active=False)
 
         if article_filter == 'news':
             articles = articles.filter(category='news').order_by('-date')
@@ -141,8 +147,14 @@ class FilteredJobPostsAPIView(APIView):
         keyword = request.GET.get('keyword', '')
         location = request.GET.get('location', '')
         job_type = request.GET.get('job_type', '')
+        is_active = request.GET.get('is_active', 'all')
         
         job_posts = JobPost.objects.all().order_by('-created_at')
+
+        if is_active.lower() in ['true', '1']:
+            job_posts = job_posts.filter(is_active=True)
+        elif is_active.lower() in ['false', '0']:
+            job_posts = job_posts.filter(is_active=False)
 
         #search by keyword and location
         if keyword:

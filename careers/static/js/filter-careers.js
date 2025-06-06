@@ -32,6 +32,7 @@ $(document).ready(function () {
             keyword: keyword,
             location: location,
             job_type: jobType,
+            is_active: true
         };
 
         $.ajax({

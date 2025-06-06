@@ -22,7 +22,8 @@ $(document).ready(function() {
         var data = {
             article_filter: articleFilter,
             page: page,
-            page_size: pageSize
+            page_size: pageSize,
+            is_active: true
         };
 
         console.log('Filter:', articleFilter, monthFilter, yearFilter);
