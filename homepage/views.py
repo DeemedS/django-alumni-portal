@@ -4,9 +4,9 @@ from events.models import Event
 from django.conf import settings
 
 def home(request):
-    featured_article = Article.objects.filter(featured=True).first()
-    news_articles = Article.objects.filter(featured=False).order_by('-date')[:2]
-    event_article = Event.objects.order_by('-date').first()
+    featured_article = Article.objects.filter(featured=True, is_active=True).first()
+    news_articles = Article.objects.filter(featured=False, is_active=True).order_by('-date')[:2]
+    event_article = Event.objects.filter(is_active=True).order_by('-date').first()
 
     return render(request, 'homepage/home.html', {
         'featured_article': featured_article,

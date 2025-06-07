@@ -46,7 +46,7 @@
             {% else %}
                 <img src="{% static 'images/default_image.png' %}" class="card-img-top" alt="...">
             {% endif %}
-            <div class="card-body">
+            <div class="card-body latest-article-body">
               <h5 class="card-title">{{ article.title }}</h5>
               <p class="card-text">{{ article.body|truncatewords:30 }}</p>
               <a href="{% url 'articles:article_page' slug=article.slug %}" class="card-link">Read More</a>
