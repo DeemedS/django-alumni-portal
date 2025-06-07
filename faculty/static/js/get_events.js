@@ -59,7 +59,7 @@ $(document).ready(function () {
                             <td data-label="Event">${events.title}</td>
                             <td data-label="Date">${formattedDateTime}</td>
                             <td data-label="Actions" class="action-icons">
-                                <a href="/events/view/${events.slug}/"><i class="fas fa-eye"></i></a>
+                                <a href="/faculty/events-view/${events.slug}/"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/events-edit/${events.slug}"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="delete-item" data-id="${events.id}" data-type="event" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>

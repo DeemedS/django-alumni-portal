@@ -63,7 +63,7 @@ $(document).ready(function () {
                             <td data-label="Date">${formattedDateTime}</td>
                             <td data-label="Category">${articles.category}</td>
                             <td data-label="Actions" class="action-icons text-nowrap">
-                                <a href="/articles/view/${articles.slug}/"><i class="fas fa-eye"></i></a>
+                                <a href="/faculty/articles-view/${articles.slug}/"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/articles/${articles.slug}/edit"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="delete-item" data-id="${articles.id}" data-type="article" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>

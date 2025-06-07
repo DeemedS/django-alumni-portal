@@ -1,0 +1,26 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+{% block title %}
+    {{ event.title }}
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <a href="/faculty/events-management" class="btn btn-secondary my-3">Back</a>
+    <div class="row justify-content-center">
+        <div class="my-3">
+            <article class="view-content py-3">
+                {% if event.banner %}
+                    <img src="{{ event.banner.url }}" alt="Banner for {{ event.title }}">
+                {% endif %}
+                <h1>{{ event.title }}</h1>
+                <p>Published on: {{ event.date }}</p>
+                <pre>{{ event.body }}</pre>
+
+                {% load custom_filters %}
+
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock %}

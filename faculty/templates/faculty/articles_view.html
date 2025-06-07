@@ -1,0 +1,75 @@
+{% extends "faculty_page_layout.html" %}
+
+{% load static %}
+
+
+{% block title %}
+    {{ school_abv }} Alumni Website | {{ article.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    
+    <div class="row justify-content-center">
+        <!-- Main content -->
+        <div class="">
+
+            <a href="/faculty/articles-management" class="btn btn-secondary my-3">Back</a>
+                    
+            <article class="view-content py-3">
+                
+                {% load custom_filters %}
+                {% if article.banner %}
+                    <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
+                {% else %}
+                    <img src="{% static 'images/default_image.png' %}" alt="Default banner">
+                {% endif %}
+            
+                <h1>{{ article.title }}</h1>
+                <p>Published on: {{ article.date }}</p>
+
+                <div class="more-info">
+
+                    <pre>{{ article.body }}</pre> 
+                    {% for item in content_order %}
+                        {% if item.type == 'subtitle' %}
+                            <h1>{{ item.object.subtitle }}</h1>
+                        {% elif item.type == 'bodytext' %}
+                                {% if item.object.quoted %}
+                                    <pre class="text-center px-5" 
+                                    style="font-size:{{ item.object.fontsize }}px;
+                                    {% if item.object.bold %}font-weight:bold;{% endif %}
+                                    {% if item.object.italic %}font-style:italic;{% endif %}"><q>{{ item.object.bodytext }}</q></pre>
+                                {% else %}
+                                    <pre style="font-size:{{ item.object.fontsize }}px;
+                                    {% if item.object.bold %}font-weight:bold;{% endif %}
+                                    {% if item.object.italic %}font-style:italic;{% endif %}">{{ item.object.bodytext }}</pre>
+                                {% endif %}
+                        {% elif item.type == 'bodyimage' %}
+                            <figure class="text-center">
+                                {% if item.object.image %}
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ item.object.image.url }}" alt="{{ item.object.alt }}">
+                                </div>
+                                {% else %}
+                                <div class="d-flex justify-content-center">
+                                    <img src="{% static 'images/default_image.png' %}" alt="Default image">
+                                </div>
+                                {% endif %}
+                                <figcaption class="fw-light fst-italic">{{ item.object.caption }}</figcaption>
+                            </figure>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                
+                
+            </article>
+        </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -21,6 +21,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.encoding import force_bytes
+from articles.models import Article
 
 def generate_student_number():
     while True:
@@ -274,6 +275,26 @@ def events_edit(request, slug):
     }
     return render(request, 'faculty/events_edit.html', context)
 
+
+@login_required(login_url='/faculty/')
+def events_view(request, slug):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    
+    event = get_object_or_404(Event, slug=slug)
+    
+    context = {
+        'event': event,
+    }
+    return render(request, 'faculty/events_view.html', context)
+
+
 @login_required(login_url='/faculty/')
 def articles_management(request):
     if not request.user.is_staff or not request.user.is_active:
@@ -291,6 +312,24 @@ def articles_management(request):
         'last_name': request.user.last_name,
     }
     return render(request, 'faculty/articles_management.html', context)
+
+@login_required(login_url='/faculty/')
+def articles_view(request, slug):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    
+    article = get_object_or_404(Article, slug=slug)
+
+    context = {
+        "article": article
+    }
+    return render(request, 'faculty/articles_view.html', context)
 
 @login_required(login_url='/faculty/')
 def story_management(request):
