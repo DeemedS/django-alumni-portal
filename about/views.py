@@ -1,12 +1,16 @@
 from django.shortcuts import render
 import requests
 from django.conf import settings
+from faculty.models import WebsiteSettings
 
 # Create your views here.
 
 def about(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
+    websettings = WebsiteSettings.objects.first()
+
+    is_authenticated = False
 
     if access_token and refresh_token:
         # Here you might want to validate the tokens or perform some action
@@ -15,9 +19,12 @@ def about(request):
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            context = {
-                'is_authenticated': True
-            }
+            is_authenticated = True
+            
+    context = {
+        'settings': websettings,
+        'is_authenticated': is_authenticated
+    }
 
-        return render(request, 'about/about.html', context)
-    return render(request, 'about/about.html', {'is_authenticated': False})
+    return render(request, 'about/about.html', context)
+

@@ -26,19 +26,19 @@
                             <h5 class="settings-title mb-4">SOCIAL MEDIA LINKS</h5>
                             <div class="mb-3">
                                 <label class="form-label">Facebook</label>
-                                <input type="url" class="form-control" name="facebook_link">
+                                <input type="url" class="form-control" name="facebook_link" value="{{ settings.facebook_link }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Instagram</label>
-                                <input type="url" class="form-control" name="instagram_link">
+                                <input type="url" class="form-control" name="instagram_link" value="{{ settings.instagram_link }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">X(Twitter)</label>
-                                <input type="url" class="form-control" name="twitter_link">
+                                <input type="url" class="form-control" name="x_link" value="{{ settings.x_link }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">LinkedIn</label>
-                                <input type="url" class="form-control" name="linkedin_link">
+                                <input type="url" class="form-control" name="linked_in_link" value="{{ settings.linked_in_link }}">
                             </div>
                         </div>
 
@@ -46,20 +46,32 @@
                          <div class="settings-form-section">
                             <h5 class="settings-title mb-4">CONTACT DETAILS</h5>
                             <div class="mb-3">
-                                <label class="form-label">ARCDO Address</label>
-                                <input type="text" class="form-control" name="arcdo_address">
+                                <label class="form-label">ARCDO Address Line 1</label>
+                                <input type="text" class="form-control" name="arcdo_address_line1" value="{{ settings.arcdo_address_line1 }}">
+                            </div>
+                                <div class="mb-3">
+                                <label class="form-label">ARCDO Address Line 2</label>
+                                <input type="text" class="form-control" name="arcdo_address_line2" value="{{ settings.arcdo_address_line2 }}">
+                            </div>
+                                <div class="mb-3">
+                                <label class="form-label">ARCDO Address Line 3</label>
+                                <input type="text" class="form-control" name="arcdo_address_line3" value="{{ settings.arcdo_address_line3 }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Contact Number 1</label>
-                                <input type="text" class="form-control" name="contact_number_1">
+                                <input type="text" class="form-control" name="phone_number_1" value="{{ settings.phone_number_1 }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Contact Number 2</label>
-                                <input type="text" class="form-control" name="contact_number_2">
+                                <input type="text" class="form-control" name="phone_number_2" value="{{ settings.phone_number_2 }}">
+                            </div>
+                                <div class="mb-3">
+                                <label class="form-label">Contact Number 2</label>
+                                <input type="text" class="form-control" name="phone_number_3" value="{{ settings.phone_number_3 }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">ARCDO Email</label>
-                                <input type="email" class="form-control" name="arcdo_email">
+                                <input type="email" class="form-control" name="arcdo_email" value="{{ settings.arcdo_email }}">
                             </div>
                         </div>
                         
@@ -69,31 +81,50 @@
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label">BANK #1 - Account Number</label>
-                                    <input type="text" class="form-control" name="bank1_account_number">
+                                    <input type="text" class="form-control" name="bank1_account_number" value="{{ settings.bank1_account_number }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">BANK #1 - Account Name</label>
-                                    <input type="text" class="form-control" name="bank1_account_name">
+                                    <input type="text" class="form-control" name="bank1_account_name" value="{{ settings.bank1_account_name }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">BANK #2 - Account Number</label>
-                                    <input type="text" class="form-control" name="bank2_account_number">
+                                    <input type="text" class="form-control" name="bank2_account_number" value="{{ settings.bank2_account_number }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">BANK #2 - Account Name</label>
-                                    <input type="text" class="form-control" name="bank2_account_name">
+                                    <input type="text" class="form-control" name="bank2_account_name" value="{{ settings.bank2_account_name }}">
                                 </div>
                             </div>
 
                             <!-- File Uploads -->
-                             <div class="file-upload">
-                                <label class="form-label">GCASH QR</label>
-                                <input type="file" class="form-control mb-3" name="gcash_qr">
-                                
-                                <label class="form-label">MAYA QR</label>
-                                <input type="file" class="form-control mb-3" name="maya_qr">
-                                <label class="form-label">PAYPAL QR</label>
-                                <input type="file" class="form-control" name="paypal_qr">
+                            <div class="file-upload row">
+                                <!-- GCASH QR Upload -->
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">GCASH QR</label>
+                                    <input type="file" class="form-control" name="gcash_qr">
+                                    {% if settings.gcash_qr %}
+                                        <img src="{{ settings.gcash_qr.url }}" alt="GCASH QR" class="img-thumbnail mt-2" style="width: 100px;">
+                                    {% endif %}
+                                </div>
+
+                                <!-- MAYA QR Upload -->
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">MAYA QR</label>
+                                    <input type="file" class="form-control" name="maya_qr">
+                                    {% if settings.maya_qr %}
+                                        <img src="{{ settings.maya_qr.url }}" alt="MAYA QR" class="img-thumbnail mt-2" style="width: 100px;">
+                                    {% endif %}
+                                </div>
+
+                                <!-- PAYPAL QR Upload -->
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">PAYPAL QR</label>
+                                    <input type="file" class="form-control" name="paypal_qr">
+                                    {% if settings.paypal_qr %}
+                                        <img src="{{ settings.paypal_qr.url }}" alt="PAYPAL QR" class="img-thumbnail mt-2" style="width: 100px;">
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
 

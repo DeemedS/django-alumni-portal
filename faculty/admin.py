@@ -28,9 +28,3 @@ class OfficialAdmin(admin.ModelAdmin):
     list_display = ('position', 'name', 'created_at')
     search_fields = ('name', 'position')
     ordering = ('position',)
-    readonly_fields = ('created_at',)
-
-    def get_readonly_fields(self, request, obj=None):
-        if obj:  # prevent changing position once saved
-            return self.readonly_fields + ('position',)
-        return self.readonly_fields

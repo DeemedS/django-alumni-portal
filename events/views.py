@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Event
 from authentication.models import User
 import requests
@@ -10,10 +10,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.urls import reverse
+from faculty.models import WebsiteSettings
 
 def events(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
+
+    websettings = WebsiteSettings.objects.first()
+
+    is_authenticated = False
 
     current_year = now().year
     years = list(range(2010, current_year + 1))
@@ -40,20 +45,15 @@ def events(request):
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            context = {
-                'years': years,
-                'months': months,
-                'current_year': current_year,
-                'is_authenticated': True
-            }
+            is_authenticated = True
 
-        return render(request, 'events/events_list.html', context)
     
     return render(request, 'events/events_list.html', {
         'years': years,
         'months': months,
         'current_year': current_year,
-        'is_authenticated': False
+        'settings': websettings,
+        'is_authenticated': is_authenticated
     })
 
 def user_events(request):
@@ -74,55 +74,40 @@ def user_events(request):
     return JsonResponse({"events": userevents}) 
 
 def event_page(request, slug):
-    event = Event.objects.get(slug=slug)
-
+    event = get_object_or_404(Event, slug=slug, is_active=True)
     access_token = request.COOKIES.get('access_token')
+    websettings = WebsiteSettings.objects.first()
+    is_authenticated = False
+    user_events = None
 
-    if not access_token:
-        context = {
-            'event': event,
-            'is_authenticated': False
-        }
-        return render(request, 'events/event_page.html', context)
-    
-    user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
-    
+    if access_token:
+        # Verify token
+        verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        verify_data = {'token': access_token}
 
-    try:
-        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
-        if user_response.status_code != 200:
-            context = {
-                'event': event,
-                'is_authenticated': False
-            }
-            return render(request, 'events/event_page.html', context)
+        try:
+            verify_response = requests.post(verify_url, data=verify_data)
+            if verify_response.status_code == 200:
+                is_authenticated = True
 
-        user_data = user_response.json()
-        user_events = user_data.get('events')
+                # If token is valid, fetch user info
+                user_info_url = f"{settings.API_TOKEN_URL}/user_info/"
+                user_response = requests.get(
+                    user_info_url,
+                    headers={'Authorization': f'Bearer {access_token}'}
+                )
 
-        if not user_events:
-            context = {
-                'event': event,
-                'is_authenticated': True
-            }
-            return render(request, 'events/event_page.html', context)
-
-    except requests.RequestException:
-        context = {
-                'event': event,
-                'is_authenticated': False
-        }
-        return render(request, 'events/event_page.html', context)
-    
-    context = {
-        'event': event,
-        'is_authenticated': False
-    }
+                if user_response.status_code == 200:
+                    user_data = user_response.json()
+                    user_events = user_data.get('events')
+        except requests.RequestException:
+            pass  # Optionally log the error here
 
     context = {
         'event': event,
-        'user_events' : user_events,
-        'is_authenticated': False
+        'settings': websettings,
+        'is_authenticated': is_authenticated,
+        'user_events': user_events
     }
     return render(request, 'events/event_page.html', context)
 

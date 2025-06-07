@@ -1,5 +1,5 @@
 import json
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from .models import JobPost
 from authentication.models import User
@@ -12,12 +12,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from careers.models import JobPost
+from faculty.models import WebsiteSettings
 
 # Create your views here.
 
 def careers(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
+    websettings = WebsiteSettings.objects.first()
+
+    is_authenticated = False
+
     if access_token and refresh_token:
         # Here you might want to validate the tokens or perform some action
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
@@ -25,13 +30,15 @@ def careers(request):
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            context = {
-                'is_authenticated': True
-            }
+            is_authenticated = True
 
-        return render(request, 'careers/careers.html', context)
-    
-    return render(request, 'careers/careers.html', {'is_authenticated': False})
+    context = {
+        'settings': websettings,
+        'is_authenticated': is_authenticated
+    }
+
+    return render(request, 'careers/careers.html', context)
+
 
 def user_jobs(request):
     access_token = request.COOKIES.get('access_token')
@@ -51,9 +58,14 @@ def user_jobs(request):
     return JsonResponse({"jobs": userjobs})
 
 def career_page(request, id):
-    job = JobPost.objects.get(id=id)
+    job = get_object_or_404(JobPost, id=id, is_active=True)
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
+
+    websettings = WebsiteSettings.objects.first()
+
+    is_authenticated = False
+
     if access_token and refresh_token:
         # Here you might want to validate the tokens or perform some action
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
@@ -61,19 +73,15 @@ def career_page(request, id):
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            context = {
-                'job': job,
-                'is_authenticated': True
-            }
-            return render(request, 'careers/career_page.html', context)
-        
+            is_authenticated = True
     context = {
         'job': job,
-        'is_authenticated': False
+        'settings': websettings,
+        'is_authenticated': is_authenticated
     }
-    
-    return render(request, 'careers/career_page.html', context)
 
+    return render(request, 'careers/career_page.html', context)
+        
 def save_job(request, id):
 
     # Get access token from cookies
