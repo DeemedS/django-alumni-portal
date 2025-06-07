@@ -97,6 +97,11 @@
                     <input type="file" class="form-control" id="import-file" accept=".csv, .xlsx">
                 </div>
                     <p class="file-reminder mt-2">* Only .csv or .xlsx files are allowed.</p>
+                    <div class="mt-2 text-start">
+                        <a href="{% static 'templates/alumni_import_template.xlsx' %}" download class="btn btn-outline-primary btn-sm">
+                            <i class="fa-solid fa-download me-1"></i>Download Template
+                        </a>
+                    </div>
                 <div class="d-flex justify-content-center mt-4 w-100 flex-column flex-sm-row">
                     <button class="cancel-btn flex-fill me-sm-3 mb-2 mb-sm-0" data-bs-dismiss="modal">Cancel</button>
                     <button id="import-btn" class="btn btn-danger flex-fill">Import</button>
