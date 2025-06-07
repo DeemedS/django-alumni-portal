@@ -19,7 +19,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.encoding import force_bytes
 from articles.models import Article
-from .models import WebsiteSettings, Official
+from .models import WebsiteSettings, Official, POSITION_CHOICES
+from django.utils.text import slugify
 
 
 def generate_student_number():
@@ -580,6 +581,11 @@ def system_settings(request):
 @login_required(login_url='/faculty/')
 def officials_management(request):
 
+    officials_by_position = {}
+    for pos_key, _ in POSITION_CHOICES:
+        slug_key = slugify(pos_key)  # example: "Vice President for Administration" → "vice-president-for-administration"
+        officials_by_position[slug_key] = Official.objects.filter(position=pos_key).first()
+
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
@@ -593,13 +599,12 @@ def officials_management(request):
         'active_page':'officials',
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
+        'officials': officials_by_position
     }
     return render(request, 'officials_management.html', context)
 
 @login_required(login_url='/faculty/')
 def handle_officials_form(request):
-
-    official = Official.objects.first()
 
     if request.method == 'POST':
         print(request.POST)

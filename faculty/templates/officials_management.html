@@ -65,8 +65,13 @@
                                 <h5 class="official-title">ARCDO OFFICIALS</h5>
                                 <div class="form-entry">
                                     <label class="officials-form-label">Director</label>
-                                    <input type="text" class="form-control mb-2" name="director_name">
-                                    <input type="file" class="form-control" name="director_photo">
+                                    <input type="text" class="form-control mb-2" name="director_name" value="{{ officials.director.name }}">
+
+                                    <div class="mb-2">
+                                        <img src="{{ officials.director.photo.url }}" alt="Director Photo" class="img-thumbnail" style="max-width: 150px;">
+                                    </div>
+
+                                    {{ form.director_photo }}
                                 </div>
 
                                 <div class="form-entry">

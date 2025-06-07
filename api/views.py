@@ -23,6 +23,7 @@ from django.db.models import Count
 class FilteredEventsAPIView(APIView):
 
     permission_classes = [AllowAny]
+    authentication_classes = []
 
     def get(self, request, *args, **kwargs):
         event_filter = request.GET.get('event_filter', 'all')
@@ -66,6 +67,7 @@ class FilteredEventsAPIView(APIView):
 class FilteredArticlesAPIView(APIView):
 
     permission_classes = [AllowAny]
+    authentication_classes = []
 
     def get(self, request, *args, **kwargs):
         article_filter = request.GET.get('article_filter', 'all')
@@ -154,6 +156,7 @@ def get_user_info(request):
 class FilteredJobPostsAPIView(APIView):
 
     permission_classes = [AllowAny]
+    authentication_classes = []
     
     def get(self, request, *args, **kwargs):
         keyword = request.GET.get('keyword', '')
