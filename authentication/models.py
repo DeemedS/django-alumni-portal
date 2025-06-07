@@ -75,6 +75,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     work_experience = models.JSONField(default=dict, blank=True)
     jobs = models.JSONField(default=list, blank=True)
     events = models.JSONField(default=list, blank=True)
+    x_link = models.CharField(max_length=100, blank=True, null=True)
+    facebook_link = models.CharField(max_length=100, blank=True, null=True)
+    linkedin_link = models.CharField(max_length=100, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     objects = UserManager()
 

@@ -11,6 +11,7 @@ class UserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password', 'student_number', 'profile_image', 'first_name', 'last_name', 
                         'middle_name', 'suffix', 'birthday', 'address', 'telephone', 'mobile', 'civil_status', 'sex', 'course', 'section', 'school_year',
                         'education', 'licenses', 'certifications', 'work_experience',
+                        'x_link', 'facebook_link', 'linkedin_link',
                         'jobs', 'events', 
                         'email_verified')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
