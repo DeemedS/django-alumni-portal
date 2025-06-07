@@ -14,10 +14,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import get_messages
 import requests
+from faculty.models import WebsiteSettings
 
 def articles_list(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
+    websettings = WebsiteSettings.objects.first()
+
+    is_authenticated = False
 
     current_year = now().year
 
@@ -48,16 +52,8 @@ def articles_list(request):
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            context = {
-                'years': years,
-                'months': months,
-                'current_year': current_year,
-                'articles': articles,
-                'school_abv': settings.SCHOOL_ABV,
-                'is_authenticated': True
-            }
+            is_authenticated = True
 
-        return render(request, 'articles/articles_list.html', context)
 
     return render(request, 'articles/articles_list.html', {
         'years': years,
@@ -65,22 +61,20 @@ def articles_list(request):
         'current_year': current_year,
         'articles': articles,
         'school_abv': settings.SCHOOL_ABV,
-        'is_authenticated': False
+        'settings': websettings,
+        'is_authenticated': is_authenticated
     })
 
 def article_page(request, slug):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
+    websettings = WebsiteSettings.objects.first()
+    
+    is_authenticated = False
 
     article = get_object_or_404(Article, slug=slug, is_active=True)
     content_order = get_ordered_content(article)
 
-    context = {
-        'article': article,
-        'content_order': content_order,
-        'school_abv': settings.SCHOOL_ABV,
-        'is_authenticated': False
-    }
 
     if access_token and refresh_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
@@ -88,7 +82,15 @@ def article_page(request, slug):
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            context['is_authenticated'] = True
+            is_authenticated = True
+
+    context = {
+        'article': article,
+        'content_order': content_order,
+        'school_abv': settings.SCHOOL_ABV,
+        'settings': websettings,
+        'is_authenticated': is_authenticated
+    }
 
     return render(request, 'articles/article_page.html', context)
 

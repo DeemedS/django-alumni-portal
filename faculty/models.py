@@ -2,14 +2,17 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 class WebsiteSettings(models.Model):
-    facebook_link = models.CharField(max_length=200)
-    instagram_link = models.CharField(max_length=200)
-    x_link = models.CharField(max_length=200)
-    linked_in_link = models.CharField(max_length=200)
-    arcdo_email = models.CharField(max_length=200)
-    phone_number_1 = models.CharField(max_length=200)
-    phone_number_2 = models.CharField(max_length=200)
-    arcdo_address = models.CharField(max_length=200)
+    facebook_link = models.CharField(max_length=200, blank=True)
+    instagram_link = models.CharField(max_length=200, blank=True)
+    x_link = models.CharField(max_length=200, blank=True)
+    linked_in_link = models.CharField(max_length=200, blank=True)
+    arcdo_email = models.CharField(max_length=200, blank=True)
+    phone_number_1 = models.CharField(max_length=200, blank=True)
+    phone_number_2 = models.CharField(max_length=200, blank=True)
+    phone_number_3 = models.CharField(max_length=200, blank=True)
+    arcdo_address_line1 = models.CharField(max_length=200, blank=True)
+    arcdo_address_line2 = models.CharField(max_length=200, blank=True)
+    arcdo_address_line3 = models.CharField(max_length=200, blank=True)
 
     def clean(self):
         if WebsiteSettings.objects.exists() and not self.pk:
@@ -24,10 +27,6 @@ class WebsiteSettings(models.Model):
 
     def __str__(self):
         return "Website Settings"
-
-from django.db import models
-
-from django.db import models
 
 POSITION_CHOICES = [
     # ARCDO OFFICIALS

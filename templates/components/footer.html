@@ -13,9 +13,9 @@
             
             <div class="col">
             <p><strong>Alumni Relations and Career Development Office</strong></p>
-            <p>2/F North Wing Main Building</p>
-            <p>PUP A. Mabini Campus, Anonas St., Sta. Mesa</p>
-            <p>Manila, Philippines 1016</p>
+            <p>{{ settings.arcdo_address_line1 }}</p>
+            <p>{{ settings.arcdo_address_line2 }}</p>
+            <p>{{ settings.arcdo_address_line3 }}</p>
             </div>
             </div>
 
@@ -23,7 +23,7 @@
             <div class="row">
             <img src="{% static "images/icons/phone.svg" %}" alt="phone">
             <div class="col">
-            <p>(63 2) 714-0593, (63 2) 335-1PUP (335-1787) or 335-1777 local 340</p>
+            <p>{{ settings.phone_number_1 }}, {{ settings.phone_number_2 }} or {{ settings.phone_number_3 }}</p>
             </div>
             </div>
 
@@ -31,7 +31,7 @@
             <div class="row">
             <img src="{% static "images/icons/envelope.svg" %}" alt="mail">
             <div class="col">
-            <p>career_alumni@pup.edu.ph</p>
+            <p>{{ settings.arcdo_email }}</p>
             </div>
             </div>
 
