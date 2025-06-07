@@ -274,7 +274,9 @@ $(document).on("click", ".save-job-btn", function () {
                 showToast('Success', 'Job is already saved', 'success');  
             }
         },
-        error: function (xhr) {
+        error: function (xhr, error) {
+            console.log(xhr)
+            console.log(error)
             if (xhr.status === 401) {
                 showToast('No User Found', 'You need to log in to save jobs.', 'warning');  
             } else if (xhr.status === 403) {
@@ -307,7 +309,9 @@ $(document).on("click", ".unsave-job-btn", function () {
                 button.text("Save Job").removeClass("btn-danger unsave-job-btn").addClass("btn-outline-danger save-job-btn");
             } 
         },
-        error: function (xhr) {
+        error: function (xhr, error) {
+            console.log(xhr)
+            console.log(error)
             if (xhr.status === 401) {
                 showToast('No User Found', 'You need to log in to save jobs.', 'warning');  
             } else if (xhr.status === 403) {
