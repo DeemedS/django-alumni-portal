@@ -1,5 +1,4 @@
 import csv
-import io
 import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -8,12 +7,10 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib.messages import get_messages
 from django.contrib.auth import logout
-import xlsxwriter
 from careers.models import JobPost
 from events.models import Event
 from events.forms import EventForm
 from authentication.models import User, Course
-import pandas as pd
 import random
 import string
 from django.contrib.auth.tokens import default_token_generator
@@ -21,6 +18,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.encoding import force_bytes
+from .models import WebsiteSettings, Official
 
 def generate_student_number():
     while True:
@@ -519,6 +517,9 @@ def send_email_import_user(user, password):
 
 @login_required(login_url='/faculty/')
 def system_settings(request):
+
+    websettings = WebsiteSettings.objects.first()
+
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
@@ -532,11 +533,13 @@ def system_settings(request):
         'active_page':'settings',
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
+        'settings':websettings
     }
     return render(request, 'system_settings.html', context)
 
 @login_required(login_url='/faculty/')
 def officials_management(request):
+
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
@@ -555,6 +558,9 @@ def officials_management(request):
 
 @login_required(login_url='/faculty/')
 def handle_officials_form(request):
+
+    official = Official.objects.first()
+
     if request.method == 'POST':
         print(request.POST)
         director_name = request.POST.get('director_name')
