@@ -1,11 +1,14 @@
+import csv
+import io
 import json
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.messages import get_messages
 from django.contrib.auth import logout
+import xlsxwriter
 from careers.models import JobPost
 from events.models import Event
 from events.forms import EventForm
@@ -59,7 +62,10 @@ def faculty_logout(request):
     return redirect('/faculty') 
 
 @login_required(login_url='/faculty/')
-def alumni_management(request):
+def alumni_management(request):\
+    
+    courses = Course.objects.all()
+
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
@@ -73,6 +79,7 @@ def alumni_management(request):
         'active_page':'alumni',
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
+        'courses': courses
     }
 
     return render(request, 'faculty/alumni_management.html', context)
@@ -403,136 +410,96 @@ def alumni_import(request):
 
     return JsonResponse({'success': False, 'message': "Invalid request method."}, status=405)
 
-# @login_required(login_url='/faculty/')
-# def alumni_import(request):
-#     if not request.user.is_staff or not request.user.is_active:
-#         return JsonResponse({
-#             'success': False,
-#             'message': "Access denied. You must be an active faculty member to proceed."
-#         }, status=403)
-    
-#     if request.method == 'POST':
-#         file = request.FILES.get('file')
+@login_required(login_url='/faculty/')
+def alumni_export(request):
+    if not request.user.is_staff or not request.user.is_active:
+        return JsonResponse({
+            'success': False,
+            'message': "Access denied. You must be an active faculty member to proceed."
+        }, status=403)
 
-#         if not file:
-#             return JsonResponse({
-#                 'success': False,
-#                 'message': "No file uploaded."
-#             }, status=400)
+    if request.method == 'POST':
+        try:
+            data_json = request.POST.get('data')
 
-#         try:
-#             df = pd.read_excel(file, sheet_name=0)
-#             if df.empty:
-#                 return JsonResponse({
-#                     'success': False,
-#                     'message': "The uploaded file is empty."
-#                 }, status=400)
+            print(data_json)
 
-#             success_rows = []
-#             failed_rows = []
+            if not data_json:
+                return JsonResponse({'success': False, 'message': "No data provided."}, status=400)
 
-#             for index, row in df.iterrows():
-#                 try:
-#                     if pd.isnull(row['Student Number']):
-#                         row['Student Number'] = generate_student_number()
+            data = json.loads(data_json)
+            selected_fields = data.get('fields', [])
+            selected_year = data.get('school_year')
+            selected_course = data.get('course')
 
-#                     password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+            # Validate selected fields
+            model_fields = {
+                'name': ['last_name', 'first_name', 'middle_name', 'suffix'],
+                'birthday': 'birthday',
+                'address': 'address',
+                'telephone': 'telephone',
+                'mobile': 'mobile',
+                'email': 'email',
+                'civil_status': 'civil_status',
+                'sex': 'sex',
+                'school_year': 'school_year',
+                'course': 'course',
+                'employment': 'jobs',  # assuming jobs is a JSONField
+            }
 
-#                     if User.objects.filter(email=row['Email Address']).exists():
-#                         failed_rows.append({
-#                             'row': index + 1,
-#                             'reason': f"Email {row['Email Address']} already exists."
-#                         })
-#                         continue
+            queryset = User.objects.all()
 
-#                     if User.objects.filter(student_number=row['Student Number']).exists():
-#                         failed_rows.append({
-#                             'row': index + 1,
-#                             'reason': f"Student number {row['Student Number']} already exists."
-#                         })
-#                         continue
+            if 'school_year' in selected_fields:
+                if selected_year:
+                    queryset = queryset.filter(school_year=selected_year)
+            if 'course' in selected_fields:
+                if selected_course:
+                    queryset = queryset.filter(course=selected_course)
 
-#                     try:
-#                         course = Course.objects.get(course_code=row['Course Code'])
-#                     except Course.DoesNotExist:
-#                         failed_rows.append({
-#                             'row': index + 1,
-#                             'reason': f"Course code '{row['Course Code']}' not found."
-#                         })
-#                         continue
 
-#                     birthday = row['Birthday']
-#                     if pd.notna(birthday):
-#                         birthday = birthday.strftime('%Y-%m-%d') if isinstance(birthday, pd.Timestamp) else birthday
+            # Prepare response
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="alumni_export.csv"'
+            writer = csv.writer(response)
 
-#                     start_date = row['Start Date']
-#                     if pd.notna(start_date):
-#                         start_date = start_date.strftime('%Y-%m-%d') if isinstance(start_date, pd.Timestamp) else start_date
+            # Header
+            header = []
+            for field in selected_fields:
+                if field == 'name':
+                    header.extend(['Last Name', 'First Name', 'Middle Name', 'Suffix'])
+                else:
+                    header.append(field.replace('_', ' ').title())
+            writer.writerow(header)
 
-#                     work_exp = [{
-#                         "company": row['Company'],
-#                         "position": row['Position'],
-#                         "startDate": start_date,
-#                         "endDate": None
-#                     }]
+            # Data rows
+            for user in queryset:
+                row = []
+                for field in selected_fields:
+                    if field == 'name':
+                        row.extend([user.last_name, user.first_name, user.middle_name or '', user.suffix or ''])
+                    elif field == 'course':
+                        row.append(user.course.course_code if user.course else '')
+                        row.append(user.course.course_name if user.course else '')
+                    elif field == 'employment':
+                        # This can be expanded depending on how you want to export JSONField data
+                        jobs = user.jobs
+                        row.append(", ".join([job.get('position', '') for job in jobs]) if jobs else '')
+                    else:
+                        value = getattr(user, model_fields[field], '')
+                        row.append(value if value is not None else '')
+                writer.writerow(row)
 
-#                     user = User.objects.create(
-#                         first_name=row['First Name'],
-#                         middle_name=row['Middle Name'],
-#                         last_name=row['Last Name'],
-#                         student_number=row['Student Number'],
-#                         suffix=row['Suffix'],
-#                         email=row['Email Address'],
-#                         birthday=birthday,
-#                         mobile=row['Mobile Number'],
-#                         civil_status=row['Civil Status'],
-#                         sex=row['Sex'],
-#                         course=course,
-#                         school_year=row['School Year'],
-#                         work_experience=work_exp
-#                     )
-#                     user.set_password(password)
-#                     user.save()
+            return response
+        
+        except Exception as e:
+                import traceback
+                traceback.print_exc()  # For console
+                return JsonResponse({'success': False, 'message': f"Error: {str(e)}"}, status=500)
 
-#                     try:
-#                         send_email_import_user(user, password)
-#                     except Exception as e:
-#                         failed_rows.append({
-#                             'row': index + 1,
-#                             'reason': f"User created but email sending failed: {str(e)}"
-#                         })
-#                         continue
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': f"Error: {str(e)}"}, status=500)
 
-#                     success_rows.append({
-#                         'row': index + 2,
-#                         'student_number': row['Student Number'],
-#                         'email': row['Email Address']
-#                     })
-
-#                 except Exception as e:
-#                     failed_rows.append({
-#                         'row': index + 1,
-#                         'reason': f"Unexpected error: {str(e)}"
-#                     })
-
-#             return JsonResponse({
-#                 'success': True,
-#                 'message': "Alumni import completed.",
-#                 'imported': success_rows,
-#                 'failed': failed_rows,
-#             })
-
-#         except Exception as e:
-#             return JsonResponse({
-#                 'success': False,
-#                 'message': f"An error occurred while importing: {str(e)}"
-#             }, status=500)
-
-#     return JsonResponse({
-#         'success': False,
-#         'message': "Invalid request method."
-#     }, status=405)
-
+    return JsonResponse({'success': False, 'message': "Invalid request method."}, status=405)
 
 def send_email_import_user(user, password):
     token = default_token_generator.make_token(user)

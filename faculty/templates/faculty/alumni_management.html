@@ -26,7 +26,6 @@
                     <div class="d-flex justify-content-end align-items-center mb-3 search-container">
                         <div class="d-flex align-items-center">
                                 <input type="text" class="form-control search-bar" placeholder="Search">
-                                <span><i class="fa-regular fa-bell fs-4"></i></span>
                         </div>
                     </div>
                     
@@ -114,9 +113,9 @@
                     <button id="import-btn" class="btn btn-danger flex-fill">Import</button>
                 </div>
 
-            <div id="import-status" class="mt-3 w-100"
-                    style="max-height: 200px; overflow-y: auto; font-size: 0.9rem; white-space: pre-wrap; background: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
-            </div>
+                <div id="import-status" class="mt-3 w-100"
+                        style="max-height: 200px; overflow-y: auto; font-size: 0.9rem; white-space: pre-wrap; background: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
+                </div>
 
                 <!-- Download Failed Rows Link -->
                 <a id="download-failed"
@@ -140,63 +139,59 @@
                 <div class="import-export-file">
                     <h4>Export Alumni Data</h4>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="name">
-                        <label class="form-check-label" for="name">Name</label>
+                        <input class="form-check-input" type="checkbox" id="check_name" name="check_name">
+                        <label class="form-check-label" for="check_name">Name</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="birthdate">
-                        <label class="form-check-label" for="birthdate">Birth Date</label>
+                        <input class="form-check-input" type="checkbox" id="check_birthdate" name="check_birthdate">
+                        <label class="form-check-label" for="check_birthdate">Birth Date</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="address">
-                        <label class="form-check-label" for="address">Address</label>
+                        <input class="form-check-input" type="checkbox" id="check_address" name="check_address">
+                        <label class="form-check-label" for="check_address">Address</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="telephone">
-                        <label class="form-check-label" for="telephone">Telephone No</label>
+                        <input class="form-check-input" type="checkbox" id="check_telephone" name="check_telephone">
+                        <label class="form-check-label" for="check_telephone">Telephone No</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="mobile">
-                        <label class="form-check-label" for="mobile">Mobile No</label>
+                        <input class="form-check-input" type="checkbox" id="check_mobile" name="check_mobile">
+                        <label class="form-check-label" for="check_mobile">Mobile No</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="email">
-                        <label class="form-check-label" for="email">Email Address</label>
+                        <input class="form-check-input" type="checkbox" id="check_email" name="check_email">
+                        <label class="form-check-label" for="check_email">Email Address</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="civil_status">
-                        <label class="form-check-label" for="civil_status">Civil Status</label>
+                        <input class="form-check-input" type="checkbox" id="check_civil_status" name="check_civil_status">
+                        <label class="form-check-label" for="check_civil_status">Civil Status</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gender">
-                        <label class="form-check-label" for="gender">Gender</label>
+                        <input class="form-check-input" type="checkbox" id="check_sex" name="check_sex" >
+                        <label class="form-check-label" for="check_sex">Sex</label>
                     </div>
                     <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="year_graduated">
-                        <label class="form-check-label" for="year_graduated">Year Graduated</label>
+                        <input class="form-check-input" type="checkbox" id="check_school_year" name= "check_school_year">
+                        <label class="form-check-label" for="check_school_year">School Year</label>
                     </div>
                     <!-- ADD MORE YEAR -->
-                    <select class="form-select mb-3" id="yearSelect">
-                        <option selected>Select Year</option>
-                        <option value="2025">2025</option>
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
+                    <select class="form-select mb-3" id="school_year" name="school_year">
+                        <option selected disabled>School Year</option>
                     </select>
 
                     <div class="form-check mb-2">
-                        <input class="form-check-input" type="checkbox" id="course_name">
-                        <label class="form-check-label" for="course_name">Course Name</label>
+                        <input class="form-check-input" type="checkbox" id="check_course" name="check_course">
+                        <label class="form-check-label" for="check_course">Course</label>
                     </div>
                     <!-- ADD MORE COURSE -->
-                    <select class="form-select mb-3" id="courseSelect">
-                        <option selected>Select Course</option>
-                        <option>Bachelor of Science in Computer Engineering</option>
-                        <option>Bachelor of Science in Information Technology</option>
-                        <option>Bachelor of Science in Computer Science</option>
-                    </select>
+                    <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="" >
+                    <input type="hidden" id="course_name" name="course_name" value=""> 
+                    <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
+                    <input type="hidden" id="selectedCourse" name="course">
+
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="employment">
-                        <label class="form-check-label" for="employment">Current Employment</label>
+                        <input class="form-check-input" type="checkbox" id="check_employment" name="check_employment">
+                        <label class="form-check-label" for="check_employment">Current Employment</label>
                     </div>
                 </div>
                 <div class="full-download mt-3">
@@ -210,13 +205,23 @@
                 <div class="d-flex justify-content-center mt-4 w-100 flex-column flex-sm-row">
                     <button class="cancel-btn flex-fill me-sm-3 mb-2 mb-sm-0" data-bs-dismiss="modal">Cancel</button>
                     <button id="export-btn" class="btn btn-danger flex-fill">Export</button>
+                    
                 </div>
+
+                <span id="exporting-text" style="display:none; color: green; font-weight: bold; margin-left: 10px; margin-top:5px; ">Exporting...</span>
+
+                <a id="download-export-btn"
+                href="#"
+                style="display: none; margin-top: 10px; font-size: 0.9rem;"
+                class="btn btn-outline-secondary"
+                download>
+                ⬇️ Download Exported Data
+                </a>
             </div>
         </div>
     </div>
 </div>
 
- 
 
 <script src="{% static 'js/get_alumni.js' %}"></script>
 <script src="{% static 'js/faculty_pagination.js' %}"></script>
@@ -224,7 +229,75 @@
 <script src="{% static 'js/import_handler.js' %}"></script>
 <script src="{% static 'js/export_handler.js' %}"></script>
 <script src="{% static 'js/xlsx.full.min.js' %}"></script>
+<script src="{% static 'js/sy_gen.js' %}"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const courseSearch = document.getElementById("courseSearch");
+        const courseSuggestions = document.getElementById("courseSuggestions");
+        const selectedCourse = document.getElementById("selectedCourse");
+        const courseName = document.getElementById("course_name");
+    
+        const courses = [
+            {% for course in courses %}
+                { id: "{{ course.id }}", text: "{{ course|escapejs }}", name: "{{ course.course_name|escapejs }}" },
+            {% endfor %}
+        ];
+    
+    
+        function filterCourseSuggestions(query) {
+            const filtered = courses.filter(course =>
+                course.text.toLowerCase().includes(query.toLowerCase())
+            );
+    
+            courseSuggestions.innerHTML = "";
+            if (filtered.length > 0) {
+                filtered.forEach(course => {
+                    const div = document.createElement("div");
+                    div.className = "list-group-item list-group-item-action";
+                    div.textContent = course.text;
+                    div.dataset.id = course.id;
+                    div.addEventListener("click", () => selectCourse(course));
+                    courseSuggestions.appendChild(div);
+                });
+                courseSuggestions.style.display = "block";
+            } else {
+                courseSuggestions.style.display = "none";
+            }
+        }
+    
+        function selectCourse(course) {
+            courseSearch.value = course.text;
+            selectedCourse.value = course.id;
+            courseName.value = course.name;
+            courseSuggestions.style.display = "none";
+        }
+    
+
+        function validateCourseInput() {
+            const enteredText = courseSearch.value.trim();
+            const matchedCourse = courses.find(course => course.text.toLowerCase() === enteredText.toLowerCase());
+    
+            if (matchedCourse) {
+                selectCourse(matchedCourse);
+            } else {
+                selectedCourse.value = "";
+                courseName.value = enteredText;
+            }
+        }
+    
+        courseSearch.addEventListener("input", () => filterCourseSuggestions(courseSearch.value));
+    
+        courseSearch.addEventListener("blur", validateCourseInput);
+    
+        document.addEventListener("click", (event) => {
+            if (!courseSearch.contains(event.target) && !courseSuggestions.contains(event.target)) {
+                courseSuggestions.style.display = "none";
+            }
+        });
+
+    });
+</script>
 
     
 {% endblock %}
