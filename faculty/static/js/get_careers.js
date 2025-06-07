@@ -4,22 +4,46 @@ $(document).ready(function () {
 
 
     function fetchCareers(page) {
+        let query = $('#search-input').val().trim();
+
+        // Hide table and pagination
+        $('table').hide();
+        $('.pagination-controls').hide();
+
+        // Show the searching message
+        $('#searching-message').show();
+
+        let url = `/api/filtered-jobposts/?page=${page}&page_size=${pageSize}`;
+        if (query) {
+            url += `&q=${encodeURIComponent(query)}`;
+        }
+
         $.ajax({
-            url: `/api/filtered-jobposts/?page=${page}&page_size=${pageSize}`,
+            url: url,
             type: "GET",
             success: function (response) {
                 let careersTable = $("tbody");
                 careersTable.empty();
 
-                response.results.forEach(function (careers) {
-                    let isActive = careers.is_active ? "active" : "inactive";
+                // Hide the searching message
+                $('#searching-message').hide();
 
-                    let truncatedTitle = careers.title.split(" ").slice(0, 5).join(" ");
-                    if (careers.title.split(" ").length > 5) {
-                        truncatedTitle += "...";
-                    }
+                // Show table and pagination again
+                $('table').show();
+                $('.pagination-controls').show();
 
-                    let row = `
+                if (response.results.length === 0) {
+                    careersTable.append(`<tr><td colspan="5" class="text-center">No jobs found.</td></tr>`);
+                } else {
+                    response.results.forEach(function (careers) {
+                        let isActive = careers.is_active ? "active" : "inactive";
+
+                        let truncatedTitle = careers.title.split(" ").slice(0, 5).join(" ");
+                        if (careers.title.split(" ").length > 5) {
+                            truncatedTitle += "...";
+                        }
+
+                        let row = `
                         <tr>
                             <td data-label="Title">${truncatedTitle}</td>
                             <td data-label="Company">${careers.company}</td>
@@ -37,18 +61,22 @@ $(document).ready(function () {
                             </td>
                         </tr>
                     `;
-                    careersTable.append(row);
-                });
+                        careersTable.append(row);
+                    });
+                }
 
                 createPagination(page, Math.ceil(response.count / pageSize), 5);
             },
             error: function (xhr, status, error) {
-                console.error("Error fetching alumni:", error);
+                console.error("Error fetching article:", error);
+                $('#searching-message').hide();
+                $('table').show();
+                $('.pagination-controls').show();
             }
         });
     }
 
-    // Function to create pagination
+    // Pagination click event
     $(document).on("click", "#pagination .page-link", function (e) {
         e.preventDefault();
         let newPage = parseInt($(this).data("page"));
@@ -58,7 +86,7 @@ $(document).ready(function () {
         }
     });
 
-    // Handle publish/unpublish button click
+    // Publish/unpublish button click event
     $(document).on("click", ".toggle-status-btn", function () {
         const button = $(this);
         const jobId = button.data("id");
@@ -84,5 +112,21 @@ $(document).ready(function () {
         });
     });
 
+    // Search button click — reset page to 1 and fetch results
+    $('#search-button').on('click', function () {
+        page = 1;
+        fetchCareers(page);
+    });
+
+    // Prevent Enter key from triggering search in input
+    $('#search-input').on('keypress', function (e) {
+        if (e.which === 13) { // Enter key
+            e.preventDefault();
+            page = 1;
+            fetchCareers(page);
+        }
+    });
+
+    // Initial fetch
     fetchCareers(page);
 });

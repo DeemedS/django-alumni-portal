@@ -3,34 +3,58 @@ $(document).ready(function () {
     const pageSize = 20;
 
     function fetchEvents(page) {
+
+        let query = $('#search-input').val().trim();
+
+        $('table').hide();
+        $('.pagination-controls').hide();
+
+        $('#searching-message').show();
+
+        let url = `/api/filtered-events/?page=${page}&page_size=${pageSize}`;
+        if (query) {
+            url += `&q=${encodeURIComponent(query)}`;
+        }
+
         $.ajax({
-            url: `/api/filtered-events/?page=${page}&page_size=${pageSize}`,
+            url: url,
             type: "GET",
             success: function (response) {
                 let eventsTable = $("tbody");
                 eventsTable.empty();
-            
-                response.results.forEach(function (events) {
-                    let isActive = events.is_active ? "active" : "inactive";
-            
-                    let truncatedTitle = events.title.split(" ").slice(0, 5).join(" ");
-                    if (events.title.split(" ").length > 5) {
-                        truncatedTitle += "...";
-                    }
-                    let eventDate = new Date(events.date);
-                    let formattedDate = eventDate.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
-                    let formattedTime = eventDate.toLocaleTimeString('en-US', {
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true
-                    });
-                    let formattedDateTime = `${formattedDate}, ${formattedTime}`;
-            
-                    let row = `
+
+                // Hide the searching message
+                $('#searching-message').hide();
+
+                // Show table and pagination again
+                $('table').show();
+                $('.pagination-controls').show()
+
+                if (response.results.length === 0) {
+                    eventsTable.append('<tr><td colspan="4" class="text-center">No events found.</td></tr>');
+                } else {
+                    response.results.forEach(function (events) {
+                        let isActive = events.is_active ? "active" : "inactive";
+
+                        let truncatedTitle = events.title.split(" ").slice(0, 5).join(" ");
+                        if (events.title.split(" ").length > 5) {
+                            truncatedTitle += "...";
+                        }
+
+                        let eventDate = new Date(events.date);
+                        let formattedDate = eventDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        let formattedTime = eventDate.toLocaleTimeString('en-US', {
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            hour12: true
+                        });
+                        let formattedDateTime = `${formattedDate}, ${formattedTime}`;
+
+                        let row = `
                         <tr>
                             <td data-label="Event">${events.title}</td>
                             <td data-label="Date">${formattedDateTime}</td>
@@ -46,9 +70,12 @@ $(document).ready(function () {
                             </td>
                         </tr>
                     `;
-                    eventsTable.append(row);
-                });
-            
+                        eventsTable.append(row);
+                    });
+                }
+                $('#searching-message').hide();
+                $('table').show();
+                $('.pagination-controls').show();
                 createPagination(page, Math.ceil(response.count / pageSize), 5);
             },
             error: function (error) {
@@ -57,16 +84,18 @@ $(document).ready(function () {
         });
     }
 
+    // Pagination controls
     $(document).on("click", "#pagination .page-link", function (e) {
         e.preventDefault();
         let newPage = parseInt($(this).data("page"));
         if (!isNaN(newPage)) {
             page = newPage;
-            fetchEvents(page);
+            const query = $("#search-input").val();
+            fetchEvents(page, query);
         }
     });
 
-    // Handle publish/unpublish button click
+    // Toggle status publish/unpublish
     $(document).on("click", ".toggle-status-btn", function () {
         const button = $(this);
         const eventId = button.data("id");
@@ -92,5 +121,22 @@ $(document).ready(function () {
         });
     });
 
+    // Search on button click
+    $("#search-button").on("click", function () {
+        const query = $("#search-input").val();
+        page = 1;
+        fetchEvents(page, query);
+    });
+
+    // Optional: Search on Enter key
+    $('#search-input').on('keypress', function (e) {
+        if (e.which === 13) { // Enter key
+            e.preventDefault();
+            page = 1;
+            fetchEvents(page);
+        }
+    });
+
+    // Initial fetch
     fetchEvents(page);
 });

@@ -30,8 +30,12 @@ class FilteredEventsAPIView(APIView):
         year = request.GET.get('year')
         is_active = request.GET.get('is_active', 'all')
         page_size = request.GET.get('page_size') or 10
+        search_query = request.GET.get('q')
 
         events = Event.objects.all().annotate(like_count=Count('liked_by'))
+
+        if search_query:
+            events = events.filter(Q(title__icontains=search_query))
 
         if is_active.lower() in ['true', '1']:
             events = events.filter(is_active=True)
@@ -69,8 +73,12 @@ class FilteredArticlesAPIView(APIView):
         year = request.GET.get('year')
         is_active = request.GET.get('is_active', 'all')
         page_size = request.GET.get('page_size') or 10
+        search_query = request.GET.get('q')
         
         articles = Article.objects.all().annotate(like_count=Count('liked_by'))
+
+        if search_query:
+            articles = articles.filter(Q(title__icontains=search_query))
 
         if is_active.lower() in ['true', '1']:
             articles = articles.filter(is_active=True)
@@ -153,8 +161,12 @@ class FilteredJobPostsAPIView(APIView):
         job_type = request.GET.get('job_type', '')
         is_active = request.GET.get('is_active', 'all')
         page_size = request.GET.get('page_size') or 10
+        search_query = request.GET.get('q')
 
         job_posts = JobPost.objects.all().annotate(like_count=Count('liked_by')).order_by('-created_at')
+        
+        if search_query:
+            job_posts = job_posts.filter(Q(title__icontains=search_query))
 
         if is_active.lower() in ['true', '1']:
             job_posts = job_posts.filter(is_active=True)
