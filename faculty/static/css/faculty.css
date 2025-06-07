@@ -374,6 +374,19 @@
     border-radius: 15px;
     text-decoration: none;
 }
+
+.submit-btn {
+  background-color: var(--pupred);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.submit-btn:hover {
+  background-color: #600;
+}
+
 .cancel-btn {
   background-color: white;
   color: var(--pupred);
@@ -409,3 +422,37 @@
     background-color: #FEAF00;
     border: 1px solid var(--pupred);
 }
+
+/* web settings css */
+.settings form input[type="text"]:focus,
+.settings form input[type="email"]:focus,
+.settings form input[type="email"]:focus,
+.settings form input[type="url"]:focus,
+.settings form input[type="file"]:focus  
+{
+    border-color: var(--pupred);
+    box-shadow: 0 0 5px rgba(128, 0, 0, 0.5);
+}
+
+.settings-title {
+      color: var(--pupred);
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+.settings-form-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+.settings-form-label {
+      font-weight: 500;
+    }
+
+.settings-file-upload {
+      margin-top: 1rem;
+    }
