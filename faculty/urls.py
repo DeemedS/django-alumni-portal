@@ -31,12 +31,14 @@ urlpatterns = [
     
     path('faculty/events-management', faculty_views.events_management, name='events_management'),
     path('faculty/events-add', faculty_views.events_add, name='events_add'),
+    path('faculty/events-view/<slug:slug>/', faculty_views.events_view, name='events_view'),
     path('faculty/events-edit/<slug:slug>/', faculty_views.events_edit, name='events_edit'),
     path('faculty/event-delete/<int:id>/', events_views.event_delete, name='event_delete'),
 
     path('faculty/story-management', faculty_views.story_management, name='story_management'),
 
     path('faculty/articles-management', faculty_views.articles_management, name='articles_management'),
+    path('faculty/articles-view/<slug:slug>/', faculty_views.articles_view, name='articles_view'),
     path('faculty/article-add', article_views.article_add, name='article_add'),
     path('faculty/article-delete/<int:id>/', article_views.article_delete, name='article_delete'),
 
