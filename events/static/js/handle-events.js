@@ -43,6 +43,7 @@ $(document).on("click", ".save-event-btn", function() {
 $(document).on("click", ".unsave-event-btn", function () {
     const eventId = $(this).attr("data-id");
     const button = $(this);
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
 
     $.ajax({
         url: `/events/unsave_event/${eventId}/`,
