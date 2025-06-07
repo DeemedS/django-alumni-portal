@@ -6,27 +6,61 @@ from careers.models import JobPost
 from authentication.models import User
 
 class EventSerializer(serializers.ModelSerializer):
-
+    like_count = serializers.IntegerField(read_only=True)
     status = serializers.SerializerMethodField()
+    is_liked   = serializers.SerializerMethodField()
 
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = [
+            'id', 'status', 'title', 'body', 'slug', 'banner', 'thumbnail', 'date',
+            'created_at', 'is_active', 'like_count', 'is_liked'
+        ]
 
     def get_status(self, obj):
+        from django.utils.timezone import now
         return "Upcoming Event" if obj.date >= now() else "Past Event"
     
+    def get_is_liked(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            return obj.liked_by.filter(pk=user.pk).exists()
+        return False
+    
 class ArticleSerializer(serializers.ModelSerializer):
+    like_count = serializers.IntegerField(read_only=True)
+    is_liked   = serializers.SerializerMethodField()
 
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = [
+            'id', 'title', 'body', 'slug', 'banner', 'thumbnail', 'author',
+            'date', 'created_at', 'featured', 'is_active', 'order', 'category',
+            'like_count', 'is_liked'
+        ]
 
+    def get_is_liked(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            return obj.liked_by.filter(pk=user.pk).exists()
+        return False
 class JobPostSerializer(serializers.ModelSerializer):
-    
+    like_count = serializers.IntegerField(read_only=True)
+    is_liked   = serializers.SerializerMethodField()
+
     class Meta:
         model = JobPost
-        fields = '__all__'
+        fields = [
+            'id', 'title', 'company', 'location', 'job_type', 'description',
+            'responsibilities', 'qualifications', 'benefits', 'salary',
+            'created_at', 'is_active', 'like_count', 'is_liked'
+        ]
+    
+    def get_is_liked(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            return obj.liked_by.filter(pk=user.pk).exists()
+        return False
 
 class ALumniSerializer(serializers.ModelSerializer):
 

@@ -35,6 +35,7 @@ function renderCard(item, index) {
         const isLong = body.split(/\s+/).length > 50;
         const imageUrl = item.type === "article" ? (item.thumbnail || "/static/images/arcdologo.jpg") : (item.banner || "/static/images/arcdologo.jpg");
         const label = item.type === "article" ? "NEWS & ANNOUNCEMENT" : "EVENT";
+        const likeCount = item.like_count || 0;
 
         return `
             <div class="card card-custom mb-3 mt-3">
@@ -64,11 +65,20 @@ function renderCard(item, index) {
                 </div>
                 <div>
                 <div class="d-flex justify-content-between align-items-center text-muted">
-                    <small class="text-muted px-3 mb-2"><i class="fa-solid fa-heart me-1"></i>1000 Likes</small>
+                    <small class="text-muted px-3 mb-2">
+                        <i class="fa-solid fa-heart me-1"></i>
+                        <span class="like-number">${likeCount}</span> Likes
+                    </small>
                 </div>
                 </div>
                 <div class="border-top d-flex justify-content-around text-muted py-2 interaction-bar">
-                    <div><i class="fa-regular fa-heart me-1"></i>Like</div>
+                    <div class="like-btn"
+                        data-id="${item.id}"
+                        data-type="${item.type}"
+                        data-liked="${item.is_liked}">
+                        <i class="${item.is_liked ? 'fa-solid text-danger' : 'fa-regular'} fa-heart me-1"></i>
+                        Like
+                    </div>
                     <div><i class="fa fa-paper-plane me-1"></i>Send</div>
                 </div>
             </div>
@@ -81,6 +91,8 @@ function renderCard(item, index) {
         const jobType = item.job_type || "N/A";
         const salary = item.salary ? item.salary + " PHP" : "Not specified";
         const applyUrl = item.apply_url || "#";
+        const likeCount = item.like_count || 0 ;
+
 
         return `
             <div class="card card-custom mb-3 mt-3">
@@ -113,10 +125,19 @@ function renderCard(item, index) {
                     </div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center text-muted">
-                        <small class="text-muted px-3 mb-2"><i class="fa-solid fa-heart me-1"></i>1000 Likes</small>
+                    <small class="text-muted px-3 mb-2">
+                        <i class="fa-solid fa-heart me-1"></i>
+                        <span class="like-number">${likeCount}</span> Likes
+                    </small>
                 </div>
                 <div class="border-top d-flex justify-content-around text-muted py-2 interaction-bar">
-                    <div><i class="fa-regular fa-heart me-1"></i>Like</div>
+                    <div class="like-btn"
+                        data-id="${item.id}"
+                        data-type="${item.type}"
+                        data-liked="${item.is_liked}">
+                        <i class="${item.is_liked ? 'fa-solid text-danger' : 'fa-regular'} fa-heart me-1"></i>
+                        Like
+                    </div>
                     <div><i class="fa-regular fa-bookmark me-1"></i>Save Job</div>
                     <div><i class="fa fa-paper-plane me-1"></i>Send</div>
                 </div>
@@ -235,3 +256,33 @@ function escapeHtml(unsafe) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
 }
+
+
+$("#news-feed-container").on("click", ".like-btn", function () {
+    const $btn    = $(this);
+    const itemId  = $btn.data("id");
+    const itemType= $btn.data("type");     // 'article' | 'event' | 'job'
+    const $card   = $btn.closest(".card");
+    const $icon   = $btn.find("i");
+    const $count  = $card.find(".like-number");
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
+
+    $.ajax({
+        url: `/api/${itemType}${itemType === 'job' ? 'posts' : 's'}/${itemId}/like/`,
+        type: "POST",
+        headers: { "X-CSRFToken": csrfToken },
+        success: function (res) {
+            $count.text(res.like_count);
+
+            if (res.liked) {
+                $icon.removeClass("fa-regular").addClass("fa-solid text-danger");
+            } else {
+                $icon.removeClass("fa-solid text-danger").addClass("fa-regular");
+            }
+            $btn.data("liked", res.liked);
+        },
+        error: function () {
+            alert("Please log in to like this item.");
+        }
+    });
+});

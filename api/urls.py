@@ -28,4 +28,8 @@ urlpatterns = [
 
     path('alumni-list/', views.AlumniListView.as_view(), name='alumni-list'),
     path('related-alumni/', views.RelatedAlumniListView.as_view(), name='related-alumni-list'),
+
+    path("articles/<int:pk>/like/",  views.ToggleArticleLikeAPIView.as_view()),
+    path("events/<int:pk>/like/",    views.ToggleEventLikeAPIView.as_view()),
+    path("jobposts/<int:pk>/like/",  views.ToggleJobLikeAPIView.as_view())
 ]
