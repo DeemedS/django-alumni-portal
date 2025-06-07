@@ -13,8 +13,12 @@ from alumniwebsite.utils.ordered_content_utils import get_ordered_content
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import get_messages
+import requests
 
 def articles_list(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+
     current_year = now().year
 
     years = list(range(2010, current_year + 1))
@@ -37,15 +41,45 @@ def articles_list(request):
 
     articles = Article.objects.all().order_by('-date')
 
+    if access_token and refresh_token:
+        # Here you might want to validate the tokens or perform some action
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            context = {
+                'is_authenticated': True
+            }
+
+        return render(request, 'articles/articles_list.html', context)
+
     return render(request, 'articles/articles_list.html', {
         'years': years,
         'months': months,
         'current_year': current_year,
         'articles': articles,
-        'school_abv': settings.SCHOOL_ABV
+        'school_abv': settings.SCHOOL_ABV,
+        'is_authenticated': False
     })
 
 def article_page(request, slug):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+
+    if access_token and refresh_token:
+        # Here you might want to validate the tokens or perform some action
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            context = {
+                'is_authenticated': True
+            }
+
+        return render(request, 'articles/article_page.html', context)
+    
     article = get_object_or_404(Article, slug=slug)
     
     content_order = get_ordered_content(article)
@@ -54,7 +88,8 @@ def article_page(request, slug):
     return render(request, 'articles/article_page.html', {
         'article': article,
         'content_order': content_order,
-        'school_abv': settings.SCHOOL_ABV  
+        'school_abv': settings.SCHOOL_ABV,
+        'is_authenticated': False
     })
 
 @csrf_exempt

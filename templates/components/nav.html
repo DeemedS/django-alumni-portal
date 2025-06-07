@@ -33,7 +33,12 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'story:stories' %}">Stories</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'services:services'%}">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'about:about'%}">About</a></li>
-        <li class="nav-item h-item"><a class="nav-link" href="{% url 'auth:portal'%}">Login</a></li>
+
+        {% if is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'users:edit' %}">Profile</a></li>
+        {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'auth:login' %}">Login</a></li>
+        {% endif %}
     </ul>
     </div>
 

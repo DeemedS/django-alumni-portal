@@ -38,6 +38,7 @@ def user_dashboard(request):
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
                 'profile_image': user_data.get('profile_image'),
+                'is_authenticated': True
             }
 
             # Now, render the dashboard template and pass the user info
@@ -167,6 +168,7 @@ def user_edit(request):
                 'section_code' : section_code,
                 'section_id' : section_id,
                 'school_year' : school_year,
+                'is_authenticated': True,
             }
 
             return render(request, 'user_edit.html', context)
@@ -217,6 +219,7 @@ def saved_jobs(request):
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
                 'profile_image': user_data.get('profile_image'),
+                'is_authenticated': True,
             }
             return render(request, 'saved_jobs.html',context)
 
@@ -259,6 +262,7 @@ def saved_events(request):
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
                 'profile_image': user_data.get('profile_image'),
+                'is_authenticated': True,
             }
             return render(request, 'saved_events.html',context)
 
@@ -498,6 +502,7 @@ def user_stories(request):
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
                 'profile_image': user_data.get('profile_image'),
+                'is_authenticated': True,
             }
             return render(request, 'user_stories.html',context)
 
@@ -539,6 +544,7 @@ def user_donation(request):
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
                 'profile_image': user_data.get('profile_image'),
+                'is_authenticated': True,
             }
             return render(request, 'user_donation.html',context)
 

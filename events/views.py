@@ -12,6 +12,9 @@ from django.contrib.messages import get_messages
 from django.urls import reverse
 
 def events(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+
     current_year = now().year
     years = list(range(2010, current_year + 1))
 
@@ -30,11 +33,24 @@ def events(request):
         {'value': 11, 'name': 'November'},
         {'value': 12, 'name': 'December'}
     ]
+    if access_token and refresh_token:
+        # Here you might want to validate the tokens or perform some action
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            context = {
+                'is_authenticated': True
+            }
+
+        return render(request, 'events/events_list.html', context)
     
     return render(request, 'events/events_list.html', {
         'years': years,
         'months': months,
         'current_year': current_year,
+        'is_authenticated': False
     })
 
 def user_events(request):
