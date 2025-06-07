@@ -2,6 +2,8 @@ $(document).ready(function () {
     $("#alumniForm").submit(function (event) {
         event.preventDefault();
 
+        const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
+
         let formData = {
             basicInfo: {
                 lastName: $("#lastName").val().trim(),
@@ -17,7 +19,7 @@ $(document).ready(function () {
                 sex: $("#sex").val(),
                 course: $("#selectedCourse").val(),
                 section: $("#section").val(),
-                schoolYear: $("#school_year").val()
+                school_year: $("#school_year").val()
             },
             education: getEducationData(),
             licenses: getLicenseData(),
@@ -29,9 +31,10 @@ $(document).ready(function () {
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
-            headers: { "X-CSRFToken": getCSRFToken() },
+            headers: { "X-CSRFToken": csrfToken },
             success: function (response) {
                 showToast("Success", "Successfully Added New Alumni.", "success");
+                window.location.href = `/faculty/alumni-edit/${response.alumni_id}/`;
             },
             error: function (xhr, status, error) {
                 console.error("Error:", error);
@@ -84,7 +87,4 @@ $(document).ready(function () {
         return workData;
     }
 
-    function getCSRFToken() {
-        return $("input[name=csrfmiddlewaretoken]").val();
-    }
 });

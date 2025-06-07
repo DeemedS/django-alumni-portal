@@ -20,7 +20,7 @@ $(document).ready(function () {
                 sex: $("#sex").val(),
                 course: $("#selectedCourse").val(),
                 section: $("#section").val(),
-                schoolYear: $("#school_year").val()
+                school_year: $("#school_year").val()
             },
             education: getEducationData(),
             licenses: getLicenseData(),

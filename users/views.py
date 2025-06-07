@@ -332,7 +332,7 @@ def alumni_edit(request, id):
             alumni.sex = basic_info.get('sex', alumni.sex)
             alumni.course = course
             alumni.section = section
-            
+            alumni.school_year=basic_info.get('school_year', alumni.school_year)
             alumni.education = education
             alumni.licenses = licenses
             alumni.work_experience = work_experience
@@ -381,7 +381,7 @@ def alumni_add(request):
                     suffix = ''.join(random.choices(string.ascii_uppercase, k=2))
                     random_digits = str(random.randint(0, 9)).zfill(1)
 
-                    student_number = f"{year}-{unique_number}-{suffix}-{random_digits}"
+                    student_number = f"{year}.{unique_number}.{suffix}.{random_digits}"
 
                     if not User.objects.filter(student_number=student_number).exists():
                         return student_number
@@ -404,28 +404,33 @@ def alumni_add(request):
                 messages.error(request, "Student number is already in use.")
                 return render(request, 'signup.html')
 
-            alumni = User.objects.create(
-                first_name=basic_info.get('firstName', ""),
-                last_name=basic_info.get('lastName', ""),
-                middle_name=basic_info.get('middleName', ""),
-                suffix=basic_info.get('suffix', ""),
-                email=basic_info.get('email', ""),
-                address=basic_info.get('address', ""),
-                birthday=parse_date(basic_info.get('birthday')) if basic_info.get('birthday') else None,
-                telephone=basic_info.get('telephone', ""),
-                mobile=basic_info.get('mobile', ""),
-                civil_status=basic_info.get('civilStatus', ""),
-                sex=basic_info.get('sex', ""),
-                course=course,
-                section=section,
-                education=education,
-                licenses=licenses,
-                work_experience=work_experience
-            )
+            try:
+                alumni = User.objects.create(
+                    first_name=basic_info.get('firstName', ""),
+                    last_name=basic_info.get('lastName', ""),
+                    middle_name=basic_info.get('middleName', ""),
+                    suffix=basic_info.get('suffix', ""),
+                    email=basic_info.get('email', ""),
+                    address=basic_info.get('address', ""),
+                    birthday=parse_date(basic_info.get('birthday')) if basic_info.get('birthday') else None,
+                    telephone=basic_info.get('telephone', ""),
+                    mobile=basic_info.get('mobile', ""),
+                    civil_status=basic_info.get('civilStatus', ""),
+                    sex=basic_info.get('sex', ""),
+                    course=course,
+                    section=section,
+                    education=education,
+                    licenses=licenses,
+                    work_experience=work_experience,
+                    student_number=student_number,
+                    school_year=basic_info.get('school_year', ""),
+                )
 
-            alumni.set_password(password)
+                alumni.set_password(password)
 
-            alumni.save()
+                alumni.save()
+            except Exception as e:
+                return JsonResponse({"error": e}, status=400)
 
             # Generate verification token
             token = default_token_generator.make_token(alumni)
@@ -447,7 +452,7 @@ def alumni_add(request):
                 fail_silently=False,
             )
 
-            return JsonResponse({"message": "Alumni added successfully!"})
+            return JsonResponse({"message": "Alumni added successfully!", "alumni_id": alumni.id})
         
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
