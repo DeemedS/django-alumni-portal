@@ -25,10 +25,12 @@
     display: block;
 }
 .sidebar-title{
-    color:black;
+    color: #343a40;
     font-size: 1.5em;
     font-weight: bold;
-    border-left: solid 5px var(--pupred);
+    border-left: solid 8px var(--pupred);
+    border-right: solid 8px var(--pupred);
+    border-radius: 0 10px 0 10px;
     padding-left: 3px;
     margin:5px;
     font-family: inherit;

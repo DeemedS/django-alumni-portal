@@ -16,7 +16,22 @@ from careers.models import JobPost
 # Create your views here.
 
 def careers(request):
-    return render(request, 'careers/careers.html')
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+    if access_token and refresh_token:
+        # Here you might want to validate the tokens or perform some action
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            context = {
+                'is_authenticated': True
+            }
+
+        return render(request, 'careers/careers.html', context)
+    
+    return render(request, 'careers/careers.html', {'is_authenticated': False})
 
 def user_jobs(request):
     access_token = request.COOKIES.get('access_token')
@@ -37,7 +52,27 @@ def user_jobs(request):
 
 def career_page(request, id):
     job = JobPost.objects.get(id=id)
-    return render(request, 'careers/career_page.html', {'job': job})
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+    if access_token and refresh_token:
+        # Here you might want to validate the tokens or perform some action
+        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        data = {'token': access_token}
+        response = requests.post(api_url, data=data)
+
+        if response.status_code == 200:
+            context = {
+                'job': job,
+                'is_authenticated': True
+            }
+            return render(request, 'careers/career_page.html', context)
+        
+    context = {
+        'job': job,
+        'is_authenticated': False
+    }
+    
+    return render(request, 'careers/career_page.html', context)
 
 def save_job(request, id):
 
