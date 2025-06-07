@@ -72,32 +72,25 @@ def article_page(request, slug):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
-    article = get_object_or_404(Article, slug=slug)
+    article = get_object_or_404(Article, slug=slug, is_active=True)
     content_order = get_ordered_content(article)
 
+    context = {
+        'article': article,
+        'content_order': content_order,
+        'school_abv': settings.SCHOOL_ABV,
+        'is_authenticated': False
+    }
+
     if access_token and refresh_token:
-        # Here you might want to validate the tokens or perform some action
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            context = {
-                'article': article,
-                'content_order': content_order,
-                'school_abv': settings.SCHOOL_ABV,
-                'is_authenticated': True
-            }
+            context['is_authenticated'] = True
 
-        return render(request, 'articles/article_page.html', context)
-
-    # Render the template with the context data.
-    return render(request, 'articles/article_page.html', {
-        'article': article,
-        'content_order': content_order,
-        'school_abv': settings.SCHOOL_ABV,
-        'is_authenticated': False
-    })
+    return render(request, 'articles/article_page.html', context)
 
 @csrf_exempt
 @require_POST

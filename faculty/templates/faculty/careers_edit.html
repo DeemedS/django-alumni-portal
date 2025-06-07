@@ -74,50 +74,50 @@
         <article class="col-md-8 preview">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h3 class="card-title fw-bold mb-4" style="color: #800000;"> {{ job_post.title }}</h3>
+                    <h3 class="card-title fw-bold mb-4 preview-title" style="color: #800000;"> {{ job_post.title }}</h3>
                     
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-created-at">
                         <div class="col-md-6">
-                            <p class="mb-0 text-muted"><strong>Posted:</strong> {{job_post.created_at}}</p>
+                            <p class="mb-0 text-muted"><strong>Posted:</strong> <span class="created-at-text">{{job_post.created_at}}</span></p>
                         </div>
                     </div>
 
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-company">
                         <div class="col-md-6">
-                            <p class="mb-0 text-muted"><strong>Company:</strong> {{ job_post.company }}</p>
+                            <p class="mb-0 text-muted"><strong>Company:</strong> <span class="company-text">{{ job_post.company }}</span></p>
                         </div>
                     </div>
 
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-meta">
                         <div class="col-md-4 mb-3 mb-md-0">
-                            <p class="mb-0"><i class="bi bi-geo-alt"></i> <strong>Location:</strong> {{ job_post.location }}</p>
+                            <p class="mb-0"><i class="bi bi-geo-alt"></i> <strong>Location:</strong> <span class="location-text">{{ job_post.location }}</span></p>
                         </div>
-                        <div class="col-md-4 mb-3 mb-md-0">
-                            <p class="mb-0"><strong>Salary:</strong> <span> {{job_post.salary}}</span> PHP</p>
+                        <div class="col-md-4 mb-3 mb-md-0 preview-salary">
+                            <p class="mb-0"><strong>Salary:</strong> <span class="salary-text">{{job_post.salary}}</span> <span class="currency">PHP</span></p>
                         </div>
-                        <div class="col-md-4">
-                            <p class="mb-0"><i class="bi bi-briefcase"></i> <strong>Job Type:</strong> {{ job_post.job_type }}</p>
+                        <div class="col-md-4 preview-job-type">
+                            <p class="mb-0"><i class="bi bi-briefcase"></i> <strong>Job Type:</strong> <span class="job-type-text">{{ job_post.job_type }}</span></p>
                         </div>
                     </div>
 
                     <hr>
 
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-description">
                         <h4 class="fw-semibold">Job Description</h4>
                         <pre class="text-secondary">{{ job_post.description }}</pre>
                     </div>
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-responsibilities">
                         <h4 class="fw-semibold">Job Responsibilities</h4>
                         <pre class="text-secondary">{{ job_post.responsibilities }}</pre>
                     </div>
 
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-qualifications">
                         <h4 class="fw-semibold">Job Qualifications</h4>
                         <pre class="text-secondary">{{ job_post.qualifications }}</pre>
                     </div>
                     
 
-                    <div class="row mb-4">
+                    <div class="row mb-4 preview-benefits">
                         <h4 class="fw-semibold">Job Benefits</h4>
                         <pre class="text-secondary">{{ job_post.benefits }}</pre>
                     </div>
@@ -141,5 +141,6 @@
     });
 </script>
 
+<script src="{% static 'js/careers_preview.js' %}"></script>
 
 {% endblock %}
