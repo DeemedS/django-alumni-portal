@@ -257,12 +257,13 @@ $(document).on("click", ".job-card", function (e) {
 $(document).on("click", ".save-job-btn", function () {
     const jobId = $(this).attr("data-id");
     const button = $(this);
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
 
     $.ajax({
         url: `/careers/save_job/${jobId}/`,
         method: "POST",
         headers: {
-            "X-CSRFToken": getCsrfToken()
+            "X-CSRFToken": csrfToken
         },
         success: function (response, status, xhr) {
             if (xhr.status === 201) {
@@ -287,25 +288,18 @@ $(document).on("click", ".save-job-btn", function () {
     });
 });
 
-function getCsrfToken() {
-    const cookieValue = document.cookie
-        .split("; ")
-        .find(row => row.startsWith("csrftoken="))
-        ?.split("=")[1];
-        console.log("CSRF Token:", cookieValue);
-    return cookieValue || "";
-}
 
 
 $(document).on("click", ".unsave-job-btn", function () {
     const jobId = $(this).attr("data-id");
     const button = $(this);
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
 
     $.ajax({
         url: `/careers/unsave_job/${jobId}/`,
         method: "POST",
         headers: {
-            "X-CSRFToken": getCsrfToken()
+            "X-CSRFToken": csrfToken
         },
         success: function (response, status, xhr) {
             if (xhr.status === 200) { 
