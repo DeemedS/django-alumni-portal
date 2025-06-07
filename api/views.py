@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer
 
 from django.utils.timezone import now
@@ -16,6 +17,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from django.db.models import Q
+from django.db.models import Count
 
 # Create your views here.
 class FilteredEventsAPIView(APIView):
@@ -27,8 +29,9 @@ class FilteredEventsAPIView(APIView):
         month = request.GET.get('month')
         year = request.GET.get('year')
         is_active = request.GET.get('is_active', 'all')
+        page_size = request.GET.get('page_size') or 10
 
-        events = Event.objects.all()
+        events = Event.objects.all().annotate(like_count=Count('liked_by'))
 
         if is_active.lower() in ['true', '1']:
             events = events.filter(is_active=True)
@@ -49,9 +52,9 @@ class FilteredEventsAPIView(APIView):
             events = events.filter(date__year=year)
 
         paginator = PageNumberPagination()
-        paginator.page_size = request.GET.get('page_size')
+        paginator.page_size = page_size
         result_page = paginator.paginate_queryset(events, request)
-        serializer = EventSerializer(result_page, many=True)
+        serializer = EventSerializer(result_page, many=True, context={"request": request})
         
         return paginator.get_paginated_response(serializer.data)
     
@@ -65,8 +68,9 @@ class FilteredArticlesAPIView(APIView):
         month = request.GET.get('month')
         year = request.GET.get('year')
         is_active = request.GET.get('is_active', 'all')
+        page_size = request.GET.get('page_size') or 10
         
-        articles = Article.objects.all()
+        articles = Article.objects.all().annotate(like_count=Count('liked_by'))
 
         if is_active.lower() in ['true', '1']:
             articles = articles.filter(is_active=True)
@@ -87,9 +91,9 @@ class FilteredArticlesAPIView(APIView):
             articles = articles.filter(date__year=year)
 
         paginator = PageNumberPagination()
-        paginator.page_size = request.GET.get('page_size')
+        paginator.page_size = page_size
         result_page = paginator.paginate_queryset(articles, request)
-        serializer = ArticleSerializer(result_page, many=True)
+        serializer = ArticleSerializer(result_page, many=True, context={"request": request})
         
         return paginator.get_paginated_response(serializer.data)
     
@@ -148,8 +152,9 @@ class FilteredJobPostsAPIView(APIView):
         location = request.GET.get('location', '')
         job_type = request.GET.get('job_type', '')
         is_active = request.GET.get('is_active', 'all')
-        
-        job_posts = JobPost.objects.all().order_by('-created_at')
+        page_size = request.GET.get('page_size') or 10
+
+        job_posts = JobPost.objects.all().annotate(like_count=Count('liked_by')).order_by('-created_at')
 
         if is_active.lower() in ['true', '1']:
             job_posts = job_posts.filter(is_active=True)
@@ -167,9 +172,10 @@ class FilteredJobPostsAPIView(APIView):
             job_posts = job_posts.filter(job_type=job_type).order_by('-created_at')
 
         paginator = PageNumberPagination()
-        paginator.page_size = request.GET.get('page_size')
+        paginator.page_size = page_size
         result_page = paginator.paginate_queryset(job_posts, request)
-        serializer = JobPostSerializer(result_page, many=True)
+        serializer = JobPostSerializer(result_page, many=True, context={"request": request})
+        
         
         return paginator.get_paginated_response(serializer.data)
     
@@ -224,4 +230,32 @@ class RelatedAlumniListView(APIView):
         result_page = paginator.paginate_queryset(users, request)
         serializer = RelatedALumniSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
+    
+class ToggleLikeMixin(APIView):
+    permission_classes = [IsAuthenticated]
+    model = None
 
+    def post(self, request, pk):
+        obj   = get_object_or_404(self.model, pk=pk)
+        user  = request.user
+
+        if obj.liked_by.filter(pk=user.pk).exists():
+            obj.liked_by.remove(user)
+            liked = False
+        else:
+            obj.liked_by.add(user)
+            liked = True
+
+        return Response({
+            "liked":       liked,
+            "like_count":  obj.liked_by.count()
+        })
+    
+class ToggleArticleLikeAPIView(ToggleLikeMixin):
+    model = Article
+
+class ToggleEventLikeAPIView(ToggleLikeMixin):
+    model = Event
+
+class ToggleJobLikeAPIView(ToggleLikeMixin):
+    model = JobPost

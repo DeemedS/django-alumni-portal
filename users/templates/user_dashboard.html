@@ -7,6 +7,7 @@
 
 {% block content %}
 {% include "components/top_nav.html" %}
+{% csrf_token %}
 
 
 <div class="container-fluid">
@@ -39,4 +40,5 @@
 </div>
 
 <script src="{% static 'js/load_feed_content.js' %}"></script>
+
 {% endblock %}

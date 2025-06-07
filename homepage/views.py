@@ -7,11 +7,10 @@ from django.conf import settings
 def home(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
-
-    featured_article = Article.objects.filter(featured=True).first()
-    news_articles = Article.objects.filter(featured=False).order_by('-date')[:2]
-    event_article = Event.objects.order_by('-date').first()
-
+    
+    featured_article = Article.objects.filter(featured=True, is_active=True).first()
+    news_articles = Article.objects.filter(featured=False, is_active=True).order_by('-date')[:2]
+    event_article = Event.objects.filter(is_active=True).order_by('-date').first()
 
     if access_token and refresh_token:
         # Here you might want to validate the tokens or perform some action
