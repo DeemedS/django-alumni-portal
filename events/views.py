@@ -41,6 +41,9 @@ def events(request):
 
         if response.status_code == 200:
             context = {
+                'years': years,
+                'months': months,
+                'current_year': current_year,
                 'is_authenticated': True
             }
 
@@ -76,7 +79,11 @@ def event_page(request, slug):
     access_token = request.COOKIES.get('access_token')
 
     if not access_token:
-        return render(request, 'events/event_page.html', {'event': event})
+        context = {
+            'event': event,
+            'is_authenticated': False
+        }
+        return render(request, 'events/event_page.html', context)
     
     user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
     
@@ -84,19 +91,40 @@ def event_page(request, slug):
     try:
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
         if user_response.status_code != 200:
-            return render(request, 'events/event_page.html', {'event': event})
+            context = {
+                'event': event,
+                'is_authenticated': False
+            }
+            return render(request, 'events/event_page.html', context)
 
         user_data = user_response.json()
         user_events = user_data.get('events')
 
         if not user_events:
-            return render(request, 'events/event_page.html', {'event': event})
+            context = {
+                'event': event,
+                'is_authenticated': True
+            }
+            return render(request, 'events/event_page.html', context)
 
     except requests.RequestException:
-        return render(request, 'events/event_page.html', {'event': event})
+        context = {
+                'event': event,
+                'is_authenticated': False
+        }
+        return render(request, 'events/event_page.html', context)
     
+    context = {
+        'event': event,
+        'is_authenticated': False
+    }
 
-    return render(request, 'events/event_page.html', {'event': event, 'user_events' : user_events})
+    context = {
+        'event': event,
+        'user_events' : user_events,
+        'is_authenticated': False
+    }
+    return render(request, 'events/event_page.html', context)
 
 def signup_event(request, id):
     event = Event.objects.get(id=id)
