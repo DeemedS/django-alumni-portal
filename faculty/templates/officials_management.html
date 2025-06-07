@@ -4,6 +4,9 @@
 {% block title %}Faculty Dashboard{% endblock %}
 
 {% block content %}
+
+{% csrf_token %}
+
 {% include 'components/faculty_topnav.html' %}
 <style>
     .officials-form-label {
@@ -54,7 +57,7 @@
 
             <div class="bg-light p-3 min-vh-100 d-flex flex-column">
                 <!-- start of content -->
-                 <form>
+                 <form id="officials-form">
                     <div class="container officials-section">
                         <div class="row">
                             <!-- ARCDO Officials -->
@@ -165,12 +168,12 @@
                         </div>
                     </div>
                 </form>
-                
-                 <!-- end of content -->
             </div>
 
         </div>
     </div>
 </div>
+
+<script src="{% static 'js/officials_handler.js' %}"></script>
 
 {% endblock %}

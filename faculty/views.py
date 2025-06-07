@@ -552,3 +552,14 @@ def officials_management(request):
         'last_name': request.user.last_name,
     }
     return render(request, 'officials_management.html', context)
+
+@login_required(login_url='/faculty/')
+def handle_officials_form(request):
+    if request.method == 'POST':
+        print(request.POST)
+        director_name = request.POST.get('director_name')
+        director_photo = request.FILES.get('director_photo')
+
+        return JsonResponse({'message': 'Success'})
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
