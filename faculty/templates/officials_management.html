@@ -1,0 +1,176 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Faculty Dashboard{% endblock %}
+
+{% block content %}
+{% include 'components/faculty_topnav.html' %}
+<style>
+    .officials-form-label {
+      font-weight: bold;
+    }
+
+    .officials-section {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      margin-top: .8rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .official-title {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 0.5rem;
+
+      color: var(--pupred);
+      font-size: 1.5rem;
+      font-weight: bold;
+      /* margin-bottom: 1rem; */
+    }
+
+    .form-entry {
+      margin-bottom: 1.5rem;
+    }
+    .officials-section input[type="text"]:focus,
+    .officials-section input[type="file"]:focus {
+        border-color: var(--pupred);
+        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/faculty_sidebar.html" %}
+        {% include 'components/delete_modal.html' %}
+
+        <div class="bg-light col mb-3 px-0 m-2 mt-3">
+
+            <div class="greeting-bar">
+                Officials Management
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                 <form>
+                    <div class="container officials-section">
+                        <div class="row">
+                            <!-- ARCDO Officials -->
+                            <div class="col-md-6">
+                                <h5 class="official-title">ARCDO OFFICIALS</h5>
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Director</label>
+                                    <input type="text" class="form-control mb-2" name="director_name">
+                                    <input type="file" class="form-control" name="director_photo">
+                                </div>
+
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Chief, Career Development & Placement Services</label>
+                                    <input type="text" class="form-control mb-2" name="chief_career_name">
+                                    <input type="file" class="form-control" name="chief_career_photo">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Chief, Alumni Relations Services</label>
+                                    <input type="text" class="form-control mb-2" name="chief_alumni_name">
+                                    <input type="file" class="form-control" name="chief_alumni_photo">
+                                </div>
+                                
+                                <!-- Repeating Admin Staff -->
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Admin Staff</label>
+                                    <input type="text" class="form-control mb-2" name="admin_staff_name_1">
+                                    <input type="file" class="form-control" name="admin_staff_photo_1">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Admin Staff</label>
+                                    <input type="text" class="form-control mb-2" name="admin_staff_name_2">
+                                    <input type="file" class="form-control" name="admin_staff_photo_2">
+                                </div>
+
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Admin Staff</label>
+                                    <input type="text" class="form-control mb-2" name="admin_staff_name_3">
+                                    <input type="file" class="form-control" name="admin_staff_photo_3">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Admin Staff</label>
+                                    <input type="text" class="form-control mb-2" name="admin_staff_name_4">
+                                    <input type="file" class="form-control" name="admin_staff_photo_4">
+                                </div>
+                            </div>
+                            
+                            <!-- Executive Officials -->
+                            <div class="col-md-6">
+                                <h5 class="official-title">EXECUTIVE OFFICIALS</h5>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">President</label>
+                                    <input type="text" class="form-control mb-2" name="president_name">
+                                    <input type="file" class="form-control" name="president_photo">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Executive Vice President</label>
+                                    <input type="text" class="form-control mb-2" name="evp_name">
+                                    <input type="file" class="form-control" name="evp_photo">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Vice President for Academic Affairs</label>
+                                    <input type="text" class="form-control mb-2" name="vp_academic_name">
+                                    <input type="file" class="form-control" name="vp_academic_photo">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Vice President for Student Affairs & Services</label>
+                                    <input type="text" class="form-control mb-2" name="vp_student_name">
+                                    <input type="file" class="form-control" name="vp_student_photo">
+                                </div>
+
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Vice President for Research, Extension, & Dev't</label>
+                                    <input type="text" class="form-control mb-2" name="vp_research_name">
+                                    <input type="file" class="form-control" name="vp_research_photo">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Vice President for Branches & Campuses</label>
+                                    <input type="text" class="form-control mb-2" name="vp_branches_name">
+                                    <input type="file" class="form-control" name="vp_branches_photo">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Vice President for Administration</label>
+                                    <input type="text" class="form-control mb-2" name="vp_admin_name">
+                                    <input type="file" class="form-control" name="vp_admin_photo">
+                                </div>
+                                
+                                <div class="form-entry">
+                                    <label class="officials-form-label">Vice President for Finance</label>
+                                    <input type="text" class="form-control mb-2" name="vp_finance_name">
+                                    <input type="file" class="form-control" name="vp_finance_photo">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Save / Discard Buttons -->
+                        <div class="text-start mt-4">
+                            <button type="submit" class="submit-btn me-3">SAVE</button>
+                            <button type="reset" class="cancel-btn">DISCARD</button>
+                        </div>
+                    </div>
+                </form>
+                
+                 <!-- end of content -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

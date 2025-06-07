@@ -1,0 +1,114 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Faculty Dashboard{% endblock %}
+
+{% block content %}
+{% include 'components/faculty_topnav.html' %}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/faculty_sidebar.html" %}
+        {% include 'components/delete_modal.html' %}
+
+        <div class="bg-light col mb-3 px-0 m-2 mt-3">
+
+            <div class="greeting-bar">
+                System Settings
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                 <div class="container settings mt-2">
+                    <form>
+                        <!-- social media links -->
+                         <div class="settings-form-section">
+                            <h5 class="settings-title mb-4">SOCIAL MEDIA LINKS</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Facebook</label>
+                                <input type="url" class="form-control" name="facebook_link">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Instagram</label>
+                                <input type="url" class="form-control" name="instagram_link">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">X(Twitter)</label>
+                                <input type="url" class="form-control" name="twitter_link">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">LinkedIn</label>
+                                <input type="url" class="form-control" name="linkedin_link">
+                            </div>
+                        </div>
+
+                        <!-- ARCDO Contact Details -->
+                         <div class="settings-form-section">
+                            <h5 class="settings-title mb-4">CONTACT DETAILS</h5>
+                            <div class="mb-3">
+                                <label class="form-label">ARCDO Address</label>
+                                <input type="text" class="form-control" name="arcdo_address">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contact Number 1</label>
+                                <input type="text" class="form-control" name="contact_number_1">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contact Number 2</label>
+                                <input type="text" class="form-control" name="contact_number_2">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">ARCDO Email</label>
+                                <input type="email" class="form-control" name="arcdo_email">
+                            </div>
+                        </div>
+                        
+                        <!-- Bank Details -->
+                         <div class="settings-form-section">
+                            <h5 class="settings-title mb-4">CONTACT DETAILS</h5>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">BANK #1 - Account Number</label>
+                                    <input type="text" class="form-control" name="bank1_account_number">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">BANK #1 - Account Name</label>
+                                    <input type="text" class="form-control" name="bank1_account_name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">BANK #2 - Account Number</label>
+                                    <input type="text" class="form-control" name="bank2_account_number">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">BANK #2 - Account Name</label>
+                                    <input type="text" class="form-control" name="bank2_account_name">
+                                </div>
+                            </div>
+
+                            <!-- File Uploads -->
+                             <div class="file-upload">
+                                <label class="form-label">GCASH QR</label>
+                                <input type="file" class="form-control mb-3" name="gcash_qr">
+                                
+                                <label class="form-label">MAYA QR</label>
+                                <input type="file" class="form-control mb-3" name="maya_qr">
+                                <label class="form-label">PAYPAL QR</label>
+                                <input type="file" class="form-control" name="paypal_qr">
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                         <div class="text-start mt-4">
+                            <button type="submit" class="submit-btn">Save</button>
+                            <button type="reset" class="cancel-btn">Discard</button>
+                        </div>
+                    </form>
+                 </div>
+                 <!-- end of content -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
