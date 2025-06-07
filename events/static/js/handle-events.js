@@ -1,12 +1,13 @@
 $(document).on("click", ".save-event-btn", function() {
     const eventId = $(this).data("id");
     const button = $(this);
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
 
     $.ajax({
         url: `/events/save_event/${eventId}/`,
         method: "POST",
         headers: {
-            "X-CSRFToken": getCsrfToken()
+            "X-CSRFToken": csrfToken
         },
 
         success: function(response, status, xhr) {
@@ -47,7 +48,7 @@ $(document).on("click", ".unsave-event-btn", function () {
         url: `/events/unsave_event/${eventId}/`,
         method: "POST",
         headers: {
-            "X-CSRFToken": getCsrfToken()
+            "X-CSRFToken": csrfToken
         },
         success: function (response, status, xhr) {
             if (xhr.status === 200) { 
@@ -68,13 +69,5 @@ $(document).on("click", ".unsave-event-btn", function () {
         }
     });
 });
-
-function getCsrfToken() {
-    const cookieValue = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("csrftoken"))
-        ?.split("=")[1];
-    return cookieValue || "";
-}
 
 
