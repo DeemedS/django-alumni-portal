@@ -38,7 +38,7 @@ function renderCard(item, index) {
 
         return `
             <div class="card card-custom mb-3 mt-3">
-                <div class="card-body">
+                <div class="card-body mb-0">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex align-items-center gap-2">
                             <div class="card-profile-img">
@@ -61,6 +61,11 @@ function renderCard(item, index) {
                     <div class="card-img">
                         <img src="${imageUrl}" alt="Preview Image" onerror="this.onerror=null;this.src='/static/images/default_image.png';" class="mb-3">
                     </div>
+                </div>
+                <div>
+                <div class="d-flex justify-content-between align-items-center text-muted">
+                    <small class="text-muted px-3 mb-2"><i class="fa-solid fa-heart me-1"></i>1000 Likes</small>
+                </div>
                 </div>
                 <div class="border-top d-flex justify-content-around text-muted py-2 interaction-bar">
                     <div><i class="fa-regular fa-heart me-1"></i>Like</div>
@@ -106,6 +111,9 @@ function renderCard(item, index) {
                             <a href="${applyUrl}" target="_blank" rel="noopener noreferrer">Apply Now</a>
                         </div>
                     </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center text-muted">
+                        <small class="text-muted px-3 mb-2"><i class="fa-solid fa-heart me-1"></i>1000 Likes</small>
                 </div>
                 <div class="border-top d-flex justify-content-around text-muted py-2 interaction-bar">
                     <div><i class="fa-regular fa-heart me-1"></i>Like</div>

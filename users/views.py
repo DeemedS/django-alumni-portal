@@ -37,6 +37,7 @@ def user_dashboard(request):
                 'active_page': 'dashboard',
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
+                'profile_image': user_data.get('profile_image'),
             }
 
             # Now, render the dashboard template and pass the user info
@@ -215,6 +216,7 @@ def saved_jobs(request):
                 'active_page': 'saved_jobs',
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
+                'profile_image': user_data.get('profile_image'),
             }
             return render(request, 'saved_jobs.html',context)
 
@@ -256,6 +258,7 @@ def saved_events(request):
                 'active_page': 'saved_events',
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
+                'profile_image': user_data.get('profile_image'),
             }
             return render(request, 'saved_events.html',context)
 
@@ -494,6 +497,7 @@ def user_stories(request):
                 'active_page': 'user_stories',
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
+                'profile_image': user_data.get('profile_image'),
             }
             return render(request, 'user_stories.html',context)
 
@@ -534,6 +538,7 @@ def user_donation(request):
                 'active_page': 'user_donation',
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
+                'profile_image': user_data.get('profile_image'),
             }
             return render(request, 'user_donation.html',context)
 

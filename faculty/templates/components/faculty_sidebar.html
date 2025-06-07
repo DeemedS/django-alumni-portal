@@ -2,7 +2,7 @@
 
 <div class="side-bar col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-white m-0 m-md-3"> 
     <div class="sidebar-title">
-        <p class="">ARCDO ADMIN</p>
+        <p class="text-center">ADMIN</p>
     </div>
     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-3 text-white min-vh-100">
 
@@ -11,13 +11,15 @@
             <h1 class="h5 mt-3 p-2 bg-white"> {{first_name}} {{last_name}}</h1>
         </div>
 
-        <div class="nav flex-column nav-pills w-100 mt-3 gap-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="sidebar-text {% if active_page == 'dashboard' %}active{% endif %}" href="/faculty/dashboard"><i class="fa-solid fa-house"></i> Home </a>
+        <div class="nav flex-column nav-pills w-100 mt-3 gap-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="sidebar-text {% if active_page == 'dashboard' %}active{% endif %}" href="/faculty/dashboard"><i class="fa-solid fa-grip"></i> Dashboard </a>
             <a class="sidebar-text {% if active_page == 'alumni' %}active{% endif %}" href="/faculty/alumni-management"><i class="fa-solid fa-user-graduate"></i> Alumni </a>
             <a class="sidebar-text {% if active_page == 'careers' %}active{% endif %}" href="/faculty/careers-management"><i class="fa-solid fa-briefcase"></i> Careers </a>
             <a class="sidebar-text {% if active_page == 'events' %}active{% endif %}" href="/faculty/events-management"><i class="fa-solid fa-calendar-days"></i> Events </a>
             <a class="sidebar-text {% if active_page == 'articles' %}active{% endif %}" href="/faculty/articles-management"><i class="fa-solid fa-newspaper"></i> Articles </a>
-            <a class="sidebar-text {% if active_page == 'alumni_stories' %}active{% endif %}" href="/faculty/story-management"><i class="fa-solid fa-book-open-reader"></i> Alumni Stories </a>
+            <a class="sidebar-text {% if active_page == 'alumni_stories' %}active{% endif %}" href="/faculty/story-management"><i class="fa-solid fa-book-open-reader"></i> Stories </a>
+            <a class="sidebar-text {% if active_page == 'officials' %}active{% endif %}" href=""><i class="fa-solid fa-users"></i> officials </a>
+            <a class="sidebar-text {% if active_page == 'settings' %}active{% endif %}" href=""><i class="fa-solid fa-gear"></i>System Settings </a>
             <a class="sidebar-text" href="/faculty/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout </a>
         </div>
 
