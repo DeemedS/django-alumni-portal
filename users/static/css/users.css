@@ -596,6 +596,10 @@
     background-color: rgb(40, 197, 197);
 }
 
+.red-background {
+    background-color: #800000;
+}
+
 .pastel-ochre-background {
     background-color: #D69759;
 }
@@ -766,4 +770,82 @@
   top: 0;
   z-index: 999; /* ensure it stays above other elements */
   background-color: white; /* add background so content under doesn’t bleed through */
+}
+
+/* alumni network css */
+.network-card{
+    min-width: 200px;
+    max-width: 200px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #000;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    align-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px) saturate(168%);
+    border-radius: 5px;
+}
+
+.network-card-background {
+    border-radius: 10px;
+    clip-path: polygon(0 0, 100% 0, 100% 27%, 0 27%);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+.network-card-body {
+    min-width: 200px;
+    max-width: 200px;
+    height: 250px;
+    background-color: transparent;
+    border: 1px solid rgb(124, 124, 124);
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.network-card-body img {
+    display: block;
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    margin-top: 0.8rem;
+    border: 1px solid #dddddd;
+    background-color: #fff;
+    object-fit: cover;
+}
+.network-details {
+    margin-top: auto; 
+}
+
+.network-card-body p {
+    line-height: 0.8rem;
+    margin-bottom: 0.3rem;
+    margin-top: 0;
+}
+
+.network-card-body h6 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.network-icons a{
+    color: #6b0f1a;
+      margin: 0 5px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
 }
