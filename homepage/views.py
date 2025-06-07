@@ -12,30 +12,22 @@ def home(request):
     news_articles = Article.objects.filter(featured=False, is_active=True).order_by('-date')[:2]
     event_article = Event.objects.filter(is_active=True).order_by('-date').first()
 
+    is_authenticated = False
+
     if access_token and refresh_token:
-        # Here you might want to validate the tokens or perform some action
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
         response = requests.post(api_url, data=data)
 
         if response.status_code == 200:
-            context = {
-                'featured_article': featured_article,
-                'news_articles': news_articles,
-                'event_article': event_article,
-                'school_abv': settings.SCHOOL_ABV,
-                'is_authenticated': True
-            }
+            is_authenticated = True
 
-        return render(request, 'homepage/home.html', context)
-    
     context = {
         'featured_article': featured_article,
         'news_articles': news_articles,
         'event_article': event_article,
         'school_abv': settings.SCHOOL_ABV,
-        'is_authenticated': False
+        'is_authenticated': is_authenticated
     }
-
 
     return render(request, 'homepage/home.html', context)
