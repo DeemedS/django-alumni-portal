@@ -21,7 +21,7 @@ from django.utils.encoding import force_bytes
 from articles.models import Article
 from .models import WebsiteSettings, Official, POSITION_CHOICES
 from django.utils.text import slugify
-
+from .forms import OfficialForm
 
 def generate_student_number():
     while True:
@@ -570,6 +570,12 @@ def system_settings(request):
 
         return redirect(reverse('authentication:faculty'))
     
+    if request.method == 'POST':
+        try:
+            data_json = request.POST.get('data')
+        except Exception as e:
+            print(e)
+    
     context = {
         'active_page':'settings',
         'first_name': request.user.first_name,
@@ -580,26 +586,25 @@ def system_settings(request):
 
 @login_required(login_url='/faculty/')
 def officials_management(request):
-
-    officials_by_position = {}
-    for pos_key, _ in POSITION_CHOICES:
-        slug_key = slugify(pos_key)  # example: "Vice President for Administration" → "vice-president-for-administration"
-        officials_by_position[slug_key] = Official.objects.filter(position=pos_key).first()
-
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
-    
+
+    officials_by_position = {}
+    forms_by_position = {}
+
+    for pos_key, _ in POSITION_CHOICES:
+        slug_key = slugify(pos_key).replace('-', '_')
+        official = Official.objects.filter(position=pos_key).first()
+        officials_by_position[slug_key] = official
+        forms_by_position[slug_key] = OfficialForm(instance=official, prefix=slug_key)
+
     context = {
-        'active_page':'officials',
+        'active_page': 'officials',
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
-        'officials': officials_by_position
+        'officials': officials_by_position,
+        'forms': forms_by_position,
     }
     return render(request, 'officials_management.html', context)
 
