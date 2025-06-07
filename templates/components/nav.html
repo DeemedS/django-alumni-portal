@@ -37,7 +37,7 @@
         {% if is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="{% url 'users:edit' %}">Profile</a></li>
         {% else %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'auth:login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'auth:portal' %}">Login</a></li>
         {% endif %}
     </ul>
     </div>
