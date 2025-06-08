@@ -238,4 +238,5 @@ if not DEBUG:
 else:
     CSRF_COOKIE_SECURE = False
     SECURE_SSL_REDIRECT = False
+    CORS_ALLOW_ORIGINS =True
 
