@@ -542,3 +542,45 @@
     flex-wrap: nowrap;
     flex-shrink: inherit;
 }
+
+/* alumni search */
+.search-inputs {
+    /* background-color: aquamarine; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+.search-inputs input,
+.search-inputs select,
+.search-inputs button
+{
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.search-inputs input:focus,
+.search-inputs select:focus,
+.search-inputs button:focus {
+    border-color: var(--pupred);
+    box-shadow: 0 0 5px rgba(128, 0, 0, 0.5);
+}
+
+.search-inputs select{
+    width: 100%;
+    max-width: 300px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.course-search {
+    width: 100%;
+    max-width: 500px;
+}
+.searches {
+    padding: 20px;
+    border: 2px solid green;
+    background-color: pink;
+}

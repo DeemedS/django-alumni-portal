@@ -68,16 +68,8 @@
                     <pre><strong>Benefits:</br></strong> {{ job.benefits }}</pre>
                     <pre><strong>Qualifications:<br></strong> {{ job.qualifications }}</pre>
                 </div>
-                <div class="d-flex justify-content-between mb-3">
-                    <button class="btn btn-success" onclick=applied()>Apply</button>
             </article>
         </div>
     </div>
 </div>
-<script>
-    function applied() {
-        alert("You have successfully applied for this job.");
-        document.querySelector('.btn-success').innerText = 'Applied';
-    }
-</script>
     {% endblock %} 

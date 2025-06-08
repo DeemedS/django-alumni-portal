@@ -234,7 +234,7 @@ $(document).on("click", ".job-card", function (e) {
                                 ` : ''}
 
                                 <div class="d-flex justify-content-start gap-3">
-                                    <a href="/careers/${data.id}" class="btn" style="background-color: #800000; color: white;">Apply Now</a>
+                                    <a href="/careers/${data.id}" class="btn" style="background-color: #800000; color: white;">View</a>
                                     <button class="btn ${saveButtonClass}" data-id="${data.id}">${saveButtonText}</button>
                                 </div>
                             </div>

@@ -23,32 +23,51 @@
             <div class="bg-light p-3 min-vh-100 d-flex flex-column">
                 <!-- start of content -->
                 <div class="container-fluid p-4">
-                    <div class="d-flex justify-content-end align-items-center mb-3 search-container">
-                        <div class="d-flex align-items-center">
-                                    <div class="col-md-8 position-relative">
-                                        <input type="text" class="form-control" id="courseSearchInSearcch" placeholder="Course" value="" >
-                                        <input type="hidden" id="course_nameInSearcch" name="course_name" value=""> 
-                                        <div id="courseSuggestionsInSearcch" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
-                                        <input type="hidden" id="selectedCourseInSearcch" name="course">
-                                    </div>
-                                <select class="form-select" id="school_year" name="school_year" data-selected-year="{{ alumni.school_year }}">
-                                    <option selected disabled>School Year</option>
-                                </select>
-                                <input type="text" class="form-control search-bar" placeholder="Search by Name">
-                        </div>
-                    </div>
+                    
                     
                     <div class="d-flex justify-content-between align-items-center mb-3 search-container">
                         <h4 class="fw-bold title-text mb-0">ALUMNI LIST</h4>
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center gap-3">
-                                <a href="/faculty/alumni-add" class="add-alumni-btn">ADD NEW ALUMNI</a>
-                                <button class="alumni-btn-green" data-bs-toggle="modal" data-bs-target="#import-modal">IMPORT FILE</button>
-                                <button class="alumni-btn-green" data-bs-toggle="modal" data-bs-target="#export-modal">EXPORT FILE</button>
+                                <a href="/faculty/alumni-add" class="add-alumni-btn">
+                                    <i class="fa-solid fa-plus me-1"></i>ADD NEW
+                                </a>
+                                <button class="alumni-btn-green" data-bs-toggle="modal" data-bs-target="#import-modal">
+                                    <i class="fa-solid fa-file-import me-1"></i>IMPORT
+                                </button>
+                                <button class="alumni-btn-green" data-bs-toggle="modal" data-bs-target="#export-modal">
+                                    <i class="fa-solid fa-file-export me-1"></i>EXPORT
+                                </button>
+                                
                             </div>
                         </div>
                     </div>
                     
+                    
+                    <div class="d-flex justify-content-center align-items-center mb-3 search-inputs">
+                        <div class="d-flex align-items-center w-100">
+                            <input type="text" class="form-control search-bar" placeholder="Search by Name">        
+                                
+                                
+
+                                <div class="course-search position-relative me-3">
+
+                                        <input type="text" class="form-control" id="courseSearchInSearcch" placeholder="Course" value="" >
+                                        <input type="hidden" id="course_nameInSearcch" name="course_name" value=""> 
+                                        <div id="courseSuggestionsInSearcch" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
+                                        <input type="hidden" id="selectedCourseInSearcch" name="course">
+
+                                </div>
+                                <select class="form-select" id="school_year" name="school_year" data-selected-year="{{ alumni.school_year }}">
+                                    <option selected disabled>School Year</option>
+                                </select>
+
+                                <button id="search-btn" class="add-alumni-btn search-btn">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </button>
+                                
+                        </div>
+                    </div>
 
 
                     <div class="table-responsive mt-3 ">
