@@ -184,6 +184,31 @@
                                 </div>
                             </div>
 
+                            {% comment %} Start Socials {% endcomment %}
+                             <h5 class="section-title mt-5">Social Media Links</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="url" class="form-control" id="facebook" name="facebook" placeholder="Facebook Profile URL" value="{{ facebook }}">
+                                        <label for="facebook" class="form-label">Facebook Profile URL</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="url" class="form-control" id="twitter" name="twitter" placeholder="Twitter Profile URL" value="{{ twitter }}">
+                                        <label for="twitter" class="form-label">X Profile URL</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="url" class="form-control" id="linkedin" name="linkedin" placeholder="LinkedIn Profile URL" value="{{ linkedin }}">
+                                        <label for="linkedin" class="form-label">LinkedIn Profile URL</label>
+                                    </div>
+                                </div>
+                            </div>
+                            {% comment %} End socials {% endcomment %}
+
+
                             <h5 class="section-title mt-5">Education Profile</h5>
                             <div id="educationSection">
                             {% if education %}
