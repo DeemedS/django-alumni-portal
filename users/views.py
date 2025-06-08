@@ -1,3 +1,4 @@
+import os
 import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -5,7 +6,7 @@ from authentication.forms import UserForm
 from authentication.models import User, Course, Section, UserSettings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseForbidden, JsonResponse
+from django.http import HttpResponseForbidden, HttpResponseRedirect, JsonResponse
 import json
 from django.utils.dateparse import parse_date
 from django.core.exceptions import ValidationError
@@ -674,62 +675,126 @@ def alumni_network(request):
     else:
         return redirect('/login/')
     
-@login_required
 @require_POST
 def remove_profile_photo(request):
-    user = request.user
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
 
-    if not user.profile_image or user.profile_image.name == '':
+    if not access_token:
+        return redirect('/login/')
+
+    verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
+    verify_response = requests.post(verify_url, data={'token': access_token})
+
+    if verify_response.status_code == 401 and refresh_token:
+        refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
+        refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
+        if refresh_response.status_code == 200:
+            new_tokens = refresh_response.json()
+            access_token = new_tokens.get('access')
+            response = redirect('/myaccount/')
+            response.set_cookie('access_token', access_token, httponly=True)
+            return response
+        else:
+            return redirect('/login/')
+    elif verify_response.status_code != 200:
+        return redirect('/login/')
+
+    user_info_url = f"{settings.API_TOKEN_URL}/user_info/"
+    user_response = requests.get(user_info_url, headers={'Authorization': f'Bearer {access_token}'})
+
+    if user_response.status_code != 200:
+        return redirect('/login/')
+
+    user_data = user_response.json()
+    profile_image_path = user_data.get('profile_image', '')
+
+    # Normalize the profile_image_path to be relative to MEDIA_ROOT
+    if profile_image_path.startswith(settings.MEDIA_URL):
+        profile_image_path = profile_image_path[len(settings.MEDIA_URL):]
+
+    profile_image_path = os.path.normpath(profile_image_path)
+
+    # Get default image path from UserSettings
+    default_image_path = 'user/profile_pics/default.jpg'
+    try:
+        settings_obj = UserSettings.objects.first()
+        if settings_obj:
+            default_image_path = settings_obj.default_profile_image.name
+    except UserSettings.DoesNotExist:
+        pass
+
+    if not profile_image_path or profile_image_path == default_image_path:
         return JsonResponse({'error': 'No profile photo to remove'}, status=400)
 
-    # Get default image path from settings
-    try:
-        settings = UserSettings.objects.first()
-        default_image_path = settings.default_profile_image.name if settings else 'user/profile_pics/default.jpg'
-    except UserSettings.DoesNotExist:
-        default_image_path = 'user/profile_pics/default.jpg'
-
-    # Only delete the file if it's not the default image
-    if user.profile_image.name != default_image_path:
-        if default_storage.exists(user.profile_image.name):
-            default_storage.delete(user.profile_image.name)
-
-    # Reset to default
-    user.profile_image = default_image_path
-    user.save(update_fields=['profile_image'])
+    if default_storage.exists(profile_image_path):
+        default_storage.delete(profile_image_path)
 
     return JsonResponse({'message': 'Photo reset to default successfully'})
 
-@login_required
 @require_POST
 def upload_profile_photo(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+
+    if not access_token:
+        return HttpResponseRedirect('/login/')
+
+    # Verify access token
+    verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
+    verify_response = requests.post(verify_url, data={'token': access_token})
+
+    if verify_response.status_code == 401 and refresh_token:
+        # Refresh token
+        refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
+        refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
+        if refresh_response.status_code == 200:
+            new_tokens = refresh_response.json()
+            access_token = new_tokens.get('access')
+            response = HttpResponseRedirect('/myaccount/')
+            response.set_cookie('access_token', access_token, httponly=True)
+            return response
+        else:
+            return HttpResponseRedirect('/login/')
+    elif verify_response.status_code != 200:
+        return HttpResponseRedirect('/login/')
+
+    # Get user info
+    user_info_url = f"{settings.API_TOKEN_URL}/user_info/"
+    user_response = requests.get(user_info_url, headers={'Authorization': f'Bearer {access_token}'})
+
+    if user_response.status_code != 200:
+        return HttpResponseRedirect('/login/')
+
+    user_data = user_response.json()
+    user_email = user_data.get('email')  # <-- Get email here
+
+    if not user_email:
+        return JsonResponse({'error': 'User email not found'}, status=400)
+
     photo = request.FILES.get('photo')
     if not photo:
         return JsonResponse({'error': 'No photo uploaded'}, status=400)
 
-    user = request.user
+    User = get_user_model()
 
-    # Get the default image path
-    default_image_path = 'user/profile_pics/default.jpg'
     try:
-        settings = UserSettings.objects.first()
-        if settings:
-            default_image_path = settings.default_profile_image.name
-    except UserSettings.DoesNotExist:
-        pass
+        user = User.objects.get(email=user_email)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
 
-    # If the user has an old image (not default), delete it
-    if user.profile_image and user.profile_image.name != default_image_path:
-        if default_storage.exists(user.profile_image.name):
-            default_storage.delete(user.profile_image.name)
+    filename = f"user/profile_pics/{user.id}.jpg"  # Still use user.id for filename
+
+    # Delete old photo if exists
+    if default_storage.exists(filename):
+        default_storage.delete(filename)
 
     # Save new photo
-    filename = f"user/profile_pics/{user.id}_{photo.name}"
     path = default_storage.save(filename, ContentFile(photo.read()))
     photo_url = default_storage.url(path)
 
-    # Update user model
-    user.profile_image = path
-    user.save(update_fields=['profile_image'])
+    # Update user's profile_image field
+    user.profile_image.name = path
+    user.save()
 
     return JsonResponse({'image_url': photo_url})
