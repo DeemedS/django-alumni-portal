@@ -1,37 +1,37 @@
 {% load static %}
 
-<div class="events-banner">
-  <div class="splide" role="group" aria-label="Splide Basic HTML Example">
+<div class="events-banner my-5">
+  <div class="splide" role="group" aria-label="Related Articles Carousel">
     <div class="splide__track">
       <ul class="splide__list">
+        {% for random in random_articles %}
+        <li class="splide__slide">
+          <div class="position-relative rounded overflow-hidden shadow-sm">
+            <a href="{% url 'articles:article_page' random.slug %}">
+              {% if random.banner %}
+                <img src="{{ random.banner.url }}" alt="{{ random.title }}" class="img-fluid w-100 object-fit-cover" style="height: 250px;">
+              {% else %}
+                <img src="{% static 'images/default-banner.jpg' %}" alt="Default image" class="img-fluid w-100 object-fit-cover" style="height: 250px;">
+              {% endif %}
+            </a>
 
-        <li class="splide__slide">
-          <img src={% static 'images/main.jpg' %} alt="...">
+            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex flex-column justify-content-end p-3 text-white">
+              <h5 class="fw-bold mb-1">{{ random.title }}</h5>
+              <p class="text-truncate clamp-3 mb-2">{{ random.body|truncatewords:20 }}</p>
+              <div class="small mb-2">
+                <i class="fa-regular fa-calendar me-2"></i>{{ random.created_at|date:"F j, Y" }}
+              </div>
+              <a href="{% url 'articles:article_page' random.slug %}" class="btn btn-sm btn-outline-light mt-auto">
+                Read More
+              </a>
+            </div>
+          </div>
         </li>
-        
-        <li class="splide__slide">
-          <img src={% static 'images/lagoon.jpg' %} alt="...">
-        </li>
-
-        <li class="splide__slide">
-          <img src={% static 'images/lagoon.jpg' %} alt="...">
-        </li>
-
-        <li class="splide__slide">
-            <img src={% static 'images/lagoon.jpg' %} alt="...">
-        </li>
-
-        <li class="splide__slide">
-            <img src={% static 'images/lagoon.jpg' %} alt="...">
-        </li>
-
-        <li class="splide__slide">
-            <img src={% static 'images/lagoon.jpg' %} alt="...">
-        </li>
-        
+        {% endfor %}
       </ul>
     </div>
   </div>
 </div>
 
-<script src={% static 'js/article-gallery-init.js' %}></script>
+<!-- Splide Initialization -->
+<script src="{% static 'js/article-gallery-init.js' %}"></script>
