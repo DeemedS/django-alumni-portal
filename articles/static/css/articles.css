@@ -4,7 +4,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: white;
   overflow: hidden;
-  height: 300px;
+  height: 350px;
   margin-bottom: 20px;
 }
 
@@ -169,4 +169,53 @@ article .more-info img {
     margin: 0;
   }
 
+}
+.featured_article-content {
+  background-color: rgba(204, 204, 204, 0.4);
+  box-shadow: 0 4px 8px rgba(31, 30, 30, 0.1);
+  z-index: 1;
+  position: relative;
+  padding:30px 30px;
+  height: 100%;
+  margin-top: 20px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.featured_article-content a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+  background-color: #800000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  
+}
+
+.featured_article-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #333;
+  padding-top: 0;
+  top: 0;
+  margin-bottom: 10px;
+}
+.featured_article-text {
+  height: 80%;
+  padding: 20px;
+  border-radius: 10px;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show 3 lines, then ellipsis */
+    line-clamp: 3; /* Standard property for compatibility */
+    -webkit-box-orient: vertical;
 }
