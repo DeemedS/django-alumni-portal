@@ -60,12 +60,14 @@ INSTALLED_APPS = [
     'alumninetwork',
 
     #third party
+    'corsheaders',
     'django_recaptcha',
     'fontawesomefree',
     'rest_framework',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -239,5 +241,5 @@ if not DEBUG:
 else:
     CSRF_COOKIE_SECURE = False
     SECURE_SSL_REDIRECT = False
-    CORS_ALLOW_ORIGINS =True
+    CORS_ALLOW_ALL_ORIGINS =True
 
