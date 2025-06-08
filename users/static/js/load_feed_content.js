@@ -79,7 +79,8 @@ function renderCard(item, index) {
                         <i class="${item.is_liked ? 'fa-solid text-danger' : 'fa-regular'} fa-heart me-1"></i>
                         Like
                     </div>
-                    <div><i class="fa fa-paper-plane me-1"></i>Send</div>
+                    <div onclick="handleSend(this)" style="cursor: pointer;" data-link="https://alumniportal.guianalankem.com/${item.type}/${item.id}">
+                    <i class="fa fa-paper-plane me-1" id="send"></i>Send</div>
                 </div>
             </div>
         `;
@@ -90,7 +91,7 @@ function renderCard(item, index) {
         const location = item.location || "Location not specified";
         const jobType = item.job_type || "N/A";
         const salary = item.salary ? item.salary + " PHP" : "Not specified";
-        const applyUrl = item.apply_url || "#";
+        const applyUrl = item.id || "#";
         const likeCount = item.like_count || 0 ;
 
 
@@ -120,7 +121,7 @@ function renderCard(item, index) {
                             <p><i class="fa-solid fa-dollar-sign me-1"></i>Salary: ${salary}</p>
                         </div>
                         <div class="job-card-button">
-                            <a href="${applyUrl}" target="_blank" rel="noopener noreferrer">Apply Now</a>
+                            <a href="/careers/${applyUrl}" target="_blank" rel="noopener noreferrer">Apply Now</a>
                         </div>
                     </div>
                 </div>
@@ -139,7 +140,8 @@ function renderCard(item, index) {
                         Like
                     </div>
                     <div><i class="fa-regular fa-bookmark me-1"></i>Save Job</div>
-                    <div><i class="fa fa-paper-plane me-1"></i>Send</div>
+                    <div onclick="handleSend(this)" style="cursor: pointer;" data-link="https://alumniportal.guianalankem.com/careers/${item.id}">
+                    <i class="fa fa-paper-plane me-1" id="send"></i>Send</div>
                 </div>
             </div>
         `;

@@ -39,6 +39,37 @@
     </div>
 </div>
 
+<div class="modal fade" id="linkCopiedModal" tabindex="-1" aria-labelledby="linkCopiedLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title" id="linkCopiedLabel">Link Copied</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        The link has been successfully copied to your clipboard!
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="{% static 'js/load_feed_content.js' %}"></script>
+
+
+<script>
+function handleSend(element) {
+    const link = element.getAttribute('data-link');
+
+    navigator.clipboard.writeText(link)
+        .then(() => {
+            // Show a Bootstrap modal or any success message
+            const modal = new bootstrap.Modal(document.getElementById('linkCopiedModal'));
+            modal.show();
+        })
+        .catch(err => {
+            alert('Failed to copy link: ' + err);
+        });
+}
+</script>
 
 {% endblock %}
