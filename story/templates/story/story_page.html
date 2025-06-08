@@ -11,7 +11,7 @@
             <a href="javascript:history.back()" class="btn btn-secondary my-3">Back</a>
             <article class="py-3">
                 
-                    <img src="{% static 'images/pylon2022.jpg' %}" alt="">
+                    <img src="{{ story.banner.url }}" alt="">
                 
                 <h1>{{ story.title }}</h1>
                 <p>{{ story.created_at }}</p>
