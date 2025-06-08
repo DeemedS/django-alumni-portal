@@ -23,6 +23,7 @@ from articles.models import Article
 from .models import WebsiteSettings, Official, POSITION_CHOICES
 from django.utils.text import slugify
 from .forms import OfficialForm, WebsiteSettingsForm
+from story.models import Stories
 
 def generate_student_number():
     while True:
@@ -349,6 +350,24 @@ def story_management(request):
         'last_name': request.user.last_name,
     }
     return render(request, 'faculty/story_management.html', context)
+
+@login_required(login_url='/faculty/')
+def story_view(request, id):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    
+    story = get_object_or_404(Stories, id=id)
+
+    context = {
+        "story": story
+    }
+    return render(request, 'faculty/story_view.html', context)
 
 @login_required(login_url='/faculty/')
 def alumni_import(request):
