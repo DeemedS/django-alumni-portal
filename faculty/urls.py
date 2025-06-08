@@ -4,6 +4,7 @@ from articles import views as article_views
 from users import views as user_views
 from careers import views as careers_views
 from events import views as events_views
+from story import views as stories_views
 
 app_name = 'faculty'
 
@@ -37,6 +38,7 @@ urlpatterns = [
 
     path('faculty/story-management', faculty_views.story_management, name='story_management'),
     path('faculty/stories-view/<int:id>/', faculty_views.story_view, name='story_view'),
+    path('faculty/stories-delete/<int:id>/', stories_views.story_delete, name='story_delete'),
 
     path('faculty/articles-management', faculty_views.articles_management, name='articles_management'),
     path('faculty/articles-view/<slug:slug>/', faculty_views.articles_view, name='articles_view'),

@@ -61,7 +61,7 @@ $(document).ready(function () {
                             <td data-label="Date">${formattedDateTime}</td>
                             <td data-label="Actions" class="action-icons">
                                 <a href="/faculty/stories-view/${stories.id}/"><i class="fas fa-eye"></i></a>
-                                <a href="#" class="delete-item" data-id="${stories.id}" data-type="event" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="delete-item" data-id="${stories.id}" data-type="stories" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                             <td class="text-center" data-label="Active">
                                 <button class="${isActive === 'active' ? 'unpublish-btn' : 'publish-btn'} toggle-status-btn" data-id="${stories.id}">
