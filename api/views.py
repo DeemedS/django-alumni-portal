@@ -215,19 +215,44 @@ class AlumniListView(APIView):
     permission_classes = [IsAuthenticated, IsStaffUser]
 
     def get(self, request, *args, **kwargs):
+        # Get filters from query params
+        verification = request.GET.get('verification')
+        course_code = request.GET.get('course_code')
+        school_year = request.GET.get('school_year')
+        search_query = request.GET.get('search')
 
+        # Start with base queryset
         users = User.objects.all().order_by("last_name", "first_name")
 
+        # Filter: Verification status
+        if verification == 'verified':
+            users = users.filter(is_active=True)
+        elif verification == 'unverified':
+            users = users.filter(is_active=False)
+
+
+        # Filter: Course code (related model)
+        if course_code:
+            users = users.filter(course__course_code__icontains=course_code)
+
+        # Filter: School year (direct field)
+        if school_year:
+            users = users.filter(school_year__icontains=school_year)
+
+        # Filter: Basic search on name or email
+        if search_query:
+            users = users.filter(
+                Q(first_name__icontains=search_query) |
+                Q(last_name__icontains=search_query) |
+                Q(email__icontains=search_query)
+            )
+
+        # Setup pagination
         paginator = PageNumberPagination()
         paginator.page_size = request.GET.get('page_size', 10)
 
-        # Paginate queryset
         result_page = paginator.paginate_queryset(users, request)
-
-        # Serialize paginated results
         serializer = ALumniSerializer(result_page, many=True)
-
-        # Return paginated response
         return paginator.get_paginated_response(serializer.data)
     
 class RelatedAlumniListView(APIView):

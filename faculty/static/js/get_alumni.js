@@ -3,17 +3,49 @@ $(document).ready(function () {
     const pageSize = 20;
 
     function fetchAlumni(page) {
+        // Get the latest values from inputs
+        let query = $('#search-input').val().trim();
+        let course_code = $('#course-code-input').val().trim();
+        let school_year = $('#school_year').val() || "";
+        let verification = $('#verification-status').val().trim();
+
+        // Hide table and pagination
+        $('table').hide();
+        $('.pagination-controls').hide();
+
+        // Show the searching message
+        $('#searching-message').show();
+
         $.ajax({
-            url: `/api/alumni-list/?page=${page}&page_size=${pageSize}`,
+            url: `/api/alumni-list/`,
             type: "GET",
+            data: {
+                page: page,
+                page_size: pageSize,
+                search: query,
+                course_code: course_code,
+                school_year: school_year,
+                verification: verification
+            },
             success: function (response) {
+
+                // Hide the searching message
+                $('#searching-message').hide();
+
+                // Show table and pagination again
+                $('table').show();
+                $('.pagination-controls').show();
+
+                // Clear and populate table with results
                 let alumniTable = $("tbody");
                 alumniTable.empty();
+                if (response.results.length === 0) {
+                    articlesTable.append(`<tr><td colspan="5" class="text-center">No articles found.</td></tr>`);
+                } else {
+                    response.results.forEach(function (alumni) {
+                        let isActive = alumni.is_active ? "active" : "inactive";
 
-                response.results.forEach(function (alumni) {
-                    let isActive = alumni.is_active ? "active" : "inactive";
-
-                    let row = `
+                        let row = `
                         <tr>
                             <td class="center-dot" data-label="Active">
                                 <div class="status-indicator ${isActive}"></div>
@@ -36,8 +68,9 @@ $(document).ready(function () {
                             </td>
                         </tr>
                     `;
-                    alumniTable.append(row);
-                });
+                        alumniTable.append(row);
+                    });
+                }
 
                 createPagination(page, Math.ceil(response.count / pageSize), 5);
             },
@@ -54,6 +87,18 @@ $(document).ready(function () {
             page = newPage;
             fetchAlumni(page);
         }
+    });
+
+    // Search/filter button
+    $('#search-button').on('click', function () {
+        page = 1;
+        fetchAlumni(page);
+    });
+
+    // Optionally, auto-fetch when filter inputs change
+    $('#course-code-input, #school_year, #verification-status').on('change', function () {
+        page = 1;
+        fetchAlumni(page);
     });
 
     fetchAlumni(page);
