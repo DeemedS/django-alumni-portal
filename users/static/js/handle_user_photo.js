@@ -23,14 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: formData,
             });
             const result = await response.json();
+
             if (response.ok && result.image_url) {
-                profileImage.src = result.image_url;
-                alert('Photo updated successfully!');
+                showToast("Success", "Profile photo updated successfully.", "success");
+                setTimeout(() => location.reload(), 1500);
             } else {
-                alert(result.error || 'Failed to update photo');
+                showToast("Error", result.error || "Failed to update photo.", "error");
             }
         } catch (error) {
-            alert('Error uploading photo');
+            showToast("Error", "Error uploading photo.", "error");
             console.error(error);
         }
     });
@@ -46,13 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
             });
             const result = await response.json();
+
             if (response.ok) {
-                alert('Photo removed successfully!');
+                showToast("Success", "Profile photo removed successfully.", "success");
+                setTimeout(() => location.reload(), 1500);
             } else {
-                alert(result.error || 'Failed to remove photo');
+                showToast("Error", result.error || "Failed to remove photo.", "error");
             }
         } catch (error) {
-            alert('Error removing photo');
+            showToast("Error", "Error removing photo.", "error");
             console.error(error);
         }
     });
