@@ -115,6 +115,9 @@ def user_edit(request):
                     alumni.course = course
                     alumni.section = section
                     alumni.school_year=basic_info.get('school_year', alumni.school_year)
+                    alumni.x_link = basic_info.get('x_link', alumni.x_link)
+                    alumni.facebook_link = basic_info.get('facebook_link', alumni.facebook_link)
+                    alumni.linkedin_link = basic_info.get('linkedin_link', alumni.linkedin_link)
                     alumni.education = education
                     alumni.licenses = licenses
                     alumni.work_experience = work_experience
