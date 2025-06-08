@@ -12,4 +12,7 @@ urlpatterns = [
     path('myaccount/user_stories/', views.user_stories, name='user_stories'),
     path('myaccount/user_donation/', views.user_donation, name='user_donation'),
     path('myaccount/logout/', views.user_logout, name='logout'),
+
+    path('myaccount/photo/upload/', views.upload_profile_photo, name='upload_profile_photo'),
+    path('myaccount/photo/remove/', views.remove_profile_photo, name='remove_profile_photo'),
 ]

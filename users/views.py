@@ -2,7 +2,7 @@ import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from authentication.forms import UserForm
-from authentication.models import User, Course, Section
+from authentication.models import User, Course, Section, UserSettings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden, JsonResponse
@@ -21,6 +21,8 @@ from story.forms import StoriesForm
 from django.contrib.auth import get_user_model
 from story.models  import Stories
 from django.core.files.storage import default_storage
+from django.views.decorators.http import require_POST
+from django.core.files.base import ContentFile
 
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
@@ -671,3 +673,63 @@ def alumni_network(request):
             return redirect('/login/')
     else:
         return redirect('/login/')
+    
+@login_required
+@require_POST
+def remove_profile_photo(request):
+    user = request.user
+
+    if not user.profile_image or user.profile_image.name == '':
+        return JsonResponse({'error': 'No profile photo to remove'}, status=400)
+
+    # Get default image path from settings
+    try:
+        settings = UserSettings.objects.first()
+        default_image_path = settings.default_profile_image.name if settings else 'user/profile_pics/default.jpg'
+    except UserSettings.DoesNotExist:
+        default_image_path = 'user/profile_pics/default.jpg'
+
+    # Only delete the file if it's not the default image
+    if user.profile_image.name != default_image_path:
+        if default_storage.exists(user.profile_image.name):
+            default_storage.delete(user.profile_image.name)
+
+    # Reset to default
+    user.profile_image = default_image_path
+    user.save(update_fields=['profile_image'])
+
+    return JsonResponse({'message': 'Photo reset to default successfully'})
+
+@login_required
+@require_POST
+def upload_profile_photo(request):
+    photo = request.FILES.get('photo')
+    if not photo:
+        return JsonResponse({'error': 'No photo uploaded'}, status=400)
+
+    user = request.user
+
+    # Get the default image path
+    default_image_path = 'user/profile_pics/default.jpg'
+    try:
+        settings = UserSettings.objects.first()
+        if settings:
+            default_image_path = settings.default_profile_image.name
+    except UserSettings.DoesNotExist:
+        pass
+
+    # If the user has an old image (not default), delete it
+    if user.profile_image and user.profile_image.name != default_image_path:
+        if default_storage.exists(user.profile_image.name):
+            default_storage.delete(user.profile_image.name)
+
+    # Save new photo
+    filename = f"user/profile_pics/{user.id}_{photo.name}"
+    path = default_storage.save(filename, ContentFile(photo.read()))
+    photo_url = default_storage.url(path)
+
+    # Update user model
+    user.profile_image = path
+    user.save(update_fields=['profile_image'])
+
+    return JsonResponse({'image_url': photo_url})

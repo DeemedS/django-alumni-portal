@@ -24,12 +24,13 @@
                             <!-- Profile Photo Section -->
                             <div class="col-md-6 text-center mb-3 mb-md-0">
                                 <div class="profile-photo">
-                                    <img src="{{ profile_image }}" class="img-fluid rounded-circle mb-3" alt="PUP Logo" />
+                                    <img id="profileImage" src="{{ profile_image }}" class="img-fluid rounded-circle mb-3" alt="PUP Logo" />
                                     <!-- Align buttons using flexbox -->
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a href="" class="btn btn-outline-primary">Change Photo</a>
-                                        <a href="" class="btn btn-outline-danger">Remove Photo</a>
+                                        <button id="changePhotoBtn" class="btn btn-outline-primary">Change Photo</button>
+                                        <button id="removePhotoBtn" class="btn btn-outline-danger">Remove Photo</button>
                                     </div>
+                                    <input type="file" id="photoInput" accept="image/*" style="display:none" />
                                 </div>
                             </div>
                             <!-- Image Requirements Section -->
@@ -444,5 +445,6 @@
 <script src="{% static 'js/alumni_add_inputs.js' %}"></script>
 <script src="{% static 'js/user_edit_form_handler.js' %}"></script>
 <script src="{% static 'js/toast.js' %}"></script>
+<script src="{% static 'js/handle_user_photo.js' %}"></script>
 
 {% endblock %}
