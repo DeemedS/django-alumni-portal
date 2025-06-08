@@ -76,6 +76,7 @@ def article_page(request, slug):
 
     article = get_object_or_404(Article, slug=slug, is_active=True)
     content_order = get_ordered_content(article)
+    random_articles = Article.objects.filter(is_active=True).exclude(id=article.id).order_by('?')[:6]
 
 
     if access_token and refresh_token:
@@ -91,6 +92,7 @@ def article_page(request, slug):
         'content_order': content_order,
         'school_abv': settings.SCHOOL_ABV,
         'settings': websettings,
+        'random_articles': random_articles,
         'is_authenticated': is_authenticated
     }
 
