@@ -94,7 +94,7 @@ $(document).ready(function () {
                 if (button.hasClass("verified-btn")) {
                     button.removeClass("verified-btn").addClass("unverified-btn").text("Unverified");
                 } else {
-                    button.removeClass("unverified-btn").addClass("verified-btn").text("Publish");
+                    button.removeClass("unverified-btn").addClass("verified-btn").text("Verified");
                 }
 
                 showToast("Success", "Alumni status updated successfully!", "success");
