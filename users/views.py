@@ -154,6 +154,9 @@ def user_edit(request):
                 section_id = section.get('id') if section else None
                 section_code = section.get('section_code', '') if section else ""
                 school_year = user_data.get('school_year')
+                facebook_link = user_data.get('facebook_link')
+                linkedin_link = user_data.get('linkedin_link')
+                x_link = user_data.get('x_link')
                 
 
             courses = Course.objects.all()
@@ -185,6 +188,9 @@ def user_edit(request):
                 'section_id' : section_id,
                 'school_year' : school_year,
                 'is_authenticated': True,
+                'facebook_link' :facebook_link,
+                'linkedin_link' : linkedin_link,
+                'x_link' : x_link,
             }
 
             return render(request, 'user_edit.html', context)

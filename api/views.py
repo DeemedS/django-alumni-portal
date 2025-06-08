@@ -131,10 +131,13 @@ def get_user_info(request):
             'mobile': user.mobile,
             'civil_status': user.civil_status,
             'sex': user.sex,
+            'linkedin_link': user.linkedin_link,
+            'facebook_link': user.facebook_link,
+            'x_link': user.x_link,
             'events': user.events,
             'jobs': user.jobs,
             'work_experience': user.work_experience,
-            'education': user.education,  # ✅ Add this line
+            'education': user.education,
             'licenses': user.licenses,
             'certifications': user.certifications,
             'course': {
