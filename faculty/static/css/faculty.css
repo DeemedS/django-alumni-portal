@@ -569,18 +569,26 @@
     box-shadow: 0 0 5px rgba(128, 0, 0, 0.5);
 }
 
-.search-inputs select{
-    width: 100%;
-    max-width: 300px;
-    border-radius: 5px;
-    font-size: 1rem;
-}
 .course-search {
     width: 100%;
     max-width: 500px;
 }
-.searches {
-    padding: 20px;
-    border: 2px solid green;
-    background-color: pink;
+
+
+/* alumni status buttons */
+.verified-btn {
+    background-color: #198754;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.unverified-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }
