@@ -19,20 +19,29 @@
         </div>
     </div>
 
-    <div class="highlight">
-        <div class="container">
-            <p>Welcome to the Alumni Stories section, where we celebrate the journeys of our graduates. Here, you can read inspiring stories from alumni who have made significant contributions in their fields and communities.</p>
-        </div>
+    <div class="container">
+        <p class="text-center">Welcome to the Alumni Stories section, where we celebrate the journeys of our graduates.</p>
+        <p class="text-center">Here, you can read inspiring stories from alumni who have made significant contributions in their fields and communities.</p>
     </div>
+
     <div class="stories-list">
         <div class="container">
-            <div class="row">
+            <div class="row story-cards" id="story-cards-container">
                 
-                {% include "components/story_card.html" %}
                 
             </div>
         </div>
     </div>
+
+    <div class="pagination-controls d-flex justify-content-center mt-3">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pagination">
+            </ul>
+        </nav>
+    </div>
 </div>
+
+<script src="{% static 'js/pagination.js' %}"></script>
+<script src="{% static 'js/filter_story.js' %}"></script>
 {% endblock %}
 

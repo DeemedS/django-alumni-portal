@@ -23,6 +23,8 @@ urlpatterns = [
     path('filtered-events/', views.FilteredEventsAPIView.as_view(), name='filtered_events_api'),
     path('filtered-articles/', views.FilteredArticlesAPIView.as_view(), name='filtered_articles_api'),
     path('filtered-jobposts/', views.FilteredJobPostsAPIView.as_view(), name='filtered_jobposts_api'),
+    path('filtered-stories/', views.FilteredStoriesAPIView.as_view(), name='filtered_stories_api'),
+
     path('job-details/<int:id>/', views.JobPostDetailView.as_view(), name='job-details'),
     path('event-details/<int:id>/', views.EventsDetailView.as_view(), name='event-details'),
 

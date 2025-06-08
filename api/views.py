@@ -1,11 +1,12 @@
 from django.shortcuts import get_object_or_404
-from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer
+from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer
 
 from django.utils.timezone import now
 from events.models import Event
 from articles.models import Article
 from careers.models import JobPost
 from authentication.models import User
+from story.models import Stories
 from .permissions import IsStaffUser
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
@@ -199,11 +200,13 @@ class FilteredJobPostsAPIView(APIView):
     
 class JobPostDetailView(RetrieveAPIView):
     permission_classes = [AllowAny]
+    authentication_classes = []
     queryset = JobPost.objects.all()
     serializer_class = JobPostSerializer
     lookup_field = 'id'
 class EventsDetailView(RetrieveAPIView):
     permission_classes = [AllowAny]
+    authentication_classes = []
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     lookup_field = 'id'
@@ -277,3 +280,31 @@ class ToggleEventLikeAPIView(ToggleLikeMixin):
 
 class ToggleJobLikeAPIView(ToggleLikeMixin):
     model = JobPost
+
+
+class FilteredStoriesAPIView(APIView):
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def get(self, request, *args, **kwargs):
+        is_active = request.GET.get('is_active', 'all')
+        page_size = request.GET.get('page_size') or 10
+        search_query = request.GET.get('q')
+        
+        stories = Stories.objects.all().order_by('-created_at')
+
+        if search_query:
+            stories = stories.filter(Q(title__icontains=search_query))
+
+        if is_active.lower() in ['true', '1']:
+            stories = stories.filter(is_active=True)
+        elif is_active.lower() in ['false', '0']:
+            stories = stories.filter(is_active=False)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(stories, request)
+        serializer = StorySerializer(result_page, many=True, context={"request": request})
+        
+        return paginator.get_paginated_response(serializer.data)

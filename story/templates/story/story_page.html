@@ -13,11 +13,10 @@
                 
                     <img src="{% static 'images/pylon2022.jpg' %}" alt="">
                 
-                <h1>Star City Love Story</h1>
-                <p>Published on: June 2 2025 </p>
+                <h1>{{ story.title }}</h1>
+                <p>{{ story.created_at }}</p>
                 <pre>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam ab reiciendis laborum enim iusto quam voluptatum accusantium ipsa omnis consequatur distinctio, officiis eius commodi architecto, ipsam, voluptate mollitia corrupti cumque.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nemo non, possimus consectetur ipsa libero mollitia ex dolor fugit tempore minus, sit magnam eius saepe ducimus obcaecati qui eligendi et.
+                    {{ story.body }}
                 </pre>
                 
             </article>

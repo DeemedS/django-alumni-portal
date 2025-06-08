@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class stories(models.Model):
+class Stories(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField()
     banner = models.ImageField(blank=True, null=True, upload_to='stories/banners/')

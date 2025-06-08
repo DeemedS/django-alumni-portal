@@ -4,6 +4,7 @@ from articles.models import Article
 from django.utils.timezone import now
 from careers.models import JobPost
 from authentication.models import User
+from story.models import Stories
 
 class EventSerializer(serializers.ModelSerializer):
     like_count = serializers.IntegerField(read_only=True)
@@ -77,3 +78,10 @@ class RelatedALumniSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'middle_name', 'course_code', 'section_code', 'school_year', 'work_experience', 'profile_image']
+
+class StorySerializer(serializers.ModelSerializer):    
+    class Meta:
+        model = Stories
+        fields = [
+            'id', 'title' , 'body', 'banner', 'thumbnail', 'created_at', 'is_active'   
+        ]
