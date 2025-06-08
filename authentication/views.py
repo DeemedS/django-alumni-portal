@@ -269,41 +269,43 @@ def send_password_reset_email(user):
         fail_silently=False,
     )
 
-@csrf_exempt
 def forgot_password(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        email = data.get('email')
+        email = request.POST.get('email')
 
         try:
             user = User.objects.get(email=email)
             send_password_reset_email(user)
-            return JsonResponse({'message': 'Password reset email sent.'})
+            messages.success(request, 'Password reset email sent.')
         except User.DoesNotExist:
-            return JsonResponse({'error': 'No user with that email found.'}, status=404)
+            messages.error(request, 'No user with that email found.')
 
     return render(request, 'forgot_password.html')
 
-@csrf_exempt
 def reset_password(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is None or not default_token_generator.check_token(user, token):
+        messages.error(request, 'This password reset link is invalid or has expired.')
+        return render(request, 'forgot_password.html')  # Optional: show dedicated template
+
     if request.method == 'POST':
-        data = json.loads(request.body)
-        new_password = data.get('password')
+        new_password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm-pass')
 
-        try:
-            uid = force_str(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(pk=uid)
+        if not new_password or not confirm_password:
+            messages.error(request, 'Please fill out both password fields.')
+        elif new_password != confirm_password:
+            messages.error(request, 'Passwords do not match.')
+        else:
+            user.set_password(new_password)
+            user.save()
+            messages.success(request, 'Your password has been reset successfully. You can now log in.')
+            return redirect('/login')
 
-            if default_token_generator.check_token(user, token):
-                user.set_password(new_password)
-                user.save()
-                return JsonResponse({'message': 'Password reset successful.'})
-            else:
-                return JsonResponse({'error': 'Invalid or expired token.'}, status=400)
-
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-            return JsonResponse({'error': 'Invalid user.'}, status=400)
-
-    # return JsonResponse({'error': 'Invalid request method.'}, status=400)
-    return render(request, 'reset_password.html')
+    return render(request, 'reset_password.html', {'uidb64': uidb64, 'token': token})
 
