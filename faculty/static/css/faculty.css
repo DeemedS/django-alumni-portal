@@ -592,3 +592,36 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* story css */
+.story-letter-container {
+      background-color: #fff;
+      padding: 3rem;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+.story-banner {
+    max-width: 100%;
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    }
+
+.story-letter-header {
+      margin-bottom: 2rem;
+    }
+
+.story-letter-body {
+      white-space: pre-wrap;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+.author-signature {
+      font-style: italic;
+      margin-top: 3rem;
+      font-size: 1rem;
+    }
