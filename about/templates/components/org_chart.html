@@ -11,44 +11,44 @@
 <div class="org container">
     <div class="row mb-4">
         <div class="col-md-12 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/MaamFlor2.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-3 text-center">Engr. FLORINDA H. OQUINDO</h6>
+            <img src="{{ officials.director.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-3 text-center">{{ officials.director.name }}</h6>
             <p class="text-center">Director</p>
         </div>
     </div>
 
     <div class="row mb-4">
         <div class="col-md-6 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/Prof_JanePulma.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-3 text-center">Prof. Jane S. Pulma</h6>
+            <img src="{{ officials.chief_career_development_placement_services.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-3 text-center">{{ officials.chief_career_development_placement_services.name }}</h6>
             <p class="text-center">Chief, Career Development & Placement Services</p>
         </div>
         <div class="col-md-6 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/JoepeSolosa.png' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-3 text-center">Prof. Ma. Joepe A. Solosa</h6>
+            <img src="{{ officials.chief_alumni_relations_services.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-3 text-center">{{ officials.chief_alumni_relations_services.name }}</h6>
             <p class="text-center">Chief, Alumni Relations Services</p>
         </div>
     </div>    
 
     <div class="row">
         <div class="col-md-3 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/MylaSalcedo.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-2 text-center">Myla D. Salcedo</h6>
+            <img src="{{ officials.admin_staff_1.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-2 text-center">{{ officials.admin_staff_1.name }}</h6>
             <p class="text-center">Admin Staff</p>
         </div>
         <div class="col-md-3 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/GlacieDungao.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-2 text-center">Glacie Joy L. Dungao</h6>
+            <img src="{{ officials.admin_staff_2.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-2 text-center">{{ officials.admin_staff_2.name }}</h6>
             <p class="text-center">Admin Staff</p>
         </div>
         <div class="col-md-3 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/MauraPaz.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-2 text-center">Maura C. Paz</h6>
+            <img src="{{ officials.admin_staff_3.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-2 text-center">{{ officials.admin_staff_3.name }}</h6>
             <p class="text-center">Admin Staff</p>
         </div>
         <div class="col-md-3 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/KennetteRemolano.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-2 text-center">Kennette A. Remolano</h6>
+            <img src="{{ officials.admin_staff_4.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-2 text-center">{{ officials.admin_staff_4.name }}</h6>
             <p class="text-center">Admin Staff</p>
         </div>
     </div>
@@ -65,49 +65,49 @@
 <div class="org container">
     <div class="row mb-4">
         <div class="col-md-12 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/ManuelMuhi.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-3 text-center">Manuel M. Muhi, D.Tech., ASEAN Engr.</h6>
+            <img src="{{ officials.president.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-3 text-center">{{ officials.president.name }}</h6>
             <p class="text-center">President</p>
         </div>
     </div>
 
     <div class="row mb-4">
         <div class="col-md-4 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/AlbertoGuillo.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-3 text-center">Alberto C. Guillo, MS(Stat) MA(Econ)</h6>
+            <img src="{{ officials.executive_vice_president.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-3 text-center">{{ officials.executive_vice_president.name }}</h6>
             <p class="text-center">Executive Vice President</p>
         </div>
         <div class="col-md-4 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/EmmanuelDeGuzman.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-3 text-center">Emanuel C. De Guzman, Ph.D</h6>
+            <img src="{{ officials.vice_president_for_academic_affairs.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-3 text-center">{{ officials.vice_president_for_academic_affairs.name }}</h6>
             <p class="text-center">Vice President for Academic Affairs</p>
         </div>
         <div class="col-md-4 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/TomasTestor.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-3 text-center">Tomas O. Testor, MPA</h6>
+            <img src="{{ officials.vice_president_for_student_affairs_services.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-3 text-center">{{ officials.vice_president_for_student_affairs_services.name }}</h6>
             <p class="text-center">Vice President for Student Affairs & Services</p>
         </div>
     </div>    
 
     <div class="row">
         <div class="col-md-3 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/AnnaGapasin.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-2 text-center">Anna Ruby P. Gapasin, DEM</h6>
+            <img src="{{ officials.vice_president_for_research_extension_devt.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-2 text-center">{{ officials.vice_president_for_research_extension_devt.name }}</h6>
             <p class="text-center">Vice President for Research, Extension, & Dev't</p>
         </div>
         <div class="col-md-3 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/PascualitoGatan.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-2 text-center">Pascualito B. Gatan, MBA</h6>
+            <img src="{{ officials.vice_president_for_branches_campuses.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-2 text-center">{{ officials.vice_president_for_branches_campuses.name }}</h6>
             <p class="text-center">Vice President for Branches & Campuses</p>
         </div>
         <div class="col-md-3 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/AdamRamilo.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-2 text-center">Adam V. Ramilo, MIR</h6>
+            <img src="{{ officials.vice_president_for_administration.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-2 text-center">{{ officials.vice_president_for_administration.name }}</h6>
             <p class="text-center">Vice President for Administration</p>
         </div>
         <div class="col-md-3 d-flex flex-column align-items-center">
-            <img src="{% static 'images/officials/MarisaLegaspi.jpg' %}" alt="Organizational Chart" class="img-thumbnail">
-            <h6 class="mt-2 text-center">Marisa J. Legaspi, CPA</h6>
+            <img src="{{ officials.vice_president_for_finance.photo.url }}" alt="Organizational Chart" class="img-thumbnail">
+            <h6 class="mt-2 text-center">{{ officials.vice_president_for_finance.name }}</h6>
             <p class="text-center">Vice President for Finance</p>
         </div>
     </div>

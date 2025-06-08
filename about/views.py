@@ -1,14 +1,21 @@
 from django.shortcuts import render
 import requests
 from django.conf import settings
-from faculty.models import WebsiteSettings
-
+from faculty.models import WebsiteSettings, POSITION_CHOICES, Official
+from django.utils.text import slugify
 # Create your views here.
 
 def about(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
     websettings = WebsiteSettings.objects.first()
+
+    officials_by_position = {}
+
+    for pos_key, _ in POSITION_CHOICES:
+        slug_key = slugify(pos_key).replace('-', '_')
+        official = Official.objects.filter(position=pos_key).first()
+        officials_by_position[slug_key] = official
 
     is_authenticated = False
 
@@ -23,7 +30,8 @@ def about(request):
             
     context = {
         'settings': websettings,
-        'is_authenticated': is_authenticated
+        'is_authenticated': is_authenticated,
+        'officials': officials_by_position
     }
 
     return render(request, 'about/about.html', context)
