@@ -29,18 +29,20 @@ $(document).ready(function () {
         console.log(formData)
 
         $.ajax({
-            url: `/faculty/edit`,
+            url: `/myaccount/edit/`,
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
             headers: { "X-CSRFToken": csrfToken },
             success: function (response) {
-                // showToast("Success", "Successfully Added New Alumni.", "success");
-                // window.location.href = `/faculty/alumni-edit/${response.alumni_id}/`;
+                showToast("Success", "Successfully Added New Alumni.", "success");
+                setTimeout(function () {
+                window.location.href = `/myaccount/edit/`;
+                }, 1000);
             },
             error: function (xhr, status, error) {
-                // console.error("Error:", error);
-                // showToast("Error", "Error submitting the form!", "danger");
+                console.error("Error:", error);
+                showToast("Error", error, "danger");
             }
         });
     });

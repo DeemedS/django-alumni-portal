@@ -93,8 +93,10 @@ def user_edit(request):
                     licenses = data.get('licenses', [])
                     work_experience = data.get('workExperience', [])
 
-                    course_name = basic_info.get('course_name')
                     course = basic_info.get('course')
+                    
+                    if not course:
+                        return JsonResponse({"error": "No Course Found"}, status=404)
 
                     course = get_object_or_404(Course, id=course) if course else None
                     section = get_object_or_404(Section, id=basic_info.get('section')) if basic_info.get('section') else None
