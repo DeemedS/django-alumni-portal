@@ -4,19 +4,19 @@
             Follow us on our social media accounts to get the latest updates from our team.
         </p>
         <div class="social-icons">
-            <a href="https://www.facebook.com/{{ settings.facebook_link|default:'' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
+            <a href="{{ settings.facebook_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
                 <i class="fa-brands fa-facebook-square"></i>
             </a>
 
-            <a href="https://www.instagram.com/{{ settings.instagram_link|default:'' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
+            <a href="{{ settings.instagram_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
                 <i class="fa-brands fa-instagram-square"></i>
             </a>
 
-            <a href="https://x.com/{{ settings.x_link|default:'' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
+            <a href="{{ settings.x_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
                 <i class="fa-brands fa-x-twitter"></i>
             </a>
 
-            <a href="https://www.linkedin.com/in/{{ settings.linked_in_link|default:'' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
+            <a href="{{ settings.linked_in_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
                 <i class="fa-brands fa-linkedin"></i>
             </a>
         </div>
