@@ -44,6 +44,7 @@ def articles_list(request):
     ]
 
     articles = Article.objects.all().order_by('-date')
+    featured_article = Article.objects.filter(featured=True, is_active=True).first()
 
     if access_token and refresh_token:
         # Here you might want to validate the tokens or perform some action
@@ -62,6 +63,7 @@ def articles_list(request):
         'articles': articles,
         'school_abv': settings.SCHOOL_ABV,
         'settings': websettings,
+        'featured_article': featured_article,
         'is_authenticated': is_authenticated
     })
 

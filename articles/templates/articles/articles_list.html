@@ -10,20 +10,19 @@
 {% block content %}
     <div class="container">
 
-        <div class="row">
-            <div class="col-md-12 my-3">
-                <h1 class="page-header">News & Announcements</h1>
+        {% include "components/featured_article.html" %}
+        <div class="top-spacer mb-5">
+            <div class="container d-flex align-items-center">
+                <h2><span>NEWS</span> & <span>ANNOUNCEMENTS</span></h2>
             </div>
         </div>
 
-        {% include "components/featured_article.html" %}
-
-        <div class="row news-filter">
+        <div class="row news-filter mt-3 mb-3">
             <div class="col-auto">
                 <label for="article-filter" class="col-form-label">Filter News</label>
 
                 <select id="article-filter" class="form-select" aria-label="News filter">
-                    <option value="all" selected>All Aricles</option>
+                    <option value="all" selected>All Articles</option>
                     <option value="news">News</option>
                     <option value="Ann">Announcements</option>
                 </select>

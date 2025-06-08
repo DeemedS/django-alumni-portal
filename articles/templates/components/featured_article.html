@@ -1,13 +1,12 @@
 {% load static %}
 
 <div class="FeaturedArticle">
-
-    <img src={% static "images/gradpic.jpg" %} alt="Background Image">
+    <img src="{{ featured_article.banner.url }}" alt="Background Image" class="mt-3">
     <div class="row">
-        <div class="col">
-            <h2>Article Title</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
-            <a href="#" class="btn btn-primary">Read More</a>
+        <div class="featured_article-content col">
+            <h2 class="featured_article-title">{{ featured_article.title}}</h2>
+           <p class="featured_article-text">{{ featured_article.body }}</p>
+            <a href="/articles/view/{{ featured_article.slug}}">Read More</a>
         </div>
     </div>
 </div>
