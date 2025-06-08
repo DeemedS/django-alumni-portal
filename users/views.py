@@ -87,37 +87,41 @@ def user_edit(request):
 
             if method == 'POST':
                 data = json.loads(request.body)
-    
-                basic_info = data.get('basicInfo', {})
-                education = data.get('education', [])
-                licenses = data.get('licenses', [])
-                work_experience = data.get('workExperience', [])
+                try:
+                    basic_info = data.get('basicInfo', {})
+                    education = data.get('education', [])
+                    licenses = data.get('licenses', [])
+                    work_experience = data.get('workExperience', [])
 
-                course_name = basic_info.get('course_name')
-                course = basic_info.get('course')
+                    course_name = basic_info.get('course_name')
+                    course = basic_info.get('course')
 
-                alumni.first_name = basic_info.get('firstName', alumni.first_name)
-                alumni.last_name = basic_info.get('lastName', alumni.last_name)
-                alumni.middle_name = basic_info.get('middleName', alumni.middle_name)
-                alumni.suffix = basic_info.get('suffix', alumni.suffix) 
-                alumni.email = basic_info.get('email', alumni.email)
-                alumni.address = basic_info.get('address', alumni.address)
-                alumni.birthday = parse_date(basic_info.get('birthday')) if basic_info.get('birthday') else None
-                alumni.telephone = basic_info.get('telephone', alumni.telephone)
-                alumni.mobile = basic_info.get('mobile', alumni.mobile)
-                alumni.civil_status = basic_info.get('civilStatus')
-                alumni.sex = basic_info.get('sex', alumni.sex)
-                alumni.course = course
-                alumni.section = section
-                alumni.school_year=basic_info.get('school_year', alumni.school_year)
-                alumni.education = education
-                alumni.licenses = licenses
-                alumni.work_experience = work_experience
+                    course = get_object_or_404(Course, id=course) if course else None
+                    section = get_object_or_404(Section, id=basic_info.get('section')) if basic_info.get('section') else None
 
-                alumni.save()
+                    alumni.first_name = basic_info.get('firstName', alumni.first_name)
+                    alumni.last_name = basic_info.get('lastName', alumni.last_name)
+                    alumni.middle_name = basic_info.get('middleName', alumni.middle_name)
+                    alumni.suffix = basic_info.get('suffix', alumni.suffix) 
+                    alumni.email = basic_info.get('email', alumni.email)
+                    alumni.address = basic_info.get('address', alumni.address)
+                    alumni.birthday = parse_date(basic_info.get('birthday')) if basic_info.get('birthday') else None
+                    alumni.telephone = basic_info.get('telephone', alumni.telephone)
+                    alumni.mobile = basic_info.get('mobile', alumni.mobile)
+                    alumni.civil_status = basic_info.get('civilStatus')
+                    alumni.sex = basic_info.get('sex', alumni.sex)
+                    alumni.course = course
+                    alumni.section = section
+                    alumni.school_year=basic_info.get('school_year', alumni.school_year)
+                    alumni.education = education
+                    alumni.licenses = licenses
+                    alumni.work_experience = work_experience
 
+                    alumni.save()
 
-                return redirect('/myaccount/edit/')
+                    return JsonResponse({"message": "Alumni updated successfully!"})
+                except json.JSONDecodeError:
+                    return JsonResponse({"error": "Invalid JSON data"}, status=400)
 
             else: 
                 
