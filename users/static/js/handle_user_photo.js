@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'X-CSRFToken': csrfToken
                 },
                 body: formData,
+                credentials: 'include'
             });
             const result = await response.json();
 
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: {
                     'X-CSRFToken': csrfToken
                 },
+                credentials: 'include'
             });
             const result = await response.json();
 
