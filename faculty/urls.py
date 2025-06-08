@@ -46,4 +46,5 @@ urlpatterns = [
     
     path('faculty/officials-management', faculty_views.officials_management, name='officials_management'),
     path('faculty/save-officials', faculty_views.handle_officials_form, name='handle_officials_form'),
+    path('faculty/save-settings', faculty_views.handle_settings_form, name='handle_settings_form'),
 ] 

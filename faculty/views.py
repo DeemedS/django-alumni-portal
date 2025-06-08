@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -21,7 +22,7 @@ from django.utils.encoding import force_bytes
 from articles.models import Article
 from .models import WebsiteSettings, Official, POSITION_CHOICES
 from django.utils.text import slugify
-from .forms import OfficialForm
+from .forms import OfficialForm, WebsiteSettingsForm
 
 def generate_student_number():
     while True:
@@ -560,27 +561,18 @@ def send_email_import_user(user, password):
 def system_settings(request):
 
     websettings = WebsiteSettings.objects.first()
+    form = WebsiteSettingsForm(instance=websettings)
 
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
-    
-    if request.method == 'POST':
-        try:
-            data_json = request.POST.get('data')
-        except Exception as e:
-            print(e)
     
     context = {
         'active_page':'settings',
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
-        'settings':websettings
+        'settings':websettings,
+        'forms':form,
     }
     return render(request, 'system_settings.html', context)
 
@@ -639,6 +631,66 @@ def handle_officials_form(request):
                 official.save()
 
             return JsonResponse({'message': 'Success'})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@login_required(login_url='/faculty/')
+def handle_settings_form(request):
+    if request.method == 'POST':
+        try:
+            settings_obj, created = WebsiteSettings.objects.get_or_create(pk=1)
+
+            # Update text fields as before...
+            settings_obj.facebook_link = request.POST.get('facebook_link', '').strip()
+            settings_obj.instagram_link = request.POST.get('instagram_link', '').strip()
+            settings_obj.x_link = request.POST.get('x_link', '').strip()
+            settings_obj.linked_in_link = request.POST.get('linked_in_link', '').strip()
+            settings_obj.arcdo_email = request.POST.get('arcdo_email', '').strip()
+            settings_obj.phone_number_1 = request.POST.get('phone_number_1', '').strip()
+            settings_obj.phone_number_2 = request.POST.get('phone_number_2', '').strip()
+            settings_obj.phone_number_3 = request.POST.get('phone_number_3', '').strip()
+            settings_obj.arcdo_address_line1 = request.POST.get('arcdo_address_line1', '').strip()
+            settings_obj.arcdo_address_line2 = request.POST.get('arcdo_address_line2', '').strip()
+            settings_obj.arcdo_address_line3 = request.POST.get('arcdo_address_line3', '').strip()
+            settings_obj.bank1_account_number = request.POST.get('bank1_account_number', '').strip()
+            settings_obj.bank1_account_name = request.POST.get('bank1_account_name', '').strip()
+            settings_obj.bank2_account_number = request.POST.get('bank2_account_number', '').strip()
+            settings_obj.bank2_account_name = request.POST.get('bank2_account_name', '').strip()
+
+            default_img_path = 'settings/default.png'  # relative to MEDIA_ROOT
+
+            def handle_image_field(field_name):
+                clear_flag = request.POST.get(f'{field_name}-clear')
+                new_file = request.FILES.get(field_name)
+                current_file = getattr(settings_obj, field_name)
+
+                if clear_flag:
+                    if current_file and current_file.name and current_file.name != default_img_path:
+                        full_path = os.path.join(settings.MEDIA_ROOT, current_file.name)
+                        if os.path.isfile(full_path):
+                            os.remove(full_path)
+                    setattr(settings_obj, field_name, default_img_path)
+
+                elif new_file:
+                    if current_file and current_file.name and current_file.name != default_img_path:
+                        full_path = os.path.join(settings.MEDIA_ROOT, current_file.name)
+                        if os.path.isfile(full_path):
+                            os.remove(full_path)
+                    setattr(settings_obj, field_name, new_file)
+
+                # else: no change to the field
+
+            handle_image_field('gcash_qr')
+            handle_image_field('maya_qr')
+            handle_image_field('paypal_qr')
+
+            settings_obj.save()
+
+            return JsonResponse({'message': 'Settings updated successfully'})
+
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
 

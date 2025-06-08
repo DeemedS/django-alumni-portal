@@ -20,25 +20,53 @@
             <div class="bg-light p-3 min-vh-100 d-flex flex-column">
                 <!-- start of content -->
                  <div class="container settings mt-2">
-                    <form>
+                    <form class="needs-validation" id="settings-form" method="POST" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
                         <!-- social media links -->
                          <div class="settings-form-section">
                             <h5 class="settings-title mb-4">SOCIAL MEDIA LINKS</h5>
                             <div class="mb-3">
                                 <label class="form-label">Facebook</label>
-                                <input type="url" class="form-control" name="facebook_link" value="{{ settings.facebook_link }}">
+                                <input type="url" class="form-control" name="facebook_link"
+                                    value="{{ settings.facebook_link }}"
+                                    pattern="https?://(www\.)?facebook\.com/.+"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid Facebook URL (e.g., https://facebook.com/yourpage).
+                                </div>
                             </div>
+
                             <div class="mb-3">
                                 <label class="form-label">Instagram</label>
-                                <input type="url" class="form-control" name="instagram_link" value="{{ settings.instagram_link }}">
+                                <input type="url" class="form-control" name="instagram_link"
+                                    value="{{ settings.instagram_link }}"
+                                    pattern="https?://(www\.)?instagram\.com/.+"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid Instagram URL (e.g., https://instagram.com/yourprofile).
+                                </div>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">X(Twitter)</label>
-                                <input type="url" class="form-control" name="x_link" value="{{ settings.x_link }}">
+                                <label class="form-label">X (Twitter)</label>
+                                <input type="url" class="form-control" name="x_link"
+                                    value="{{ settings.x_link }}"
+                                    pattern="https?://(www\.)?(twitter\.com|x\.com)/.+"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid X (Twitter) URL (e.g., https://x.com/yourprofile).
+                                </div>
                             </div>
+
                             <div class="mb-3">
                                 <label class="form-label">LinkedIn</label>
-                                <input type="url" class="form-control" name="linked_in_link" value="{{ settings.linked_in_link }}">
+                                <input type="url" class="form-control" name="linked_in_link"
+                                    value="{{ settings.linked_in_link }}"
+                                    pattern="https?://(www\.)?linkedin\.com/.+"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Please enter a valid LinkedIn URL (e.g., https://linkedin.com/in/yourprofile).
+                                </div>
                             </div>
                         </div>
 
@@ -100,38 +128,44 @@
                             <!-- File Uploads -->
                             <div class="file-upload row">
                                 <!-- GCASH QR Upload -->
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 qr">
                                     <label class="form-label">GCASH QR</label>
-                                    <input type="file" class="form-control" name="gcash_qr">
+                                    <div class="mt-1">
                                     {% if settings.gcash_qr %}
                                         <img src="{{ settings.gcash_qr.url }}" alt="GCASH QR" class="img-thumbnail mt-2" style="width: 100px;">
                                     {% endif %}
+                                    {{ forms.gcash_qr }}
+                                    </div>
                                 </div>
 
                                 <!-- MAYA QR Upload -->
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 qr">
                                     <label class="form-label">MAYA QR</label>
-                                    <input type="file" class="form-control" name="maya_qr">
+                                    <div class="mt-1">
                                     {% if settings.maya_qr %}
                                         <img src="{{ settings.maya_qr.url }}" alt="MAYA QR" class="img-thumbnail mt-2" style="width: 100px;">
                                     {% endif %}
+                                    {{ forms.maya_qr }}
+                                    </div>
                                 </div>
 
                                 <!-- PAYPAL QR Upload -->
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 qr">
                                     <label class="form-label">PAYPAL QR</label>
-                                    <input type="file" class="form-control" name="paypal_qr">
+                                    <div class="mt-1">
                                     {% if settings.paypal_qr %}
                                         <img src="{{ settings.paypal_qr.url }}" alt="PAYPAL QR" class="img-thumbnail mt-2" style="width: 100px;">
                                     {% endif %}
+                                    </div>
+                                    {{ forms.paypal_qr }}
                                 </div>
                             </div>
                         </div>
 
                         <!-- Submit Button -->
                          <div class="text-start mt-4">
-                            <button type="submit" class="submit-btn">Save</button>
-                            <button type="reset" class="cancel-btn">Discard</button>
+                            <button type="submit" class="submit-btn me-3">SAVE</button>
+                            <button type="reset" class="cancel-btn">DISCARD</button>
                         </div>
                     </form>
                  </div>
@@ -142,4 +176,26 @@
     </div>
 </div>
 
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+<script src="{% static 'js/settings_handler.js' %}"></script>
+<script>
+  // Bootstrap 5 custom validation
+  (function () {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+
+    Array.from(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
 {% endblock %}

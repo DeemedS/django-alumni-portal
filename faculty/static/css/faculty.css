@@ -486,3 +486,7 @@
     color: #600;
     margin-bottom: 20px;
 }
+
+.qr a {
+    font-size: 5px;
+}

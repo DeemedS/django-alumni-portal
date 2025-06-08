@@ -1,5 +1,5 @@
 from django import forms
-from .models import Official
+from .models import Official, WebsiteSettings
 
 class OfficialForm(forms.ModelForm):
     remove_photo = forms.BooleanField(required=False, label="Remove current photo")
@@ -20,3 +20,13 @@ class OfficialForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+class WebsiteSettingsForm(forms.ModelForm):
+    class Meta:
+        model = WebsiteSettings
+        fields = ['gcash_qr', 'maya_qr', 'paypal_qr']
+        widgets = {
+            'gcash_qr':forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'maya_qr':forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'paypal_qr':forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }

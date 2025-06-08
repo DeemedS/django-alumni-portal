@@ -18,9 +18,9 @@ class WebsiteSettings(models.Model):
     bank1_account_name = models.CharField(max_length=200, blank=True)
     bank2_account_number = models.CharField(max_length=200, blank=True)
     bank2_account_name = models.CharField(max_length=200, blank=True)
-    gcash_qr = models.ImageField(upload_to='user/settings/gcashqr/', blank=True, null=True)
-    maya_qr = models.ImageField(upload_to='user/settings/mayaqr/', blank=True, null=True)
-    paypal_qr = models.ImageField(upload_to='user/settings/paypalqr/', blank=True, null=True)
+    gcash_qr = models.ImageField(upload_to='settings/gcashqr/', blank=True, null=True)
+    maya_qr = models.ImageField(upload_to='settings/mayaqr/', blank=True, null=True)
+    paypal_qr = models.ImageField(upload_to='settings/paypalqr/', blank=True, null=True)
 
     def clean(self):
         if WebsiteSettings.objects.exists() and not self.pk:
