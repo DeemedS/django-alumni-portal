@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer
+from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer, AlumniNetworkSerializer
 
 from django.utils.timezone import now
 from events.models import Event
@@ -19,6 +19,7 @@ from rest_framework.response import Response
 
 from django.db.models import Q
 from django.db.models import Count
+from datetime import datetime
 
 # Create your views here.
 class FilteredEventsAPIView(APIView):
@@ -306,5 +307,50 @@ class FilteredStoriesAPIView(APIView):
         paginator.page_size = page_size
         result_page = paginator.paginate_queryset(stories, request)
         serializer = StorySerializer(result_page, many=True, context={"request": request})
+        
+        return paginator.get_paginated_response(serializer.data)
+    
+class FilteredAlumniAPIView(APIView):
+
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def get(self, request, *args, **kwargs):
+        is_active = request.GET.get('is_active', 'True')
+        page_size = request.GET.get('page_size') or 10
+        course_code = request.GET.get('course_code')
+        section_code = request.GET.get('section_code')
+
+        if not request.GET.get('school_year'):
+            current_year = datetime.now().year - 1
+            last_year = current_year - 1
+            school_year = f"{last_year}-{current_year}"
+        else:
+            school_year = request.GET.get('school_year')
+        
+        alumni = User.objects.all()
+
+        if is_active.lower() in ['true', '1']:
+            alumni = alumni.filter(is_active=True)
+        elif is_active.lower() in ['false', '0']:
+            alumni = alumni.filter(is_active=False)
+
+        # Filter by course_code
+        if course_code:
+            alumni = alumni.filter(course_code=course_code)
+
+        print(school_year)
+
+        # # Filter by school_year
+        if school_year:
+            alumni = alumni.filter(school_year=school_year)
+        
+        if section_code:
+            alumni = alumni.filter(section__section_code=section_code)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(alumni, request)
+        serializer = AlumniNetworkSerializer(result_page, many=True, context={"request": request})
         
         return paginator.get_paginated_response(serializer.data)

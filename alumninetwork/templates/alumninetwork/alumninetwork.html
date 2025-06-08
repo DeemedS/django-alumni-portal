@@ -1,0 +1,80 @@
+{% extends "user_page_layout.html" %}
+{% load static %}
+{% block title %}
+    
+{% endblock %}
+{% block content %}
+
+{% include "components/top_nav.html" %}
+{% csrf_token %}
+
+<style>
+    .filter-bar {
+      background-color: #f5f5f5;
+      padding: 1rem;
+    }
+
+    .filter-bar .form-select,
+    .filter-bar .form-control {
+      max-width: 200px;
+    }
+
+    .filter-bar .btn {
+      background-color: #6b0f1a;
+      color: #fff;
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        
+        {% include "components/sidebar.html" %}
+
+        {% comment %} start {% endcomment %}
+         <div class="col mb-3">
+            <div class="user-header mt-3">
+                <h3>Alumni Networks</h3>
+            </div>
+            <div class="p-3 bg-light">
+
+                 <!-- Filter Bar -->
+                <div class="filter-bar d-flex justify-content-center gap-3 flex-wrap">
+                    <select class="form-select">
+                        <option selected>Section</option>
+                    </select>
+                    <select class="form-select">
+                        <option selected>Course</option>
+                    </select>
+                    <select class="form-select">
+                        <option selected>Year</option>
+                    </select>
+                    <button class="btn">Search</button>
+                </div>
+
+                <!-- Alumni Cards -->
+                <div class="alumni-list">
+                    <div class="container">
+                        <div class="row alumni-cards" id="alumni-cards-container">
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination-controls d-flex justify-content-center mt-3">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination" id="pagination">
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+
+         </div>
+        {% comment %} end {% endcomment %}
+
+    </div>
+</div>
+<script src="{% static 'js/pagination.js' %}"></script>
+<script src="{% static 'js/filter-alumni-network.js' %}"></script>
+{% endblock %}

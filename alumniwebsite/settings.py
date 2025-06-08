@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'faculty',
     'authentication',
     'story',
+    'alumninetwork',
 
     #third party
     'django_recaptcha',

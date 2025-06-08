@@ -85,3 +85,12 @@ class StorySerializer(serializers.ModelSerializer):
         fields = [
             'id', 'title' , 'body', 'banner', 'thumbnail', 'created_at', 'is_active'   
         ]
+
+class AlumniNetworkSerializer(serializers.ModelSerializer):
+    course_code = serializers.CharField(source="course.course_code", read_only=True)
+    section_code = serializers.CharField(source="section.section_code", read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'middle_name', 'course_code', 'section_code', 'school_year', 'work_experience', 'profile_image',
+                'facebook_link', "x_link", "linkedin_link"]
