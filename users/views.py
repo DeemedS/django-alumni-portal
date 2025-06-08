@@ -16,6 +16,7 @@ from django.utils.encoding import force_bytes
 from django.conf import settings
 import random
 import string
+from faculty.models import WebsiteSettings
 
 
 def user_dashboard(request):
@@ -533,6 +534,8 @@ def user_donation(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
+    websettings = WebsiteSettings.objects.first()
+
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
@@ -550,6 +553,7 @@ def user_donation(request):
                 'last_name' : user_data.get('last_name'),
                 'profile_image': user_data.get('profile_image'),
                 'is_authenticated': True,
+                'settings': websettings
             }
             return render(request, 'user_donation.html',context)
 

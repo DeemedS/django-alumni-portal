@@ -26,16 +26,16 @@
                              <div class="card mb-3">
                                 <div class="card-body">
                                 <h5 class="card-title">Directly Bank Transfer</h5>
-                                <p><strong>Account Number:</strong> 222333000456987</p>
-                                <p><strong>Account Name:</strong> Polytechnic University of the Philippines</p>
+                                <p><strong>Account Number:</strong> {{ settings.bank1_account_number }}</p>
+                                <p><strong>Account Name:</strong>  {{ settings.bank1_account_name }}</p>
                                 </div>
                             </div>
 
                             <div class="card mb-4">
                                 <div class="card-body">
                                 <h5 class="card-title">Directly Bank Transfer</h5>
-                                <p><strong>Account Number:</strong> 222333000456987</p>
-                                <p><strong>Account Name:</strong> Polytechnic University of the Philippines</p>
+                                <p><strong>Account Number:</strong> {{ settings.bank2_account_number }}</p>
+                                <p><strong>Account Name:</strong> {{ settings.bank2_account_name }}</p>
                                 </div>
                             </div>
 
@@ -44,19 +44,19 @@
                                 <div class="col-md-4">
                                     <div class="qr-box gcash">
                                         <div class="qr-title text-white">GCASH</div>
-                                        <img src="" alt="GCASH QR" class="img-fluid">
+                                        <img src="{{ settings.gcash_qr }}" alt="GCASH QR" class="img-fluid">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="qr-box maya">
                                         <div class="qr-title text-white">MAYA</div>
-                                        <img src="" alt="MAYA QR" class="img-fluid">
+                                        <img src="{{ settings.maya_qr }}" alt="MAYA QR" class="img-fluid">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="qr-box paypal">
                                         <div class="qr-title text-white">PAYPAL</div>
-                                        <img src="" alt="PAYPAL QR" class="img-fluid">
+                                        <img src="{{ settings.paypal_qr }}" alt="PAYPAL QR" class="img-fluid">
                                     </div>
                                 </div>
                             </div>
@@ -67,16 +67,16 @@
                                     <h5 class="card-title">Contact Details</h5>
                                     <div class="row">
                                         <div class="col-md-3 fw-bold">Name</div>
-                                        <div class="col-md-9">Polytechnic University of the Philippines</div>
+                                        <div class="col-md-9">Alumni Relations & Career Development Office</div>
 
                                         <div class="col-md-3 fw-bold">Address</div>
-                                        <div class="col-md-9">PUP A. Mabini Campus Anonas Street, Sta. Mesa, Manila Philippines 1016</div>
+                                        <div class="col-md-9">{{ settings.arcdo_address_line1 }}, {{ settings.arcdo_address_line2 }}, {{ settings.arcdo_address_line3 }}</div>
 
                                         <div class="col-md-3 fw-bold">Contact</div>
-                                        <div class="col-md-9">(+63 2) 5335-1PUP (5335-1787) or 5335-1777</div>
+                                        <div class="col-md-9">{{ settings.phone_number_1 }}, {{ settings.phone_number_2 }} or{{ settings.phone_number_3 }}</div>
 
                                         <div class="col-md-3 fw-bold">Email</div>
-                                        <div class="col-md-9">inquire@pup.edu.ph</div>
+                                        <div class="col-md-9">{{ settings.arcdo_email }}</div>
                                     </div>
                                 </div>
                             </div>
