@@ -610,12 +610,36 @@ def officials_management(request):
 
 @login_required(login_url='/faculty/')
 def handle_officials_form(request):
-
     if request.method == 'POST':
-        print(request.POST)
-        director_name = request.POST.get('director_name')
-        director_photo = request.FILES.get('director_photo')
+        try:
+            for pos_key, _ in POSITION_CHOICES:
+                slug_key = slugify(pos_key).replace('-', '_')
 
-        return JsonResponse({'message': 'Success'})
+                name_key = f"{slug_key}_name"
+                photo_key = f"{slug_key}-photo"
+                remove_photo_key = f"{slug_key}-photo-clear"
+
+                name_value = request.POST.get(name_key, '').strip()
+                photo_file = request.FILES.get(photo_key)
+                remove_photo = request.POST.get(remove_photo_key) == 'on'
+
+                official, _ = Official.objects.get_or_create(position=pos_key)
+
+                if name_value:
+                    official.name = name_value
+
+                if remove_photo:
+                    if official.photo:
+                        official.photo.delete(save=False)
+
+                    official.photo = 'officials_photos/default.png'
+                elif photo_file:
+                    official.photo = photo_file
+
+                official.save()
+
+            return JsonResponse({'message': 'Success'})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)

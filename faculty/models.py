@@ -80,9 +80,8 @@ POSITION_CHOICES = [
 class Official(models.Model):
     position = models.CharField(max_length=100, choices=POSITION_CHOICES, unique=True)
     name = models.CharField(max_length=100)
-    photo = models.ImageField(upload_to='officials_photos/')
+    photo = models.ImageField(upload_to='officials_photos/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.position} - {self.name}"
-
