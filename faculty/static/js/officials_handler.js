@@ -14,11 +14,13 @@ $('#officials-form').on('submit', function (e) {
             'X-CSRFToken': csrfToken
         },
         success: function (response) {
-            alert('Form submitted successfully!');
-            console.log(response);
+            showToast("Success", `Successfully Updated the Officials.`, "success");
+            setTimeout(function () {
+                location.reload();
+            }, 1000);
         },
         error: function (xhr, status, error) {
-            alert('An error occurred while submitting the form.');
+            showToast("Update Failed", `An error occurred while submitting the form.`, "danger");
             console.error(xhr.responseText);
         }
     });
