@@ -55,7 +55,7 @@
             
                 <!-- Render the form -->
                     <div class="container mt-3">
-                        <form class="edit-user-form mb-3" method="post">
+                        <form id="userForm" class="userForm mb-3" method="post">
                             {% csrf_token %}
 
                             <div class="row mb-3">
@@ -412,5 +412,6 @@
 <script src="{% static 'js/sy_gen.js' %}"></script>
 <script src="{% static 'js/year_gen.js' %}"></script>
 <script src="{% static 'js/alumni_add_inputs.js' %}"></script>
+<script src="{% static 'js/user_edit_form_handler.js' %}"></script>
 
 {% endblock %}

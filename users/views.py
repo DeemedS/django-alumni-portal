@@ -78,40 +78,46 @@ def user_edit(request):
 
         method = request.method
 
-
         if response.status_code == 200:
             user_data = user_response.json()
 
+            alumni = get_object_or_404(User, email=user_data.get('email'))
+            courses = Course.objects.all()
+            sections = Section.objects.all()
+
             if method == 'POST':
-                user_instance = User.objects.filter(email=user_data.get('email')).first()
-                form = UserForm(request.POST, instance=user_instance)
+                data = json.loads(request.body)
+    
+                basic_info = data.get('basicInfo', {})
+                education = data.get('education', [])
+                licenses = data.get('licenses', [])
+                work_experience = data.get('workExperience', [])
 
-                if form.is_valid():
+                course_name = basic_info.get('course_name')
+                course = basic_info.get('course')
 
-                    print(form.cleaned_data)
+                alumni.first_name = basic_info.get('firstName', alumni.first_name)
+                alumni.last_name = basic_info.get('lastName', alumni.last_name)
+                alumni.middle_name = basic_info.get('middleName', alumni.middle_name)
+                alumni.suffix = basic_info.get('suffix', alumni.suffix) 
+                alumni.email = basic_info.get('email', alumni.email)
+                alumni.address = basic_info.get('address', alumni.address)
+                alumni.birthday = parse_date(basic_info.get('birthday')) if basic_info.get('birthday') else None
+                alumni.telephone = basic_info.get('telephone', alumni.telephone)
+                alumni.mobile = basic_info.get('mobile', alumni.mobile)
+                alumni.civil_status = basic_info.get('civilStatus')
+                alumni.sex = basic_info.get('sex', alumni.sex)
+                alumni.course = course
+                alumni.section = section
+                alumni.school_year=basic_info.get('school_year', alumni.school_year)
+                alumni.education = education
+                alumni.licenses = licenses
+                alumni.work_experience = work_experience
 
-                    form.save()
-
-                    first_name = form.cleaned_data.get('first_name')
-                    last_name = form.cleaned_data.get('last_name')
-                    suffix = form.cleaned_data.get('suffix')
-                    suffix = "" if suffix in (None, "None") else suffix
-                    email = user_data.get('email')
-                    student_number = user_data.get('student_number')
-                    middle_name = form.cleaned_data.get('middle_name')
-                    birthday = form.cleaned_data.get('birthday')
-                    address = form.cleaned_data.get('address')
-                    telephone = form.cleaned_data.get('telephone')
-                    mobile = form.cleaned_data.get('mobile')
-                    civil_status = form.cleaned_data.get('civil_status')
-                    sex = form.cleaned_data.get('sex')
-                    profile_image = form.cleaned_data.get('profile_image')
-                    work_experience = user_data.get('work_experience', [])
-                    education = user_data.get('education', [])
-                    licenses = user_data.get('licenses', [])
+                alumni.save()
 
 
-                    return redirect('/myaccount/edit/')
+                return redirect('/myaccount/edit/')
 
             else: 
                 
