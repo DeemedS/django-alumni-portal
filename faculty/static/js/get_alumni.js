@@ -29,6 +29,11 @@ $(document).ready(function () {
                                 <a href="/faculty/alumni-edit/${alumni.id}"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="delete-item" data-id="${alumni.id}" data-type="alumni" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
+                            <td class="text-center" data-label="Status">
+                                <button class="${isActive === 'active' ? 'verified-btn' : 'unverified-btn'} toggle-status-btn" data-id="${alumni.id}">
+                                    ${isActive === 'active' ? 'Verified' : 'Verify'}
+                                </button>
+                            </td>
                         </tr>
                     `;
                     alumniTable.append(row);
