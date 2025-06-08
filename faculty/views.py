@@ -11,7 +11,7 @@ from django.contrib.auth import logout
 from careers.models import JobPost
 from events.models import Event
 from events.forms import EventForm
-from authentication.models import User, Course
+from authentication.models import User, Course, Section
 import random
 import string
 from django.contrib.auth.tokens import default_token_generator
@@ -391,6 +391,13 @@ def alumni_import(request):
                 course = Course.objects.get(course_code=row['Course Code'])
             except Course.DoesNotExist:
                 return JsonResponse({'success': False, 'message': f"Course code '{row['Course Code']}' not found."}, status=400)
+            
+            try:
+                section = Section.objects.get(section_code=row['Section Code'], course=course)
+            except Section.DoesNotExist:
+                section = ''
+            except Section.MultipleObjectsReturned:
+                section = ''
 
             # Format birthday and start date
             def format_date(value):
@@ -423,6 +430,7 @@ def alumni_import(request):
                 civil_status=row.get('Civil Status', ''),
                 sex=row.get('Sex', ''),
                 course=course,
+                section=section,
                 school_year=row.get('School Year', ''),
                 work_experience=work_exp
             )

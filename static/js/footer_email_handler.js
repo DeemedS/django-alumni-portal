@@ -19,8 +19,13 @@ $(document).ready(function () {
                 $('#contactForm')[0].reset();
             },
             error: function (xhr, status, error) {
-
-                showToast("Error", error, "error");
+                let errorMsg = "An error occurred.";
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                } else if (error) {
+                    errorMsg = error;
+                }
+                showToast("Error", errorMsg, "danger");
             }
         });
     });
