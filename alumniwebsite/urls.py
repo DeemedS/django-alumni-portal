@@ -37,6 +37,7 @@ urlpatterns = [
     path('', include('alumninetwork.urls')),
 
     path('home/', include('homepage.urls')),
+    path('help-email/', views.help_email , name='help_email'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('api.urls')),
     

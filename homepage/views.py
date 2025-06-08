@@ -4,6 +4,7 @@ from articles.models import Article
 from events.models import Event
 from faculty.models import WebsiteSettings
 from django.conf import settings
+from alumniwebsite.forms import FormWithCaptcha
 
 def home(request):
     access_token = request.COOKIES.get('access_token')
@@ -27,6 +28,7 @@ def home(request):
     context = {
         'featured_article': featured_article,
         'news_articles': news_articles,
+        'form' : FormWithCaptcha(),
         'event_article': event_article,
         'school_abv': settings.SCHOOL_ABV,
         'is_authenticated': is_authenticated,

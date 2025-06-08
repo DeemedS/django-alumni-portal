@@ -42,7 +42,7 @@
             <p>We are here to address any questions you may have about the Alumni Relations and Career Development Office.
                 Please contact us and we will get back to you as soon as possible.</p>
 
-                <form method="POST">
+                <form id="contactForm" method="POST">
                 {% csrf_token %}
 
                 <div class="row">
@@ -99,3 +99,11 @@
 
     </div>
 </footer>
+
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+<script src="{% static 'js/footer_email_handler.js' %}"></script>
+
+
