@@ -241,11 +241,7 @@ class AlumniListView(APIView):
 
         # Filter: Basic search on name or email
         if search_query:
-            users = users.filter(
-                Q(first_name__icontains=search_query) |
-                Q(last_name__icontains=search_query) |
-                Q(email__icontains=search_query)
-            )
+            users = users.filter(email__icontains=search_query)
 
         # Setup pagination
         paginator = PageNumberPagination()

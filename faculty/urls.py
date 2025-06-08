@@ -23,6 +23,7 @@ urlpatterns = [
     path('faculty/alumni-delete/<int:id>/', user_views.alumni_delete, name='alumni_delete'),
     path('faculty/alumni-import', faculty_views.alumni_import, name='alumni_import'),
     path('faculty/alumni-export', faculty_views.alumni_export, name='alumni_export'),
+    path('user/toggle_status/<int:id>/', faculty_views.toggle_user_status, name='toggle_user_status'),
 
     path('faculty/careers-management', faculty_views.careers_management, name='careers_management'),
     path('faculty/career-add', careers_views.career_add, name='career_add'),

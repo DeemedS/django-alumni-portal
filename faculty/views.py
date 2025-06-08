@@ -722,3 +722,27 @@ def handle_settings_form(request):
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+@login_required(login_url='/faculty/')
+def toggle_user_status(request, id):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))  # Check if message exists
+
+        return redirect(reverse('authentication:faculty'))
+    
+    if request.method == 'POST':
+        try:
+            user = User.objects.get(id=id)
+            user.is_active = not user.is_active
+            user.save()
+            return JsonResponse({"message": "User status updated successfully"}, status=200)
+        except Event.DoesNotExist:
+            return JsonResponse({"error": "User not found"}, status=404)  # Not Found
+        except Exception as e:
+            return JsonResponse({"error": f"Error updating User status: {str(e)}"}, status=500)
+    else:
+        messages.error(request, "Invalid request method.")
+        return redirect(reverse('authentication:faculty'))

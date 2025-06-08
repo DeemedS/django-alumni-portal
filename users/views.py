@@ -798,3 +798,4 @@ def upload_profile_photo(request):
     user.save()
 
     return JsonResponse({'image_url': photo_url})
+    

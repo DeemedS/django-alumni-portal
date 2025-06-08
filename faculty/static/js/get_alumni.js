@@ -40,7 +40,7 @@ $(document).ready(function () {
                 let alumniTable = $("tbody");
                 alumniTable.empty();
                 if (response.results.length === 0) {
-                    articlesTable.append(`<tr><td colspan="5" class="text-center">No articles found.</td></tr>`);
+                    alumnisTable.append(`<tr><td colspan="5" class="text-center">No alumnis found.</td></tr>`);
                 } else {
                     response.results.forEach(function (alumni) {
                         let isActive = alumni.is_active ? "active" : "inactive";
@@ -80,6 +80,31 @@ $(document).ready(function () {
         });
     }
 
+    $(document).on("click", ".toggle-status-btn", function () {
+        const button = $(this);
+        const alumniId = button.data("id");
+
+        $.ajax({
+            url: `/user/toggle_status/${alumniId}/`,
+            type: "POST",
+            headers: {
+                'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function () {
+                if (button.hasClass("verified-btn")) {
+                    button.removeClass("verified-btn").addClass("unverified-btn").text("Unverified");
+                } else {
+                    button.removeClass("unverified-btn").addClass("verified-btn").text("Publish");
+                }
+
+                showToast("Success", "Alumni status updated successfully!", "success");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error toggling alumni status:", error);
+            }
+        });
+    });
+
     $(document).on("click", "#pagination .page-link", function (e) {
         e.preventDefault();
         let newPage = parseInt($(this).data("page"));
@@ -96,7 +121,7 @@ $(document).ready(function () {
     });
 
     // Optionally, auto-fetch when filter inputs change
-    $('#course-code-input, #school_year, #verification-status').on('change', function () {
+    $('#course-code-input, #search-input, #school_year, #verification-status').on('change', function () {
         page = 1;
         fetchAlumni(page);
     });
