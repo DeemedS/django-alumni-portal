@@ -27,7 +27,8 @@
                     
                     <div class="d-flex justify-content-between align-items-center mb-3 search-container">
                         <h4 class="fw-bold title-text mb-0">LIST OF STORIES</h4>
-                        <input type="text" class="form-control search-bar" placeholder="Search">
+                        <input type="text" id="search-input" name="q" class="form-control search-bar" placeholder="Search Event..." value="{{ request.GET.q }}">
+                        <button id="search-button" class="add-alumni-btn">SEARCH</button>
                     </div>
                     
 
@@ -37,41 +38,14 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>Story Title</th>
-                                    <th>Name</th>
-                                    <th>Course</th>
+                                    <th>User Email</th>
+                                    <th>Date Created</th>
                                     <th>Actions</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td data-label="Title">Kwentong Bayan</td>
-                                    <td data-label="Name">Gil Daniel Acollador</td>
-                                    <td data-label="Course">BSCPE</td>
-                                    <td data-label="Actions" class="action-icons text-nowrap">
-                                        <a href="#"><i class="fas fa-eye"></i></a>
-                                        <a href="#" class="delete-item" data-id="" data-type="" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                    <td class="text-center" data-label="Active">
-                                        <button class="publish-btn toggle-status-btn" data-id="${articles.id}">
-                                            Publish
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Title">Star City Love Story</td>
-                                    <td data-label="Name">Jeffrey Eguillon</td>
-                                    <td data-label="Course">BSCPE</td>
-                                    <td data-label="Actions" class="action-icons text-nowrap">
-                                        <a href="#"><i class="fas fa-eye"></i></a>
-                                        <a href="#" class="delete-item" data-id="${articles.id}" data-type="article" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                    <td class="text-center" data-label="Active">
-                                        <button class="unpublish-btn toggle-status-btn" data-id="${articles.id}">
-                                            Unpublish
-                                        </button>
-                                    </td>
-                                </tr>
+                               
                             </tbody>
                         </table>
                     </div>
@@ -79,20 +53,21 @@
                 <!-- end of content -->
             </div>
 
-            <!-- <div class="pagination-controls d-flex justify-content-center mt-3">
+            <div class="pagination-controls d-flex justify-content-center mt-3">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination" id="pagination">
                     </ul>
                 </nav>
-            </div> -->
+            </div>
 
         </div>
     </div>
 </div>
 
-<!-- <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
-    Toast template will be added dynamically
-</div> -->
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+<script src="{% static 'js/get_story.js'%}"></script>
+<script src="{% static 'js/faculty_pagination.js' %}"></script>
+</div>
 
 
 

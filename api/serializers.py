@@ -79,11 +79,13 @@ class RelatedALumniSerializer(serializers.ModelSerializer):
         model = User
         fields = ['first_name', 'last_name', 'middle_name', 'course_code', 'section_code', 'school_year', 'work_experience', 'profile_image']
 
-class StorySerializer(serializers.ModelSerializer):    
+class StorySerializer(serializers.ModelSerializer):
+    user_email = serializers.EmailField(source='user.email', read_only=True)
+
     class Meta:
         model = Stories
         fields = [
-            'id', 'title' , 'body', 'banner', 'thumbnail', 'created_at', 'is_active'   
+            'id', 'title', 'body', 'banner', 'thumbnail', 'created_at', 'is_active', 'user_email'
         ]
 
 class AlumniNetworkSerializer(serializers.ModelSerializer):
