@@ -3,6 +3,7 @@ import requests
 from django.conf import settings
 from faculty.models import WebsiteSettings, POSITION_CHOICES, Official
 from django.utils.text import slugify
+from alumniwebsite.forms import FormWithCaptcha
 # Create your views here.
 
 def about(request):
@@ -30,6 +31,7 @@ def about(request):
             
     context = {
         'settings': websettings,
+        'form' : FormWithCaptcha(),
         'is_authenticated': is_authenticated,
         'officials': officials_by_position
     }

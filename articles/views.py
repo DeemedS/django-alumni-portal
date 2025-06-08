@@ -15,6 +15,7 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 import requests
 from faculty.models import WebsiteSettings
+from alumniwebsite.forms import FormWithCaptcha
 
 def articles_list(request):
     access_token = request.COOKIES.get('access_token')
@@ -62,6 +63,7 @@ def articles_list(request):
         'current_year': current_year,
         'articles': articles,
         'school_abv': settings.SCHOOL_ABV,
+        'form' : FormWithCaptcha(),
         'settings': websettings,
         'featured_article': featured_article,
         'is_authenticated': is_authenticated
@@ -91,6 +93,7 @@ def article_page(request, slug):
         'article': article,
         'content_order': content_order,
         'school_abv': settings.SCHOOL_ABV,
+        'form' : FormWithCaptcha(),
         'settings': websettings,
         'random_articles': random_articles,
         'is_authenticated': is_authenticated

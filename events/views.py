@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.urls import reverse
 from faculty.models import WebsiteSettings
+from alumniwebsite.forms import FormWithCaptcha
 
 def events(request):
     access_token = request.COOKIES.get('access_token')
@@ -54,6 +55,7 @@ def events(request):
         'years': years,
         'months': months,
         'current_year': current_year,
+        'form' : FormWithCaptcha(),
         'settings': websettings,
         'latest_events': latest_events,
         'is_authenticated': is_authenticated
@@ -108,6 +110,7 @@ def event_page(request, slug):
 
     context = {
         'event': event,
+        'form' : FormWithCaptcha(),
         'settings': websettings,
         'is_authenticated': is_authenticated,
         'user_events': user_events

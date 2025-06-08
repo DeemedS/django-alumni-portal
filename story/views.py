@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.urls import reverse
+from alumniwebsite.forms import FormWithCaptcha
 
 # Create your views here.
 def story(request):
@@ -26,6 +27,7 @@ def story(request):
             is_authenticated = True
 
     context = {
+        'form' : FormWithCaptcha(),
         'settings': websettings,
         'is_authenticated': is_authenticated
     }
@@ -52,6 +54,7 @@ def story_page(request, id):
             is_authenticated = True
 
     context ={
+        'form' : FormWithCaptcha(),
         'settings': websettings,
         'is_authenticated': is_authenticated,
         'story': story
