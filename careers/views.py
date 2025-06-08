@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from careers.models import JobPost
 from faculty.models import WebsiteSettings
+from alumniwebsite.forms import FormWithCaptcha
 
 # Create your views here.
 
@@ -33,6 +34,7 @@ def careers(request):
             is_authenticated = True
 
     context = {
+        'form' : FormWithCaptcha(),
         'settings': websettings,
         'is_authenticated': is_authenticated
     }
@@ -76,6 +78,7 @@ def career_page(request, id):
             is_authenticated = True
     context = {
         'job': job,
+        'form' : FormWithCaptcha(),
         'settings': websettings,
         'is_authenticated': is_authenticated
     }

@@ -2,6 +2,7 @@ from django.shortcuts import render
 import requests
 from django.conf import settings
 from faculty.models import WebsiteSettings
+from alumniwebsite.forms import FormWithCaptcha
 
 # Create your views here.
 
@@ -23,6 +24,7 @@ def services(request):
             
     context = {
         'settings': websettings,
+        'form' : FormWithCaptcha(),
         'is_authenticated': is_authenticated
     }
 
