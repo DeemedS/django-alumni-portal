@@ -29,13 +29,13 @@ $(document).ready(function() {
                     if (response.results.length > 0) {
                         $.each(response.results, function(index, alumni) {
                         var cardHtml = `
-                        <div class="network-card p-0 mb-3 mt-3">
+                        <div class="network-card p-0 mb-3 mt-3 mx-2">
                             <div class="network-card-background red-background"></div>
                             <div class="network-card-body">
                                 <img src="${alumni.profile_image.url || '/static/images/default_image.png'}" alt="Alumnus photo" class="alumni-image">
                                 <div class="network-details">
-                                    <h6 class="mt-3 mb-3 alumni-name">${alumni.title}</h6>
-                                    <p class="mb-1">${alumni.course_code || ''}</p>
+                                    <h6 class="mt-3 mb-3 alumni-name">${alumni.first_name} ${alumni.last_name}</h6>
+                                   <p class="mb-1">${alumni.course_code || ''}${alumni.section_code ? ` - ${alumni.section_code}` : ''}</p>
                                     <p class="mb-1">${alumni.school_year || ''}</p>
                                     <p class="mb-3">${alumni.position || ''}</p>
                                 </div>
