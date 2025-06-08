@@ -126,38 +126,46 @@
                             </div>
 
                             <!-- File Uploads -->
-                            <div class="file-upload row">
+                            <div class="file-upload qr-details row ">
                                 <!-- GCASH QR Upload -->
-                                <div class="col-md-4 mb-3 qr">
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label">GCASH QR</label>
-                                    <div class="mt-1">
+                                    <div class="mt-1 qr">
                                     {% if settings.gcash_qr %}
                                         <img src="{{ settings.gcash_qr.url }}" alt="GCASH QR" class="img-thumbnail mt-2" style="width: 100px;">
                                     {% endif %}
-                                    {{ forms.gcash_qr }}
+                                    
+                                        <div class="mt-1 qr-form">
+                                            {{ forms.gcash_qr }}
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- MAYA QR Upload -->
-                                <div class="col-md-4 mb-3 qr">
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label">MAYA QR</label>
-                                    <div class="mt-1">
+                                    <div class="mt-1 qr">
                                     {% if settings.maya_qr %}
                                         <img src="{{ settings.maya_qr.url }}" alt="MAYA QR" class="img-thumbnail mt-2" style="width: 100px;">
                                     {% endif %}
-                                    {{ forms.maya_qr }}
+                                        <div class="mt-1 qr-form">
+                                            {{ forms.maya_qr }}
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- PAYPAL QR Upload -->
-                                <div class="col-md-4 mb-3 qr">
+                                <div class="col-md-4 mb-3">
                                     <label class="form-label">PAYPAL QR</label>
-                                    <div class="mt-1">
+                                    <div class="mt-1 qr">
                                     {% if settings.paypal_qr %}
                                         <img src="{{ settings.paypal_qr.url }}" alt="PAYPAL QR" class="img-thumbnail mt-2" style="width: 100px;">
                                     {% endif %}
+                                    
+                                        <div class="mt-1 qr-form">
+                                            {{ forms.paypal_qr }}
+                                        </div>
                                     </div>
-                                    {{ forms.paypal_qr }}
                                 </div>
                             </div>
                         </div>

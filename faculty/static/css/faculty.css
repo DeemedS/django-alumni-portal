@@ -488,5 +488,57 @@
 }
 
 .qr a {
-    font-size: 5px;
+    font-size: .8rem;
+    color: var(--pupred);
+    text-decoration: none;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+}
+.qr-details img{
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.qr-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+.qr-details .qr-form {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.qr-details .qr-form label {
+    font-weight: bold;
+    color: var(--pupred);
+    margin-bottom: 10px;
+}
+.qr-details .qr-form input[type="checkbox"] {
+    margin-left: 10px;
+    font-size: 1.2rem;
+}
+
+.qr {
+    max-height: 300px;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: nowrap;
+    flex-shrink: inherit;
 }
