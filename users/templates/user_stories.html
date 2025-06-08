@@ -12,62 +12,55 @@
     <div class="row flex-nowrap">
         {% include "components/sidebar.html" %}
         <div class="col mb-3">
+            <div class="user-header mt-3">
+                <h3>My Story</h3>
+            </div>
 
-                <div class="user-header mt-3">
-                    <h3>My Story</h3>
-                </div>
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <div class="row">
+                    <div class="col gap-3">
+                        <form method="POST" enctype="multipart/form-data" class="form-section">
+                            {% csrf_token %}
+                            {{ form.non_field_errors }}
 
-                <div class="bg-light p-3 min-vh-100 d-flex flex-column">
-                    <div class="row">
-                        <div class="col gap-3">
-                            
-                            <!-- start of form -->
-                            <div class="alumni-story">
-                                <form class="form-section">
-                                    <div class="mb-3">
-                                        <label for="title" class="form-label">Title</label>
-                                        <input type="text" class="form-control" id="title" placeholder="">
-                                    </div>
+                            <div class="mb-3">
+                                <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                                {{ form.title }}
+                            </div>
 
-                                    <div class="mb-3">
-                                        <label for="body" class="form-label">Body</label>
-                                        <textarea class="form-control" id="body" rows="10"></textarea>
-                                        <div class="form-text">(Narrative, max of 300 words)</div>
-                                    </div>
+                            <div class="mb-3">
+                                <label for="{{ form.body.id_for_label }}" class="form-label">Body</label>
+                                {{ form.body }}
+                                <div class="form-text">(Narrative, max of 300 words)</div>
+                            </div>
 
-                                    <div class="col-md-4 mb-3">
-                                        <label for="banner" class="form-label file-label">Banner</label>
-                                        <div class="input-group">
-                                        <input type="file" class="form-control custom-file-input" id="banner">
-                                        </div>
-                                    </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="{{ form.banner.id_for_label }}" class="form-label file-label">Banner</label>
+                                {{ form.banner }}
+                                {% if story.banner %}
+                                    <div class="mt-2"><strong>Current:</strong> <a href="{{ story.banner.url }}" target="_blank">View banner</a></div>
+                                {% endif %}
+                            </div>
 
-                                    <div class="col-md-4 mb-4">
-                                        <label for="thumbnail" class="form-label file-label">Thumbnail</label>
-                                        <div class="input-group">
-                                            <input type="file" class="form-control custom-file-input" id="thumbnail">
-                                        </div>
-                                    </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="{{ form.thumbnail.id_for_label }}" class="form-label file-label">Thumbnail</label>
+                                {{ form.thumbnail }}
+                                {% if story.thumbnail %}
+                                    <div class="mt-2"><strong>Current:</strong> <a href="{{ story.thumbnail.url }}" target="_blank">View thumbnail</a></div>
+                                {% endif %}
+                            </div>
 
-                                    <div class="d-flex gap-3 mt-2">
-                                        <button type="submit" class="submit-btn px-4">Submit</button>
-                                        <button type="reset" class="cancel-btn px-4">DISCARD</button>
-                                    </div>
-                                </form>
-                            </div>  
-
-                             <!-- end of form-->
-
-
-                        </div>
+                            <div class="d-flex gap-3 mt-2">
+                                <button type="submit" class="submit-btn px-4">
+                                    {% if story %} Update {% else %} Submit {% endif %}
+                                </button>
+                                <button type="reset" class="cancel-btn px-4">DISCARD</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-                
-                
-
+            </div>
         </div>
-        
     </div>
 </div>
 {% endblock %}

@@ -5,7 +5,7 @@ from authentication.forms import UserForm
 from authentication.models import User, Course, Section
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import HttpResponseForbidden, JsonResponse
 import json
 from django.utils.dateparse import parse_date
 from django.core.exceptions import ValidationError
@@ -17,7 +17,10 @@ from django.conf import settings
 import random
 import string
 from faculty.models import WebsiteSettings
-
+from story.forms import StoriesForm
+from django.contrib.auth import get_user_model
+from story.models  import Stories
+from django.core.files.storage import default_storage
 
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
@@ -513,43 +516,74 @@ def user_stories(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
-    if access_token:
-        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
-        data = {'token': access_token}
-        response = requests.post(api_url, data=data)
+    if not access_token:
+        return redirect('/login/')
 
-        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
-        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+    # Token verification
+    verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
+    verify_response = requests.post(verify_url, data={'token': access_token})
 
-        if response.status_code == 200:
-            # Now, render the dashboard template and pass the user info
-            user_data = user_response.json()
-            context = {
-                'active_page': 'user_stories',
-                'first_name' : user_data.get('first_name'),
-                'last_name' : user_data.get('last_name'),
-                'profile_image': user_data.get('profile_image'),
-                'is_authenticated': True,
-            }
-            return render(request, 'user_stories.html',context)
-
-        elif response.status_code == 401 and refresh_token:
+    if verify_response.status_code != 200:
+        if refresh_token:
             refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
             refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
-
             if refresh_response.status_code == 200:
-                new_tokens = refresh_response.json()
-                access_token = new_tokens.get('access')
-                response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True)
+                new_access_token = refresh_response.json().get('access')
+                response = redirect('/myaccount/user_stories/')
+                response.set_cookie('access_token', new_access_token, httponly=True)
                 return response
-            
-            else:
-                return redirect('/login/')
-        else:
-            return redirect('/login/')
-    else:
         return redirect('/login/')
+
+    # Get user info
+    user_info_url = f"{settings.API_TOKEN_URL}/user_info/"
+    user_info_response = requests.get(user_info_url, headers={'Authorization': f'Bearer {access_token}'})
+    if user_info_response.status_code != 200:
+        return HttpResponseForbidden("Could not fetch user info")
+
+    user_data = user_info_response.json()
+    User = get_user_model()
+    try:
+        user = User.objects.get(email=user_data['email'])
+    except User.DoesNotExist:
+        return HttpResponseForbidden("User not found.")
+
+    try:
+        story = Stories.objects.get(user=user)
+    except Stories.DoesNotExist:
+        story = None
+
+    if request.method == 'POST':
+        form = StoriesForm(request.POST, request.FILES, instance=story)
+
+        if form.is_valid():
+            story_instance = form.save(commit=False)
+            story_instance.user = user
+
+            # ✅ Delete old banner if new one uploaded or cleared
+            if story and story.banner and ('banner' in request.FILES or not request.POST.get('banner')):
+                if default_storage.exists(story.banner.name):
+                    default_storage.delete(story.banner.name)
+
+            # ✅ Delete old thumbnail if new one uploaded or cleared
+            if story and story.thumbnail and ('thumbnail' in request.FILES or not request.POST.get('thumbnail')):
+                if default_storage.exists(story.thumbnail.name):
+                    default_storage.delete(story.thumbnail.name)
+
+            story_instance.save()
+            return redirect('/myaccount/user_stories/')
+    else:
+        form = StoriesForm(instance=story)
+
+    context = {
+        'form': form,
+        'story': story,
+        'active_page': 'user_stories',
+        'first_name': user_data.get('first_name'),
+        'last_name': user_data.get('last_name'),
+        'profile_image': user_data.get('profile_image'),
+        'is_authenticated': True,
+    }
+    return render(request, 'user_stories.html', context)
 
 def user_donation(request):
     access_token = request.COOKIES.get('access_token')
