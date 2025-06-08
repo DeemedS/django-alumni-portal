@@ -356,11 +356,8 @@ class FilteredAlumniAPIView(APIView):
         elif is_active.lower() in ['false', '0']:
             alumni = alumni.filter(is_active=False)
 
-        # Filter by course_code
         if course_code:
-            alumni = alumni.filter(course_code=course_code)
-
-        print(school_year)
+            alumni = alumni.filter(course__course_code=course_code)
 
         # # Filter by school_year
         if school_year:

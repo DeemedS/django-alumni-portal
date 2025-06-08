@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-    updateAlumniCards();
-
     $(document).on('click', '.page-link', function(e) {
         e.preventDefault();
         var page = $(this).data('page');
@@ -10,12 +8,19 @@ $(document).ready(function() {
 
     function updateAlumniCards(page = 1) {
 
+        let course_code = $('#course_code').val().trim() || "";
+        let school_year = $('#school_year').val() || "";
+        let section_code = $('#section').val()?.trim() || "";
+
         var pageSize = window.innerWidth <= 640 ? 5 : (window.innerWidth <= 1024 ? 10 : 20);
 
         var data = {
             page: page,
             page_size: pageSize,
-            is_active: true
+            is_active: true,
+            course_code: course_code,
+            school_year: school_year,
+            section_code: section_code
         };
 
         $('#alumni-cards-container').fadeOut(400, function() {
@@ -67,4 +72,12 @@ $(document).ready(function() {
         });
     }
 
+        // Search on button click
+    $("#search-button").on("click", function () {
+        const query = $("#search-input").val();
+        page = 1;
+        updateAlumniCards(page, query);
+    });
+
+    updateAlumniCards();
 });
