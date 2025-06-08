@@ -1,37 +1,36 @@
 {% load static %}
 
-<div class="events-banner ">
+<div class="events-banner">
   <div class="splide" role="group" aria-label="Splide Basic HTML Example">
     <div class="splide__track">
       <ul class="splide__list">
+        {% for event in latest_events %}
         <li class="splide__slide">
-          <img src={% static 'images/grad.jpg' %} alt="...">
-            <div class="carousel-caption">
-              <H1>THESIS DEFENSE</H1> 
-              <p>We are hopeful that our group will successfully pass the thesis defense for Design Project 2. After months of hard work and research, we look forward to the committee's feedback and are excited about the next steps. Thank you to everyone who has supported us along the way.</p>
-              <div class="row caption-content">
-                  <div class="col-md-2">
-                      <p><span><i class="fa-regular fa-calendar"></i></span> January 28, 2025</p>
-                  </div>
-                  <div class="col-md-2">
-                      <p><span><i class="fa-solid fa-clock"></i></span> 1:00 PM</p>
-                  </div>
-                  <div class="col-md-2">
-                      <p><span><i class="fa-solid fa-location-dot"></i></span> CEA ROOM 300</p>
-                  </div>
+          <div class="event-item position-relative">
+            <img src="{{ event.banner.url }}" alt="{{ event.title }}" class="img-fluid w-100" />
+            <div class="carousel-caption d-flex flex-column justify-content-center align-items-center text-center top-0 start-0 w-100 h-100 px-3 px-md-5 bg-black bg-opacity-50">
+              <div class="container">
+                <h1 class="display-6 display-md-5 fw-bold text-white">{{ event.title }}</h1>
+                <p class="lead text-white clamp-3">
+                  {{ event.body }}
+                </p>
+                <a href="view/{{ event.slug }}" class="btn btn-outline-light mt-2">
+                  Read More
+                </a>
+                <div class="row justify-content-center mt-3">
+                  <p class="text-white col-12 col-md-auto mb-0">
+                    <i class="fa-regular fa-calendar me-2"></i> {{ event.date }}
+                  </p>
+                </div>
               </div>
+            </div>
           </div>
         </li>
-        <li class="splide__slide">
-          <img src={% static 'images/main.jpg' %} alt="...">
-        </li>
-        <li class="splide__slide">
-          <img src={% static 'images/lagoon.jpg' %} alt="...">
-        </li>
+        {% endfor %}
       </ul>
     </div>
   </div>
 </div>
 
 
-<script src={% static 'js/events-banner-init.js' %}></script>
+<script src="{% static 'js/events-banner-init.js' %}"></script>

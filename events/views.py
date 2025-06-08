@@ -23,6 +23,8 @@ def events(request):
     current_year = now().year
     years = list(range(2010, current_year + 1))
 
+    latest_events = Event.objects.filter(is_active=True).order_by('-date')[:3]
+
     months = [
         {'value': 0, 'name': 'All'},
         {'value': 1, 'name': 'January'},
@@ -53,6 +55,7 @@ def events(request):
         'months': months,
         'current_year': current_year,
         'settings': websettings,
+        'latest_events': latest_events,
         'is_authenticated': is_authenticated
     })
 

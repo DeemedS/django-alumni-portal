@@ -8,6 +8,115 @@
     <h3 class="text-center">Alumni Profile</h3>
 </div>
 
+<div class="container mt-4 resume-style bg-light p-4 rounded shadow">
+  <div class="row">
+    <!-- Left column: Personal & other info -->
+    <div class="col-md-9">
+      <!-- Personal Information -->
+      <div class="resume-section">
+        <h4 class="section-title">Personal Information</h4>
+        <p><strong>Name:</strong> {{ alumni.first_name }} {{ alumni.middle_name }} {{ alumni.last_name }}</p>
+        <p><strong>Birthday:</strong> {{ alumni.birthday }}</p>
+        <p><strong>Sex:</strong> {{ alumni.sex }}</p>
+        <p><strong>Civil Status:</strong> {{ alumni.civil_status }}</p>
+        <p><strong>Address:</strong> {{ alumni.address }}</p>
+        <p><strong>Email:</strong> {{ alumni.email }}</p>
+        <p><strong>Telephone:</strong> {{ alumni.telephone }}</p>
+        <p><strong>Mobile:</strong> {{ alumni.mobile }}</p>
+      </div>
+
+      <!-- Education -->
+       
+      <div class="resume-section mt-4">
+        <h4 class="section-title">Education</h4>
+        <p><strong>Course:</strong> {{ alumni.course.course_code }}</p>
+        <p><strong>Section:</strong> {{ alumni.section.section_code }}</p>
+        <p><strong>School Year Graduated:</strong> {{ alumni.school_year }}</p>
+        <p><strong>College:</strong> Bachelor of Science in Computer Engineering</p>
+        <p><strong>Year Graduated:</strong> 2025</p>
+      </div>
+
+      <!-- additional education -->
+      <div class="resume-section mt-4">
+        <h4 class="section-title">Additional Education</h4>
+
+        {% if alumni.education %}
+          {% for edu in alumni.education %}
+            <p><strong>Year:</strong> {{ edu.year }}</p>
+            <p><strong>Degree:</strong> {{ edu.degree }}</p>
+            <p><strong>School:</strong> {{ edu.school }}</p>
+            {% if not forloop.last %}
+              <hr>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p>No education data available.</p>
+        {% endif %}
+      </div>
+
+
+      <!-- Certifications -->
+      <div class="resume-section mt-4">
+        <h4 class="section-title">Certifications</h4>
+        {% if alumni.licenses %}
+          {% for cert in alumni.licenses %}
+            <p><strong>Certificate:</strong> {{ cert.name }}</p>
+            <p><strong>Issued By:</strong> {{ cert.org }}</p>
+            <p><strong>Issued Date:</strong> {{ cert.issueDate }}</p>
+            <p><strong>Expiration Date:</strong> {{ cert.expirationDate }}</p>
+            {% if not forloop.last %}
+              <hr>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p>No certificate data available.</p>
+        {% endif %}
+      </div>
+
+      <!-- Work and Licenses  -->
+      <div class="resume-section mt-4">
+        <h4 class="section-title">Work Experience</h4>
+        {% if alumni.work_experience %}
+          {% for work in alumni.work_experience %}
+            <p><strong>Company:</strong> {{ work.company }}</p>
+            <p><strong>Position:</strong> {{ work.position }}</p>
+            <p><strong>Start Date:</strong> {{ work.startDate }}</p>
+            <p><strong>End Date:</strong> {{ work.endDate }}</p>
+            {% if not forloop.last %}
+              <hr>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <p>No work data available.</p>
+        {% endif %}
+
+      </div>
+    </div>
+
+    <!-- Right column: Profile Photo -->
+    <div class="col-md-3 text-center">
+      <div class="profile-photo-wrapper">
+        <img src="{{ alumni.profile_image.url }}" alt="Alumni Photo" class="img-fluid rounded shadow">
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+ 
+</style>
+{% endblock %}
+
+{% comment %} {% extends "edits_layout.html" %}
+{% load static %}
+{% block title %}Alumni Profile{% endblock %}
+
+{% block content %}
+<div class="title-bar mb-3">
+    <a href="/faculty/alumni-management"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 class="text-center">Alumni Profile</h3>
+</div>
+
 <div class="container mt-4">
     <!-- Basic Information Profile -->
     <div class="profile-section">
@@ -133,4 +242,6 @@
         </div>
       </div>
     </div>
-{% endblock %}
+{% endblock %} {% endcomment %}
+
+
