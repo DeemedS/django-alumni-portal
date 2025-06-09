@@ -64,7 +64,6 @@ INSTALLED_APPS = [
     'django_recaptcha',
     'fontawesomefree',
     'rest_framework',
-    'permissions_policy',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +75,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'permissions_policy.PermissionsPolicyMiddleware',
+    "django_permissions_policy.PermissionsPolicyMiddleware",
 ]
 
 ROOT_URLCONF = 'alumniwebsite.urls'
