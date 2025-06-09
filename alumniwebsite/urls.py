@@ -21,6 +21,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     
@@ -40,6 +41,7 @@ urlpatterns = [
     path('help-email/', views.help_email , name='help_email'),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('api.urls')),
+    path('.well-known/security.txt', views.security_txt),
     
 ]
 

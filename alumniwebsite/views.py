@@ -5,6 +5,7 @@ from .forms import FormWithCaptcha
 from django.core.mail import send_mail
 from faculty.models import WebsiteSettings
 import requests
+from django.http import HttpResponse
 
 
 def home(request):
@@ -60,3 +61,13 @@ def help_email(request):
             return JsonResponse({'error': f'Failed to send email: {str(e)}'}, status=500)
 
     return HttpResponseNotAllowed(['POST'])
+
+
+
+def security_txt(request):
+    content = """
+    Contact: mailto:guianalankem@gmail.com
+    Expires: 2027-12-31T23:59:00.000Z
+    Preferred-Languages: en
+        """.strip()
+    return HttpResponse(content, content_type='text/plain')
