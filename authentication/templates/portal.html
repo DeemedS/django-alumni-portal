@@ -30,12 +30,11 @@
                 <div class="col-md-7 right">
 
                     <div class="btn-box">
-              
                         <div class="d-grid gap-2">
                                 <h2>Hi, PUPian!</h2>
                                 <p>Welcome to the Alumni Portal. Please select your account type to proceed.</p>
-                                <button class="btn cust-btn" type="button" onclick="window.location.href = '/login'">ALUMNI</button>
-                                <button class="btn cust-btn" type="button" onclick="window.location.href = '/faculty'">ADMIN</button>
+                                <button class="btn cust-btn" type="button" id="alumniBtn">ALUMNI</button>
+                                <button class="btn cust-btn" type="button" id="adminBtn">ADMIN</button>
                                 <div class="text-center mt-5">
                                     <button class="btn back-btn" type="button" onclick="window.location.href = '/'">Back to home</button>
                                 </div>
@@ -48,4 +47,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('alumniBtn').addEventListener('click', function () {
+        window.location.href = '/login';
+    });
+
+    document.getElementById('adminBtn').addEventListener('click', function () {
+        window.location.href = '/faculty';
+    });
+</script>
 {% endblock %}
