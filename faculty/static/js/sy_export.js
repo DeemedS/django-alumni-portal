@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const schoolYearSelect = document.getElementById("check_school_year");
+    const schoolYearSelect = document.getElementById("school_year_1");
 
     // Ensure school_year select exists
     if (!schoolYearSelect) {
