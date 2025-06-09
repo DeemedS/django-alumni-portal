@@ -16,3 +16,4 @@ openpyxl
 pandas
 xlsxwriter
 django-cors-headers
+django-permissions-policy

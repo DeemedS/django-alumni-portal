@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django_recaptcha',
     'fontawesomefree',
     'rest_framework',
+    'permissions_policy',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'permissions_policy.PermissionsPolicyMiddleware',
 ]
 
 ROOT_URLCONF = 'alumniwebsite.urls'
@@ -246,3 +248,9 @@ else:
     SECURE_SSL_REDIRECT = False
     CORS_ALLOW_ALL_ORIGINS =True
 
+
+PERMISSIONS_POLICY = {
+    "geolocation": ["self"],
+    "microphone": [],
+    "camera": [],
+}
