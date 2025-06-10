@@ -19,7 +19,7 @@ document.getElementById("export-btn").addEventListener("click", function () {
     if (document.getElementById("check_email").checked) selectedFields.push("email");
     if (document.getElementById("check_civil_status").checked) selectedFields.push("civil_status");
     if (document.getElementById("check_sex").checked) selectedFields.push("sex");
-    if (document.getElementById("check_school_year").checked) selectedFields.push("check_school_year");
+    if (document.getElementById("check_school_year").checked) selectedFields.push("school_year");
     if (document.getElementById("check_course").checked) selectedFields.push("course");
     if (document.getElementById("check_employment").checked) selectedFields.push("employment");
 
