@@ -534,6 +534,10 @@ def alumni_export(request):
             for field in selected_fields:
                 if field == 'name':
                     header.extend(['Last Name', 'First Name', 'Middle Name', 'Suffix'])
+                elif field == 'course':
+                    header.extend(['Course Code', 'Course Name'])
+                elif field == 'employment':
+                    header.extend(['Company', 'Position', 'Start Date', 'End Date'])
                 else:
                     header.append(field.replace('_', ' ').title())
             writer.writerow(header)
@@ -543,21 +547,40 @@ def alumni_export(request):
                 row = []
                 for field in selected_fields:
                     if field == 'name':
-                        row.extend([user.last_name, user.first_name, user.middle_name or '', user.suffix or ''])
+                        row.extend([
+                            user.last_name,
+                            user.first_name,
+                            user.middle_name or '',
+                            user.suffix or ''
+                        ])
                     elif field == 'course':
-                        row.append(user.course.course_code if user.course else '')
-                        row.append(user.course.course_name if user.course else '')
+                        row.extend([
+                            user.course.course_code if user.course else '',
+                            user.course.course_name if user.course else ''
+                        ])
                     elif field == 'employment':
-                        # This can be expanded depending on how you want to export JSONField data
-                        jobs = user.jobs
-                        row.append(", ".join([job.get('position', '') for job in jobs]) if jobs else '')
+                        work_experience = user.work_experience or []
+                        if work_experience:
+                            # Sort jobs by latest startDate
+                            try:
+                                latest_work_experience = sorted(work_experience, key=lambda x: x.get('startDate', ''), reverse=True)[0]
+                            except (TypeError, IndexError):
+                                latest_work_experience = {}
+                        else:
+                            latest_work_experience = {}
+                        row.extend([
+                            latest_work_experience.get('company', ''),
+                            latest_work_experience.get('position', ''),
+                            latest_work_experience.get('startDate', ''),
+                            latest_work_experience.get('endDate', '')
+                        ])
                     else:
-                        value = getattr(user, model_fields[field], '')
+                        value = getattr(user, model_fields.get(field, ''), '')
                         row.append(value if value is not None else '')
                 writer.writerow(row)
 
             return response
-        
+
         except Exception as e:
                 import traceback
                 traceback.print_exc()  # For console
