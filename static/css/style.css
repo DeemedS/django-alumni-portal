@@ -21,6 +21,10 @@
 body {
 }
 
+.nav-logo-text {
+    font-size: .8rem;
+}
+
 main {
     font-family: 'Poppins';
     background-color: #ececec;
