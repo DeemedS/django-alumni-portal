@@ -113,7 +113,10 @@
                                         for this website.
                                     </label>
                                 </div>
-                                <button type="submit" class="w-100">SUBMIT</button>
+                                <button type="submit" class="submit w-100" id="form-submit" style="display: inline-flex; align-items: center; justify-content: center;">
+                                <span id="btn-spinner" class="spinner d-none"></span>
+                                <span id="btn-text">SUBMIT</span>
+                                </button>
                                 <p class="text-center mt-3 small">Already have an account? <a href="/login" class="fw-bold">Sign in Here</a></p>
                             </form>
                             </div>
@@ -198,5 +201,7 @@
 
 <script src="{% static 'js/sy_gen.js' %}"></script>
 <script src="{% static 'js/year_gen.js' %}"></script>
+<script src="{% static 'js/spinner.js' %}"></script>
+<link href="{% static 'css/spinner.css' %}" rel="stylesheet" type="text/css">
 
 {% endblock %}
