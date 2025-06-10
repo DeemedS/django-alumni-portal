@@ -662,7 +662,9 @@ def handle_officials_form(request):
                 remove_photo_key = f"{slug_key}-photo-clear"
 
                 name_value = request.POST.get(name_key, '').strip()
+
                 photo_file = request.FILES.get(photo_key)
+
                 remove_photo = request.POST.get(remove_photo_key) == 'on'
 
                 official, _ = Official.objects.get_or_create(position=pos_key)
@@ -673,10 +675,11 @@ def handle_officials_form(request):
                 if remove_photo:
                     if official.photo:
                         official.photo.delete(save=False)
-
                     official.photo = 'officials_photos/default.png'
                 elif photo_file:
                     official.photo = photo_file
+                elif not photo_file:
+                    official.photo = 'officials_photos/default.png'
 
                 official.save()
 
