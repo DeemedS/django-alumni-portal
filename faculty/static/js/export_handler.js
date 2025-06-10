@@ -19,11 +19,11 @@ document.getElementById("export-btn").addEventListener("click", function () {
     if (document.getElementById("check_email").checked) selectedFields.push("email");
     if (document.getElementById("check_civil_status").checked) selectedFields.push("civil_status");
     if (document.getElementById("check_sex").checked) selectedFields.push("sex");
-    if (document.getElementById("check_school_year").checked) selectedFields.push("school_year_1");
+    if (document.getElementById("check_school_year").checked) selectedFields.push("check_school_year");
     if (document.getElementById("check_course").checked) selectedFields.push("course");
     if (document.getElementById("check_employment").checked) selectedFields.push("employment");
 
-    const schoolYear = document.getElementById("school_year").value;
+    const schoolYear = document.getElementById("school_year_1").value;
     const course = document.getElementById("selectedCourse").value;
 
     const formData = new FormData();
