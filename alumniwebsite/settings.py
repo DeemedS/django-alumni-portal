@@ -167,8 +167,44 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+USE_S3_MEDIA = config('USE_S3_MEDIA', default=False, cast=bool)
+
+if USE_S3_MEDIA:
+    # AWS credentials & bucket
+    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default=None)
+    AWS_S3_CUSTOM_DOMAIN = config('AWS_S3_CUSTOM_DOMAIN', default=None)
+
+    # Common S3 settings
+    AWS_QUERYSTRING_AUTH = False      # no signed URLs
+    AWS_DEFAULT_ACL = None            # avoids warnings
+    AWS_S3_OBJECT_PARAMETERS = {      # cache headers
+        'CacheControl': 'max-age=86400',
+    }
+
+    # Construct the URL base for media files
+    if AWS_S3_CUSTOM_DOMAIN:
+        S3_MEDIA_DOMAIN = AWS_S3_CUSTOM_DOMAIN
+    else:
+        region = f'.{AWS_S3_REGION_NAME}' if AWS_S3_REGION_NAME else ''
+        S3_MEDIA_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3{region}.amazonaws.com'
+
+    MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://{S3_MEDIA_DOMAIN}/{MEDIA_LOCATION}/'
+
+    # Tell Django to use S3 for media uploads
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    # If you need separation of media subfolder, subclass or use STORAGES dict:
+    # from storages.backends.s3boto3 import S3Boto3Storage
+    # class MediaStorage(S3Boto3Storage):
+    #     location = MEDIA_LOCATION
+    # DEFAULT_FILE_STORAGE = 'your_project.settings.MediaStorage'
+else:
+    # Fallback: local media
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
