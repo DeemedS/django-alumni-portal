@@ -45,5 +45,6 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script src="{% static 'js/handle-events.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/handle-events.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/onerror-img.js' %}"></script>
 {% endblock %}

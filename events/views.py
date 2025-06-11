@@ -56,6 +56,7 @@ def events(request):
         'months': months,
         'current_year': current_year,
         'form' : FormWithCaptcha(),
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'settings': websettings,
         'latest_events': latest_events,
         'is_authenticated': is_authenticated
@@ -111,6 +112,7 @@ def event_page(request, slug):
     context = {
         'event': event,
         'form' : FormWithCaptcha(),
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'settings': websettings,
         'is_authenticated': is_authenticated,
         'user_events': user_events

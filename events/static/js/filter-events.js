@@ -54,8 +54,7 @@ $(document).ready(function() {
                                                 <div class="position-relative">
                                                     <img src="${event.thumbnail || '/static/images/default_image.png'}" 
                                                     class="card-img-top" 
-                                                    alt="${event.title}"
-                                                    onerror="this.onerror=null; this.src='/static/images/default_image.png';">
+                                                    alt="${event.title}">
                                                     <div class="overlay">
                                                         <div class="badge text-bg-warning">${eventDate}</div>
                                                         <span class="badge ${badgeClass}">${event.status}</span>
@@ -68,6 +67,11 @@ $(document).ready(function() {
                                                 </div>
                                             </div>`;
                             $('#event-cards-container').append(cardHtml);
+                            $('#event-cards-container img').on('error', function() {
+                                if (!this.src.includes('default_image.png')) {
+                                    this.src = '/static/images/default_image.png';
+                                }
+                            });
                         });
                     } else {
                         var noEventsHtml = '<div class="col-12 text-center"><p>No events found for the selected filters.</p></div>';

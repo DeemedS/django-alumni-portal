@@ -33,4 +33,4 @@
 </div>
 
 
-<script src="{% static 'js/events-banner-init.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/events-banner-init.js' %}"></script>
