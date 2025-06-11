@@ -30,7 +30,6 @@ def home(request):
     context = {
         'featured_article': featured_article,
         'news_articles': news_articles,
-        'form' : FormWithCaptcha(),
         'event_article': event_article,
         'school_abv': settings.SCHOOL_ABV,
         'is_authenticated': is_authenticated,
