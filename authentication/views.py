@@ -16,14 +16,23 @@ from django.contrib.auth import login
 from django.conf import settings
 import random
 import string
+from alumniwebsite.forms import FormWithCaptcha
 from authentication.models import Course
+from faculty.models import WebsiteSettings
 
 
 User = get_user_model()
 
 # Create your views here.
 def portal(request):
-    return render(request, 'portal.html')
+
+    websettings = WebsiteSettings.objects.first()
+    
+    return render(request, 'portal.html', {
+        'form' : FormWithCaptcha(),
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+        'settings': websettings,
+    })
 
 def user_login(request):
 

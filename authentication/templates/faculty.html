@@ -70,4 +70,5 @@
 
 <script src="{% static 'js/spinner.js' %}"></script>
 <link href="{% static 'css/spinner.css' %}" rel="stylesheet" type="text/css">
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/authentication.js' %}"></script>
 {% endblock %}
