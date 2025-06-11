@@ -47,4 +47,5 @@
   <img src={% static "images/pup-image.webp" %} />
 </div>
 
-  <script src={% static 'js/initialize-hero-swiper.js' %}></script>
+
+  <script nonce="{{ request.csp_nonce }}" src={% static 'js/initialize-hero-swiper.js' %}></script>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load csp %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,13 +31,13 @@
     <link href="{% static 'css/swiper-bundle.min.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <script src="{% static 'js/main.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/main.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/toast.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/splide.min.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
 
-    <script src="{% static 'js/toast.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
-    <script src="{% static 'js/splide.min.js' %}"></script>
-    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
 </head>
 <body>
     

@@ -307,7 +307,6 @@ if not DEBUG:
         "DIRECTIVES": {
             "default-src": ("'none'",),
             "script-src": (
-                "'self'",
                 NONCE,
                 "https://maps.googleapis.com",
                 "https://www.google.com",
@@ -333,6 +332,7 @@ if not DEBUG:
                 "https://maps.google.com",
                 "https://www.google.com/maps/embed",
             ),
+            "object-src": ("'none'",),
             "base-uri": ("'self'",),
             "form-action": ("'self'",),
             "frame-ancestors": ("'none'",),
@@ -349,7 +349,6 @@ else:
         "DIRECTIVES": {
             "default-src": ("'none'",),
             "script-src": (
-                "'self'",
                 NONCE,
                 "https://maps.googleapis.com",
                 "https://www.google.com",
@@ -371,6 +370,7 @@ else:
                 "https://maps.google.com",
                 "https://www.google.com/maps/embed",
             ),
+            "object-src": ("'none'",),
             "base-uri": ("'self'",),
             "form-action": ("'self'",),
             "frame-ancestors": ("'none'",),
