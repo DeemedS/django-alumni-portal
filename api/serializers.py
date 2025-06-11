@@ -69,7 +69,7 @@ class ALumniSerializer(serializers.ModelSerializer):
     section_code = serializers.CharField(source="section.section_code", read_only=True)
     class Meta:
         model = User
-        fields = ['id', 'is_active', 'email', 'first_name', 'last_name', 'middle_name', 'mobile', 'course_code', 'section_code', 'school_year']
+        fields = ['id', 'is_active', 'email', 'first_name', 'last_name', 'middle_name', 'mobile', 'course_code', 'section_code', 'year_graduated']
 
 class RelatedALumniSerializer(serializers.ModelSerializer):
 
@@ -77,7 +77,7 @@ class RelatedALumniSerializer(serializers.ModelSerializer):
     section_code = serializers.CharField(source="section.section_code", read_only=True)
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'middle_name', 'course_code', 'section_code', 'school_year', 'work_experience', 'profile_image']
+        fields = ['first_name', 'last_name', 'middle_name', 'course_code', 'section_code', 'year_graduated', 'work_experience', 'profile_image']
 
 class StorySerializer(serializers.ModelSerializer):
     user_email = serializers.EmailField(source='user.email', read_only=True)
@@ -94,5 +94,5 @@ class AlumniNetworkSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'middle_name', 'course_code', 'section_code', 'school_year', 'work_experience', 'profile_image',
+        fields = ['first_name', 'last_name', 'middle_name', 'course_code', 'section_code', 'year_graduated', 'work_experience', 'profile_image',
                 'facebook_link', "x_link", "linkedin_link"]

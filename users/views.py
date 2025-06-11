@@ -120,7 +120,7 @@ def user_edit(request):
                     alumni.sex = basic_info.get('sex', alumni.sex)
                     alumni.course = course
                     alumni.section = section
-                    alumni.school_year=basic_info.get('school_year', alumni.school_year)
+                    alumni.year_graduated=basic_info.get('year_graduated', alumni.year_graduated)
                     alumni.x_link = basic_info.get('x_link', alumni.x_link)
                     alumni.facebook_link = basic_info.get('facebook_link', alumni.facebook_link)
                     alumni.linkedin_link = basic_info.get('linkedin_link', alumni.linkedin_link)
@@ -159,7 +159,7 @@ def user_edit(request):
                 section = user_data.get('section', {})
                 section_id = section.get('id') if section else None
                 section_code = section.get('section_code', '') if section else ""
-                school_year = user_data.get('school_year')
+                year_graduated = user_data.get('year_graduated')
                 facebook_link = user_data.get('facebook_link')
                 linkedin_link = user_data.get('linkedin_link')
                 x_link = user_data.get('x_link')
@@ -192,7 +192,7 @@ def user_edit(request):
                 'course_id' : course_id,
                 'section_code' : section_code,
                 'section_id' : section_id,
-                'school_year' : school_year,
+                'year_graduated' : year_graduated,
                 'is_authenticated': True,
                 'facebook_link' :facebook_link,
                 'linkedin_link' : linkedin_link,
@@ -360,7 +360,7 @@ def alumni_edit(request, id):
             alumni.sex = basic_info.get('sex', alumni.sex)
             alumni.course = course
             alumni.section = section
-            alumni.school_year=basic_info.get('school_year', alumni.school_year)
+            alumni.year_graduated=basic_info.get('year_graduated', alumni.year_graduated)
             alumni.education = education
             alumni.licenses = licenses
             alumni.work_experience = work_experience
@@ -451,7 +451,7 @@ def alumni_add(request):
                     licenses=licenses,
                     work_experience=work_experience,
                     student_number=student_number,
-                    school_year=basic_info.get('school_year', ""),
+                    year_graduated=basic_info.get('year_graduated', ""),
                 )
 
                 alumni.set_password(password)

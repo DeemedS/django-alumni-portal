@@ -151,7 +151,7 @@ def get_user_info(request):
                 'id': user.section.id if user.section else None,
                 'section_code': user.section.section_code if user.section else None,
             },
-            'school_year': user.school_year,
+            'year_graduated': user.year_graduated,
         }
 
         return Response(user_info, status=200)
@@ -218,7 +218,7 @@ class AlumniListView(APIView):
         # Get filters from query params
         verification = request.GET.get('verification')
         course_code = request.GET.get('course_code')
-        school_year = request.GET.get('school_year')
+        year_graduated = request.GET.get('year_graduated')
         search_query = request.GET.get('search')
 
         # Start with base queryset
@@ -236,8 +236,8 @@ class AlumniListView(APIView):
             users = users.filter(course__course_code__icontains=course_code)
 
         # Filter: School year (direct field)
-        if school_year:
-            users = users.filter(school_year__icontains=school_year)
+        if year_graduated:
+            users = users.filter(year_graduated__icontains=year_graduated)
 
         # Filter: Basic search on name or email
         if search_query:
@@ -342,12 +342,12 @@ class FilteredAlumniAPIView(APIView):
         course_code = request.GET.get('course_code')
         section_code = request.GET.get('section_code')
 
-        if not request.GET.get('school_year'):
+        if not request.GET.get('year_graduated'):
             current_year = datetime.now().year - 1
             last_year = current_year - 1
-            school_year = f"{last_year}-{current_year}"
+            year_graduated = f"{last_year}-{current_year}"
         else:
-            school_year = request.GET.get('school_year')
+            year_graduated = request.GET.get('year_graduated')
         
         alumni = User.objects.all()
 
@@ -359,9 +359,9 @@ class FilteredAlumniAPIView(APIView):
         if course_code:
             alumni = alumni.filter(course__course_code=course_code)
 
-        # # Filter by school_year
-        if school_year:
-            alumni = alumni.filter(school_year=school_year)
+        # # Filter by year_graduated
+        if year_graduated:
+            alumni = alumni.filter(year_graduated=year_graduated)
         
         if section_code:
             alumni = alumni.filter(section__section_code=section_code)

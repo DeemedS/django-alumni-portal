@@ -46,7 +46,7 @@ function fetchRelatedAlumni(courseCode = null, pageSize = 10) {
                         <p class="mb-3">${position || 'No Work Info'}</p>
                         <div class="alumni-details">
                             <p>${alumnus.course_code || 'BSPUP'}</p>
-                            <p>SY ${alumnus.school_year || '0000-0000'}</p>
+                            <p>BATCH ${alumnus.year_graduated || '0000'}</p>
                         </div>
                     </div>
                 </div>
