@@ -18,9 +18,6 @@
     src: url('../fonts/RobotoSlab-Bold.ttf');
 }
 
-body {
-}
-
 .nav-logo-text {
     font-size: .8rem;
 }
@@ -323,8 +320,7 @@ footer .sec-2 .form-control {
     font-weight: 500; 
     letter-spacing: .6rem;
     text-shadow: -.5px -.5px 0 #FFDF00, .5px -.5px 0 #FFDF00,
-          -.5px .5px 0 #FFDF00, .5px .5px 0 #FFDF00; color: white;
-
+    -.5px .5px 0 #FFDF00, .5px .5px 0 #FFDF00; color: white;
 }
 
 @media (max-width: 992px) {
