@@ -308,6 +308,7 @@ if not DEBUG:
                 "https://fonts.googleapis.com",
             ),
             "font-src": (
+                "data:",
                 "'self'",
                 "https://fonts.gstatic.com",
             ),
@@ -339,7 +340,7 @@ else:
                 "https://cdn.jsdelivr.net/npm/",
                 "https://fonts.googleapis.com",
             ),
-            "font-src": ("'self'", "https://fonts.gstatic.com",),
+            "font-src": ("'self'", "data:", "https://fonts.gstatic.com",),
             "img-src": ("'self'", "data:"),
             "connect-src": ("'self'",),
             "frame-src": ("https://www.google.com",),
