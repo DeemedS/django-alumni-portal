@@ -92,7 +92,7 @@ def register(request):
         sex = request.POST.get('sex')
         course = request.POST.get('course')
         course_name = request.POST.get('course_name')
-        school_year = request.POST.get('school_year')
+        year_graduated = request.POST.get('year_graduated')
         company = request.POST.get('company')
         position = request.POST.get('position')
         start_date = request.POST.get('start_date')
@@ -165,7 +165,7 @@ def register(request):
             birthday=birthday,
             sex = sex,
             course = Course.objects.get(id=course) if course else None,
-            school_year=school_year,
+            year_graduated=year_graduated,
             work_experience = work_exp
             )
 

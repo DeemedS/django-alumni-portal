@@ -19,7 +19,7 @@ $(document).ready(function () {
                 sex: $("#sex").val(),
                 course: $("#selectedCourse").val(),
                 section: $("#section").val(),
-                school_year: $("#school_year").val()
+                year_graduated: $("#year_graduated").val()
             },
             education: getEducationData(),
             licenses: getLicenseData(),

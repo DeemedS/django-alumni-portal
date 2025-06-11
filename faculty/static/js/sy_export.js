@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const schoolYearSelect = document.getElementById("school_year_1");
+    const schoolYearSelect = document.getElementById("year_graduated_1");
 
-    // Ensure school_year select exists
+    // Ensure year_graduated select exists
     if (!schoolYearSelect) {
-        console.warn("Element with ID 'school_year' not found.");
+        console.warn("Element with ID 'year_graduated' not found.");
         return;
     }
 

@@ -67,7 +67,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     sex = models.CharField(max_length=10, blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
     section = models.ForeignKey(Section, on_delete=models.SET_NULL, null=True, blank=True)
-    school_year = models.CharField(max_length=10, blank=True, null=True)
+    year_graduated = models.CharField(max_length=10, blank=True, null=True)
     email_verified = models.BooleanField(default=False)
     education = models.JSONField(default=dict, blank=True)
     licenses = models.JSONField(default=dict, blank=True)

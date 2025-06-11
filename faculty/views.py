@@ -450,7 +450,7 @@ def alumni_import(request):
                 sex=row.get('Sex', ''),
                 course=course,
                 section=section,
-                school_year=row.get('School Year', ''),
+                year_graduated=row.get('School Year', ''),
                 work_experience=work_exp
             )
             user.set_password(password)
@@ -496,7 +496,7 @@ def alumni_export(request):
 
             data = json.loads(data_json)
             selected_fields = data.get('fields', [])
-            selected_year = data.get('school_year')
+            selected_year = data.get('year_graduated')
             selected_course = data.get('course')
 
             # Validate selected fields
@@ -509,16 +509,16 @@ def alumni_export(request):
                 'email': 'email',
                 'civil_status': 'civil_status',
                 'sex': 'sex',
-                'school_year': 'school_year',
+                'year_graduated': 'year_graduated',
                 'course': 'course',
                 'employment': 'jobs',  # assuming jobs is a JSONField
             }
 
             queryset = User.objects.all()
 
-            if 'school_year' in selected_fields:
+            if 'year_graduated' in selected_fields:
                 if selected_year:
-                    queryset = queryset.filter(school_year=selected_year)
+                    queryset = queryset.filter(year_graduated=selected_year)
             if 'course' in selected_fields:
                 if selected_course:
                     queryset = queryset.filter(course=selected_course)

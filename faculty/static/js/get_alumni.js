@@ -6,7 +6,7 @@ $(document).ready(function () {
         // Get the latest values from inputs
         let query = $('#search-input').val().trim();
         let course_code = $('#course-code-input').val().trim();
-        let school_year = $('#school_year').val() || "";
+        let year_graduated = $('#year_graduated').val() || "";
         let verification = $('#verification-status').val().trim();
 
         // Hide table and pagination
@@ -24,7 +24,7 @@ $(document).ready(function () {
                 page_size: pageSize,
                 search: query,
                 course_code: course_code,
-                school_year: school_year,
+                year_graduated: year_graduated,
                 verification: verification
             },
             success: function (response) {
@@ -55,7 +55,7 @@ $(document).ready(function () {
                             <td data-label="Phone">${alumni.mobile || "N/A"}</td>
                             <td data-label="Course">${alumni.course_code || "N/A"}</td>
                             <td data-label="Section">${alumni.section_code || "N/A"}</td>
-                            <td data-label="School Year">${alumni.school_year || "N/A"}</td>
+                            <td data-label="School Year">${alumni.year_graduated || "N/A"}</td>
                             <td data-label="Actions" class="action-icons text-nowrap">
                                 <a href="/faculty/alumni-view/${alumni.id}"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/alumni-edit/${alumni.id}"><i class="fas fa-edit"></i></a>
@@ -121,7 +121,7 @@ $(document).ready(function () {
     });
 
     // Optionally, auto-fetch when filter inputs change
-    $('#course-code-input, #search-input, #school_year, #verification-status').on('change', function () {
+    $('#course-code-input, #search-input, #year_graduated, #verification-status').on('change', function () {
         page = 1;
         fetchAlumni(page);
     });
