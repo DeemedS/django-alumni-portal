@@ -66,7 +66,9 @@ def articles_list(request):
         'form' : FormWithCaptcha(),
         'settings': websettings,
         'featured_article': featured_article,
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'is_authenticated': is_authenticated
+        
     })
 
 def article_page(request, slug):
@@ -96,6 +98,7 @@ def article_page(request, slug):
         'form' : FormWithCaptcha(),
         'settings': websettings,
         'random_articles': random_articles,
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'is_authenticated': is_authenticated
     }
 

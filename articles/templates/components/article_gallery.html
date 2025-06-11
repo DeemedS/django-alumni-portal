@@ -9,9 +9,9 @@
           <div class="position-relative rounded overflow-hidden shadow-sm">
             <a href="{% url 'articles:article_page' random.slug %}">
               {% if random.banner %}
-                <img src="{{ random.banner.url }}" alt="{{ random.title }}" class="img-fluid w-100 object-fit-cover" style="height: 250px;">
+                <img src="{{ random.banner.url }}" alt="{{ random.title }}" class="img-fluid w-100 object-fit-cover news-gallery-banner">
               {% else %}
-                <img src="{% static 'images/default-banner.jpg' %}" alt="Default image" class="img-fluid w-100 object-fit-cover" style="height: 250px;">
+                <img src="{% static 'images/default-banner.jpg' %}" alt="Default image" class="img-fluid w-100 object-fit-cover">
               {% endif %}
             </a>
 
@@ -34,4 +34,4 @@
 </div>
 
 <!-- Splide Initialization -->
-<script src="{% static 'js/article-gallery-init.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/article-gallery-init.js' %}"></script>

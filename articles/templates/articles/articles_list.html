@@ -65,7 +65,7 @@
 
     </div>
 
-    <script src="{% static 'js/filter_article.js' %}"></script>
-    <script src="{% static 'js/pagination.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/filter_article.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/pagination.js' %}"></script>
 
 {% endblock %}

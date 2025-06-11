@@ -49,8 +49,7 @@ $(document).ready(function() {
                             var articleDate = new Date(article.date).toDateString();
                             var cardHtml = `<div class="card col-md-8 mb-4">
                                                 <div class="position-relative">
-                                                    <img src="${article.thumbnail || '/static/images/default_image.png'}" class="card-img-top" alt="${article.title}"
-                                                    onerror="this.onerror=null; this.src='/static/images/default_image.png';">
+                                                    <img src="${article.thumbnail || '/static/images/default_image.png'}" class="card-img-top" alt="${article.title}">
                                                     <div class="overlay">
                                                         ${article.category == 'news' ? `<div class="badge text-bg-info">NEWS</div>` : 
                                                             `<div class="badge text-bg-danger">ANN</div>`}
@@ -65,6 +64,11 @@ $(document).ready(function() {
                                                 </div>
                                             </div>`;
                             $('#article-cards-container').append(cardHtml);
+                            $('#article-cards-container img').on('error', function() {
+                                if (!this.src.includes('default_image.png')) {
+                                    this.src = '/static/images/default_image.png';
+                                }
+                            });
                         });
                     } else {
                         var noArticleHtml = '<div class="col-12 text-center"><p>No articles found for the selected filters.</p></div>';
@@ -84,5 +88,6 @@ $(document).ready(function() {
             });
         });
     }
+
 
 });

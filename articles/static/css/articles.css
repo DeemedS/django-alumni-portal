@@ -233,3 +233,7 @@ article .more-info img {
 .object-fit-cover {
   object-fit: cover;
 }
+
+.news-gallery-banner{
+  height: 250px;
+}
