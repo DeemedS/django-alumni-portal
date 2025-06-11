@@ -69,7 +69,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'csp.middleware.CSPMiddleware',
     'alumniwebsite.middleware.HttpOnlyCSRFMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -80,6 +79,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_permissions_policy.PermissionsPolicyMiddleware",
+
+    "csp.middleware.CSPMiddleware",
+    "alumniwebsite.middleware.init_csp_nonce_middleware",
 ]
 
 ROOT_URLCONF = 'alumniwebsite.urls'
@@ -96,7 +98,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            "libraries": {
+            "csp": "csp.templatetags.csp",
+            },
         },
+
     },
 ]
 
@@ -294,10 +300,7 @@ if not DEBUG:
 
     CSRF_COOKIE_PATH = '/'
     CSRF_COOKIE_DOMAIN = None
-    CSP_INCLUDE_NONCE_IN = [
-    'script-src',
-    'script-src-elem'
-    ]
+
 
     CONTENT_SECURITY_POLICY = {
         "DIRECTIVES": {
@@ -373,6 +376,7 @@ else:
         }
     }
 
+CSP_INCLUDE_NONCE_IN = ['script-src', 'script-src-elem']
 
 PERMISSIONS_POLICY = {
     "geolocation": ["self"],

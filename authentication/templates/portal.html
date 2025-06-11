@@ -4,6 +4,7 @@
 {% block title %}
     Alumni Portal | Login
 {% endblock %}
+{% load csp %}
 
 
 {% block content %}
@@ -48,7 +49,8 @@
     </div>
 </div>
 
-<script nonce="{{ CSP_NONCE }}">
+{% script type="application/javascript" async=False %}
+    <script>
     document.getElementById('alumniBtn').addEventListener('click', function () {
         window.location.href = '/login';
     });
@@ -56,5 +58,6 @@
     document.getElementById('adminBtn').addEventListener('click', function () {
         window.location.href = '/faculty';
     });
-</script>
+    </script>
+{% endscript %}
 {% endblock %}

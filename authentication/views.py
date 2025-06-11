@@ -23,8 +23,9 @@ User = get_user_model()
 
 # Create your views here.
 def portal(request):
-    nonce = secrets.token_urlsafe(16)
-    return render(request, 'portal.html', {'nonce': nonce})
+    str(request.csp_nonce)
+    print("CSP Nonce:", request.csp_nonce)
+    return render(request, 'portal.html', {'CSP_NONCE': request.csp_nonce})
 
 def user_login(request):
 
