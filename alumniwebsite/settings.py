@@ -67,7 +67,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'alumniwebsite.middleware.HttpOnlyCSRFMiddleware'
+    'alumniwebsite.middleware.HttpOnlyCSRFMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
