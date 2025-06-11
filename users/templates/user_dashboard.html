@@ -1,5 +1,6 @@
 {% extends "user_page_layout.html" %}
 {% load static %}
+{% load csp %}
 
 {% block title %}
     Alumni Portal | User Dashboard
@@ -53,9 +54,10 @@
   </div>
 </div>
 
-<script src="{% static 'js/load_feed_content.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/load_feed_content.js' %}"></script>
 
 
+{% script type="application/javascript" async=False %}
 <script>
 function handleSend(element) {
     const link = element.getAttribute('data-link');
@@ -71,5 +73,8 @@ function handleSend(element) {
         });
 }
 </script>
+{% endscript %}
+
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/onerror-img.js' %}"></script>
 
 {% endblock %}

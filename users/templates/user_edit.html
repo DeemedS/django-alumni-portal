@@ -1,5 +1,6 @@
 {% extends "user_page_layout.html" %}
 {% load static %}
+{% load csp %}
 
 {% block title %}
     Alumni Portal | User Dashboard
@@ -30,7 +31,7 @@
                                         <button id="changePhotoBtn" class="btn btn-outline-primary">Change Photo</button>
                                         <button id="removePhotoBtn" class="btn btn-outline-danger">Remove Photo</button>
                                     </div>
-                                    <input type="file" id="photoInput" accept="image/*" style="display:none" />
+                                    <input type="file" id="photoInput" accept="image/*" class="d-none" />
                                 </div>
                             </div>
                             <!-- Image Requirements Section -->
@@ -153,7 +154,7 @@
                                     <div class="form-floating">
                                         <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="{{ course }}" >
                                         <label for="courseSearch" class="form-label">Course</label>
-                                        <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
+                                        <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow course-sug"></div>
                                         <input type="hidden" id="selectedCourse" name="course" value="{{ course_id }}">
                                     </div>
                                 </div>
@@ -177,10 +178,10 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-floating">
-                                        <select class="form-select" id="school_year" name="school_year" data-selected-year="{{ school_year }}">
+                                        <select class="form-select" id="year_graduated" name="year_graduated" data-selected-year="{{ year_graduated }}">
                                             <option selected disabled>Select School Year</option>
                                         </select>
-                                        <label for="school_year" class="form-label">School Year (Graduated)</label>
+                                        <label for="year_graduated" class="form-label">School Year (Graduated)</label>
                                     </div>
                                 </div>
                             </div>
@@ -325,6 +326,7 @@
     <!-- Toast template will be added dynamically -->
     </div>
 
+{% script type="application/javascript" async=False %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const courseSearch = document.getElementById("courseSearch");
@@ -352,7 +354,6 @@
         function initializeFields() {
     
             const selectedCourseId = "{{ course_id }}";
-            console.log("Selected Course ID:", selectedCourseId);
             selectedCourse.value = selectedCourseId;
     
             if (selectedCourseId) {
@@ -363,7 +364,6 @@
             }
     
             const selectedSectionId = "{{ section_id }}";
-            console.log("Selected Section ID:", selectedSectionId);
             updateSections(selectedCourseId, selectedSectionId);
         }
     
@@ -437,14 +437,17 @@
         initializeFields();
     });
 </script>
+{% endscript %}
 
 
 
-<script src="{% static 'js/sy_gen.js' %}"></script>
-<script src="{% static 'js/year_gen.js' %}"></script>
-<script src="{% static 'js/alumni_add_inputs.js' %}"></script>
-<script src="{% static 'js/user_edit_form_handler.js' %}"></script>
-<script src="{% static 'js/toast.js' %}"></script>
-<script src="{% static 'js/handle_user_photo.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/sy_gen.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/year_gen.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/alumni_add_inputs.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/user_edit_form_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/toast.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/handle_user_photo.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/onerror-img.js' %}"></script>
 
 {% endblock %}
+

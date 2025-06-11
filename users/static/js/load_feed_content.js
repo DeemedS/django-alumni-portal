@@ -54,13 +54,13 @@ function renderCard(item, index) {
                     <div class="card-title">
                         <strong>${title}</strong><br>
                     </div>
-                    <pre class="mb-0 body-text" data-index="${index}" style="white-space:pre-wrap;">${
+                    <pre class="mb-0 body-text white-space-pre-wrap" data-index="${index}">${
                         isLong 
-                        ? getPreviewByWords(body, 35) + '<span class="see-more" style="color:blue;cursor:pointer;">See more</span>' 
+                        ? getPreviewByWords(body, 35) + '<span class="see-more pointer text-blue-600">See more</span>' 
                         : escapeHtml(body)
                     }</pre>
                     <div class="card-img">
-                        <img src="${imageUrl}" alt="Preview Image" onerror="this.onerror=null;this.src='/static/images/default_image.png';" class="mb-3">
+                        <img src="${imageUrl}" alt="Preview Image" class="mb-3">
                     </div>
                 </div>
                 <div>
@@ -79,7 +79,7 @@ function renderCard(item, index) {
                         <i class="${item.is_liked ? 'fa-solid text-danger' : 'fa-regular'} fa-heart me-1"></i>
                         Like
                     </div>
-                    <div onclick="handleSend(this)" style="cursor: pointer;" data-link="https://alumniportal.guianalankem.com/${item.type}/${item.id}">
+                    <div class="pointer" onclick="handleSend(this)" data-link="https://alumniportal.guianalankem.com/${item.type}/${item.id}">
                     <i class="fa fa-paper-plane me-1" id="send"></i>Send</div>
                 </div>
             </div>
@@ -101,7 +101,7 @@ function renderCard(item, index) {
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="d-flex align-items-center gap-2">
                             <div class="card-profile-img">
-                                <img src="${companyLogo}" alt="Company Logo" onerror="this.onerror=null;this.src='/static/images/arcdologo.jpg';">
+                                <img src="${companyLogo}" alt="Company Logo">
                             </div>
                             <div>
                                 <h6 class="mb-0">ARCDO</h6>
@@ -111,7 +111,7 @@ function renderCard(item, index) {
                     </div>
                     <div class="job-card-content">
                         <div class="job-card-company">
-                            <img src="${companyLogo}" alt="Company Logo" onerror="this.onerror=null;this.src='/static/images/arcdologo.jpg';">
+                            <img src="${companyLogo}" alt="Company Logo">
                         </div>
                         <div class="job-card-details">
                             <h3 class="job-card-title">${jobTitle}</h3>
@@ -140,7 +140,7 @@ function renderCard(item, index) {
                         Like
                     </div>
                     <div><i class="fa-regular fa-bookmark me-1"></i>Save Job</div>
-                    <div onclick="handleSend(this)" style="cursor: pointer;" data-link="https://alumniportal.guianalankem.com/careers/${item.id}">
+                    <div class="pointer" onclick="handleSend(this)" data-link="https://alumniportal.guianalankem.com/careers/${item.id}">
                     <i class="fa fa-paper-plane me-1" id="send"></i>Send</div>
                 </div>
             </div>
@@ -179,6 +179,11 @@ function loadMore() {
             combined.push(item);
             const index = combined.length - 1;
             container.append(renderCard(item, index));
+            $('#news-feed-container img').on('error', function() {
+                if (!this.src.includes('default_image.png')) {
+                    this.src = '/static/images/default_image.png';
+                }
+            });
         });
 
         isLoading = false;

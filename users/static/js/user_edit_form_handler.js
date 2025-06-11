@@ -19,7 +19,7 @@ $(document).ready(function () {
                 sex: $("#sex").val(),
                 course: $("#selectedCourse").val(),
                 section: $("#section").val(),
-                school_year: $("#school_year").val(),
+                year_graduated: $("#year_graduated").val(),
                 x_link: $("#twitter").val(),
                 facebook_link: $("#facebook").val(),
                 linkedin_link: $("#linkedin").val()
@@ -28,8 +28,6 @@ $(document).ready(function () {
             licenses: getLicenseData(),
             workExperience: getWorkData()
         };
-
-        console.log(formData)
 
         $.ajax({
             url: `/myaccount/edit/`,

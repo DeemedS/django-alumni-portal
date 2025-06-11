@@ -11,5 +11,5 @@
       </div>
 </div>
 
-<script src="{% static 'js/load_related_alumni.js' %}"></script>
-<script src={% static 'js/related_alumni_slider_init.js' %}></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/load_related_alumni.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src={% static 'js/related_alumni_slider_init.js' %}></script>
