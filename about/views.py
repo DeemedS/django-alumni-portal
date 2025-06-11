@@ -32,6 +32,7 @@ def about(request):
     context = {
         'settings': websettings,
         'form' : FormWithCaptcha(),
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'is_authenticated': is_authenticated,
         'officials': officials_by_position
     }
