@@ -64,9 +64,11 @@ INSTALLED_APPS = [
     'django_recaptcha',
     'fontawesomefree',
     'rest_framework',
+    'csp',
 ]
 
 MIDDLEWARE = [
+    'csp.middleware.CSPMiddleware',
     'alumniwebsite.middleware.HttpOnlyCSRFMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -301,3 +303,36 @@ PERMISSIONS_POLICY = {
     "microphone": [],
     "camera": [],
 }
+
+CSP_DEFAULT_SRC = ("'none'",)
+
+CSP_SCRIPT_SRC = (
+    'https://www.google.com',
+    'https://www.gstatic.com',
+    'https://cdn.jsdelivr.net/npm/',
+)
+
+CSP_STYLE_SRC = (
+    'https://cdn.jsdelivr.net/npm/',
+    'https://fonts.googleapis.com',
+)
+
+CSP_FONT_SRC = (
+    'https://fonts.gstatic.com',
+)
+
+CSP_IMG_SRC = ("'self'", 'data:')
+
+CSP_CONNECT_SRC = ("'self'",)
+
+CSP_FRAME_SRC = (
+    'https://www.google.com',
+)
+
+CSP_BASE_URI = ("'self'",)
+CSP_FORM_ACTION = ("'self'",)
+CSP_FRAME_ANCESTORS = ("'none'",)
+
+# Debug CSP
+CSP_REPORT_ONLY = True  # Try policy first
+CSP_REPORT_URI = '/csp-report/'
