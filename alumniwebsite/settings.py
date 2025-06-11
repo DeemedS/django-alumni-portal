@@ -287,19 +287,24 @@ if not DEBUG:
 
     SESSION_COOKIE_SAMESITE = 'Strict'
     CSRF_COOKIE_SAMESITE = 'Strict'
+
     SESSION_COOKIE_NAME = '__Secure-sessionid'
+    CSRF_COOKIE_NAME = '__Secure-sessionid'
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     CSRF_COOKIE_PATH = '/'
     CSRF_COOKIE_DOMAIN = None
-    CSP_INCLUDE_NONCE_IN = ['script']
+    CSP_INCLUDE_NONCE_IN = [
+    'script-src',
+    'script-src-elem'
+    ]
 
     CONTENT_SECURITY_POLICY = {
         "DIRECTIVES": {
             "default-src": ("'none'",),
             "script-src": (
                 "'self'",
-                "'nonce-*'",
+                
                 "https://maps.googleapis.com",
                 "https://www.google.com",
                 "https://www.gstatic.com",
@@ -341,7 +346,6 @@ else:
             "default-src": ("'none'",),
             "script-src": (
                 "'self'",
-                "'nonce-*'",
                 "https://maps.googleapis.com",
                 "https://www.google.com",
                 "https://www.gstatic.com",
