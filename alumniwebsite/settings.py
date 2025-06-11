@@ -299,6 +299,7 @@ if not DEBUG:
             "default-src": ("'none'",),
             "script-src": (
                 "'self'",
+                "'nonce-*'",
                 "https://maps.googleapis.com",
                 "https://www.google.com",
                 "https://www.gstatic.com",
@@ -340,6 +341,7 @@ else:
             "default-src": ("'none'",),
             "script-src": (
                 "'self'",
+                "'nonce-*'",
                 "https://maps.googleapis.com",
                 "https://www.google.com",
                 "https://www.gstatic.com",
