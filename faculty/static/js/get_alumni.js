@@ -55,7 +55,7 @@ $(document).ready(function () {
                             <td data-label="Phone">${alumni.mobile || "N/A"}</td>
                             <td data-label="Course">${alumni.course_code || "N/A"}</td>
                             <td data-label="Section">${alumni.section_code || "N/A"}</td>
-                            <td data-label="School Year">${alumni.year_graduated || "N/A"}</td>
+                            <td data-label="Batch">${alumni.year_graduated || "N/A"}</td>
                             <td data-label="Actions" class="action-icons text-nowrap">
                                 <a href="/faculty/alumni-view/${alumni.id}"><i class="fas fa-eye"></i></a>
                                 <a href="/faculty/alumni-edit/${alumni.id}"><i class="fas fa-edit"></i></a>
