@@ -1,8 +1,9 @@
+import secrets
 import requests
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -13,9 +14,6 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_str
 from django.contrib.auth import login
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-import json
-from django.http import JsonResponse
 import random
 import string
 from authentication.models import Course
@@ -25,7 +23,8 @@ User = get_user_model()
 
 # Create your views here.
 def portal(request):
-    return render(request, 'portal.html')
+    nonce = secrets.token_urlsafe(16)
+    return render(request, 'portal.html', {'nonce': nonce})
 
 def user_login(request):
 
