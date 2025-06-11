@@ -37,6 +37,7 @@ def portal(request):
 def user_login(request):
 
     access_token = request.COOKIES.get('access_token')
+    websettings = WebsiteSettings.objects.first()
 
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -81,11 +82,16 @@ def user_login(request):
         else:
             return render(request, 'login.html')
 
-    return render(request, 'login.html')
+    return render(request, 'login.html', {
+        'form' : FormWithCaptcha(),
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+        'settings': websettings,
+    })
 
 def register(request):
     
     courses = Course.objects.all()
+    websettings = WebsiteSettings.objects.first()
 
     if request.method == 'POST':
 
@@ -188,16 +194,25 @@ def register(request):
     
     context = {
         'courses': courses,
+        'form' : FormWithCaptcha(),
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+        'settings': websettings,
     }
     
     return render(request, 'signup.html', context)
 
 def faculty(request):
+    websettings = WebsiteSettings.objects.first()
+
+    context = {
+        'form': FormWithCaptcha(),
+        'RECAPTCHA_PUBLIC_KEY': settings.RECAPTCHA_PUBLIC_KEY,
+        'settings': websettings,
+    }
 
     if request.user.is_authenticated:
-        
         return redirect('/faculty/dashboard')
-    
+
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -208,13 +223,7 @@ def faculty(request):
             if user.is_active:
                 if user.is_staff:
                     login(request, user)
-
-                    context = {
-                        'first_name': request.user.first_name,
-                        'last_name': request.user.last_name,
-                    }
-
-                    return render(request, 'faculty_dashboard.html', context)
+                    return redirect('/faculty/dashboard')
                 else:
                     messages.error(request, "Access denied. You are not a faculty member.")
             else:
@@ -222,9 +231,7 @@ def faculty(request):
         else:
             messages.error(request, "Invalid email or password.")
 
-        return render(request, 'faculty.html')
-
-    return render(request, 'faculty.html')
+    return render(request, 'faculty.html', context)
 
 
 def send_verification_email(user):

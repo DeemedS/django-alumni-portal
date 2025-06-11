@@ -400,3 +400,13 @@ input[type="checkbox"].form-check-input:checked {
     }
     
 }
+
+.login-submit-btn-div{
+    text-align: center !important;
+}
+
+.login-submit-btn{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}

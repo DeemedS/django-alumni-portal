@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load csp %}
 
 {% block title %}
     Alumni Portal | Register
@@ -68,7 +69,7 @@
                                     <div class="col-md-8 position-relative">
                                         <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="" >
                                         <input type="hidden" id="course_name" name="course_name" value=""> 
-                                        <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
+                                        <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow course-sug"></div>
                                         <input type="hidden" id="selectedCourse" name="course">
                                     </div>
                                     <div class="col-md-4">
@@ -113,7 +114,7 @@
                                         for this website.
                                     </label>
                                 </div>
-                                <button type="submit" class="submit w-100" id="form-submit" style="display: inline-flex; align-items: center; justify-content: center;">
+                                <button type="submit" class="submit w-100 login-submit-btn" id="form-submit">
                                 <span id="btn-spinner" class="spinner d-none"></span>
                                 <span id="btn-text">SUBMIT</span>
                                 </button>
@@ -131,6 +132,7 @@
 
 </div>
 
+{% script type="application/javascript" async=False %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const courseSearch = document.getElementById("courseSearch");
@@ -197,11 +199,13 @@
         });
 
     });
-</script>
+    </script>
+{% endscript %}
 
-<script src="{% static 'js/sy_gen.js' %}"></script>
-<script src="{% static 'js/spinner.js' %}"></script>
-<link href="{% static 'css/spinner.css' %}" rel="stylesheet" type="text/css">
+
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/sy_gen.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/spinner.js' %}"></script>
+<link nonce="{{ request.csp_nonce }}" href="{% static 'css/spinner.css' %}" rel="stylesheet" type="text/css">
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/authentication.js' %}"></script>
 
 {% endblock %}
