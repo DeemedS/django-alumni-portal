@@ -262,7 +262,7 @@
 
 .socials .social-container {
     width: 100%;
-    min-height: 100px;
+    min-height: 10px;
     text-align: center;
 }
 
@@ -273,7 +273,7 @@
 }
 
 .socials .social-icons i {
-    font-size: 7rem;
+    font-size: 2rem;
     color: #fff;
 }
 
@@ -283,7 +283,7 @@
 
 @media screen and (max-width: 768px) {
     .socials .social-icons i {
-        font-size: 3rem;
+        font-size: 2rem;
     }
 
 }
