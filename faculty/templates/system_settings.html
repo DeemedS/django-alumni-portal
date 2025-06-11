@@ -188,8 +188,8 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script src="{% static 'js/settings_handler.js' %}"></script>
-<script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/settings_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}">
   // Bootstrap 5 custom validation
   (function () {
     'use strict'

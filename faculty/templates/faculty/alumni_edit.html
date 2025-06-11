@@ -214,7 +214,7 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script>
+<script nonce="{{ request.csp_nonce }}">
     document.addEventListener("DOMContentLoaded", function () {
         const courseSearch = document.getElementById("courseSearch");
         const courseSuggestions = document.getElementById("courseSuggestions");
@@ -331,9 +331,9 @@
 
 
 
-<script src="{% static 'js/sy_gen.js' %}"></script>
-<script src="{% static 'js/year_gen.js' %}"></script>
-<script src="{% static 'js/alumni_add_inputs.js' %}"></script>
-<script src="{% static 'js/alumni-edit-form-handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/sy_gen.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/year_gen.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/alumni_add_inputs.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/alumni-edit-form-handler.js' %}"></script>
     
 {% endblock %}

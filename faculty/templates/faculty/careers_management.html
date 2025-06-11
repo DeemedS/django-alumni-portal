@@ -70,7 +70,7 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script>
+<script nonce="{{ request.csp_nonce }}">
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('search-input');
         const searchForm = document.getElementById('search-form');
@@ -94,7 +94,7 @@
     });
 </script>
 
-<script src="{% static 'js/get_careers.js' %}"></script>
-<script src="{% static 'js/faculty_pagination.js' %}"></script>
-<script src="{% static 'js/delete_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/get_careers.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/faculty_pagination.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/delete_handler.js' %}"></script>
 {% endblock %}

@@ -125,8 +125,8 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script src="{% static 'js/careers_preview.js' %}"></script>
-<script src="{% static 'js/career-add-form-handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/careers_preview.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/career-add-form-handler.js' %}"></script>
 
 
 {% endblock %}

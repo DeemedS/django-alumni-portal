@@ -6,7 +6,7 @@
 {% block content %}
 
 {% include 'components/faculty_topnav.html' %}
-<style>
+<style nonce="{{ request.csp_nonce }}">
     .officials-form-label {
       font-weight: bold;
     }
@@ -228,6 +228,6 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script src="{% static 'js/officials_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/officials_handler.js' %}"></script>
 
 {% endblock %}

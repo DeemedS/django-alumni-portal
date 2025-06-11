@@ -70,8 +70,8 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script src="{% static 'js/get_articles.js' %}"></script>
-<script src="{% static 'js/faculty_pagination.js' %}"></script>
-<script src="{% static 'js/delete_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/get_articles.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/faculty_pagination.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/delete_handler.js' %}"></script>
 
 {% endblock %}

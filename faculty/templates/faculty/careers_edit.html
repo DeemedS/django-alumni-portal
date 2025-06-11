@@ -133,7 +133,7 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script>
+<script nonce="{{ request.csp_nonce }}">
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault();
         showToast("success","Job post updated successfully", "success");
@@ -141,6 +141,6 @@
     });
 </script>
 
-<script src="{% static 'js/careers_preview.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/careers_preview.js' %}"></script>
 
 {% endblock %}

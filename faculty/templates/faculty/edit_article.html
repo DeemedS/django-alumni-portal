@@ -170,7 +170,7 @@
 
 
 
-    <script>
+    <script nonce="{{ request.csp_nonce }}">
         $(document).ready(function() {
             const sortable = new Sortable(document.getElementById('form-container'), {
                 animation: 150,
@@ -217,7 +217,7 @@
         });        
     </script>
     
-    <script>
+    <script nonce="{{ request.csp_nonce }}">
         function updateContainerOrder(containerId, order, itemSelector, dataIdAttr) {
             const container = document.getElementById(containerId);
             const items = Array.from(container.querySelectorAll(itemSelector));
@@ -250,26 +250,26 @@
     
 
 
-    <script type="text/template" id="bodytext-template">
+    <script nonce="{{ request.csp_nonce }}" type="text/template" id="bodytext-template">
         <div class="formset-row sortable-item">
             {{ bodytext_formset.empty_form.as_p }}
             <button type="button" class="remove-form-button">Remove</button>
         </div>
     </script>
     
-    <script type="text/template" id="bodyimage-template">
+    <script nonce="{{ request.csp_nonce }}" type="text/template" id="bodyimage-template">
         <div class="formset-row sortable-item">
             {{ bodyimage_formset.empty_form.as_p }}
             <button type="button" class="remove-form-button">Remove</button>
         </div>
     </script>
     
-    <script type="text/template" id="subtitle-template">
+    <script nonce="{{ request.csp_nonce }}" type="text/template" id="subtitle-template">
         <div class="formset-row sortable-item">
             {{ subtitle_formset.empty_form.as_p }}
             <button type="button" class="remove-form-button">Remove</button>
         </div>
     </script>
 
-    <script src="{% static 'js/add_form.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/add_form.js' %}"></script>
     {% endblock %}
