@@ -42,6 +42,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('api.urls')),
     path('.well-known/security.txt', views.security_txt),
+    path("csp-report/", views.csp_report_view, name="csp-report"),
     
 ]
 

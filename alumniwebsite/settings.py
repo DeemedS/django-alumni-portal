@@ -360,3 +360,22 @@ PERMISSIONS_POLICY = {
 
 CSP_ENABLED = True
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'csp': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'csp.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['csp'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}

@@ -6,7 +6,10 @@ from django.core.mail import send_mail
 from faculty.models import WebsiteSettings
 import requests
 from django.http import HttpResponse
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import logging
+import json
 
 def home(request):
     context = {'form' : FormWithCaptcha()}
@@ -71,3 +74,17 @@ def security_txt(request):
     Preferred-Languages: en
         """.strip()
     return HttpResponse(content, content_type='text/plain')
+
+
+logger = logging.getLogger(__name__)
+
+@csrf_exempt
+def csp_report_view(request):
+    if request.method == "POST":
+        try:
+            report = json.loads(request.body.decode("utf-8"))
+            logger.warning("CSP Violation: %s", json.dumps(report, indent=2))
+        except Exception as e:
+            logger.error("Failed to parse CSP report: %s", e)
+        return JsonResponse({"status": "ok"})
+    return JsonResponse({"status": "only POST allowed"}, status=405)
