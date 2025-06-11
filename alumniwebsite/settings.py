@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from decouple import config, Csv
 from datetime import timedelta
-from csp.middleware import CSPMiddleware
+from csp.constants import NONCE
 import os
 
 
@@ -279,6 +279,7 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv())
 
 API_TOKEN_URL = config("API_TOKEN_URL")
 
+CSP_INCLUDE_NONCE_IN = ['script-src', 'script-src-elem']
 
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
@@ -307,7 +308,7 @@ if not DEBUG:
             "default-src": ("'none'",),
             "script-src": (
                 "'self'",
-                
+                NONCE,
                 "https://maps.googleapis.com",
                 "https://www.google.com",
                 "https://www.gstatic.com",
@@ -349,6 +350,7 @@ else:
             "default-src": ("'none'",),
             "script-src": (
                 "'self'",
+                NONCE,
                 "https://maps.googleapis.com",
                 "https://www.google.com",
                 "https://www.gstatic.com",
@@ -376,7 +378,6 @@ else:
         }
     }
 
-CSP_INCLUDE_NONCE_IN = ['script-src', 'script-src-elem']
 
 PERMISSIONS_POLICY = {
     "geolocation": ["self"],
