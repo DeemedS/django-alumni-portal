@@ -8,7 +8,7 @@
 {% include "components/top_nav.html" %}
 {% csrf_token %}
 
-<style>
+<style nonce="{{ request.csp_nonce }}">
     .filter-bar {
       background-color: #f5f5f5;
       padding: 1rem;
@@ -130,7 +130,7 @@
                     <div>
                         <input type="hidden" id="course_name" name="course_name" value=""> 
                         <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="" >
-                        <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
+                        <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow course-sug"></div>
                         <input type="hidden" id="selectedCourse" name="course">
                         <input type="hidden" id="course_code" name="course_code" value="">
                     </div>
@@ -142,7 +142,7 @@
                     </div>
 
                     <div>
-                        <select class="form-select" id="school_year" name="school_year" data-selected-year="{{ alumni.school_year }}">
+                        <select class="form-select" id="year_graduated" name="year_graduated" data-selected-year="{{ alumni.year_graduated }}">
                             <option selected disabled>Select School Year</option>
                         </select>
                     </div>
@@ -174,11 +174,11 @@
 
     </div>
 </div>
-<script src="{% static 'js/pagination.js' %}"></script>
-<script src="{% static 'js/filter-alumni-network.js' %}"></script>
-<script src="{% static 'js/sy_gen.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/pagination.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/filter-alumni-network.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/sy_gen.js' %}"></script>
 
-<script>
+<script nonce="{{ request.csp_nonce }}">
     document.addEventListener("DOMContentLoaded", function () {
         const courseSearch = document.getElementById("courseSearch");
         const courseSuggestions = document.getElementById("courseSuggestions");

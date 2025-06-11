@@ -9,7 +9,7 @@ $(document).ready(function() {
     function updateAlumniCards(page = 1) {
 
         let course_code = $('#course_code').val().trim() || "";
-        let school_year = $('#school_year').val() || "";
+        let year_graduated = $('#year_graduated').val() || "";
         let section_code = $('#section').val()?.trim() || "";
 
         var pageSize = window.innerWidth <= 640 ? 5 : (window.innerWidth <= 1024 ? 10 : 20);
@@ -19,7 +19,7 @@ $(document).ready(function() {
             page_size: pageSize,
             is_active: true,
             course_code: course_code,
-            school_year: school_year,
+            year_graduated: year_graduated,
             section_code: section_code
         };
 
@@ -41,7 +41,7 @@ $(document).ready(function() {
                                 <div class="network-details">
                                     <h6 class="mt-3 mb-3 alumni-name">${alumni.first_name} ${alumni.last_name}</h6>
                                    <p class="mb-1">${alumni.course_code || ''}${alumni.section_code ? ` - ${alumni.section_code}` : ''}</p>
-                                    <p class="mb-1">${alumni.school_year || ''}</p>
+                                    <p class="mb-1">BATCH ${alumni.year_graduated || ''}</p>
                                     <p class="mb-3">${alumni.position || ''}</p>
                                 </div>
                                 <div class="network-icons mb-3">
