@@ -1,11 +1,12 @@
 from django.middleware.csrf import CsrfViewMiddleware
 from django.conf import settings
-from django.middleware.csrf import _get_token
+from django.middleware.csrf import get_token
+
 
 
 class HttpOnlyCSRFMiddleware(CsrfViewMiddleware):
     def _set_token(self, request, response):
-        token = _get_token(request)
+        token = get_token(request)
         if getattr(response, 'csrf_cookie_set', False):
             return
         response.set_cookie(
