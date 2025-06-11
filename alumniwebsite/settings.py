@@ -297,15 +297,18 @@ if not DEBUG:
         "DIRECTIVES": {
             "default-src": ("'none'",),
             "script-src": (
+                "'self'",
                 "https://www.google.com",
                 "https://www.gstatic.com",
                 "https://cdn.jsdelivr.net/npm/",
             ),
             "style-src": (
+                "'self'",
                 "https://cdn.jsdelivr.net/npm/",
                 "https://fonts.googleapis.com",
             ),
             "font-src": (
+                "'self'",
                 "https://fonts.gstatic.com",
             ),
             "img-src": ("'self'", "data:"),
@@ -326,15 +329,17 @@ else:
         "DIRECTIVES": {
             "default-src": ("'none'",),
             "script-src": (
+                "'self'",
                 "https://www.google.com",
                 "https://www.gstatic.com",
                 "https://cdn.jsdelivr.net/npm/",
             ),
             "style-src": (
+                "'self'",
                 "https://cdn.jsdelivr.net/npm/",
                 "https://fonts.googleapis.com",
             ),
-            "font-src": ("https://fonts.gstatic.com",),
+            "font-src": ("'self'", "https://fonts.gstatic.com",),
             "img-src": ("'self'", "data:"),
             "connect-src": ("'self'",),
             "frame-src": ("https://www.google.com",),
