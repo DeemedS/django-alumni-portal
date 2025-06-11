@@ -284,6 +284,8 @@ def send_password_reset_email(user):
     )
 
 def forgot_password(request):
+    websettings = WebsiteSettings.objects.first()
+
     if request.method == 'POST':
         email = request.POST.get('email')
 
@@ -294,9 +296,14 @@ def forgot_password(request):
         except User.DoesNotExist:
             messages.error(request, 'No user with that email found.')
 
-    return render(request, 'forgot_password.html')
+    return render(request, 'forgot_password.html',{
+        'settings': websettings,
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+        'form': FormWithCaptcha(),
+    })
 
 def reset_password(request, uidb64, token):
+    websettings = WebsiteSettings.objects.first()
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
@@ -321,5 +328,11 @@ def reset_password(request, uidb64, token):
             messages.success(request, 'Your password has been reset successfully. You can now log in.')
             return redirect('/login')
 
-    return render(request, 'reset_password.html', {'uidb64': uidb64, 'token': token})
+    return render(request, 'reset_password.html', {
+        'uidb64': uidb64,
+        'token': token,
+        'settings': websettings,
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+        'form': FormWithCaptcha(),
+    })
 
