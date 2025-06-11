@@ -6,10 +6,10 @@ from .models import UserSettings
 class UserAdmin(UserAdmin):
     model = User
     list_display = ('email', 'student_number', 'is_staff', 'is_active',)
-    list_filter = ('course', 'section', 'school_year', 'is_staff', 'is_active',)
+    list_filter = ('course', 'section', 'year_graduated', 'is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('email', 'password', 'student_number', 'profile_image', 'first_name', 'last_name', 
-                        'middle_name', 'suffix', 'birthday', 'address', 'telephone', 'mobile', 'civil_status', 'sex', 'course', 'section', 'school_year',
+                        'middle_name', 'suffix', 'birthday', 'address', 'telephone', 'mobile', 'civil_status', 'sex', 'course', 'section', 'year_graduated',
                         'education', 'licenses', 'certifications', 'work_experience',
                         'x_link', 'facebook_link', 'linkedin_link',
                         'jobs', 'events', 

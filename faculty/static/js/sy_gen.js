@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentYear = new Date().getFullYear();
     for (let year = currentYear; year >= 1980; year--) {
         const option = document.createElement("option");
-        option.value = `${year}-${year + 1}`;
-        option.textContent = `${year}-${year + 1}`;
+        option.value = `${year}`;
+        option.textContent = `${year}`;
         schoolYearSelect.appendChild(option);
     }
 
