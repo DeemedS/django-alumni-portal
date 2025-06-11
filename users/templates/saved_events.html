@@ -21,14 +21,14 @@
                 <div class="bg-light p-3 min-vh-100 d-flex flex-column">
                     <div class="row">
                         <div class="col gap-3">
-                            <div id="events-container" class="overflow-y-auto" style="max-height: 100vh; overflow-x: hidden;">
+                            <div id="events-container" class="overflow-y-auto overflow-x-hidden vh-100">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!--  -->
-                <script src="{% static 'js/get_saved_events.js' %}"></script>
+                <script nonce="{{ request.csp_nonce }}" src="{% static 'js/get_saved_events.js' %}"></script>
 
             </div>
         </div>
