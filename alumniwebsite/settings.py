@@ -315,6 +315,7 @@ if not DEBUG:
             ),
             "style-src": (
                 "'self'",
+                 NONCE,
                 "https://cdn.jsdelivr.net/npm/",
                 "https://fonts.googleapis.com",
                 "https://maps.googleapis.com",
@@ -357,6 +358,7 @@ else:
             ),
             "style-src": (
                 "'self'",
+                NONCE,
                 "https://cdn.jsdelivr.net/npm/",
                 "https://fonts.googleapis.com",
                 "https://maps.googleapis.com",

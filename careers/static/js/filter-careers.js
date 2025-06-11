@@ -97,7 +97,7 @@ $(document).ready(function () {
                     <div class="card mb-3 shadow-sm">
                         <div class="card-body">
                             <!-- Job Title -->
-                            <h5 class="card-title" style="color: #800000;">${job.title}</h5>
+                            <h5 class="card-title pup-red"">${job.title}</h5>
                             
                             <!-- Company Name -->
                             <p class="card-text">
@@ -179,7 +179,7 @@ $(document).on("click", ".job-card", function (e) {
                     $(".job-description").html(`
                         <div class="card mb-4">
                             <div class="card-body">
-                                <h3 class="card-title fw-bold mb-4" style="color: #800000;">${data.title}</h3>
+                                <h3 class="card-title fw-bold mb-4 pup-red">${data.title}</h3>
                                 
                                 <div class="row mb-4">
                                     <div class="col-md-6">
@@ -234,7 +234,7 @@ $(document).on("click", ".job-card", function (e) {
                                 ` : ''}
 
                                 <div class="d-flex justify-content-start gap-3">
-                                    <a href="/careers/${data.id}" class="btn" style="background-color: #800000; color: white;">View</a>
+                                    <a href="/careers/${data.id}" class="btn red-careers-btn">View</a>
                                     <button class="btn ${saveButtonClass}" data-id="${data.id}">${saveButtonText}</button>
                                 </div>
                             </div>

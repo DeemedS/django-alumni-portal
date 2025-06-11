@@ -45,7 +45,7 @@
 
         <div class="job-description col-md-6 mb-3">
             <div class="alert alert-light text-center border border-3 border-danger">
-                <h5 class="alert-heading" style="color: #800000;">No Job Selected</h5>
+                <h5 class="alert-heading">No Job Selected</h5>
                 <p class="text-dark">Select a job from the list to see more details. Browse through the available opportunities and find your next career step!</p>
             </div>
         </div>
@@ -58,7 +58,7 @@
     <!-- Toast template will be added dynamically -->
 </div>
 
-<script src="{% static 'js/filter-careers.js' %}"></script>
-<script src="{% static 'js/pagination.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/filter-careers.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/pagination.js' %}"></script>
 
 {% endblock %}

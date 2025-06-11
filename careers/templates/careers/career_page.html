@@ -4,7 +4,7 @@
     {{ job.title }}
 {% endblock %}
 {% block content %}
-<style>
+<style nonce="{{ request.csp_nonce }}">
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f8f9fa;
@@ -53,7 +53,7 @@
         <div class="col-12 col-md-8 my-3">
             <article class="p-3 bg-white shadow-sm rounded">
                 
-                    <h1  style="color: #800000">{{ job.title.title }}</h1>
+                    <h1  class="pup-red" >{{ job.title.title }}</h1>
                     <p class="text-muted small">Published on: {{ job.created_at }}</p>
                 
                 <div class="mb-3">

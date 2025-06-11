@@ -36,7 +36,8 @@ def careers(request):
     context = {
         'form' : FormWithCaptcha(),
         'settings': websettings,
-        'is_authenticated': is_authenticated
+        'is_authenticated': is_authenticated,
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY
     }
 
     return render(request, 'careers/careers.html', context)
@@ -80,7 +81,9 @@ def career_page(request, id):
         'job': job,
         'form' : FormWithCaptcha(),
         'settings': websettings,
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'is_authenticated': is_authenticated
+        
     }
 
     return render(request, 'careers/career_page.html', context)

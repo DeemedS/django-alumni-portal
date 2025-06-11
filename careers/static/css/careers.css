@@ -110,3 +110,15 @@
   }
 }
 
+.alert_heading {
+  color: #800000;
+}
+
+.pup-red {
+  color: #800000;
+}
+
+.red-careers-btn {
+  background-color: #800000 !important; 
+  color: white !important;
+}
