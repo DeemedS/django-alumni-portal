@@ -9,6 +9,8 @@ from alumniwebsite.forms import FormWithCaptcha
 def home(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
+
+    form = FormWithCaptcha()
     
     featured_article = Article.objects.filter(featured=True, is_active=True).first()
     news_articles = Article.objects.filter(featured=False, is_active=True).order_by('-date')[:2]
@@ -32,7 +34,9 @@ def home(request):
         'event_article': event_article,
         'school_abv': settings.SCHOOL_ABV,
         'is_authenticated': is_authenticated,
-        'settings': websettings
+        'settings': websettings,
+        "form": form,
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY
     }
 
     return render(request, 'homepage/home.html', context)

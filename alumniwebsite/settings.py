@@ -292,6 +292,7 @@ if not DEBUG:
 
     CSRF_COOKIE_PATH = '/'
     CSRF_COOKIE_DOMAIN = None
+    CSP_INCLUDE_NONCE_IN = ['script']
 
     CONTENT_SECURITY_POLICY = {
         "DIRECTIVES": {
@@ -325,6 +326,7 @@ else:
     CSRF_COOKIE_SECURE = False
     SECURE_SSL_REDIRECT = False
     CORS_ALLOW_ALL_ORIGINS =True
+    CSP_INCLUDE_NONCE_IN = ['script']
 
     CONTENT_SECURITY_POLICY_REPORT_ONLY = {
         "DIRECTIVES": {

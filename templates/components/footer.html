@@ -42,20 +42,20 @@
             <p>We are here to address any questions you may have about the Alumni Relations and Career Development Office.
                 Please contact us and we will get back to you as soon as possible.</p>
 
-                <form id="contactForm" method="POST">
+            <form id="contactForm" method="POST">
                 {% csrf_token %}
 
                 <div class="row">
-                    
+
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input id="name" name="name" type="text" class="form-control" placeholder="Name (LN, FN, MI.)" >
+                            <input id="name" name="name" type="text" class="form-control" placeholder="Name (LN, FN, MI.)">
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input id="emailaddress" name="emailaddress" type="emailaddress" class="form-control" placeholder="E-mail Address" required>
+                            <input id="emailaddress" name="emailaddress" type="email" class="form-control" placeholder="E-mail Address" required>
                         </div>
                     </div>
 
@@ -79,17 +79,21 @@
 
                     <div class="col-md-12">
                         <div class="form-group mb-3">
-                            {{ form.captcha }}
-                        </div>   
+                            <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_PUBLIC_KEY }}"></div>
+                        </div>
                     </div>
 
                     <div class="col-md-12">
                         <button type="submit" name="submit" class="btn btn-lg">
-                            <img src="{% static "images/icons/envelope.svg" %}" alt="mail">  Send message
+                            <img src="{% static 'images/icons/envelope.svg' %}" alt="mail"> Send message
                         </button>
                     </div>
+
                 </div>
-                </form>
+
+                <script nonce="{{ CSP_NONCE }}" src="https://www.google.com/recaptcha/api.js" async defer></script>
+            </form>
+
         </div>
 
         <div class="copyrigths">
