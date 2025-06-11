@@ -16,15 +16,15 @@
         {% endblock %}
     </title>
 
-    <script src="{% static 'js/toast.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/toast.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/faculty.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <script src="{%static 'js/faculty.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{%static 'js/faculty.js' %}"></script>
 
     
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
 </head>
 <body>
 

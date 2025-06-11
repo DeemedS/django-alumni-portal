@@ -230,15 +230,15 @@
 </div>
 
 
-<script src="{% static 'js/get_alumni.js' %}"></script>
-<script src="{% static 'js/faculty_pagination.js' %}"></script>
-<script src="{% static 'js/delete_handler.js' %}"></script>
-<script src="{% static 'js/import_handler.js' %}"></script>
-<script src="{% static 'js/export_handler.js' %}"></script>
-<script src="{% static 'js/xlsx.full.min.js' %}"></script>
-<script src="{% static 'js/sy_gen.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/get_alumni.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/faculty_pagination.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/delete_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/import_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/export_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/xlsx.full.min.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/sy_gen.js' %}"></script>
 
-<script>
+<script nonce="{{ request.csp_nonce }}">
     document.addEventListener("DOMContentLoaded", function () {
         const courseSearch = document.getElementById("courseSearch");
         const courseSuggestions = document.getElementById("courseSuggestions");
@@ -308,7 +308,7 @@
 
 
 
-<script src="{% static 'js/sy_gen.js' %}"></script>
-<script src="{% static 'js/sy_export.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/sy_gen.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/sy_export.js' %}"></script>
     
 {% endblock %}
