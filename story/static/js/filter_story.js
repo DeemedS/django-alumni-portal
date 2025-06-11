@@ -34,9 +34,7 @@ $(document).ready(function() {
                             <img
                             src="${story.thumbnail || '/static/images/default_image.png'}"
                             alt="${story.title}"
-                            class="img-fluid story-img"
-                            onerror="this.onerror=null; this.src='/static/images/default_image.png';"
-                            />
+                            class="img-fluid story-img"/>
                             <h3 class="story-title">${story.title}</h3>
                             <p class="story-description">
                             ${story.body}
@@ -45,6 +43,11 @@ $(document).ready(function() {
                         </div>
                         </div>`;
                             $('#story-cards-container').append(cardHtml);
+                            $('#story-cards-container img').on('error', function() {
+                            if (!this.src.includes('default_image.png')) {
+                                this.src = '/static/images/default_image.png';
+                            }
+                        });
                         });
                     } else {
                         var noStoryHtml = '<div class="col-12 text-center"><p>No storys found for the selected filters.</p></div>';

@@ -28,6 +28,7 @@ def story(request):
 
     context = {
         'form' : FormWithCaptcha(),
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'settings': websettings,
         'is_authenticated': is_authenticated
     }
@@ -55,6 +56,7 @@ def story_page(request, id):
 
     context ={
         'form' : FormWithCaptcha(),
+        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'settings': websettings,
         'is_authenticated': is_authenticated,
         'story': story
