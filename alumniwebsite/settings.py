@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from decouple import config, Csv
 from datetime import timedelta
+from csp.middleware import CSPMiddleware
 import os
 
 
@@ -292,10 +293,57 @@ if not DEBUG:
     CSRF_COOKIE_PATH = '/'
     CSRF_COOKIE_DOMAIN = None
 
+    CONTENT_SECURITY_POLICY = {
+        "DIRECTIVES": {
+            "default-src": ("'none'",),
+            "script-src": (
+                "https://www.google.com",
+                "https://www.gstatic.com",
+                "https://cdn.jsdelivr.net/npm/",
+            ),
+            "style-src": (
+                "https://cdn.jsdelivr.net/npm/",
+                "https://fonts.googleapis.com",
+            ),
+            "font-src": (
+                "https://fonts.gstatic.com",
+            ),
+            "img-src": ("'self'", "data:"),
+            "connect-src": ("'self'",),
+            "frame-src": ("https://www.google.com",),
+            "base-uri": ("'self'",),
+            "form-action": ("'self'",),
+            "frame-ancestors": ("'none'",),
+        },
+    }
+
 else:
     CSRF_COOKIE_SECURE = False
     SECURE_SSL_REDIRECT = False
     CORS_ALLOW_ALL_ORIGINS =True
+
+    CONTENT_SECURITY_POLICY_REPORT_ONLY = {
+        "DIRECTIVES": {
+            "default-src": ("'none'",),
+            "script-src": (
+                "https://www.google.com",
+                "https://www.gstatic.com",
+                "https://cdn.jsdelivr.net/npm/",
+            ),
+            "style-src": (
+                "https://cdn.jsdelivr.net/npm/",
+                "https://fonts.googleapis.com",
+            ),
+            "font-src": ("https://fonts.gstatic.com",),
+            "img-src": ("'self'", "data:"),
+            "connect-src": ("'self'",),
+            "frame-src": ("https://www.google.com",),
+            "base-uri": ("'self'",),
+            "form-action": ("'self'",),
+            "frame-ancestors": ("'none'",),
+            "report-uri": ("/csp-report/",),
+        }
+    }
 
 
 PERMISSIONS_POLICY = {
@@ -304,35 +352,5 @@ PERMISSIONS_POLICY = {
     "camera": [],
 }
 
-CSP_DEFAULT_SRC = ("'none'",)
+CSP_ENABLED = True
 
-CSP_SCRIPT_SRC = (
-    'https://www.google.com',
-    'https://www.gstatic.com',
-    'https://cdn.jsdelivr.net/npm/',
-)
-
-CSP_STYLE_SRC = (
-    'https://cdn.jsdelivr.net/npm/',
-    'https://fonts.googleapis.com',
-)
-
-CSP_FONT_SRC = (
-    'https://fonts.gstatic.com',
-)
-
-CSP_IMG_SRC = ("'self'", 'data:')
-
-CSP_CONNECT_SRC = ("'self'",)
-
-CSP_FRAME_SRC = (
-    'https://www.google.com',
-)
-
-CSP_BASE_URI = ("'self'",)
-CSP_FORM_ACTION = ("'self'",)
-CSP_FRAME_ANCESTORS = ("'none'",)
-
-# Debug CSP
-CSP_REPORT_ONLY = True  # Try policy first
-CSP_REPORT_URI = '/csp-report/'
