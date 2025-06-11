@@ -763,6 +763,7 @@ def toggle_user_status(request, id):
         try:
             user = User.objects.get(id=id)
             user.is_active = not user.is_active
+            user.email_verified = True
             user.save()
             return JsonResponse({"message": "User status updated successfully"}, status=200)
         except Event.DoesNotExist:
