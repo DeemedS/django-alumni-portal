@@ -82,6 +82,7 @@ MIDDLEWARE = [
 
     "csp.middleware.CSPMiddleware",
     "alumniwebsite.middleware.init_csp_nonce_middleware",
+    "alumniwebsite.middleware.RemoveServerHeaderMiddleware",
 ]
 
 ROOT_URLCONF = 'alumniwebsite.urls'

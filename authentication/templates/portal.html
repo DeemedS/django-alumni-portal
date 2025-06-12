@@ -37,7 +37,7 @@
                                 <button class="btn cust-btn" type="button" id="alumniBtn">ALUMNI</button>
                                 <button class="btn cust-btn" type="button" id="adminBtn">ADMIN</button>
                                 <div class="text-center mt-5">
-                                    <button class="btn back-btn" type="button" onclick="window.location.href = '/'">Back to home</button>
+                                    <button class="btn back-btn" type="button" id="back">Back to home</button>
                                 </div>
                             </div> 
                         </div>  
@@ -51,6 +51,10 @@
 
 {% script type="application/javascript" async=False %}
     <script>
+    document.getElementById('back').addEventListener('click', function () {
+        window.location.href = '/';
+    });
+
     document.getElementById('alumniBtn').addEventListener('click', function () {
         window.location.href = '/login';
     });

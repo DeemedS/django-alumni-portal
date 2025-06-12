@@ -85,7 +85,7 @@
                             <label for="courseSearch" class="form-label">Course</label>
                             <input type="hidden" id="course_name" name="course_name" value=""> 
                             <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="{{ alumni.course }}" >
-                            <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000;"></div>
+                            <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow course-sug" ></div>
                             <input type="hidden" id="selectedCourse" name="course">
                         </div>
 
@@ -240,10 +240,6 @@
         {% endfor %}
     
         function initializeFields() {
-            console.log("Alumni Course ID:", "{{ alumni.course.id }}");
-            console.log("Alumni Section ID:", "{{ alumni.section.id }}");
-            console.log("Alumni Course:", "{{ alumni.course | escapejs }}");
-    
             const selectedCourseId = "{{ alumni.course.id }}";
             selectedCourse.value = selectedCourseId;
     

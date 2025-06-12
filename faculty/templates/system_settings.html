@@ -5,6 +5,13 @@
 
 {% block content %}
 {% include 'components/faculty_topnav.html' %}
+<style nonce="{{ request.csp_nonce }}">
+    .width-100 {
+        width: 150px !important;
+        height: 150px !important;
+        object-fit: cover !important;
+    }
+</style>
 <div class="container-fluid">
     <div class="row flex-nowrap">
         
@@ -132,7 +139,7 @@
                                     <label class="form-label">GCASH QR</label>
                                     <div class="mt-1 qr">
                                     {% if settings.gcash_qr %}
-                                        <img src="{{ settings.gcash_qr.url }}" alt="GCASH QR" class="img-thumbnail mt-2" style="width: 100px;">
+                                        <img src="{{ settings.gcash_qr.url }}" alt="GCASH QR" class="img-thumbnail mt-2 width-100">
                                     {% endif %}
                                     
                                         <div class="mt-1 qr-form">
@@ -146,7 +153,7 @@
                                     <label class="form-label">MAYA QR</label>
                                     <div class="mt-1 qr">
                                     {% if settings.maya_qr %}
-                                        <img src="{{ settings.maya_qr.url }}" alt="MAYA QR" class="img-thumbnail mt-2" style="width: 100px;">
+                                        <img src="{{ settings.maya_qr.url }}" alt="MAYA QR" class="img-thumbnail mt-2 width-100">
                                     {% endif %}
                                         <div class="mt-1 qr-form">
                                             {{ forms.maya_qr }}
@@ -159,7 +166,7 @@
                                     <label class="form-label">PAYPAL QR</label>
                                     <div class="mt-1 qr">
                                     {% if settings.paypal_qr %}
-                                        <img src="{{ settings.paypal_qr.url }}" alt="PAYPAL QR" class="img-thumbnail mt-2" style="width: 100px;">
+                                        <img src="{{ settings.paypal_qr.url }}" alt="PAYPAL QR" class="img-thumbnail mt-2 width-100">
                                     {% endif %}
                                     
                                         <div class="mt-1 qr-form">
@@ -206,4 +213,6 @@
     })
   })()
 </script>
+
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/onerror-img.js' %}"></script>
 {% endblock %}

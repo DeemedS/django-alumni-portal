@@ -25,3 +25,14 @@ def init_csp_nonce_middleware(get_response):
         return get_response(request)
 
     return middleware
+
+class RemoveServerHeaderMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        # Clean headers
+        response.headers.pop('Server', None)
+        response.headers.pop('X-Powered-By', None)
+        return response
