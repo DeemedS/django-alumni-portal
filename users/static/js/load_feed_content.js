@@ -83,7 +83,7 @@ function renderCard(item, index) {
                         onclick="handleSend(this)" 
                         data-link="${   
                             item.type === 'event'
-                                ? `https://alumniportal.guianalankem.com/events/${item.slug}`
+                                ? `https://alumniportal.guianalankem.com/events/view/${item.slug}`
                                 : `https://alumniportal.guianalankem.com/articles/view/${item.slug}`
                         }">
                         <i class="fa fa-paper-plane me-1" id="send"></i>Send
