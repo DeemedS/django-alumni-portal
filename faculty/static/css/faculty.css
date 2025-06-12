@@ -474,8 +474,7 @@
     font-size: 2rem;
     font-weight: bold;
 }
-.view-content pre {
-    background-color: #f8f9fa;
+.view-content pre { 
     padding: 10px;
     border-radius: 5px;
     overflow-x: auto;

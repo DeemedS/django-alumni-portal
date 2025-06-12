@@ -29,43 +29,40 @@
                 <h1>{{ article.title }}</h1>
                 <p>Published on: {{ article.date }}</p>
 
-            <div class="more-info">
-                <pre>{{ article.body }}</pre> 
+                <div class="more-info">
 
-                {% for item in content_order %}
-                    {% if item.type == 'subtitle' %}
-                        <h1>{{ item.object.subtitle }}</h1>
-
-                    {% elif item.type == 'bodytext' %}
-                        {% with
-                        "fs-"|add:item.object.fontsize|stringformat:"s" as size_class
-                        "fw-bold" if item.object.bold else "" as bold_class
-                        "fst-italic" if item.object.italic else "" as italic_class
-                        %}
-                            {% if item.object.quoted %}
-                                <pre class="text-center px-5 {{ size_class }} {{ bold_class }} {{ italic_class }}">
-                                    <q>{{ item.object.bodytext }}</q>
-                                </pre>
-                            {% else %}
-                                <pre class="{{ size_class }} {{ bold_class }} {{ italic_class }}">
-                                    {{ item.object.bodytext }}
-                                </pre>
-                            {% endif %}
-                        {% endwith %}
-                    {% elif item.type == 'bodyimage' %}
-                        <figure class="text-center">
-                            <div class="d-flex justify-content-center">
-                                {% if item.object.image %}
-                                    <img src="{{ item.object.image.url }}" alt="{{ item.object.alt }}">
+                    <pre>{{ article.body }}</pre> 
+                    {% for item in content_order %}
+                        {% if item.type == 'subtitle' %}
+                            <h1>{{ item.object.subtitle }}</h1>
+                        {% elif item.type == 'bodytext' %}
+                            {% with "fs-"|add:item.object.fontsize|stringformat:"s" as size_class %}
+                                {% if item.object.quoted %}
+                                    <pre class="text-center px-5 {{ size_class }} {% if item.object.bold %}fw-bold{% endif %} {% if item.object.italic %}fst-italic{% endif %}">
+                                        <q>{{ item.object.bodytext }}</q>
+                                    </pre>
                                 {% else %}
-                                    <img src="{% static 'images/default_image.png' %}" alt="Default image">
+                                    <pre class="{{ size_class }} {% if item.object.bold %}fw-bold{% endif %} {% if item.object.italic %}fst-italic{% endif %}">
+                                        {{ item.object.bodytext }}
+                                    </pre>
                                 {% endif %}
-                            </div>
-                            <figcaption class="fw-light fst-italic">{{ item.object.caption }}</figcaption>
-                        </figure>
-                    {% endif %}
-                {% endfor %}
-            </div>
+                            {% endwith %}
+                        {% elif item.type == 'bodyimage' %}
+                            <figure class="text-center">
+                                {% if item.object.image %}
+                                <div class="d-flex justify-content-center">
+                                    <img src="{{ item.object.image.url }}" alt="{{ item.object.alt }}">
+                                </div>
+                                {% else %}
+                                <div class="d-flex justify-content-center">
+                                    <img src="{% static 'images/default_image.png' %}" alt="Default image">
+                                </div>
+                                {% endif %}
+                                <figcaption class="fw-light fst-italic">{{ item.object.caption }}</figcaption>
+                            </figure>
+                        {% endif %}
+                    {% endfor %}
+                </div>
 
                 
                 
