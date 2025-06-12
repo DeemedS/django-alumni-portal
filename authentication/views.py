@@ -188,11 +188,10 @@ def register(request):
             return render(request, 'signup.html', context)
         
         if not send_verification_email(user):
-            messages.error(request, "Registration successful, but we couldn't send the verification email. Please try logging in later or contact support.")
+            messages.error(request, "We couldn't send the verification email.")
             return render(request, 'signup.html', context)
         else:
             user.save()
-
             return render(request, 'success_page.html')
 
     return render(request, 'signup.html', context)
