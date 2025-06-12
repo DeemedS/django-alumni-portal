@@ -3,13 +3,11 @@ document.getElementById("export-btn").addEventListener("click", function () {
     const exportingText = document.getElementById("exporting-text");
     const downloadBtn = document.getElementById("download-export-btn");
 
-    // Disable export button and show exporting text
     exportBtn.disabled = true;
-    exportingText.style.display = "inline";
-    downloadBtn.style.display = "none";
+    exportingText.classList.remove("d-none");
+    downloadBtn.classList.add("d-none");
 
     const selectedFields = [];
-    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
 
     if (document.getElementById("check_name").checked) selectedFields.push("name");
     if (document.getElementById("check_birthdate").checked) selectedFields.push("birthday");
@@ -25,40 +23,54 @@ document.getElementById("export-btn").addEventListener("click", function () {
 
     const schoolYear = document.getElementById("year_graduated_1").value;
     const course = document.getElementById("selectedCourse").value;
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
 
     const formData = new FormData();
     formData.append("data", JSON.stringify({
         fields: selectedFields,
-        year_graduated: schoolYear !== "School Year" ? schoolYear : null,
+        year_graduated: schoolYear || null,
         course: course || null
     }));
 
-    fetch('/faculty/alumni-export', {
+    fetch("/faculty/alumni-export", {
         method: "POST",
         body: formData,
         headers: {
             "X-CSRFToken": csrfToken
         }
     })
-        .then(response => {
-            if (response.ok) return response.blob();
-            return response.json().then(err => { throw err; });
-        })
-        .then(blob => {
-            const url = window.URL.createObjectURL(blob);
+    .then(response => {
+        if (response.ok) return response.blob();
+        return response.json().then(err => { throw err; });
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        downloadBtn.href = url;
+        downloadBtn.download = "alumni_export.csv";
+        downloadBtn.classList.remove("d-none");
+    })
+    .catch(error => {
+        alert(error.message || "Failed to export.");
+    })
+    .finally(() => {
+        exportingText.classList.add("d-none");
+        exportBtn.disabled = false;
+    });
+});
 
-            // Setup and show the download button
-            downloadBtn.href = url;
-            downloadBtn.download = "alumni_export.csv";
-            downloadBtn.style.display = "inline-block";
+document.getElementById("cancel-export-btn").addEventListener("click", function () {
 
-        })
-        .catch(error => {
-            alert(error.message || "Failed to export.");
-        })
-        .finally(() => {
-            // Hide exporting text and enable export button again
-            exportingText.style.display = "none";
-            exportBtn.disabled = false;
-        });
+    document.querySelectorAll("#export-modal .form-check-input").forEach(input => {
+        input.checked = false;
+    });
+
+    document.getElementById("year_graduated_1").value = "";
+    document.getElementById("courseSearch").value = "";
+    document.getElementById("course_name").value = "";
+    document.getElementById("selectedCourse").value = "";
+    document.getElementById("courseSuggestions").innerHTML = "";
+
+    document.getElementById("exporting-text").style.display = "none";
+    document.getElementById("download-export-btn").style.display = "none";
+    document.getElementById("export-btn").disabled = false;
 });
