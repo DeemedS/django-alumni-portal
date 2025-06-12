@@ -3,73 +3,70 @@
 {% block title %}
     {{ job.title }}
 {% endblock %}
+
 {% block content %}
-<style nonce="{{ request.csp_nonce }}">
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
-    }
-    
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    
-    article {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    
-    h1 {
-        color: #800000;
-        font-size: 2rem;
-        font-weight: 700;
-    }
-    
-    .job-details p {
-        margin-bottom: 10px;
-    }
-    
-    .job-details p strong {
-        color: #333;
-    }
-    
-    @media (max-width: 768px) {
-        h1 {
-            font-size: 1.5rem;
-        }
-    
-        .job-details p {
-            font-size: 0.9rem;
-        }
-    }
-    
-</style>
-<div class="container">
-    <a href="javascript:history.back()" class="btn btn-secondary my-3">Back</a>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 my-3">
-            <article class="p-3 bg-white shadow-sm rounded">
-                
-                    <h1  class="pup-red" >{{ job.title.title }}</h1>
-                    <p class="text-muted small">Published on: {{ job.created_at }}</p>
-                
-                <div class="mb-3">
-                    <pre class="lead">{{ job.description }}</pre>
-                </div>
-                <div class="job-details mb-4">
-                    <pre><strong>Requirements:</strong> {{ job.requirements }}</pre>
-                    <p><strong>Location:</strong> {{ job.location }}</p>
-                    <p><strong>Salary:</strong> {{ job.salary }}</p>
-                    <p><strong>Company:</strong> {{ job.company }}</p>
-                    <pre><strong>Responsibilities:<br></strong> {{ job.responsibilities }}</pre>
-                    <pre><strong>Benefits:</br></strong> {{ job.benefits }}</pre>
-                    <pre><strong>Qualifications:<br></strong> {{ job.qualifications }}</pre>
-                </div>
-            </article>
+<div class="container my-4 p-4">
+  <a href="javascript:history.back()" class="btn btn-secondary mb-4 mt-4">Back</a>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-10">
+      <article class="p-4 bg-white border border-light rounded  mb-5">
+
+        <!-- Job Title and Date -->
+        <h1 class="fw-bold mb-2 pup-red">{{ job.title.title }}</h1>
+        <p class="text-muted small mb-4">Published on: {{ job.created_at }}</p>
+
+        <!-- Job Details -->
+        <div class="mb-4">
+          <h5 class="fw-semibold">Job Details</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Company:</strong> {{ job.company }}</li>
+            <li class="list-group-item"><strong>Email:</strong> {{ job.company_email }}</li>
+            <li class="list-group-item"><strong>Location:</strong> {{ job.location }}</li>
+            <li class="list-group-item d-flex align-items-center">
+            <strong class="me-2">Salary:</strong>
+            {% if job.salary %}
+                <span class="text-success">₱{{ job.salary }}</span>
+            {% else %}
+                <span class="text-muted">Not specified</span>
+            {% endif %}
+            </li>
+            {% if job.company_contact %}
+            <li class="list-group-item"><strong>Contact:</strong> {{ job.company_contact }}</li>
+            {% endif %}
+          </ul>
         </div>
+
+          <!-- Description -->
+        <div class="mb-4">
+          <h5 class="fw-semibold">Job Description</h5>
+          <pre class="text-muted">{{ job.description }}</pre>
+        </div>
+
+        <!-- Optional Sections -->
+        {% if job.responsibilities %}
+        <div class="mb-4">
+          <h5 class="fw-semibold">Responsibilities</h5>
+          <pre class="text-muted">{{ job.responsibilities }}</pre>
+        </div>
+        {% endif %}
+
+        {% if job.benefits %}
+        <div class="mb-4">
+          <h5 class="fw-semibold">Benefits</h5>
+          <pre class="text-muted">{{ job.benefits }}</pre>
+        </div>
+        {% endif %}
+
+        {% if job.qualifications %}
+        <div class="mb-4">
+          <h5 class="fw-semibold">Qualifications</h5>
+          <pre class="text-muted">{{ job.qualifications }}</pre>
+        </div>
+        {% endif %}
+
+      </article>
     </div>
+  </div>
 </div>
-    {% endblock %} 
+{% endblock %}

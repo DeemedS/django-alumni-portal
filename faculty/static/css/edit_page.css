@@ -179,3 +179,15 @@ input[type="checkbox"][id$="-clear_id"], label[for$="-clear_id"] {
     object-fit: cover;
     border-radius: 10px;
   }
+
+.title-text {
+  color: var(--pupred) !important;
+  font-weight: bold !important;
+}
+
+.text-active {
+  color: #198754 !important;
+}
+.text-inactive {
+  color: #dc3545 !important;
+} 

@@ -115,7 +115,8 @@
 }
 
 .pup-red {
-  color: #800000;
+  color: #800000 !important;
+  font-weight: bold;
 }
 
 .red-careers-btn {

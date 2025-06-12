@@ -143,6 +143,8 @@ def careers_edit(request, id):
     if request.method == 'POST':
         job_post.title = request.POST['title']
         job_post.company = request.POST['company']
+        job_post.company_email = request.POST['company_email']
+        job_post.company_contact = request.POST['company_contact']
         job_post.location = request.POST['location']
         job_post.job_type = request.POST['job_type']
         job_post.description = request.POST['description']
@@ -190,6 +192,9 @@ def careers_view(request, id):
     job_post_with_label = {
         'id': job_post.id,
         'date_posted': job_post.created_at,
+        'company_email': job_post.company_email,
+        'company_contact': job_post.company_contact,
+        'salary': job_post.salary,
         'location': job_post.location,
         'is_active': job_post.is_active,
         'title': job_post.title,

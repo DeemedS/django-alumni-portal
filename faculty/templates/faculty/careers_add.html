@@ -16,11 +16,19 @@
                     {% csrf_token %}
                     <div class="mb-3 col">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" value="" placeholder="Enter job title">
+                        <input type="text" class="form-control" id="title" name="title" value="" placeholder="Enter job title" required>
                     </div>
                     <div class="mb-3 col">
                         <label for="company" class="form-label">Company</label>
-                        <input type="text" class="form-control" id="company" name="company" value="" placeholder="Enter company name">
+                        <input type="text" class="form-control" id="company" name="company" value="" placeholder="Enter company name" required>
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="company_email" class="form-label">Company Email:</label>
+                        <input type="email" class="form-control" id="company_email" name="company_email" value="" placeholder="Enter company email" required>
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="company_contact" class="form-label">Contact:</label>
+                        <input type="text" class="form-control" id="company_contact" name="company_contact" value="" placeholder="Enter company contact">
                     </div>
                     <div class="mb-3 col">
                         <label for="salary" class="form-label">Salary</label>
@@ -28,11 +36,11 @@
                     </div>
                     <div class="mb-3 col">
                         <label for="location" class="form-label">Location</label>
-                        <input type="text" class="form-control" id="location" name="location" value="" placeholder="Enter job location">
+                        <input type="text" class="form-control" id="location" name="location" value="" placeholder="Enter job location" required>
                     </div>
                     <div class="mb-3 col">
                         <label for="job-type" class="form-label">Job Type</label>
-                        <select class="form-select" id="job-type" name="job_type">
+                        <select class="form-select" id="job-type" name="job_type" required>
                             <option selected disabled value="">Select job type</option>
                             <option value="FT">Full-Time</option>
                             <option value="PT">Part-Time</option>
@@ -57,7 +65,7 @@
                         <textarea class="form-control" id="benefits" name="benefits" rows="3" placeholder="Enter benefits"></textarea>
                     </div>
                     <div class="text-end mt-4">
-                        <button type="button" class="cancel-btn" onclick="discardChanges()">Discard</button>
+                        <button type="reset" class="cancel-btn">Discard</button>
                         <button type="submit" class="submit-btn">Save</button>
                     </div>
                 </form>
@@ -68,8 +76,8 @@
         <article class="col-md-8 preview">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h3 class="card-title fw-bold mb-4 preview-title" style="color: #800000;"></h3>
-                    
+                    <h3 class="card-title fw-bold mb-4 preview-title title-text"></h3>
+
                     <div class="row mb-4 preview-created-at">
                         <div class="col-md-6">
                             <p class="mb-0 text-muted"><strong>Created At:</strong> <span class="created-at-text"></span></p>
@@ -79,6 +87,16 @@
                     <div class="row mb-4 preview-company">
                         <div class="col-md-6">
                             <p class="mb-0"><strong>Company:</strong> <span class="company-text"></span></p>
+                        </div>
+                    </div>
+                    <div class="row mb-4 preview-company-email">
+                        <div class="col-md-6">
+                            <p class="mb-0"><strong>Company Email:</strong> <span class="company-email-text"></span></p>
+                        </div>
+                    </div>
+                    <div class="row mb-4 preview-contact">
+                        <div class="col-md-6">
+                            <p class="mb-0"><strong>Company Contact:</strong> <span class="company-contact-text"></span></p>
                         </div>
                     </div>
         

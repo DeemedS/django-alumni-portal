@@ -23,6 +23,14 @@
                         <input type="text" class="form-control" id="company" name="company" value="{{ job_post.company }}" placeholder="Enter company name">
                     </div>
                     <div class="mb-3 col">
+                        <label for="company_email" class="form-label">Company Email</label>
+                        <input type="email" class="form-control" id="company_email" name="company_email" value="{{ job_post.company_email }}" placeholder="Enter company email">
+                    </div>
+                    <div class="mb-3 col">
+                        <label for="company_contact" class="form-label">Contact</label>
+                        <input type="text" class="form-control" id="company_contact" name="company_contact" value="{{ job_post.company_contact }}" placeholder="Enter company contact">
+                    </div>
+                    <div class="mb-3 col">
                         <label for="salary" class="form-label">Salary</label>
                         <input type="text" class="form-control" id="salary" name="salary" value="{{ job_post.salary }}" placeholder="Enter salary">
                     </div>
@@ -74,7 +82,8 @@
         <article class="col-md-8 preview">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h3 class="card-title fw-bold mb-4 preview-title pup-red"> {{ job_post.title }}</h3>
+                  
+                    <h3 class="card-title fw-bold mb-4 preview-title title-text"> {{ job_post.title }}</h3>
                     
                     <div class="row mb-4 preview-created-at">
                         <div class="col-md-6">
@@ -87,6 +96,17 @@
                             <p class="mb-0 text-muted"><strong>Company:</strong> <span class="company-text">{{ job_post.company }}</span></p>
                         </div>
                     </div>
+                    <div class="row mb-4 preview-company-email">
+                        <div class="col-md-6">
+                            <p class="mb-0 text-muted"><strong>Company Email:</strong> <span class="company-email-text">{{ job_post.company_email }}</span></p>
+                        </div>
+                    </div>
+                    <div class="row mb-4 preview-contact">
+                        <div class="col-md-6">
+                            <p class="mb-0 text-muted"><strong>Company Contact:</strong> <span class="company-contact-text">{{ job_post.company_contact }}</span></p>
+                        </div>
+                    </div>
+                   
 
                     <div class="row mb-4 preview-meta">
                         <div class="col-md-4 mb-3 mb-md-0">
