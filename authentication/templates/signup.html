@@ -94,7 +94,12 @@
                                         <input type="text" class="form-control" name="position" placeholder="Current Position">
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control" name="start_date" placeholder="Employment Date" max="9999-12-31" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                        <input 
+                                        type="text" 
+                                        class="form-control employment-date" 
+                                        name="start_date" 
+                                        placeholder="Employment Date" 
+                                        max="9999-12-31">
                                     </div>
                                 </div>
                                 <div class="mb-2">
@@ -210,6 +215,20 @@
 
     birthdayInput.addEventListener('blur', () => {
     birthdayInput.type = 'text';
+    });
+    
+    document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.employment-date').forEach(function (input) {
+        input.addEventListener('focus', function () {
+        input.type = 'date';
+        });
+
+        input.addEventListener('blur', function () {
+        if (!input.value) {
+            input.type = 'text';
+        }
+        });
+    });
     });
     </script>
 {% endscript %}
