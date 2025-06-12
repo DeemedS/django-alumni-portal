@@ -167,10 +167,6 @@ def register(request):
             "endDate": None
         }]
 
-        if not send_verification_email(user):
-            messages.error(request, "We couldn't send the verification email.")
-            return render(request, 'signup.html', context)
-
         # Create the user
         user = User.objects.create_user(
             student_number=student_number,
@@ -188,6 +184,10 @@ def register(request):
         )
 
         user.save()
+
+        if not send_verification_email(user):
+            messages.error(request, "We couldn't send the verification email.")
+            return render(request, 'signup.html', context)
 
         if user is None:
             messages.error(request, "An error occurred. Please try again.")
