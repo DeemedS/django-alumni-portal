@@ -1,14 +1,12 @@
-:root{
-    --pupred: #800000;
-}
+
 /* Sidebar*/
 .nav-pills .sidebar-text {
     padding: 10px;
     text-transform: uppercase;
 }
 .nav-pills .sidebar-text.active {
-    background-color: #FEAF00;
-    color: #600;
+    background-color: var(--pupgold);
+    color: var(--pupdarkred);
 }
 
 @media (max-width: 768px) {
@@ -69,7 +67,7 @@
 
 /* Greeting Bar */
 .greeting-bar {
-    background-color: #600;
+    background-color: var(--pupdarkred);
     color: white;
     padding: 15px;
     font-weight: bold;
@@ -79,7 +77,7 @@
 
 /* Card Styles */
 .card-custom {
-    background-color: #600;
+    background-color: var(--pupdarkred);
     color: white;
     text-align: center;
     padding: 20px;
@@ -101,7 +99,7 @@
 
 /* Alumni management css */
 .title-text{
-    color:#600;
+    color: var(--pupdarkred);
 }
 .table th, .table td {
     vertical-align: middle;
@@ -186,13 +184,7 @@
         border: 1px solid #dee2e6;
         padding: 10px;
     }
-    /* .table td { //old design
-        text-align: right;
-        padding-left: 50%;
-        position: relative;
-        white-space: normal; 
-        word-wrap: break-word;
-    } */
+
     .table td {
         text-align: left; /* Align text to the left */
         padding-left: 10px; /* Adjust padding */
@@ -282,11 +274,8 @@
   }
 
 .publish-btn {
-    /* background-color: rgb(13, 134, 13);
-    color: white;
-    border-radius: 5px; */
-    background-color: #FEAF00 ; 
-    color: #800000;
+    background-color: var(--pupgold) ; 
+    color: var(--pupred);
     border-radius: 5px;
     border:none;
     letter-spacing: 0.2em;
@@ -300,8 +289,8 @@
  background-color: #d99400;
 }
 .unpublish-btn {
-    background-color: #800000;
-    color: #FEAF00;
+    background-color: var(--pupred);
+    color: var(--pupgold);
     border-radius: 5px;
     border:none;
     letter-spacing: 0.2em;
@@ -361,8 +350,8 @@
 
 
 .import-export-file [type="checkbox"].form-check-input:checked {
-      accent-color: maroon !important;
-      background-color: #800000;
+      accent-color: var(--pupred) !important;
+      background-color: var(--pupred);
       border: 1px solid var(--pupred);
 }
 .import-btn {
@@ -384,7 +373,7 @@
 }
 
 .submit-btn:hover {
-  background-color: #600;
+  background-color: var(--pupdarkred);
 }
 
 .cancel-btn {
@@ -419,7 +408,7 @@
 }
 .full-download input[type="checkbox"].form-check-input:checked {
     accent-color: maroon !important;
-    background-color: #FEAF00;
+    background-color: var(--pupgold);
     border: 1px solid var(--pupred);
 }
 
@@ -483,7 +472,7 @@
     word-wrap: break-word; /* Breaks long words */
 }
 .view-content h2 {
-    color: #600;
+    color: var(--pupdarkred);
     margin-bottom: 20px;
 }
 
@@ -545,7 +534,6 @@
 
 /* alumni search */
 .search-inputs {
-    /* background-color: aquamarine; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -625,3 +613,46 @@
       margin-top: 3rem;
       font-size: 1rem;
     }
+
+    /* from inline css */
+.searching-message {
+        display:none; 
+        font-weight: 600; 
+        font-size: 1.2rem;
+}
+
+.import-status {
+    max-height: 200px; 
+    overflow-y: auto; 
+    font-size: 0.9rem; 
+    white-space: pre-wrap; 
+    background: #f8f9fa; 
+    border: 1px solid #ddd; 
+    padding: 10px; 
+    border-radius: 5px;
+}
+
+.download-failed {
+    display: none; 
+    margin-top: 10px; 
+    font-size: 0.9rem;
+}
+
+.courseSuggestions {
+    display: none; 
+    z-index: 1000;
+}
+
+.exporting-text {
+    display:none; 
+    color: #198754; 
+    font-weight: bold; 
+    margin-left: 10px; 
+    margin-top:5px; 
+}
+
+.download-export-btn {
+    display: none; 
+    margin-top: 10px; 
+    font-size: 0.9rem;
+}
