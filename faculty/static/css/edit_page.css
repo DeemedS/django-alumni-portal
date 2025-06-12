@@ -1,6 +1,8 @@
 :root{
-    --red: #800000;
     --pupred: #800000;
+    --pupdarkred: #600000;
+    --pupgold: #FEAF00;
+    --pupgoldenrod: #DAA520;
 }
 .sortable-container {
     margin: 20px 0;
@@ -91,13 +93,26 @@ article pre {
   padding: 10px 20px;
   border-radius: 5px;
 }
+.submit-btn:hover {
+  background-color: var(--pupdarkred) !important;
+  color: var(--pupgold);
+  cursor: pointer;
+}
 .cancel-btn {
-  background-color: white;
-  color: var(--pupred);
-  border: 2px solid var(--pupred);
+  background-color: white !important;
+  color: var(--pupred) !important;
+  border: 2px solid var(--pupred) !important;
   padding: 10px 20px;
   border-radius: 5px;
 }
+
+.cancel-btn:hover {
+  background-color: var(--pupgoldenrod) !important;
+  border: 2px solid var(--pupgoldenrod) !important;
+  color: white !important;
+  cursor: pointer;
+}
+
 /* alumni edit */
 .form-header {
   background-color: var(--pupred);
@@ -141,8 +156,8 @@ input[type="checkbox"][id$="-clear_id"], label[for$="-clear_id"] {
 }
 
 .alumni-edit-form input:focus, .alumni-edit-form select:focus {
-  border: 1px solid var(--red);
-  box-shadow: 0 0 5px var(--red);
+  border: 1px solid var(--pupred);
+  box-shadow: 0 0 5px var(--pupred);
 }
 
 /* Alumni view css */
