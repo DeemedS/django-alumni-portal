@@ -89,14 +89,18 @@ def user_login(request):
     })
 
 def register(request):
-    
     courses = Course.objects.all()
     websettings = WebsiteSettings.objects.first()
 
+    context = {
+        'courses': courses,
+        'form': FormWithCaptcha(),
+        'RECAPTCHA_PUBLIC_KEY': settings.RECAPTCHA_PUBLIC_KEY,
+        'settings': websettings,
+    }
+
     if request.method == 'POST':
 
-        print(request.POST)
-        
         last_name = request.POST.get('last_name')
         first_name = request.POST.get('first_name')
         middle_name = request.POST.get('middle_name')
@@ -114,7 +118,7 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm-pass')
         agree = request.POST.get('agree')
-        
+
         def generate_student_number():
             while True:
                 years = [f"{i:04d}" for i in range(0, 9999)]
@@ -127,78 +131,68 @@ def register(request):
 
                 if not User.objects.filter(student_number=student_number).exists():
                     return student_number
-            
+
         def generate_course_code(course_name, max_length=10):
             acronym = ''.join(word[0] for word in course_name.split()).upper()
             return acronym[:max_length]
-        
-        # Check if the user agreed to the terms and conditions
-        
+
+        # Validation
         if not agree:
             messages.error(request, "You must agree to the terms and conditions.")
-            return render(request, 'signup.html')
-        
-        # Validate form data
+            return render(request, 'signup.html', context)
+
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
-            return render(request, 'signup.html')
+            return render(request, 'signup.html', context)
 
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email is already in use.")
-            return render(request, 'signup.html')
+            return render(request, 'signup.html', context)
 
-        if User.objects.filter(student_number=student_number).exists():
+        if student_number and User.objects.filter(student_number=student_number).exists():
             messages.error(request, "Student number is already in use.")
-            return render(request, 'signup.html')
-        
-        #if not student_number is blank or ''
+            return render(request, 'signup.html', context)
+
         if not student_number:
             student_number = generate_student_number()
 
         if not course and course_name:
             course_code = generate_course_code(course_name)
             course = Course.objects.get_or_create(course_name=course_name, course_code=course_code)[0].id
-        
+
         work_exp = [{
             "company": company,
             "position": position,
             "startDate": start_date,
             "endDate": None
         }]
-            
+
         # Create the user
         user = User.objects.create_user(
-            student_number=student_number, 
-            email=email, 
+            student_number=student_number,
+            email=email,
             password=password,
             first_name=first_name,
             last_name=last_name,
             middle_name=middle_name,
             mobile=mobile,
             birthday=birthday,
-            sex = sex,
-            course = Course.objects.get(id=course) if course else None,
+            sex=sex,
+            course=Course.objects.get(id=course) if course else None,
             year_graduated=year_graduated,
-            work_experience = work_exp
-            )
+            work_experience=work_exp
+        )
 
         if user is None:
             messages.error(request, "An error occurred. Please try again.")
-            return render(request, 'signup.html')
+            return render(request, 'signup.html', context)
 
         # Send verification email
         if send_verification_email(user):
             user.save()
 
         return render(request, 'success_page.html')
-    
-    context = {
-        'courses': courses,
-        'form' : FormWithCaptcha(),
-        "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
-        'settings': websettings,
-    }
-    
+
     return render(request, 'signup.html', context)
 
 def faculty(request):
