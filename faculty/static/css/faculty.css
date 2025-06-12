@@ -625,3 +625,8 @@
       margin-top: 3rem;
       font-size: 1rem;
     }
+
+    .import-status {
+  max-height: 200px;
+  white-space: pre-wrap;
+}
