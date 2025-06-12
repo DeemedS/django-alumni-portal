@@ -117,6 +117,7 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm-pass')
+        profile_image = request.FILES.get('profile_image')
         agree = request.POST.get('agree')
 
         def generate_student_number():
@@ -166,6 +167,9 @@ def register(request):
             "startDate": start_date,
             "endDate": None
         }]
+        if not profile_image:
+            messages.error(request, "Profile image is required.")
+            return render(request, 'signup.html', context)
 
         # Create the user
         user = User.objects.create_user(
@@ -180,7 +184,8 @@ def register(request):
             sex=sex,
             course=Course.objects.get(id=course) if course else None,
             year_graduated=year_graduated,
-            work_experience=work_exp
+            work_experience=work_exp,
+            profile_image=profile_image
         )
 
         user.save()

@@ -410,3 +410,48 @@ input[type="checkbox"].form-check-input:checked {
     align-items: center !important;
     justify-content: center !important;
 }
+
+.file-upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: Arial, sans-serif;
+  max-width: 300px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input[type="file"] {
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background: #800000;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  background: #800000;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="file"]:hover::file-selector-button {
+  background-color: #a00000;
+}

@@ -33,7 +33,7 @@
                         <div class="d-flex align-items-center justify-content-center">
                             <div class="form-box bg-white p-4 shadow-lg">
                             <h6 class="text-center fw-bold mb-3">Register Account</h6>
-                            <form method="POST">
+                            <form method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
 
                                 {% if messages %}
@@ -43,6 +43,8 @@
                                         </div>
                                     {% endfor %}
                                 {% endif %}
+                               
+
                                 <div class="row mb-2">
                                     <div class="col-md-4"><input type="text" class="form-control" placeholder="Last Name" name="last_name" id="last_name" required></div>
                                     <div class="col-md-4"><input type="text" class="form-control" placeholder="First Name" name="first_name" id="first_name" required></div>
@@ -66,7 +68,7 @@
                                 <div class="mb-2">
                                     <input type="email" class="form-control" placeholder="Email Address" id="email" name="email"  required>
                                 </div>
-
+                                
                                 <div class="row mb-2">
                                     <div class="col-md-8 position-relative">
                                         <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="" >
@@ -99,7 +101,7 @@
                                         class="form-control employment-date" 
                                         name="start_date" 
                                         placeholder="Employment Date" 
-                                        max="9999-12-31">
+                                        max="9999-12-31" required>
                                     </div>
                                 </div>
                                 <div class="mb-2">
@@ -112,6 +114,14 @@
                                     <div class="col-md-6">
                                         <input type="password" class="form-control" placeholder="Confirm Password" id="confirm-pass" name="confirm-pass" required>
                                     </div>
+                                </div>
+                                 <!-- Profile Photo field -->
+                                <div class="mb-2">
+                                    <div class="file-upload-wrapper">
+                                        <label for="profile_image">Profile Photo</label>
+                                        <input type="file" id="profile_image" name="profile_image" accept="image/*" required>
+                                    </div>
+
                                 </div>
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="checkbox" id="agree" name="agree" required>
