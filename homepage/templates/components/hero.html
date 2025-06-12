@@ -17,17 +17,34 @@
                 <p>Join the PUP Alumni Association and connect with fellow alumni, get updates on events, and more.</p>
                 <a href="/signup" class="btn">SIGN-UP NOW</a>
               </div>
-              
+
             </div>
           </div>
         </div>
 
+        <div class="swiper-slide">
+          <img src={% static "images/main.jpg" %} />
+          <div class="slide-content slider-2">
+            <div class="row">
+            <div class="col-md-8 slide-content-text-1">
+              <h1>ALUMNI RELATIONS AND CAREER DEVELOPMENT OFFICE</h1>
+              <p>Welcome to our alumni community, where past meets present and connections endure. Join us in celebrating our shared memories and forging new pathways together.</p>
+              <a href="/signup" class="btn">SIGN-UP NOW</a>
+            </div>
+            </div>
+          </div>  
+        </div>
 
+      </div>
+
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
   </div>
 </div>
 
-{% comment %} <div class="hero">
+<div class="hero">
   <img src={% static "images/pup-image.webp" %} />
 </div>
 
-  <script src={% static 'js/initialize-hero-swiper.js' %}></script> {% endcomment %}
+  <script nonce="{{ request.csp_nonce }}" src={% static 'js/initialize-hero-swiper.js' %}></script>
