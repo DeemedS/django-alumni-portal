@@ -231,21 +231,26 @@ def faculty(request):
 
 
 def send_verification_email(user):
-    token = default_token_generator.make_token(user)
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
-    verification_url = f"{settings.DOMAIN_URL}/verify-email/{uid}/{token}/"
+    try:
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        verification_url = f"{settings.DOMAIN_URL}/verify-email/{uid}/{token}/"
 
-    subject = 'Verify your Alumni Portal account'
-    message = f'Hi {user.email},\n\nPlease click the link below to verify your account:\n\n{verification_url}'
+        subject = 'Verify your Alumni Portal account'
+        message = f'Hi {user.email},\n\nPlease click the link below to verify your account:\n\n{verification_url}'
+
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            fail_silently=False,
+        )
+        return True
+    except Exception as e:
+        print(f"Failed to send verification email: {e}")
+        return False
     
-    send_mail(
-    subject,
-    message,
-    settings.DEFAULT_FROM_EMAIL,
-    [user.email],
-    fail_silently=False,
-    )
-
 def verify_email(request, uidb64, token):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -270,13 +275,19 @@ def send_password_reset_email(user):
     subject = 'Reset your Alumni Portal password'
     message = f'Hi {user.email},\n\nPlease click the link below to reset your password:\n\n{reset_url}'
 
-    send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        [user.email],
-        fail_silently=False,
-    )
+    try:
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            fail_silently=False,
+        )
+        return True
+    except Exception as e:
+        return False
+
+    
 
 def forgot_password(request):
     websettings = WebsiteSettings.objects.first()
