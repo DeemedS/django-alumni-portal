@@ -60,7 +60,7 @@
                             {{ form.fontsize }}
                             </p>
 
-                            <input type="checkbox" name="bodytext-{{ forloop.counter0 }}-DELETE" id="id_bodytext-{{ form.id.value }}-DELETE" style="display: none;">
+                            <input type="checkbox" name="bodytext-{{ forloop.counter0 }}-DELETE" id="id_bodytext-{{ form.id.value }}-DELETE" class="d-none">
                             <button type="button" class="remove-form-button">Remove</button>
                             </div>
                         {% endfor %}
@@ -89,7 +89,7 @@
                             {{ form.date }}
                             </p>
 
-                            <input type="checkbox" name="bodyimage-{{ forloop.counter0 }}-DELETE" id="id_bodyimage-{{ form.id.value }}-DELETE" style="display: none;">
+                            <input type="checkbox" name="bodyimage-{{ forloop.counter0 }}-DELETE" id="id_bodyimage-{{ form.id.value }}-DELETE" class="d-none">
                             <button type="button" class="remove-form-button">Remove</button>
                             </div>
                         {% endfor %}
@@ -102,7 +102,7 @@
                                 <label for="id_subtitle-{{ form.id.value }}-subtitle">Subtitle:</label>
                                 {{ form.subtitle }}
                             </p>
-                            <input type="checkbox" name="subtitle-{{ forloop.counter0 }}-DELETE" id="id_subtitle-{{ form.id.value }}-DELETE" style="display: none;">
+                            <input type="checkbox" name="subtitle-{{ forloop.counter0 }}-DELETE" id="id_subtitle-{{ form.id.value }}-DELETE" class="d-none">
                             <button type="button" class="remove-form-button">Remove</button>
                             </div>
                         {% endfor %}
@@ -132,17 +132,18 @@
                                     <h1>{{ item.object.subtitle }}</h1>
                                 </div>
                             {% elif item.type == 'bodytext' %}
-                                <div class="" data-id="bodytext-{{ item.object.id}}">
-                                {% if item.object.quoted %}
-                                    <pre class="text-center px-5" 
-                                    style="font-size:{{ item.object.fontsize }}px;
-                                    {% if item.object.bold %}font-weight:bold;{% endif %}
-                                    {% if item.object.italic %}font-style:italic;{% endif %}"><q>{{ item.object.bodytext }}</q></pre>
-                                {% else %}
-                                    <pre style="font-size:{{ item.object.fontsize }}px;
-                                    {% if item.object.bold %}font-weight:bold;{% endif %}
-                                    {% if item.object.italic %}font-style:italic;{% endif %}">{{ item.object.bodytext }}</pre>
-                                {% endif %}
+                                <div data-id="bodytext-{{ item.object.id }}">
+                                    {% with "fs-"|add:item.object.fontsize|stringformat:"s" as size_class %}
+                                        {% if item.object.quoted %}
+                                            <pre class="text-center px-5 {{ size_class }} {% if item.object.bold %}fw-bold{% endif %} {% if item.object.italic %}fst-italic{% endif %}">
+                                                <q>{{ item.object.bodytext }}</q>
+                                            </pre>
+                                        {% else %}
+                                            <pre class="{{ size_class }} {% if item.object.bold %}fw-bold{% endif %} {% if item.object.italic %}fst-italic{% endif %}">
+                                                {{ item.object.bodytext }}
+                                            </pre>
+                                        {% endif %}
+                                    {% endwith %}
                                 </div>
                             {% elif item.type == 'bodyimage' %}
                                 <div class="" data-id="bodyimage-{{ item.object.id}}">
@@ -189,8 +190,6 @@
                         .map(child => child.getAttribute('data-id'))
                         .filter(dataId => dataId !== null);
         
-                    console.log('Order:', order);
-        
                     // Send updated order via AJAX
                     $.ajax({
                         url: '{% url "faculty:update_order" %}',
@@ -204,7 +203,6 @@
                             'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val()
                         },
                         success: function(response) {
-                            console.log('Order updated:', response);
                             updateContainerOrder('sorted-content', order, '[data-id]', 'data-id');
                             showToast('Success', 'Order updated successfully', 'success');
                         },
@@ -272,4 +270,5 @@
     </script>
 
     <script nonce="{{ request.csp_nonce }}" src="{% static 'js/add_form.js' %}"></script>
+    <script nonce="{{ request.csp_nonce }}" src="{% static 'js/onerror-img.js' %}"></script>
     {% endblock %}

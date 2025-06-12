@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib.messages import get_messages
 from django.contrib.auth import logout
+from alumniwebsite.utils.ordered_content_utils import get_ordered_content
 from careers.models import JobPost
 from events.models import Event
 from events.forms import EventForm
@@ -327,9 +328,11 @@ def articles_view(request, slug):
         return redirect(reverse('authentication:faculty'))
     
     article = get_object_or_404(Article, slug=slug)
+    content_order = get_ordered_content(article)
 
     context = {
-        "article": article
+        "article": article,
+        'content_order': content_order,
     }
     return render(request, 'faculty/articles_view.html', context)
 

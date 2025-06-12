@@ -79,8 +79,15 @@ function renderCard(item, index) {
                         <i class="${item.is_liked ? 'fa-solid text-danger' : 'fa-regular'} fa-heart me-1"></i>
                         Like
                     </div>
-                    <div class="pointer" onclick="handleSend(this)" data-link="https://alumniportal.guianalankem.com/${item.type}/${item.id}">
-                    <i class="fa fa-paper-plane me-1" id="send"></i>Send</div>
+                    <div class="pointer" 
+                        onclick="handleSend(this)" 
+                        data-link="${   
+                            item.type === 'event'
+                                ? `https://alumniportal.guianalankem.com/events/view/${item.slug}`
+                                : `https://alumniportal.guianalankem.com/articles/view/${item.slug}`
+                        }">
+                        <i class="fa fa-paper-plane me-1" id="send"></i>Send
+                    </div>
                 </div>
             </div>
         `;

@@ -34,16 +34,17 @@
                         {% if item.type == 'subtitle' %}
                             <h1>{{ item.object.subtitle }}</h1>
                         {% elif item.type == 'bodytext' %}
+                            {% with "fs-"|add:item.object.fontsize|stringformat:"s" as size_class %}
                                 {% if item.object.quoted %}
-                                    <pre class="text-center px-5" 
-                                    style="font-size:{{ item.object.fontsize }}px;
-                                    {% if item.object.bold %}font-weight:bold;{% endif %}
-                                    {% if item.object.italic %}font-style:italic;{% endif %}"><q>{{ item.object.bodytext }}</q></pre>
+                                    <pre class="text-center px-5 {{ size_class }} {% if item.object.bold %}fw-bold{% endif %} {% if item.object.italic %}fst-italic{% endif %}">
+                                        <q>{{ item.object.bodytext }}</q>
+                                    </pre>
                                 {% else %}
-                                    <pre style="font-size:{{ item.object.fontsize }}px;
-                                    {% if item.object.bold %}font-weight:bold;{% endif %}
-                                    {% if item.object.italic %}font-style:italic;{% endif %}">{{ item.object.bodytext }}</pre>
+                                    <pre class="{{ size_class }} {% if item.object.bold %}fw-bold{% endif %} {% if item.object.italic %}fst-italic{% endif %}">
+                                        {{ item.object.bodytext }}
+                                    </pre>
                                 {% endif %}
+                            {% endwith %}
                         {% elif item.type == 'bodyimage' %}
                             <figure class="text-center">
                                 {% if item.object.image %}
