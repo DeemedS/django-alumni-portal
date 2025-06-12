@@ -41,9 +41,7 @@ function fetchRelatedAlumni(courseCode = null, pageSize = 10) {
                 <div class="alumni-card">
                     <div class="alumni-card-background ${backgroundClass}"></div>
                         <div class="alumni-card-body">
-                        <img src="${alumnus.profile_image && alumnus.profile_image.trim() !== '' ? alumnus.profile_image : '/static/images/default_user.jpg'}"
-     onerror="this.onerror=null;this.src='/static/images/default_user.jpg';"
-     alt="Alumnus photo" class="alumni-image">
+                         <img src="${alumnus.profile_image || '/static/images/default_user.jpg'}" alt="Alumnus photo" class="alumni-image">
                         <h6 class="mt-3 mb-1 alumni-name">${alumnus.first_name || 'First Name'} ${alumnus.last_name || 'Last Name'}</h6>
                         <p class="mb-3">${position || 'No Work Info'}</p>
                         <div class="alumni-details">
