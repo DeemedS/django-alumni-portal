@@ -166,10 +166,33 @@ $(document).on("click", ".job-card", function (e) {
                     const date = new Date(data.created_at);
                     data.created_at = date.toDateString();
 
-                    // Format salary
-                    const formattedSalary = new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: 0,
-                    }).format(data.salary);
+                    // Format salary or salary range
+                    let formattedSalary = "";
+                    if (typeof data.salary === "string" && data.salary.includes("-")) {
+                        // Handle range
+                        const [min, max] = data.salary.split("-").map(s => s.trim());
+                        if (!isNaN(min) && !isNaN(max)) {
+                            const formattedMin = new Intl.NumberFormat('en-PH', { minimumFractionDigits: 0 }).format(Number(min));
+                            const formattedMax = new Intl.NumberFormat('en-PH', { minimumFractionDigits: 0 }).format(Number(max));
+                            formattedSalary = `${formattedMin} - ${formattedMax}`;
+                        } else {
+                            formattedSalary = data.salary; // fallback if not numbers
+                        }
+                    } else if (data.salary && !isNaN(data.salary)) {
+                        // Handle single value
+                        formattedSalary = new Intl.NumberFormat('en-PH', { minimumFractionDigits: 0 }).format(Number(data.salary));
+                    }
+
+                    // Map job type abbreviations to full meanings
+                    const jobTypeMap = {
+                        "FT": "Full-Time",
+                        "PT": "Part-Time",
+                        "IN": "Internship",
+                        "CT": "Contract",
+                        // Add more as needed
+                    };
+                    const jobTypeFull = jobTypeMap[data.job_type] || data.job_type;
+
 
                     // Check if the job is saved
                     const isSaved = savedJobIds.includes(data.id);
@@ -194,14 +217,28 @@ $(document).on("click", ".job-card", function (e) {
                                 </div>
 
                                 <div class="row mb-4">
-                                    <div class="col-md-4 mb-3 mb-md-0">
-                                        <p class="mb-0"><i class="bi bi-geo-alt"></i> <strong>Location:</strong> ${data.location}</p>
+                                    <div class="col-md-6">
+                                        <p class="mb-0 text-muted"><strong>Email:</strong> ${data.company_email}</p>
                                     </div>
-                                    <div class="col-md-4 mb-3 mb-md-0">
-                                        <p class="mb-0"><strong>Salary:</strong> <span>${formattedSalary}</span> PHP</p>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        ${data.company_contact ? `<p class="mb-0 text-muted"><strong>Contact:</strong> ${data.company_contact}</p>` : ''}
                                     </div>
-                                    <div class="col-md-4">
-                                        <p class="mb-0"><i class="bi bi-briefcase"></i> <strong>Job Type:</strong> ${data.job_type}</p>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center">
+                                        <span><strong>Location:</strong> ${data.location}</span>
+                                    </div>
+                                    <div class="col-md-4 mb-3 mb-md-0 d-flex align-items-center">
+                                        ${formattedSalary
+                                            ? `<span><strong>Salary:</strong> <span class="text-success">₱${formattedSalary}</span></span>`
+                                            : `<span><strong>Salary:</strong> <span class="text-muted">Not specified</span></span>`
+                                        }
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-center">
+                                        <span><strong>Job Type:</strong> ${jobTypeFull}</span>
                                     </div>
                                 </div>
 

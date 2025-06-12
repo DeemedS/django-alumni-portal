@@ -229,6 +229,8 @@ def career_add(request):
 
             title = data.get("title", "")
             company = data.get("company", "")
+            company_email = data.get("company_email", "")
+            company_contact = data.get("company_contact", "")
             salary = data.get("salary", "")
             location = data.get("location", "")
             job_type = data.get("job_type", "")
@@ -241,6 +243,8 @@ def career_add(request):
             career = JobPost.objects.create(
                 title=title,
                 company=company,
+                company_email=company_email,
+                company_contact=company_contact,
                 salary=salary,
                 location=location,
                 job_type=job_type,

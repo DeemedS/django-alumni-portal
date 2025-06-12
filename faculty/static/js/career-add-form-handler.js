@@ -5,6 +5,8 @@ $(document).ready(function () {
         let formData = {
             title: $("#title").val(),
             company: $("#company").val(),
+            company_email: $("#company_email").val(),
+            company_contact: $("#company_contact").val(),
             salary: $("#salary").val(),
             location: $("#location").val(),
             job_type: $("#job-type").val(),

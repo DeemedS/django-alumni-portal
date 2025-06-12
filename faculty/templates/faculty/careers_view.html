@@ -9,14 +9,36 @@
 </div>
 <div class="container mt-4">
     <div class="job-detail">
-        <h3 id="job-title">{{job_post.title}}</h3>
-        <p class="text-muted" id="company-name">{{job_post.company}}</p>
+        <h3 id="job-title" class="title-text">{{job_post.title}}</h3>
         <div class="row mb-3">
-            {% if job_post.salary %}
             <div class="col-md-6">
-                <p><span class="detail-label">Salary:</span> <span id="salary">₱{{job_post.salary}}</span></p>
+                <p><span class="detail-label">Company:</span> <span id="company">{{job_post.company}}</span></p>
+            </div>
+            <div class="col-md-6">
+                <p><span class="detail-label">Posted On:</span> <span id="posted-on">{{job_post.date_posted}}</span></p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <p><span class="detail-label">Company Email:</span> <span id="company-email">{{job_post.company_email}}</span></p>
+            </div>
+            {% if job_post.company_contact %}
+            <div class="col-md-6">
+                <p><span class="detail-label">Contact:</span> <span id="company-contact">{{job_post.company_contact}}</span></p>
             </div>
             {% endif %}
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <p>
+                    <span class="detail-label">Salary:</span>
+                    {% if job_post.salary %}
+                        <span class="text-success" id="salary">₱{{ job_post.salary }}</span>
+                    {% else %}
+                        <span class="text-muted" id="salary">Not specified</span>
+                    {% endif %}
+                </p>
+            </div>
             <div class="col-md-6">
                 <p><span class="detail-label">Location:</span> <span id="location">{{job_post.location}}</span></p>
             </div>
@@ -28,9 +50,9 @@
             <div class="col-md-6">
                 <p><span class="detail-label">Status:</span> <span id="job-status" class="status-active">
                     {% if job_post.is_active %}
-                        <span style="color: green;">Active</span>
+                        <span class="text-active">Published</span>
                     {% else %}
-                        <span style="color: red;">Inactive</span>
+                        <span class="text-inactive">Unpublished</span>
                     {% endif %}
                 <span></p>
             </div>

@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Form fields
     const titleInput = document.getElementById('title');
     const companyInput = document.getElementById('company');
+    const companyEmailInput = document.getElementById('company_email');
+    const companyContactInput = document.getElementById('company_contact');
     const salaryInput = document.getElementById('salary');
     const locationInput = document.getElementById('location');
     const jobTypeSelect = document.getElementById('job-type');
@@ -42,6 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
     
         toggleSection(titleInput.value, '.preview-title');
         toggleSection(companyInput.value, '.company-text', '.preview-company');
+        toggleSection(companyEmailInput.value, '.company-email-text', '.preview-company-email');
+        toggleSection(companyContactInput.value, '.company-contact-text', '.preview-contact');
         toggleSection(locationInput.value, '.location-text', '.preview-location');
         toggleSection(salaryInput.value, '.salary-text', '.preview-salary');
         toggleSection(jobTypeSelect.value, '.job-type-text', '.preview-job-type');
@@ -55,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
     [
         titleInput,
         companyInput,
+        companyEmailInput,
+        companyContactInput,
         salaryInput,
         locationInput,
         jobTypeSelect,
