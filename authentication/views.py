@@ -186,12 +186,14 @@ def register(request):
         if user is None:
             messages.error(request, "An error occurred. Please try again.")
             return render(request, 'signup.html', context)
-
-        # Send verification email
-        if send_verification_email(user):
+        
+        if not send_verification_email(user):
+            messages.error(request, "Registration successful, but we couldn't send the verification email. Please try logging in later or contact support.")
+            return render(request, 'signup.html', context)
+        else:
             user.save()
 
-        return render(request, 'success_page.html')
+            return render(request, 'success_page.html')
 
     return render(request, 'signup.html', context)
 
