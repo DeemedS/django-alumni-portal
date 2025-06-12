@@ -81,14 +81,13 @@ function renderCard(item, index) {
                     </div>
                     <div class="pointer" 
                         onclick="handleSend(this)" 
-                        data-link="${
+                        data-link="${   
                             item.type === 'event'
                                 ? `https://alumniportal.guianalankem.com/events/${item.slug}`
-                                : `https://alumniportal.guianalankem.com/news/view/${item.slug}`
+                                : `https://alumniportal.guianalankem.com/articles/view/${item.slug}`
                         }">
                         <i class="fa fa-paper-plane me-1" id="send"></i>Send
                     </div>
-                    <i class="fa fa-paper-plane me-1" id="send"></i>Send</div>
                 </div>
             </div>
         `;
