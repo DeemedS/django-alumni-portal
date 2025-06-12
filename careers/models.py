@@ -11,7 +11,7 @@ class JobPost(models.Model):
         ]
         title = models.CharField(max_length=200)
         company = models.CharField(max_length=200)
-        company_email = models.EmailField(max_length=254, default='noemail@gmail.com')
+        company_email = models.EmailField(max_length=254)
         company_contact = models.CharField(max_length=15, blank=True, null=True)
         location = models.CharField(max_length=200)
         job_type = models.CharField(max_length=2, choices=JOB_TYPES, default='FT')
