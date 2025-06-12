@@ -257,20 +257,50 @@ def send_verification_email(user):
         return False
     
 def verify_email(request, uidb64, token):
+    websettings = WebsiteSettings.objects.first()
+
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
+    if user is None or not default_token_generator.check_token(user, token):
+        status = 404
+        messages.error(request, '')
+        return render(request, 'verify_email.html', {
+            'status': status,
+            'settings': websettings,
+            "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+            'form': FormWithCaptcha(),
+        })
+    
+    if user is not None and user.email_verified:
+        status = 409
+        return render(request, 'verify_email.html', {
+            'status': status,
+            'settings': websettings,
+            "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+            'form': FormWithCaptcha(),
+        })
+
     if user is not None and default_token_generator.check_token(user, token):
         user.email_verified = True
         user.save()
         status = 200
-        return render(request, 'verify_email.html', {'status': status})
+        return render(request, 'verify_email.html', {
+            'status': status,
+            'settings': websettings,
+            "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+            'form': FormWithCaptcha(),
+        })
     else:
         status = 400
-        return render(request, 'verify_email.html', {'status': status})
+        return render(request, 'verify_email.html', {'status': status,
+            'settings': websettings,
+            "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+            'form': FormWithCaptcha(),
+        }) 
 
 def send_password_reset_email(user):
     token = default_token_generator.make_token(user)
@@ -323,7 +353,11 @@ def reset_password(request, uidb64, token):
 
     if user is None or not default_token_generator.check_token(user, token):
         messages.error(request, 'This password reset link is invalid or has expired.')
-        return render(request, 'forgot_password.html')  # Optional: show dedicated template
+        return render(request, 'forgot_password.html', {
+            'settings': websettings,
+            "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+            'form': FormWithCaptcha(),
+        }) 
 
     if request.method == 'POST':
         new_password = request.POST.get('password')
