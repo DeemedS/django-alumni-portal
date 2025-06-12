@@ -51,7 +51,9 @@
                                 <div class="row mb-2">
                                     <div class="col-md-4"><input type="text" class="form-control" placeholder="Mobile No." name="mobile" id="mobile" required></div>
                                     <div class="col-md-4">
-                                        <input type="text" placeholder="Birthday" class="form-control" onfocus="(this.type='date')" max="9999-12-31" onblur="(this.type='text')" name="birthday" id="birthday" required >
+                                        <input type="text" placeholder="Birthday" class="form-control" 
+                                        max="9999-12-31" 
+                                        name="birthday" id="birthday" required >
                                     </div>
                                     <div class="col-md-4">
                                         <select class="form-select" name="sex" id="sex" required>
@@ -198,6 +200,16 @@
             }
         });
 
+    });
+
+    const birthdayInput = document.getElementById('birthday');
+
+    birthdayInput.addEventListener('focus', () => {
+    birthdayInput.type = 'date';
+    });
+
+    birthdayInput.addEventListener('blur', () => {
+    birthdayInput.type = 'text';
     });
     </script>
 {% endscript %}
