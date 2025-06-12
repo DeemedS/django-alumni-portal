@@ -3,6 +3,15 @@
 {% block title %} {{job_post.title}}{% endblock %}
 
 {% block content %}
+<style nonce="{{ request.csp_nonce }}">
+  .status-active-text {
+    color: green;
+  }
+  .status-inactive-text {
+    color: red;
+  }
+</style>
+
 <div class="title-bar mb-3">
     <a href="/faculty/careers-management"><i class="fa-solid fa-arrow-left"></i></a>
     <h3 class="text-center">{{job_post.title}}</h3>
@@ -26,13 +35,16 @@
                 <p><span class="detail-label">Job Type:</span> <span id="job-type">{{job_post.job_type_label}}</span></p>
             </div>
             <div class="col-md-6">
-                <p><span class="detail-label">Status:</span> <span id="job-status" class="status-active">
-                    {% if job_post.is_active %}
-                        <span style="color: green;">Active</span>
-                    {% else %}
-                        <span style="color: red;">Inactive</span>
-                    {% endif %}
-                <span></p>
+            <p>
+            <span class="detail-label">Status:</span>
+            <span id="job-status" class="status-active">
+                {% if job_post.is_active %}
+                <span class="status-active-text">Active</span>
+                {% else %}
+                <span class="status-inactive-text">Inactive</span>
+                {% endif %}
+            </span>
+            </p>
             </div>
         </div>
         <hr>

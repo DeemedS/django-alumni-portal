@@ -347,3 +347,7 @@ footer .sec-2 .form-control {
 .pointer {
     cursor: pointer;
 }
+
+.pup-red {
+    color: #800000 !important;
+}

@@ -626,7 +626,31 @@
       font-size: 1rem;
     }
 
-    .import-status {
+.import-status {
   max-height: 200px;
   white-space: pre-wrap;
 }
+
+.pre-text {
+  white-space: pre-wrap;
+  text-align: center;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.fs-12 { font-size: 12px; }
+.fs-13 { font-size: 13px; }
+.fs-14 { font-size: 14px; }
+.fs-15 { font-size: 15px; }
+.fs-16 { font-size: 16px; }
+
+.fw-bold { font-weight: bold; }
+.fst-italic { font-style: italic; }
