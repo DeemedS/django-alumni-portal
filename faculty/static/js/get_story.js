@@ -58,9 +58,11 @@ $(document).ready(function () {
                         <tr>
                             <td data-label="Event">${stories.title}</td>
                             <td data-label="User">${stories.user_email}</td>
+                            <td data-label="Author">${stories.user_is_staff ? 'Staff' : 'Alumni'}</td>
                             <td data-label="Date">${formattedDateTime}</td>
                             <td data-label="Actions" class="action-icons">
                                 <a href="/faculty/stories-view/${stories.id}/"><i class="fas fa-eye"></i></a>
+                                 ${stories.user_is_staff ? `<a href="/faculty/story-edit/${stories.id}/"><i class="fas fa-edit"></i></a>` : ''}
                                 <a href="#" class="delete-item" data-id="${stories.id}" data-type="stories" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                             <td class="text-center" data-label="Active">

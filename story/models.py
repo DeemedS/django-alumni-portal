@@ -4,7 +4,7 @@ from authentication.models import User
 
 # Create your models here.
 class Stories(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     body = models.TextField()
     banner = models.ImageField(blank=True, null=True, upload_to='stories/banners/')
