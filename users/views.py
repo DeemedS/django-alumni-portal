@@ -29,53 +29,51 @@ def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
-    headers = {
-        'Authorization': f'Bearer {access_token}',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
+
+    base_headers = {
+        'User-Agent': user_agent
     }
 
-    if access_token:
-        # Step 1: Verify token
-        verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
-        verify_response = requests.post(verify_url, json={'token': access_token}, headers={'User-Agent': headers['User-Agent']})
+    if not access_token:
+        return redirect('/login/')
 
-        # Token is valid
-        if verify_response.status_code == 200:
-            # Step 2: Get user info
-            user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
-            user_response = requests.get(user_api_url, headers=headers)
+    verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
+    verify_response = requests.post(verify_url, json={'token': access_token}, headers=base_headers)
 
-            if user_response.status_code == 200:
-                user_data = user_response.json()
-                context = {
-                    'active_page': 'dashboard',
-                    'first_name': user_data.get('first_name'),
-                    'last_name': user_data.get('last_name'),
-                    'profile_image': user_data.get('profile_image'),
-                    'is_authenticated': True
-                }
-                return render(request, 'user_dashboard.html', context)
+    if verify_response.status_code == 200:
+        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
+        auth_headers = {
+            **base_headers,
+            'Authorization': f'Bearer {access_token}'
+        }
+        user_response = requests.get(user_api_url, headers=auth_headers)
 
-            else:
-                # Failed to get user data (even though token verified)
-                return redirect('/login/')
-
-        # Token expired or invalid
-        elif verify_response.status_code == 401 and refresh_token:
-            # Step 3: Try refreshing the token
-            refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
-            refresh_response = requests.post(refresh_url, data={'refresh': refresh_token}, headers={'User-Agent': headers['User-Agent']})
-
-            if refresh_response.status_code == 200:
-                new_access_token = refresh_response.json().get('access')
-                response = redirect('/myaccount/')
-                response.set_cookie('access_token', new_access_token, httponly=True)
-                return response
-
-            else:
-                return redirect('/login/')
+        if user_response.status_code == 200:
+            user_data = user_response.json()
+            context = {
+                'active_page': 'dashboard',
+                'first_name': user_data.get('first_name'),
+                'last_name': user_data.get('last_name'),
+                'profile_image': user_data.get('profile_image'),
+                'is_authenticated': True
+            }
+            return render(request, 'user_dashboard.html', context)
         else:
             return redirect('/login/')
+
+    elif verify_response.status_code == 401 and refresh_token:
+        refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
+        refresh_response = requests.post(refresh_url, data={'refresh': refresh_token}, headers=base_headers)
+
+        if refresh_response.status_code == 200:
+            new_access_token = refresh_response.json().get('access')
+            response = redirect('/myaccount/')
+            response.set_cookie('access_token', new_access_token, httponly=True)
+            return response
+        else:
+            return redirect('/login/')
+
     else:
         return redirect('/login/')
 
