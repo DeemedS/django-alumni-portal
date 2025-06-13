@@ -33,10 +33,13 @@ def user_dashboard(request):
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
-        response = requests.post(api_url, data=data)
+        response = requests.post(api_url, json=data)
 
         user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+
+        print(response.status_code)
+        print(response.text)
 
         if response.status_code == 200:
             user_data = user_response.json()
