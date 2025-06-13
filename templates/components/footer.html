@@ -1,113 +1,101 @@
  {% load static %}
 
-<footer class="container-fluid" id="footer">
-    <div class="row">
+ <footer id="footer" class="mt-3 pt-5 ">
+    <div class="container">
+        <div class="row g-5">
+            <!-- left column info-->
+             <div class="col-md-6">
+                <h5 class="fw-bold">Address</h5>
+                <p class="mb-1 fw-bold">Alumni Relations and Career Development Office</p>
+                <p>
+                    {{ settings.arcdo_address_line1 }}<br>
+                    {{ settings.arcdo_address_line2 }}<br>
+                    {{ settings.arcdo_address_line3 }}
+                </p>
 
-        <div class="col-md-6 info">
+                <h5 class=" fw-bold mt-4">Phone Number</h5>
+                <p>{{ settings.phone_number_1 }}, {{ settings.phone_number_2 }} or {{ settings.phone_number_3 }}</p>
 
-            <h3>Address</h3>
 
-            <div class="row">
+                <h5 class="fw-bold mt-4">E-main Address</h5>
+                <p>{{ settings.arcdo_email }}</p>
 
-            <img src="{% static "images/icons/map-pin.svg" %}" alt="location">
+                <h6 class="fw-bold mt-4">Follow Us</h6>
+                <p>Stay Connected with us on:</p>
+                <div class="d-flex gap-3 footer-social-icons">
+                    <a href="{{ settings.facebook_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
+                        <i class="fa-brands fa-facebook-square"></i>
+                    </a>
+
+                    <a href="{{ settings.instagram_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
+                        <i class="fa-brands fa-instagram-square"></i>
+                    </a>
+
+                    <a href="{{ settings.x_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+
+                    <a href="{{ settings.linked_in_link|default:'#' }}" target="_blank" rel="noopener noreferrer" class="social-icon">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
             
-            <div class="col">
-            <p><strong>Alumni Relations and Career Development Office</strong></p>
-            <p>{{ settings.arcdo_address_line1 }}</p>
-            <p>{{ settings.arcdo_address_line2 }}</p>
-            <p>{{ settings.arcdo_address_line3 }}</p>
-            </div>
-            </div>
+            <!-- right column form-->
+            <div class="col-md-6 mb-3">
+                <div class="p-4 footer-form rounded-4 shadow">
+                    <h5 class="fw-bold">We're here to assist you.</h5>
+                    <p>We are here to address any questions you may have about the Alumni Relations and Career Development Office.
+                        Please contact us and we will get back to you as soon as possible.</p>
 
-            <h3>Phone Number</h3>
-            <div class="row">
-            <img src="{% static "images/icons/phone.svg" %}" alt="phone">
-            <div class="col">
-            <p>{{ settings.phone_number_1 }}, {{ settings.phone_number_2 }} or {{ settings.phone_number_3 }}</p>
-            </div>
-            </div>
-
-            <h3>E-mail Address</h3>
-            <div class="row">
-            <img src="{% static "images/icons/envelope.svg" %}" alt="mail">
-            <div class="col">
-            <p>{{ settings.arcdo_email }}</p>
-            </div>
-            </div>
-
-        </div>
-
-        <div class="col-md-6 sec-2">
-            <h3>HOW CAN WE ASSIST</h3>
-            <p>We are here to address any questions you may have about the Alumni Relations and Career Development Office.
-                Please contact us and we will get back to you as soon as possible.</p>
-
-            <form id="contactForm" method="POST">
-                {% csrf_token %}
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input id="name" name="name" type="text" class="form-control" placeholder="Name (LN, FN, MI.)">
+                    <form id="contactForm" method="POST">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-2">
+                                <label for="name" class="form-label">Name</label>
+                                <input id="name" name="name" type="text" class="form-control" placeholder="Name (LN, FN, MI.)">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label for="email" class="form-label">Email</label>
+                                <input id="emailaddress" name="emailaddress" type="email" class="form-control" placeholder="E-mail Address" required>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input id="emailaddress" name="emailaddress" type="email" class="form-control" placeholder="E-mail Address" required>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-2">
+                                <label for="year" class="form-label">Batch</label>
+                                <input id="year" name="year" type="text" class="form-control" placeholder="Year of Graduation">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label for="program" class="form-label">Course</label>
+                                <input id="program" name="program" type="text" class="form-control" placeholder="Course/Program">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input id="year" name="year" type="text" class="form-control" placeholder="Year of Graduation">
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input id="program" name="program" type="text" class="form-control" placeholder="Course/Program">
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Message</label>
                             <textarea id="message" name="message" class="form-control" placeholder="Compose Message..." required></textarea>
                         </div>
-                    </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group mb-3">
+                        <div class="mb-4">
                             <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_PUBLIC_KEY }}"></div>
                         </div>
-                    </div>
 
-                    <div class="col-md-12">
-                        <button type="submit" name="submit" class="btn btn-lg">
-                            <img src="{% static 'images/icons/envelope.svg' %}" alt="mail"> Send message
-                        </button>
-                    </div>
+                        <div class="col-md-12">
+                            <button type="submit" name="submit" class="footer-button fw-bold">
+                                <i class="fa-solid fa-paper-plane"></i> Send message
+                            </button>
+                            
+                        </div>
 
+                        <script nonce="{{ CSP_NONCE }}" src="https://www.google.com/recaptcha/api.js" async defer></script>
+                    </form>
                 </div>
-
-                <script nonce="{{ CSP_NONCE }}" src="https://www.google.com/recaptcha/api.js" async defer></script>
-            </form>
-
+            </div>
         </div>
-
-        <div class="copyrigths">
-            <p>&copy; 2024 Polytechnic University of the Philippines</p>
-            <p>Alumni Relations and Career Development</p>
-        </div>
-
+    </div>
+    <div class="copyrights text-center">
+        <p>&copy; {% now 'Y' %} Polytechnic University of the Philippines</p>
+        <p>Alumni Relations and Career Development</p>
     </div>
 </footer>
-
-<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
-    <!-- Toast template will be added dynamically -->
-</div>
-
-<script nonce="{{ request.csp_nonce }}" src="{% static 'js/footer_email_handler.js' %}"></script>
-
-

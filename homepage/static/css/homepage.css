@@ -251,44 +251,7 @@
 /* END EVENTS */
 
 
-/* SOCIALS */
 
-.socials {
-    padding: 2rem 0;
-    background-color: #800000;
-    color: #FFF;
-}
-
-
-.socials .social-container {
-    width: 100%;
-    min-height: 10px;
-    text-align: center;
-}
-
-.socials .social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-}
-
-.socials .social-icons i {
-    font-size: 2rem;
-    color: #fff;
-}
-
-.socials .social-icons i:hover {
-    color: darkcyan;
-}
-
-@media screen and (max-width: 768px) {
-    .socials .social-icons i {
-        font-size: 2rem;
-    }
-
-}
-
-/* END SOCIALS */
 
 /* HERO */
 
