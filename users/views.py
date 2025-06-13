@@ -82,10 +82,16 @@ def user_edit(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
+    user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
+
+    base_headers = {
+        'User-Agent': user_agent
+    }
+
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
-        response = requests.post(api_url, data=data)
+        response = requests.post(api_url, data=data, headers=base_headers)
 
         user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
@@ -239,10 +245,16 @@ def saved_jobs(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
+    user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
+
+    base_headers = {
+        'User-Agent': user_agent
+    }
+
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
-        response = requests.post(api_url, data=data)
+        response = requests.post(api_url, data=data, headers=base_headers)
 
         user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
@@ -281,11 +293,16 @@ def saved_events(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
+    user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
+
+    base_headers = {
+        'User-Agent': user_agent
+    }
 
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
-        response = requests.post(api_url, data=data)
+        response = requests.post(api_url, data=data, headers=base_headers)
 
         user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
@@ -527,12 +544,18 @@ def user_stories(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
+    user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
+
+    base_headers = {
+        'User-Agent': user_agent
+    }
+
     if not access_token:
         return redirect('/login/')
 
     # Token verification
     verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
-    verify_response = requests.post(verify_url, data={'token': access_token})
+    verify_response = requests.post(verify_url, data={'token': access_token}, headers=base_headers)
 
     if verify_response.status_code != 200:
         if refresh_token:
@@ -600,12 +623,18 @@ def user_donation(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
+    user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
+
+    base_headers = {
+        'User-Agent': user_agent
+    }
+
     websettings = WebsiteSettings.objects.first()
 
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
-        response = requests.post(api_url, data=data)
+        response = requests.post(api_url, data=data, headers=base_headers)
 
         user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
@@ -645,10 +674,16 @@ def alumni_network(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
 
+    user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
+
+    base_headers = {
+        'User-Agent': user_agent
+    }
+
     if access_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
         data = {'token': access_token}
-        response = requests.post(api_url, data=data)
+        response = requests.post(api_url, data=data, headers=base_headers)
 
         user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
         user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})

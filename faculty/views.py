@@ -686,8 +686,6 @@ def handle_officials_form(request):
                     official.photo = 'officials_photos/default.png'
                 elif photo_file:
                     official.photo = photo_file
-                elif not photo_file:
-                    official.photo = 'officials_photos/default.png'
 
                 official.save()
 
