@@ -38,6 +38,8 @@ urlpatterns = [
     path('faculty/event-delete/<int:id>/', events_views.event_delete, name='event_delete'),
 
     path('faculty/story-management', faculty_views.story_management, name='story_management'),
+    path('faculty/story-add', stories_views.story_add, name='story_add'),
+    path('faculty/story-edit/<int:id>/', stories_views.story_edit, name='story_edit'),
     path('faculty/stories-view/<int:id>/', faculty_views.story_view, name='story_view'),
     path('faculty/stories-delete/<int:id>/', stories_views.story_delete, name='story_delete'),
 

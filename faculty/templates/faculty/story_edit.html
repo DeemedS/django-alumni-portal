@@ -1,0 +1,72 @@
+{% extends "edits_layout.html" %}
+{% load static %}
+{% block title %}Edit {{ story.title }}{% endblock %}
+
+{% block content %}
+<div class="title-bar mb-3 d-flex align-items-center">
+    <a href="{% url 'faculty:story_management' %}" class="me-2"><i class="fa-solid fa-arrow-left"></i></a>
+    <h3 class="flex-grow-1 text-center m-0">Edit {{ story.title }}</h3>
+</div>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <!-- Edit Story Form -->
+        <div class="col-md-5">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" id="edit-story-form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ story.title }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="body" class="form-label">Body</label>
+                            <textarea class="form-control" id="body" name="body" rows="5" required>{{ story.body }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="banner" class="form-label">Banner</label>
+                            <input type="file" class="form-control" id="banner" name="banner">
+                            {% if story.banner %}
+                                <small class="text-muted d-block mt-1">Current: <img src="{{ story.banner.url }}" alt="Current banner" style="height:40px;"></small>
+                            {% endif %}
+                        </div>
+                        <div class="text-end mt-4">
+                            <button type="submit" class="submit-btn">Update Story</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Story Preview -->
+        <div class="col-md-7">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <strong>Preview</strong>
+                </div>
+                <div class="card-body">
+                    {% if story.banner %}
+                        <img src="{{ story.banner.url }}" alt="Banner for {{ story.title }}" class="img-fluid mb-3 rounded">
+                    {% else %}
+                        <img src="{% static 'images/default_image.png' %}" alt="Default banner" class="img-fluid mb-3 rounded">
+                    {% endif %}
+                    <h4>{{ story.title }}</h4>
+                    <p class="text-muted mb-1">Date: {{ story.created_at|date:"M d, Y" }}</p>
+                    <div class="border rounded p-2 bg-light" style="white-space: pre-line;">{{ story.body }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Toast -->
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+<script nonce="{{ request.csp_nonce }}">
+    document.getElementById('edit-story-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        showToast("success", "Story post updated successfully", "success");
+        setTimeout(() => this.submit(), 2000);
+    });
+</script>
+{% endblock %}

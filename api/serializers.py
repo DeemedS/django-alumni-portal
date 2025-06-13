@@ -81,11 +81,12 @@ class RelatedALumniSerializer(serializers.ModelSerializer):
 
 class StorySerializer(serializers.ModelSerializer):
     user_email = serializers.EmailField(source='user.email', read_only=True)
+    user_is_staff = serializers.BooleanField(source='user.is_staff', read_only=True)
 
     class Meta:
         model = Stories
         fields = [
-            'id', 'title', 'body', 'banner', 'thumbnail', 'created_at', 'is_active', 'user_email'
+            'id', 'title', 'body', 'banner', 'thumbnail', 'created_at', 'is_active', 'user_email', 'user_is_staff'
         ]
 
 class AlumniNetworkSerializer(serializers.ModelSerializer):

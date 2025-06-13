@@ -558,36 +558,37 @@ def user_stories(request):
     except User.DoesNotExist:
         return HttpResponseForbidden("User not found.")
 
-    try:
-        story = Stories.objects.get(user=user)
-    except Stories.DoesNotExist:
-        story = None
 
-    if request.method == 'POST':
-        form = StoriesForm(request.POST, request.FILES, instance=story)
-
-        if form.is_valid():
-            story_instance = form.save(commit=False)
-            story_instance.user = user
-
-            # ✅ Delete old banner if new one uploaded or cleared
-            if story and story.banner and ('banner' in request.FILES or not request.POST.get('banner')):
-                if default_storage.exists(story.banner.name):
-                    default_storage.delete(story.banner.name)
-
-            # ✅ Delete old thumbnail if new one uploaded or cleared
-            if story and story.thumbnail and ('thumbnail' in request.FILES or not request.POST.get('thumbnail')):
-                if default_storage.exists(story.thumbnail.name):
-                    default_storage.delete(story.thumbnail.name)
-
-            story_instance.save()
-            return redirect('/myaccount/user_stories/')
+    if user.is_staff:
+        stories = Stories.objects.filter(user=user)
+        story = None  # Not used for staff
+        form = None   # Not used for staff
     else:
-        form = StoriesForm(instance=story)
+        # Alumni: only one story allowed
+        story = Stories.objects.filter(user=user).first()
+        stories = None  # Not used for alumni
+        if request.method == 'POST':
+            form = StoriesForm(request.POST, request.FILES, instance=story)
+            if form.is_valid():
+                story_instance = form.save(commit=False)
+                story_instance.user = user
+                # Handle banner/thumbnail deletion as before...
+                if story and story.banner and ('banner' in request.FILES or not request.POST.get('banner')):
+                    if default_storage.exists(story.banner.name):
+                        default_storage.delete(story.banner.name)
+                if story and story.thumbnail and ('thumbnail' in request.FILES or not request.POST.get('thumbnail')):
+                    if default_storage.exists(story.thumbnail.name):
+                        default_storage.delete(story.thumbnail.name)
+                story_instance.save()
+                return redirect('/myaccount/user_stories/')
+        else:
+            form = StoriesForm(instance=story)
+    
 
     context = {
         'form': form,
         'story': story,
+        'stories': stories,
         'active_page': 'user_stories',
         'first_name': user_data.get('first_name'),
         'last_name': user_data.get('last_name'),
@@ -595,6 +596,8 @@ def user_stories(request):
         'is_authenticated': True,
     }
     return render(request, 'user_stories.html', context)
+
+    
 
 def user_donation(request):
     access_token = request.COOKIES.get('access_token')

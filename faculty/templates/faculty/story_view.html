@@ -10,7 +10,12 @@
         <div class="my-3">
             <article class=" story-letter-container py-3">
                 <!-- Banner -->
-                <img src="{{story.banner.url}}" alt="Banner Image" class="story-banner">
+                {% if story.banner %}
+                    <img src="{{ story.banner.url }}" alt="Banner" />
+                {% else %}
+                    <!-- Optionally show a placeholder image or nothing -->
+                    <img src="{% static 'images/placeholder-banner.jpg' %}" alt="Placeholder Banner" />
+                {% endif %}
 
                 <!-- Header -->
                 <div class="story-letter-header">

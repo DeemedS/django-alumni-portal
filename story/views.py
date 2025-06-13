@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.urls import reverse
 from alumniwebsite.forms import FormWithCaptcha
+from .forms import StoriesForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def story(request):
@@ -100,3 +102,62 @@ def toggle_story_status(request, id):
     else:
         messages.error(request, "Invalid request method.")
         return redirect(reverse('authentication:faculty'))
+    
+@login_required(login_url='/faculty/')
+def story_add(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+
+        return redirect(reverse('authentication:faculty'))
+    # Only allow one story for non-staff users
+    if not request.user.is_staff and Stories.objects.filter(user=request.user).exists():
+        messages.error(request, "You have already submitted a story.")
+        return redirect(reverse('faculty:story_management'))
+
+
+    if request.method == 'POST':
+        form = StoriesForm(request.POST, request.FILES)
+        if form.is_valid():
+            story = form.save(commit=False)
+            story.user = request.user
+            story.save()
+            messages.success(request, "Story added successfully.")
+            return redirect(reverse('faculty:story_management'))
+        else:
+            messages.error(request, "Error adding story. Please check the form.")
+    else:
+        form = StoriesForm()
+    
+    context = {
+        'form' : form,
+    }
+    return render(request, 'faculty/story_add.html', context)
+
+@login_required(login_url='/faculty/')
+def story_edit(request, id):
+    story = get_object_or_404(Stories, id=id)
+    # Only allow editing if the story was created by a staff user
+    if not story.user.is_staff:
+        messages.error(request, "You are not allowed to edit alumni stories.")
+        return redirect(reverse('faculty:story_management'))
+
+
+    if request.method == 'POST':
+        form = StoriesForm(request.POST, request.FILES, instance=story)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Story updated successfully.")
+            return redirect(reverse('faculty:story_management'))
+        else:
+            messages.error(request, "Error updating story. Please check the form.")
+    else:
+        form = StoriesForm(instance=story)
+
+    context = {
+        'form': form,
+        'story': story
+    }
+    return render(request, 'faculty/story_edit.html', context)
