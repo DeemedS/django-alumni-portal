@@ -50,9 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.success) {
                         const deleteButton = document.querySelector(`.delete-item[data-id="${deleteItemId}"][data-type="${deleteItemType}"]`);
                         const row = deleteButton ? deleteButton.closest("tr") : null;
-                
-                        console.log("Row to remove:", row);
-                
+      
                         if (row) {
                             row.remove();
                             showToast("Success", `Successfully Deleted ${deleteItemType}.`, "success");

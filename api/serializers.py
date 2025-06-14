@@ -3,7 +3,7 @@ from events.models import Event
 from articles.models import Article
 from django.utils.timezone import now
 from careers.models import JobPost
-from authentication.models import User, Section
+from authentication.models import Course, User, Section
 from story.models import Stories
 
 class EventSerializer(serializers.ModelSerializer):
@@ -116,3 +116,21 @@ class CourseSectionSerializer(serializers.ModelSerializer):
             "section_id",
             "section_code",
         ]
+
+class SectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = ['id', 'section_code']
+class CourseWithSectionsSerializer(serializers.ModelSerializer):
+    sections = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Course
+        fields = ['id', 'course_code', 'course_name', 'sections']
+
+    def get_sections(self, obj):
+        # Use filtered_sections if available (due to prefetch), fallback to all
+        sections = getattr(obj, 'filtered_sections', None)
+        if sections is None:
+            sections = obj.sections.all()
+        return SectionSerializer(sections, many=True).data

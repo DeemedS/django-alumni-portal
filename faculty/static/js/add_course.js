@@ -1,29 +1,45 @@
 $(document).ready(function () {
-    $("#careerForm").submit(function (event) {
+    $("#courseForm").submit(function (event) {
         event.preventDefault();
 
         let formData = {
-            title: $("#title").val(),
-            company: $("#company").val(),
-            company_email: $("#company_email").val(),
+            course_code: $("#course-code").val(),
+            course_name: $("#course-name").val(),
         };
 
         $.ajax({
-            url: "/faculty/career-add",
+            url: "/faculty/course-add",
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
             headers: { 'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val() },
             success: function (response) {
+                showToast("Success", "Course added successfully!", "success");
 
-                // Redirect to the career edit page
-                if (response.redirect_url) {
-                    window.location.href = response.redirect_url;
-                }
+                $("#course-code").val("");
+                $("#course-name").val("");
+
+                setTimeout(() => {
+                    const addCourseModal = document.getElementById("add-course-modal");
+                    const modalInstance = bootstrap.Modal.getInstance(addCourseModal);
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+                }, 1000);
             },
-            error: function (xhr, status, error) {
-                console.error("Error:", error);
-                showToast("Error", "Error submitting the form!", "danger");
+            error: function (xhr, status, err) {
+                
+
+                let errorMessage = "An unexpected error occurred.";
+
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
+                }
+
+                console.error("Error:", err);
+                console.error("Error:", errorMessage);
+
+                showToast("Error", errorMessage, "danger");
             }
         });
     });

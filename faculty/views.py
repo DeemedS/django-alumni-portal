@@ -867,3 +867,47 @@ def section_delete(request, id):
         return JsonResponse({"success": True}, status=200)
     except Exception as e:
         return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
+    
+@login_required(login_url='/faculty/')
+def course_add(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            course_code = data.get("course_code", "")
+            course_name = data.get("course_name", "")
+
+            print(course_code, course_name)
+
+            if not course_code or not course_name:
+                return JsonResponse({
+                    "error": "Invalid input or missing inputs."
+                }, status=400)
+
+            
+            if Course.objects.filter(course_code=course_code).exists():
+                return JsonResponse({
+                    "error": "Course code already exists."
+                }, status=400)
+
+            course = Course.objects.create(
+                course_code=course_code,
+                course_name=course_name,
+            )
+            
+            course.save()
+
+            return JsonResponse({"message": "Course added successfully!"}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+        
+    return render(request, 'faculty/careers_add.html')

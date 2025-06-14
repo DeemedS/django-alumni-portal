@@ -44,21 +44,31 @@ $(document).ready(function () {
                 if (response.results.length === 0) {
                     sectionTable.append(`<tr><td colspan="5" class="text-center">No Sections found.</td></tr>`);
                 } else {
-                    response.results.forEach(function (section) {
-                        let row = `
-                        <tr>
-                            <td data-label="Course Name">${section.course_name}</td>
-                            <td data-label="Course Code">${section.course_code}</td>
-                            <td data-label="Section Code">${section.section_code}</td>
-                            <td data-label="Actions" class="action-icons text-nowrap">
-                                <a href="/faculty/section/${section.course_id}/edit"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="delete-item" data-id="${section.course_id}" data-type="section" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    `;
-                        sectionTable.append(row);
+                    let foundSections = false;
+
+                    response.results.forEach(function (course) {
+                        if (course.sections && course.sections.length > 0) {
+                            foundSections = true;
+                            course.sections.forEach(function (section) {
+                                let row = `
+                                    <tr>
+                                        <td data-label="Course Name">${course.course_name}</td>
+                                        <td data-label="Course Code">${course.course_code}</td>
+                                        <td data-label="Section Code">${section.section_code}</td>
+                                        <td data-label="Actions" class="action-icons text-nowrap">
+                                            <a href="/faculty/section/${course.id}/edit"><i class="fas fa-edit"></i></a>
+                                            <a href="#" class="delete-item" data-id="${course.id}" data-type="section" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                `;
+                                sectionTable.append(row);
+                            });
+                        }
                     });
 
+                    if (!foundSections) {
+                        sectionTable.append(`<tr><td colspan="5" class="text-center">No Sections found.</td></tr>`);
+                    }
                 }
 
                 createPagination(page, Math.ceil(response.count / pageSize), 5);
