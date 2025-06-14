@@ -84,9 +84,6 @@ def toggle_story_status(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
     
     if request.method == 'POST':
@@ -108,9 +105,6 @@ def story_add(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     # Only allow one story for non-staff users
     if not request.user.is_staff and Stories.objects.filter(user=request.user).exists():

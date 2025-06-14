@@ -45,11 +45,6 @@ def generate_student_number():
 def faculty_dashboard(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
     
     context = {
@@ -84,11 +79,6 @@ def alumni_management(request):
 
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
 
     context = {
@@ -107,11 +97,6 @@ def section_management(request):
 
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
 
     context = {
@@ -130,11 +115,6 @@ def course_management(request):
 
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
 
     context = {
@@ -150,11 +130,6 @@ def course_management(request):
 def alumni_view(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     alumni = get_object_or_404(User, id=id)
@@ -168,10 +143,6 @@ def alumni_view(request, id):
 def careers_management(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
         return redirect(reverse('authentication:faculty'))
 
     context = {
@@ -185,11 +156,6 @@ def careers_management(request):
 def careers_edit(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     try:
@@ -224,11 +190,6 @@ def careers_edit(request, id):
 def careers_view(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     try:
@@ -274,11 +235,6 @@ def careers_view(request, id):
 def events_management(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     context = {
@@ -292,11 +248,6 @@ def events_management(request):
 def events_add(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     if request.method == 'POST':
@@ -317,11 +268,6 @@ def events_add(request):
 def events_edit(request, slug):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     event = get_object_or_404(Event, slug=slug)
@@ -346,11 +292,6 @@ def events_edit(request, slug):
 def events_view(request, slug):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     event = get_object_or_404(Event, slug=slug)
@@ -365,11 +306,6 @@ def events_view(request, slug):
 def articles_management(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     context = {
@@ -383,11 +319,6 @@ def articles_management(request):
 def articles_view(request, slug):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     article = get_object_or_404(Article, slug=slug)
@@ -402,12 +333,7 @@ def articles_view(request, slug):
 @login_required(login_url='/faculty/')
 def story_management(request):
     if not request.user.is_staff or not request.user.is_active:
-        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")    
         return redirect(reverse('authentication:faculty'))
     
     context = {
@@ -421,11 +347,6 @@ def story_management(request):
 def story_view(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     story = get_object_or_404(Stories, id=id)
@@ -555,8 +476,6 @@ def alumni_export(request):
     if request.method == 'POST':
         try:
             data_json = request.POST.get('data')
-
-            print(data_json)
 
             if not data_json:
                 return JsonResponse({'success': False, 'message': "No data provided."}, status=400)
@@ -818,10 +737,6 @@ def handle_settings_form(request):
 def toggle_user_status(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
     
     if request.method == 'POST':
@@ -883,8 +798,6 @@ def section_delete(request, id):
 def course_add(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
         return redirect(reverse('authentication:faculty'))
 
     if request.method == "POST":
@@ -923,8 +836,6 @@ def course_add(request):
 def section_add(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
         return redirect(reverse('authentication:faculty'))
 
     if request.method == "POST":
@@ -971,8 +882,6 @@ def section_add(request):
 def course_edit(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
         return redirect(reverse('authentication:faculty'))
 
     if request.method == "POST":
@@ -1010,8 +919,6 @@ def course_edit(request):
 def section_edit(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
         return redirect(reverse('authentication:faculty'))
 
     if request.method == "POST":
