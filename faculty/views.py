@@ -883,8 +883,6 @@ def course_add(request):
             course_code = data.get("course_code", "")
             course_name = data.get("course_name", "")
 
-            print(course_code, course_name)
-
             if not course_code or not course_name:
                 return JsonResponse({
                     "error": "Invalid input or missing inputs."
@@ -909,5 +907,50 @@ def course_add(request):
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
-        
-    return render(request, 'faculty/careers_add.html')
+
+@login_required(login_url='/faculty/')
+def section_add(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            course_id = data.get("course_id", "")
+            section_code = data.get("section_code", "")
+
+            if not course_id or not section_code:
+                return JsonResponse({
+                    "error": "Invalid input or missing inputs."
+                }, status=400)
+
+            if not Course.objects.filter(id=course_id).exists():
+                return JsonResponse({
+                    "error": "Course not Found."
+                }, status=400)
+                
+
+            course = Course.objects.get(id=course_id)
+
+            if Section.objects.filter(course=course, section_code__iexact=section_code).exists():
+                return JsonResponse({
+                    "error": "Section code already exists for this course."
+                }, status=400)
+
+            section = Section.objects.create(
+                course=course,
+                section_code=section_code,
+            )
+            
+            section.save()
+
+            return JsonResponse({"message": "Section added successfully!"}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)

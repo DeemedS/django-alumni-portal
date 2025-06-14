@@ -31,8 +31,6 @@ $(document).ready(function () {
             type: "GET",
             success: function (response) {
 
-                console.log(response.results);
-
                 $('#searching-message').addClass('d-none').hide();
                 $('table').show();
                 $('.pagination-controls').show();

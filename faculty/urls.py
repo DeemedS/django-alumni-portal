@@ -51,6 +51,7 @@ urlpatterns = [
     path('faculty/system-settings', faculty_views.system_settings, name='system_settings'),
 
     path('faculty/section-delete/<int:id>/', faculty_views.section_delete, name='section_delete'),
+    path('faculty/section-add', faculty_views.section_add, name='section_add'),
 
     path('faculty/course-delete/<int:id>/', faculty_views.course_delete, name='course_delete'),
     path('faculty/course-add', faculty_views.course_add, name='course_add'),

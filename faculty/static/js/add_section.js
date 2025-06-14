@@ -3,12 +3,13 @@ $(document).ready(function () {
         event.preventDefault();
 
         let formData = {
-            course_code: $("#course-code").val(),
+            section_code: $("#section-code").val(),
             course_name: $("#course-name").val(),
+            course_id: $("#selectedCourse").val(),
         };
 
         $.ajax({
-            url: "/faculty/course-add",
+            url: "/faculty/section-add",
             type: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
@@ -18,15 +19,16 @@ $(document).ready(function () {
 
                 $("#course-code").val("");
                 $("#course-name").val("");
+                $("#selectedCourse").val("");
 
                 setTimeout(() => {
-                    const addCourseModal = document.getElementById("add-course-modal");
+                    const addCourseModal = document.getElementById("add-section-modal");
                     const modalInstance = bootstrap.Modal.getInstance(addCourseModal);
                     if (modalInstance) {
                         modalInstance.hide();
                     }
                 }, 1000);
-                
+
                 location.reload();
             },
             error: function (xhr, status, err) {
