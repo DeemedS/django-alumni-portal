@@ -42,7 +42,7 @@ $(document).ready(function () {
                 courseTable.empty();
 
                 if (response.results.length === 0) {
-                    courseTable.append(`<tr><td colspan="5" class="text-center">No Course and Sections found.</td></tr>`);
+                    courseTable.append(`<tr><td colspan="5" class="text-center">No Sections found.</td></tr>`);
                 } else {
                     response.results.forEach(function (course) {
                         let row = `
