@@ -24,6 +24,7 @@ from story.models  import Stories
 from django.core.files.storage import default_storage
 from django.views.decorators.http import require_POST
 from django.core.files.base import ContentFile
+from django.contrib.auth import update_session_auth_hash
 
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
@@ -244,51 +245,89 @@ def user_logout(request):
 def user_change_password(request):
     access_token = request.COOKIES.get('access_token')
     refresh_token = request.COOKIES.get('refresh_token')
-
     user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
 
     base_headers = {
         'User-Agent': user_agent
     }
 
-    if access_token:
-        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
-        data = {'token': access_token}
-        response = requests.post(api_url, data=data, headers=base_headers)
+    if not access_token:
+        return redirect('/login/')
 
-        user_api_url = f"{settings.API_TOKEN_URL}/user_info/"
-        user_response = requests.get(user_api_url, headers={'Authorization': f'Bearer {access_token}'})
+    # Validate access token
+    verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
+    verify_response = requests.post(verify_url, data={'token': access_token}, headers=base_headers)
 
-        if response.status_code == 200:
-            # Now, render the dashboard template and pass the user info
-            user_data = user_response.json()
-            context = {
-                'active_page': 'change_password',
-                'first_name' : user_data.get('first_name'),
-                'last_name' : user_data.get('last_name'),
-                'profile_image': user_data.get('profile_image'),
-                'is_authenticated': True,
-            }
-            return render(request, 'change_password.html',context)
+    # Try refreshing token if needed
+    if verify_response.status_code == 401 and refresh_token:
+        refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
+        refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
 
-        elif response.status_code == 401 and refresh_token:
-            refresh_url = f"{settings.API_TOKEN_URL}/token/refresh/"
-            refresh_response = requests.post(refresh_url, data={'refresh': refresh_token})
-
-            if refresh_response.status_code == 200:
-                new_tokens = refresh_response.json()
-                access_token = new_tokens.get('access')
-                response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True)
-                return response
-            
-            else:
-                return redirect('/login/')
+        if refresh_response.status_code == 200:
+            new_tokens = refresh_response.json()
+            access_token = new_tokens.get('access')
+            response = redirect('/myaccount/')
+            response.set_cookie('access_token', access_token, httponly=True)
+            return response
         else:
             return redirect('/login/')
-    else:
+    elif verify_response.status_code != 200:
         return redirect('/login/')
-    
+
+    # Handle POST (AJAX) request to change password
+    if request.method == "POST" and request.headers.get("Content-Type") == "application/json":
+        try:
+            data = json.loads(request.body)
+            current_password = data.get("current_password")
+            new_password = data.get("new_password")
+            confirm_new_password = data.get("confirm_new_password")
+
+            # Get user info
+            user_info_url = f"{settings.API_TOKEN_URL}/user_info/"
+            user_response = requests.get(user_info_url, headers={'Authorization': f'Bearer {access_token}'})
+
+            if user_response.status_code != 200:
+                return JsonResponse({'error': 'Failed to retrieve user info.'}, status=400)
+
+            user_data = user_response.json()
+            user_email = user_data.get('email')
+            user = User.objects.filter(email=user_email).first()
+
+            if not user:
+                return JsonResponse({'error': 'User not found.'}, status=404)
+
+            if not user.check_password(current_password):
+                return JsonResponse({'error': 'Current password is incorrect.'}, status=400)
+
+            if new_password != confirm_new_password:
+                return JsonResponse({'error': 'New passwords do not match.'}, status=400)
+
+            if current_password == new_password:
+                return JsonResponse({'error': 'New password must be different from the current one.'}, status=400)
+
+            user.set_password(new_password)
+            user.save()
+            update_session_auth_hash(request, user)  # Prevent logout
+
+            return JsonResponse({'message': 'Password changed successfully.'})
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    # Handle GET (initial page load)
+    user_info_url = f"{settings.API_TOKEN_URL}/user_info/"
+    user_response = requests.get(user_info_url, headers={'Authorization': f'Bearer {access_token}'})
+    user_data = user_response.json() if user_response.status_code == 200 else {}
+
+    context = {
+        'active_page': 'change_password',
+        'first_name': user_data.get('first_name'),
+        'last_name': user_data.get('last_name'),
+        'profile_image': user_data.get('profile_image'),
+        'is_authenticated': True,
+    }
+
+    return render(request, 'change_password.html', context)
 
 def saved_jobs(request):
     access_token = request.COOKIES.get('access_token')
