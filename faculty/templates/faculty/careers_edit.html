@@ -70,9 +70,9 @@
                             <label class="form-check-label" for="is_active">Active</label>
                         </div>
                     </div>
-                    <div class="text-end mt-4">
-                        <button type="button" class="cancel-btn" onclick="discardChanges()">Discard</button>
-                        <button type="submit" class="submit-btn">Save</button>
+                    <div class="text-end mt-4 center-spinner">
+                        <button type="button" class="cancel-btn" onclick="history.back();" >Discard</button>
+                        <button id="form-submit" type="submit" class="submit-btn"><span id="btn-spinner" class="spinner d-none"></span>Submit</button>
                     </div>
                 </form>
             </div>

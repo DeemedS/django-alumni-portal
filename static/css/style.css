@@ -319,3 +319,13 @@ footer .footer-form {
 .pup-red {
     color: #800000 !important;
 }
+
+.center-spinner {
+    text-align: center !important;
+}
+
+#form-submit{
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}

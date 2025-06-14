@@ -40,10 +40,10 @@
                       <label for="time" class="form-label">Time</label>
                       {{ form.time }}
                   </div>
-                  <div class="text-end mt-4">
-                      <button type="button" class="cancel-btn" onclick="discardChanges()">Discard</button>
-                      <button type="submit" class="submit-btn">Add</button>
-                  </div>
+                    <div class="text-end mt-4 center-spinner">
+                        <button type="button" class="cancel-btn" onclick="history.back();" >Discard</button>
+                        <button id="form-submit" type="submit" class="submit-btn"><span id="btn-spinner" class="spinner d-none"></span>Save</button>
+                    </div>
               </form>
                 <!--End of content-->
             </div>

@@ -31,8 +31,9 @@
                                 <small class="text-muted d-block mt-1">Current: <img src="{{ story.banner.url }}" alt="Current banner" style="height:40px;"></small>
                             {% endif %}
                         </div>
-                        <div class="text-end mt-4">
-                            <button type="submit" class="submit-btn">Update Story</button>
+
+                        <div class="text-end mt-4 center-spinner">
+                            <button id="form-submit" type="submit" class="submit-btn"><span id="btn-spinner" class="spinner d-none"></span>Add</button>
                         </div>
                     </form>
                 </div>
