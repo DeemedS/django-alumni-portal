@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseNotAllowed, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .forms import FormWithCaptcha
 from django.core.mail import send_mail
 from faculty.models import WebsiteSettings
@@ -88,3 +88,9 @@ def csp_report_view(request):
             logger.error("Failed to parse CSP report: %s", e)
         return JsonResponse({"status": "ok"})
     return JsonResponse({"status": "only POST allowed"}, status=405)
+
+def custom_csrf_failure_view(request, reason=""):
+    referer = request.META.get('HTTP_REFERER')
+    if referer:
+        return redirect(f'{referer}?csrf_error=1')
+    return redirect('/?csrf_error=1')

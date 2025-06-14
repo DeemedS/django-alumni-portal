@@ -411,3 +411,5 @@ LOGGING = {
         },
     },
 }
+
+CSRF_FAILURE_VIEW = 'alumniwebsite.views.custom_csrf_failure_view'
