@@ -1,50 +1,21 @@
 {% load static %}
-<div class="main-hero">
-  <div class="swiper mySwiper">
-      <div class="swiper-wrapper">
 
-        <div class="swiper-slide">
-          <img src={% static "images/park.jpg" %} />
-          <div class="slide-content">
-            <div class="row">
-
-              <div class="col-md-4 slide-content-image">
-                <img src={% static "images/login-now.png" %} />
-              </div>
-
-              <div class="col-md-4 slide-content-text">
-                <h1>Be a part of the PUP Alumni Community</h1>
-                <p>Join the PUP Alumni Association and connect with fellow alumni, get updates on events, and more.</p>
-                <a href="/signup" class="btn">SIGN-UP NOW</a>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="swiper-slide">
-          <img src={% static "images/main.jpg" %} />
-          <div class="slide-content slider-2">
-            <div class="row">
-            <div class="col-md-8 slide-content-text-1">
-              <h1>ALUMNI RELATIONS AND CAREER DEVELOPMENT OFFICE</h1>
-              <p>Welcome to our alumni community, where past meets present and connections endure. Join us in celebrating our shared memories and forging new pathways together.</p>
-              <a href="/signup" class="btn">SIGN-UP NOW</a>
-            </div>
-            </div>
-          </div>  
-        </div>
-
-      </div>
-
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
+<div class="hero">
+  <img class="hero-bg" src="{% static 'images/bg.jpg' %}" alt="Hero Background" />
+  
+  <div class="hero-content">
+    <div class="hero-text">
+      <p class="subtitle">WELCOME TO THE</p>
+      <h1 class="title">ALUMNI PORTAL</h1>
+      <p class="description">
+        Stay connected with the PUP community — join the Alumni Association for event updates, networking, and more.
+      </p>
+    </div>
+    <div class="hero-image-right">
+      <img src="{% static 'images/Ellipse 5.png' %}" alt="Alumni Illustration" />
+    </div>
   </div>
 </div>
 
-<div class="hero">
-  <img src={% static "images/pup-image.webp" %} />
-</div>
 
   <script nonce="{{ request.csp_nonce }}" src={% static 'js/initialize-hero-swiper.js' %}></script>
