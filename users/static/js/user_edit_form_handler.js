@@ -43,7 +43,10 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error("Error:", error);
+                $("#btn-spinner").addClass("d-none");
+                $("#form-submit").prop("disabled", false);
                 showToast("Error", error, "danger");
+                
             }
         });
     });

@@ -35,6 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     errorMessage = xhr.responseJSON.error;
                 }
 
+                $("#btn-spinner").addClass("d-none");
+                $("#form-submit").prop("disabled", false);
+
                 console.error("Error:", err);
                 console.error("Error:", errorMessage);
 
