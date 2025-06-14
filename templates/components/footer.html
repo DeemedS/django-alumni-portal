@@ -53,28 +53,28 @@
                         <div class="row mb-3">
                             <div class="col-md-6 mb-2">
                                 <label for="name" class="form-label">Name</label>
-                                <input id="name" name="name" type="text" class="form-control" placeholder="Name (LN, FN, MI.)">
+                                <input id="name" name="name" type="text" class="form-control" placeholder="eg., Dela Cruz, Juan M.">
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="email" class="form-label">Email</label>
-                                <input id="emailaddress" name="emailaddress" type="email" class="form-control" placeholder="E-mail Address" required>
+                                <input id="emailaddress" name="emailaddress" type="email" class="form-control" placeholder="eg., juandelacruz@gmail.com" required>
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <div class="col-md-6 mb-2">
                                 <label for="year" class="form-label">Batch</label>
-                                <input id="year" name="year" type="text" class="form-control" placeholder="Year of Graduation">
+                                <input id="year" name="year" type="text" class="form-control" placeholder="eg., 2025">
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="program" class="form-label">Course</label>
-                                <input id="program" name="program" type="text" class="form-control" placeholder="Course/Program">
+                                <input id="program" name="program" type="text" class="form-control" placeholder="eg, BS in Computer Engineering">
                             </div>
                         </div>
 
                         <div class="mb-4">
                             <label for="message" class="form-label">Message</label>
-                            <textarea id="message" name="message" class="form-control" placeholder="Compose Message..." required></textarea>
+                            <textarea id="message" name="message" class="form-control" placeholder="Type your message here..." required></textarea>
                         </div>
 
                         <div class="mb-4">
@@ -99,3 +99,8 @@
         <p>Alumni Relations and Career Development</p>
     </div>
 </footer>
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/footer_email_handler.js' %}"></script>
