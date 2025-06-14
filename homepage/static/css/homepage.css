@@ -469,6 +469,14 @@
     text-align: center;
 }
 
+.hero .btn:active {
+    background-color: #FFB300;
+}
+.hero .btn:hover {
+    background-color: #990000;
+    color: #FFB300;
+}
+
 .service-cards .coming-soon {
     position: relative;
     /* Full viewport height */
