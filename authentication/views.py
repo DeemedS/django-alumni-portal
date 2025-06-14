@@ -19,6 +19,7 @@ import string
 from alumniwebsite.forms import FormWithCaptcha
 from authentication.models import Course
 from faculty.models import WebsiteSettings
+from django.db.models import Q
 
 
 User = get_user_model()
@@ -133,10 +134,6 @@ def register(request):
                 if not User.objects.filter(student_number=student_number).exists():
                     return student_number
 
-        def generate_course_code(course_name, max_length=10):
-            acronym = ''.join(word[0] for word in course_name.split()).upper()
-            return acronym[:max_length]
-
         # Validation
         if not agree:
             messages.error(request, "You must agree to the terms and conditions.")
@@ -158,8 +155,7 @@ def register(request):
             student_number = generate_student_number()
 
         if not course and course_name:
-            course_code = generate_course_code(course_name)
-            course = Course.objects.get_or_create(course_name=course_name, course_code=course_code)[0].id
+            course = Course.objects.filter(course_name=request.POST.get('course_name')).first()
 
         work_exp = [{
             "company": company,

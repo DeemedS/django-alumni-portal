@@ -25,6 +25,7 @@ from .models import WebsiteSettings, Official, POSITION_CHOICES
 from django.utils.text import slugify
 from .forms import OfficialForm, WebsiteSettingsForm
 from story.models import Stories
+from django.db.models import Q
 
 def generate_student_number():
     while True:
@@ -458,12 +459,13 @@ def alumni_import(request):
 
             if User.objects.filter(student_number=student_number).exists():
                 return JsonResponse({'success': False, 'message': f"Student number {student_number} already exists."}, status=409)
+            
+            course_code = row.get('Course Code', '').strip()
+            course_name = row.get('Course', '').strip()
 
-            # Get course
-            try:
-                course = Course.objects.get(course_code=row['Course Code'])
-            except Course.DoesNotExist:
-                return JsonResponse({'success': False, 'message': f"Course code '{row['Course Code']}' not found."}, status=400)
+            course = Course.objects.filter(
+                Q(course_code=course_code) | Q(course_name=course_name)
+            ).first()
             
             try:
                 section = Section.objects.get(section_code=row['Section Code'], course=course)
