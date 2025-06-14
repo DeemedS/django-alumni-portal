@@ -18,8 +18,6 @@ def home(request):
     websettings = WebsiteSettings.objects.first()
 
     is_authenticated = False
-    is_admin = False
-
 
     if access_token and refresh_token:
         api_url = f"{settings.API_TOKEN_URL}/token/verify/"
@@ -29,17 +27,12 @@ def home(request):
         if response.status_code == 200:
             is_authenticated = True
 
-    if request.user.is_authenticated:
-        is_admin = True
-        
-
     context = {
         'featured_article': featured_article,
         'news_articles': news_articles,
         'event_article': event_article,
         'school_abv': settings.SCHOOL_ABV,
         'is_authenticated': is_authenticated,
-        'is_admin': is_admin,
         'settings': websettings,
         "form": form,
         "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY

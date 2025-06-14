@@ -1,6 +1,10 @@
 from django.middleware.csrf import CsrfViewMiddleware
 from django.conf import settings
 from django.middleware.csrf import get_token
+from django.utils.deprecation import MiddlewareMixin
+from django.contrib.auth import get_user_model
+import jwt
+import requests
 
 class HttpOnlyCSRFMiddleware(CsrfViewMiddleware):
     def _set_token(self, request, response):
@@ -36,3 +40,29 @@ class RemoveServerHeaderMiddleware:
         response.headers.pop('Server', None)
         response.headers.pop('X-Powered-By', None)
         return response
+    
+class JWTAuthenticationMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        access_token = request.COOKIES.get('access_token')
+        refresh_token = request.COOKIES.get('refresh_token')
+
+        request.is_user_authenticated = False
+        request.is_admin = False
+
+        if access_token and refresh_token:
+            try:
+                api_url = f"{settings.API_TOKEN_URL}/token/verify/"
+                response = requests.post(api_url, data={'token': access_token})
+
+                if response.status_code == 200:
+                    payload = jwt.decode(access_token, settings.SECRET_KEY, algorithms=["HS256"])
+                    user_id = payload.get("user_id")
+
+                    if user_id:
+                        User = get_user_model()
+                        try:
+                            request.is_user_authenticated = True
+                        except User.DoesNotExist:
+                            pass
+            except Exception:
+                pass

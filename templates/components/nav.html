@@ -34,7 +34,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'services:services'%}">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'about:about'%}">About</a></li>
 
-        {% if not is_authenticated and is_admin %}
+        {% if not is_authenticated and request.user.is_authenticated %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Profile
@@ -45,7 +45,7 @@
                     <li><a class="dropdown-item text-primary" href="{% url 'faculty:faculty_logout' %}">Logout</a></li>
                 </ul>
             </li>
-        {% elif is_authenticated and is_admin %}
+        {% elif is_authenticated and request.user.is_authenticated %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Profile
@@ -56,7 +56,7 @@
                     <li><a class="dropdown-item text-primary" href="{% url 'faculty:faculty_logout' %}">Logout</a></li>
                 </ul>
             </li>
-        {% elif is_authenticated and not is_admin %}
+        {% elif is_authenticated and not request.user.is_authenticated %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Profile
