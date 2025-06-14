@@ -10,6 +10,8 @@
 {% include 'components/faculty_topnav.html' %}
 
 {% include 'components/delete_modal.html' %}
+{% include 'components/edit_course_modal.html' %}
+
 <div class="container-fluid">
     <div class="row flex-nowrap">
         {% include "components/faculty_sidebar.html" %}
@@ -22,14 +24,12 @@
             <div class="bg-light p-3 min-vh-100 d-flex flex-column">
                 <!-- start of content -->
                 <div class="container-fluid p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3 search-container">
-                        <h4 class="fw-bold title-text mb-0">COURSE LIST</h4>
-                        <div class="d-flex align-items-center">
-                            <div class="d-flex align-items-center gap-3">
-                                <button class="add-alumni-btn" data-bs-toggle="modal" data-bs-target="#add-course-modal">
-                                    <i class="fa-solid fa-plus me-1"></i>ADD COURSE
-                                </button>
-                            </div>
+                  <div class="d-flex justify-content-between align-items-center mb-3 search-container">
+                    <h4 class="fw-bold title-text mb-0">COURSE LIST</h4>
+                    <div class="d-flex align-items-center">
+                    <a class="add-alumni-btn" data-bs-toggle="modal" data-bs-target="#add-course-modal">
+                        <i class="fa-solid fa-plus me-1"></i>ADD COURSE
+                    </a>
                 </div>
             </div>
                     
@@ -80,13 +80,18 @@
     </div>
 </div>
 
-<div class="modal fade" id="add-course-modal" tabindex="-1" aria-labelledby="import-modal" aria-hidden="true">
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+
+
+<div class="modal fade" id="add-course-modal" tabindex="-1" aria-labelledby="add-course-modal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-danger add-course-modal">
       <div class="modal-body d-flex flex-column justify-content-center align-items-center">
         <div class="add-course w-100">
           <h4>Add Course</h4>
-          <form id="courseForm" method="POST">
             {% csrf_token %}
             
             <div class="mb-3 text-start w-100">
@@ -103,20 +108,17 @@
               <button class="cancel-btn flex-fill me-sm-3 mb-2 mb-sm-0" data-bs-dismiss="modal">Cancel</button>
               <button type="submit" id="submit-course-btn" class="btn btn-danger flex-fill">Submit</button>
             </div>
-          </form>
       </div>
     </div>
   </div>
 </div>
 
 
-<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
-    <!-- Toast template will be added dynamically -->
-</div>
-
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/get_course.js' %}"></script>
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/add_course.js' %}"></script>
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/faculty_pagination.js' %}"></script>
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/delete_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/edit_course.js' %}"></script>
+
     
 {% endblock %}

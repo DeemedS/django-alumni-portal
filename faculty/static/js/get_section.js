@@ -55,7 +55,12 @@ $(document).ready(function () {
                                         <td data-label="Course Code">${course.course_code}</td>
                                         <td data-label="Section Code">${section.section_code}</td>
                                         <td data-label="Actions" class="action-icons text-nowrap">
-                                            <a href="/faculty/section/${section.id}/edit"><i class="fas fa-edit"></i></a>
+                                            <a href="#"
+                                                class="edit-section-btn-me"                                 
+                                                data-id="${section.id}" 
+                                                data-code="${section.section_code}"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#edit-section-modal"><i class="fas fa-edit"></i></a>
                                             <a href="#" class="delete-item" data-id="${section.id}" data-type="section" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>

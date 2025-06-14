@@ -45,7 +45,13 @@ $(document).ready(function () {
                             <td data-label="Course Name">${course.course_name}</td>
                             <td data-label="Course Code">${course.course_code}</td>
                             <td data-label="Actions" class="action-icons text-nowrap">
-                                <a href="/faculty/course/${course.id}/edit"><i class="fas fa-edit"></i></a>
+                                <a href="#"
+                                class="edit-course-btn-me"                                 
+                                data-id="${course.id}" 
+                                data-name="${course.course_name}" 
+                                data-code="${course.course_code}"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#edit-course-modal"><i class="fas fa-edit"></i></a>
                                 <a href="#" class="delete-item" data-id="${course.id}" data-type="course" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>

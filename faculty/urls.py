@@ -52,9 +52,11 @@ urlpatterns = [
 
     path('faculty/section-delete/<int:id>/', faculty_views.section_delete, name='section_delete'),
     path('faculty/section-add', faculty_views.section_add, name='section_add'),
+    path('faculty/section-edit', faculty_views.section_edit, name='section_edit'),
 
     path('faculty/course-delete/<int:id>/', faculty_views.course_delete, name='course_delete'),
     path('faculty/course-add', faculty_views.course_add, name='course_add'),
+    path('faculty/course-edit', faculty_views.course_edit, name='course_edit'),
 
     path('faculty/course-management', faculty_views.course_management, name='course_section_management'),
     path('faculty/section-management', faculty_views.section_management, name='course_section_management'),

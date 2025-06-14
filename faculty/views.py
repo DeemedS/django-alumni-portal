@@ -954,3 +954,90 @@ def section_add(request):
             return JsonResponse({"error": "Invalid JSON data"}, status=400)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+        
+
+@login_required(login_url='/faculty/')
+def course_edit(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            course_code = data.get("course_code", "")
+            course_name = data.get("course_name", "")
+            course_id = data.get("course_id", "")
+
+            if not course_code or not course_name or not course_id:
+                return JsonResponse({
+                    "success": False,
+                    "message": "Invalid input or missing inputs."
+                }, status=400)
+
+            course = Course.objects.get(id=course_id)
+            course.course_code = course_code
+            course.course_name = course_name
+            course.save()
+
+            return JsonResponse({
+                "success": True,
+                "message": "Course updated successfully!"
+            }, status=200)
+
+        except Course.DoesNotExist:
+            return JsonResponse({"success": False, "message": "Course not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "message": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)}, status=500)
+        
+@login_required(login_url='/faculty/')
+def section_edit(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            section_code = data.get("section_code", "")
+            section_id = data.get("section_id", "")
+            
+
+            if not section_code or not section_id:
+                return JsonResponse({
+                    "success": False,
+                    "message": "Invalid input or missing inputs."
+                }, status=400)
+            
+            section = Section.objects.get(id=section_id)
+            course = section.course
+
+            if Section.objects.filter(course=course, section_code__iexact=section_code).exists():
+                return JsonResponse({
+                    "success": False,
+                    "message": "Section code already exists for this course.",
+                }, status=400)
+
+            
+            section.section_code = section_code
+            section.save()
+
+            return JsonResponse({
+                "success": True,
+                "message": "Section updated successfully!"
+            }, status=200)
+
+        except Course.DoesNotExist:
+            return JsonResponse({"success": False, "message": "Section not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "message": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)}, status=500)

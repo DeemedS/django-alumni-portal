@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#courseForm").submit(function (event) {
+    $("#submit-section-btn").on("click", function (event) {
         event.preventDefault();
 
         let formData = {

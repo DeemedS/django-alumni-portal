@@ -1,10 +1,11 @@
 $(document).ready(function () {
-    $("#courseForm").submit(function (event) {
+    $("#submit-course-btn").on("click", function (event) {
         event.preventDefault();
 
+
         let formData = {
-            course_code: $("#course-code").val(),
-            course_name: $("#course-name").val(),
+            course_code: document.getElementById("course-code").value.trim(),
+            course_name: document.getElementById("course-name").value.trim(),
         };
 
         $.ajax({
@@ -46,3 +47,4 @@ $(document).ready(function () {
         });
     });
 });
+

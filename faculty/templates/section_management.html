@@ -10,6 +10,8 @@
 {% include 'components/faculty_topnav.html' %}
 
 {% include 'components/delete_modal.html' %}
+{% include 'components/edit_section_modal.html' %}
+
 <div class="container-fluid">
     <div class="row flex-nowrap">
         {% include "components/faculty_sidebar.html" %}
@@ -83,16 +85,18 @@
     </div>
 </div>
 
+
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
 <div class="modal fade" id="add-section-modal" tabindex="-1" aria-labelledby="add-section-modal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-danger add-course-modal">
       <div class="modal-body d-flex flex-column justify-content-center align-items-center">
         <div class="add-section w-100">
           <h4>Add Section</h4>
-          <form id="courseForm" method="POST">
             {% csrf_token %}
-
-
             <div class="mb-3 text-start w-100">
                 <label for="course-name" class="form-label">Course Name</label>
                 <input type="text" class="form-control" id="courseSearch" placeholder="e.g., Bachelor of Science in Computer Engineering" value="" >
@@ -111,21 +115,16 @@
           <button class="cancel-btn flex-fill me-sm-3 mb-2 mb-sm-0" data-bs-dismiss="modal">Cancel</button>
           <button id="submit-section-btn" class="btn btn-danger flex-fill">Submit</button>
         </div>
-        </form>
       </div>
     </div>
   </div>
-</div>
-
-
-<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
-    <!-- Toast template will be added dynamically -->
 </div>
 
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/get_section.js' %}"></script>
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/faculty_pagination.js' %}"></script>
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/delete_handler.js' %}"></script>
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/add_section.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/edit_section.js' %}"></script>
 
 <script nonce="{{request.csp_nonce}}">
     document.addEventListener("DOMContentLoaded", function () {
