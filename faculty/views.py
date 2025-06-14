@@ -62,9 +62,20 @@ def faculty_dashboard(request):
     
 
 def faculty_logout(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+    
     logout(request)
+
+    response = redirect('/faculty')
+    
+    if access_token:
+        response.delete_cookie('access_token')
+    if refresh_token:
+        response.delete_cookie('refresh_token')
+
     messages.success(request, "You have been logged out successfully.")
-    return redirect('/faculty') 
+    return response
 
 @login_required(login_url='/faculty/')
 def alumni_management(request):
