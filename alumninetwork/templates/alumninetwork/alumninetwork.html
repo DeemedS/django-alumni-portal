@@ -126,7 +126,7 @@
 
                  <!-- Filter Bar -->
                 <div class="filter-bar d-flex justify-content-center gap-3 flex-wrap">
-
+                
                     <div>
                         <input type="hidden" id="course_name" name="course_name" value=""> 
                         <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="" >
@@ -141,11 +141,10 @@
                         </select>
                     </div>
 
-                    <div>
-                        <select class="form-select" id="year_graduated" name="year_graduated" data-selected-year="{{ alumni.year_graduated }}">
-                            <option selected disabled>Select School Year</option>
-                        </select>
-                    </div>
+                    <select class="form-select" id="year_graduated" name="year_graduated"
+                            data-selected-year="{{ current_year }}">
+                        <option disabled>Select School Year</option>
+                    </select>
 
                     <button id="search-button"  class="btn">Search</button>
                 </div>
@@ -153,6 +152,9 @@
                 <!-- Alumni Cards -->
                 <div class="alumni-list">
                     <div class="container">
+                        <div id="searching-message" class="d-none text-center my-4 fw-semibold fs-5">
+                        Finding Alumni ...
+                        </div>
                         <div class="row alumni-cards" id="alumni-cards-container">
                             
                             
