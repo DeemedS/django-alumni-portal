@@ -1,11 +1,11 @@
 from django.shortcuts import get_object_or_404
-from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer, AlumniNetworkSerializer
+from .serializers import CourseSectionSerializer, EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer, AlumniNetworkSerializer
 
 from django.utils.timezone import now
 from events.models import Event
 from articles.models import Article
 from careers.models import JobPost
-from authentication.models import User
+from authentication.models import Section, User
 from story.models import Stories
 from .permissions import IsStaffUser
 from rest_framework.views import APIView
@@ -371,4 +371,35 @@ class FilteredAlumniAPIView(APIView):
         result_page = paginator.paginate_queryset(alumni, request)
         serializer = AlumniNetworkSerializer(result_page, many=True, context={"request": request})
         
+        return paginator.get_paginated_response(serializer.data)
+    
+class FilteredCourseSectionAPIView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+
+    
+    def get(self, request):
+        page_size = request.GET.get('page_size') or 10
+
+        course_name = request.GET.get('course_name')
+        course_code = request.query_params.get("course_code")
+        section_code = request.query_params.get("section_code")
+
+        sections = Section.objects.select_related("course").order_by("id")
+
+        if course_name:
+            sections = sections.filter(course__course_name__icontains=course_name)
+
+        if course_code:
+            sections = sections.filter(course__course_code__icontains=course_code)
+
+        if section_code:
+            sections = sections.filter(section_code__icontains=section_code)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(sections, request)
+        serializer = CourseSectionSerializer(result_page, many=True, context={"request": request})
+
         return paginator.get_paginated_response(serializer.data)

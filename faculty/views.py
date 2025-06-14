@@ -66,7 +66,7 @@ def faculty_logout(request):
     return redirect('/faculty') 
 
 @login_required(login_url='/faculty/')
-def alumni_management(request):\
+def alumni_management(request):
     
     courses = Course.objects.all()
 
@@ -87,6 +87,52 @@ def alumni_management(request):\
     }
 
     return render(request, 'faculty/alumni_management.html', context)
+
+@login_required(login_url='/faculty/')
+def section_management(request):
+    
+    courses = Course.objects.all()
+
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))  # Check if message exists
+
+        return redirect(reverse('authentication:faculty'))
+
+    context = {
+        'active_page':'section',
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'courses': courses
+    }
+
+    return render(request, 'section_management.html', context)
+
+@login_required(login_url='/faculty/')
+def course_management(request):
+    
+    courses = Course.objects.all()
+
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        
+        # Debug: Print stored messages before redirecting
+        storage = get_messages(request)
+        print("Messages before redirect:", list(storage))  # Check if message exists
+
+        return redirect(reverse('authentication:faculty'))
+
+    context = {
+        'active_page':'course',
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'courses': courses
+    }
+
+    return render(request, 'course_management.html', context)
 
 @login_required(login_url='/faculty/')
 def alumni_view(request, id):

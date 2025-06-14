@@ -49,7 +49,9 @@ urlpatterns = [
     path('faculty/article-delete/<int:id>/', article_views.article_delete, name='article_delete'),
 
     path('faculty/system-settings', faculty_views.system_settings, name='system_settings'),
-    
+
+    path('faculty/course-management', faculty_views.course_management, name='course_section_management'),
+    path('faculty/section-management', faculty_views.section_management, name='course_section_management'),
     path('faculty/officials-management', faculty_views.officials_management, name='officials_management'),
     path('faculty/save-officials', faculty_views.handle_officials_form, name='handle_officials_form'),
     path('faculty/save-settings', faculty_views.handle_settings_form, name='handle_settings_form'),
