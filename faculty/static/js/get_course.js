@@ -46,7 +46,7 @@ $(document).ready(function () {
                             <td data-label="Course Code">${course.course_code}</td>
                             <td data-label="Actions" class="action-icons text-nowrap">
                                 <a href="/faculty/course/${course.course_id}/edit"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="delete-item" data-id="${course.course_id}" data-type="article" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="delete-item" data-id="${course.course_id}" data-type="course" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     `;

@@ -50,6 +50,9 @@ urlpatterns = [
 
     path('faculty/system-settings', faculty_views.system_settings, name='system_settings'),
 
+    path('faculty/section-delete/<int:id>/', faculty_views.section_delete, name='section_delete'),
+    path('faculty/course-delete/<int:id>/', faculty_views.course_delete, name='course_delete'),
+
     path('faculty/course-management', faculty_views.course_management, name='course_section_management'),
     path('faculty/section-management', faculty_views.section_management, name='course_section_management'),
     path('faculty/officials-management', faculty_views.officials_management, name='officials_management'),

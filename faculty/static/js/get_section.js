@@ -51,8 +51,8 @@ $(document).ready(function () {
                             <td data-label="Course Code">${section.course_code}</td>
                             <td data-label="Section Code">${section.section_code}</td>
                             <td data-label="Actions" class="action-icons text-nowrap">
-                                <a href="/faculty/course/${section.course_id}/edit"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="delete-item" data-id="${section.course_id}" data-type="article" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                <a href="/faculty/section/${section.course_id}/edit"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="delete-item" data-id="${section.course_id}" data-type="section" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     `;

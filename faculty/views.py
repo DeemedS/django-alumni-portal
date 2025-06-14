@@ -825,3 +825,43 @@ def toggle_user_status(request, id):
     else:
         messages.error(request, "Invalid request method.")
         return redirect(reverse('authentication:faculty'))
+    
+@login_required(login_url='/faculty/')
+def course_delete(request, id):
+    course = Course.objects.filter(id=id).first()
+
+    if not course:
+        return JsonResponse({"success": False, "message": "Course not found"}, status=404)
+
+    try:
+        # Delete course from all users' saved course list
+        users_with_course = User.objects.filter(course=course)
+        for user in users_with_course:
+            user.course = None
+            user.save()
+
+        # Delete the job post itself
+        course.delete()
+        return JsonResponse({"success": True}, status=200)
+    except Exception as e:
+        return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
+    
+@login_required(login_url='/faculty/')
+def section_delete(request, id):
+    section = Section.objects.filter(id=id).first()
+
+    if not section:
+        return JsonResponse({"success": False, "message": "Section not found"}, status=404)
+
+    try:
+        # Delete section from all users' saved section list
+        users_with_section = User.objects.filter(section=section)
+        for user in users_with_section:
+            user.section = None
+            user.save()
+
+        # Delete the section post itself
+        section.delete()
+        return JsonResponse({"success": True}, status=200)
+    except Exception as e:
+        return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
