@@ -384,6 +384,25 @@
   }
 }
 
+@media (max-width: 580px) {
+
+  .hero-image-right {
+    display: none;
+  }
+  .hero-text .subtitle {
+    font-size: 0.8rem !important;
+  } 
+
+  .hero-text .title {
+    font-size: 2rem !important;
+    max-width: 100% !important;
+  } 
+  .hero-text .description {
+    font-size: 0.5rem !important;
+  } 
+  
+}
+
 
 @media (min-width: 1281px) {
     .hero{
