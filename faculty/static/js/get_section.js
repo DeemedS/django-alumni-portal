@@ -12,7 +12,7 @@ $(document).ready(function () {
         $('.pagination-controls').hide();
         $('#searching-message').removeClass('d-none').show();
 
-        let url = `/api/filtered-course-section/?page=${page}&page_size=${pageSize}`;
+        let url = `/api/filtered-course-with-section/?page=${page}&page_size=${pageSize}`;
 
         if (section_code) {
             url += `&section_code=${encodeURIComponent(section_code)}`;
@@ -30,34 +30,35 @@ $(document).ready(function () {
             url: url,
             type: "GET",
             success: function (response) {
-                // Hide the searching message
-                $('#searching-message').addClass('d-none').hide();
 
-                // Show table and pagination again
+                console.log(response.results);
+
+                $('#searching-message').addClass('d-none').hide();
                 $('table').show();
                 $('.pagination-controls').show();
 
-                // Clear and populate table with results
                 let sectionTable = $('tbody');
                 sectionTable.empty();
+
+                let foundSections = false;
 
                 if (response.results.length === 0) {
                     sectionTable.append(`<tr><td colspan="5" class="text-center">No Sections found.</td></tr>`);
                 } else {
-                    let foundSections = false;
-
                     response.results.forEach(function (course) {
-                        if (course.sections && course.sections.length > 0) {
+                        const sections = Array.isArray(course.sections) ? course.sections : [];
+
+                        if (sections.length > 0) {
                             foundSections = true;
-                            course.sections.forEach(function (section) {
+                            sections.forEach(function (section) {
                                 let row = `
                                     <tr>
                                         <td data-label="Course Name">${course.course_name}</td>
                                         <td data-label="Course Code">${course.course_code}</td>
                                         <td data-label="Section Code">${section.section_code}</td>
                                         <td data-label="Actions" class="action-icons text-nowrap">
-                                            <a href="/faculty/section/${course.id}/edit"><i class="fas fa-edit"></i></a>
-                                            <a href="#" class="delete-item" data-id="${course.id}" data-type="section" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                            <a href="/faculty/section/${section.id}/edit"><i class="fas fa-edit"></i></a>
+                                            <a href="#" class="delete-item" data-id="${section.id}" data-type="section" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 `;

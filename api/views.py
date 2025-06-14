@@ -409,3 +409,45 @@ class FilteredCourseSectionAPIView(APIView):
 
         serializer = CourseWithSectionsSerializer(result_page, many=True, context={"request": request})
         return paginator.get_paginated_response(serializer.data)
+    
+class FilteredCourseSectionWithOnlySectionsAPIView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def get(self, request):
+        page_size = int(request.GET.get('page_size', 10))
+
+        course_name = request.GET.get('course_name')
+        course_code = request.GET.get('course_code')
+        section_code = request.GET.get('section_code')
+
+        # Filter only courses that have at least one section
+        courses = Course.objects.annotate(
+            section_count=Count('sections')
+        ).filter(section_count__gt=0).order_by("id")
+
+        # Filter by course fields
+        if course_name:
+            courses = courses.filter(course_name__icontains=course_name)
+
+        if course_code:
+            courses = courses.filter(course_code__icontains=course_code)
+
+        # Filter section_code (optional)
+        if section_code:
+            courses = courses.prefetch_related(
+                Prefetch(
+                    'sections',
+                    queryset=Section.objects.filter(section_code__icontains=section_code),
+                    to_attr='filtered_sections'
+                )
+            )
+        else:
+            courses = courses.prefetch_related('sections')
+
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(courses, request)
+
+        serializer = CourseWithSectionsSerializer(result_page, many=True, context={"request": request})
+        return paginator.get_paginated_response(serializer.data)
