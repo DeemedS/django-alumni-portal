@@ -293,6 +293,7 @@
     align-items: center;
     justify-content: flex-start;
     padding: 3rem 5%;
+    margin-top: 40px;
   }
 
 }
@@ -309,7 +310,7 @@
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: 0.2rem;
-  line-height: 1.2;
+  line-height: 1;
 }
 
 .hero-text .title {
@@ -337,6 +338,7 @@
   letter-spacing: 0.2rem;
   max-width: 80%;
   margin-top: 1rem;
+  line-height: 1.1;
 }
 
 .hero-image-right img {
@@ -383,6 +385,10 @@
   .hero-text .description {
     font-size: 1rem;
   }
+
+    .hero .btn {
+    margin-top: 5px;
+  }
 }
 
 @media (max-width: 580px) {
@@ -391,16 +397,32 @@
     display: none;
   }
   .hero-text .subtitle {
-    font-size: 0.8rem !important;
+    font-size: 0.6rem !important;
   } 
 
   .hero-text .title {
-    font-size: 2rem !important;
+    font-size: 1rem !important;
     max-width: 100% !important;
   } 
   .hero-text .description {
     font-size: 0.5rem !important;
   } 
+
+  .hero .btn {
+    margin-top: 3px;
+    line-height: 10px !important;
+    font-size: 0.5rem;
+  }
+
+  .hero-text .title {
+  -webkit-text-stroke: 0px #FFB300;
+  text-shadow:
+    0px 0px 0 #FFB300,
+   -0px 0px 0 #FFB300,
+    0px -0px 0 #FFB300,
+   -0px -0px 0 #FFB300,
+    0 6px 6px rgba(0, 0, 0, 0.5);
+    }
   
 }
 
@@ -434,6 +456,17 @@
     max-width: 90%;
     margin: 0 auto;
   }
+}
+
+.hero .btn {
+    font-family: 'Poppins';
+    border-radius: 0%;
+    background-color: #800000;
+    color: #fff;
+    font-weight: 500;
+    line-height: 30px;
+    letter-spacing: 3px;
+    text-align: center;
 }
 
 .service-cards .coming-soon {
