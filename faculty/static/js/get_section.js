@@ -2,7 +2,7 @@ $(document).ready(function () {
     let page = 1;
     const pageSize = 20;
 
-    function fetchCourse(page) {
+    function fetchSection(page) {
         let section_code = $('#search-section-code-input').val().trim();
         let course_name = $('#search-course-name-input').val().trim();
         let course_code = $('#search-course-code-input').val().trim();
@@ -38,25 +38,25 @@ $(document).ready(function () {
                 $('.pagination-controls').show();
 
                 // Clear and populate table with results
-                let courseTable = $('tbody');
-                courseTable.empty();
+                let sectionTable = $('tbody');
+                sectionTable.empty();
 
                 if (response.results.length === 0) {
-                    courseTable.append(`<tr><td colspan="5" class="text-center">No Sections found.</td></tr>`);
+                    sectionTable.append(`<tr><td colspan="5" class="text-center">No Sections found.</td></tr>`);
                 } else {
-                    response.results.forEach(function (course) {
+                    response.results.forEach(function (section) {
                         let row = `
                         <tr>
-                            <td data-label="Course Name">${course.course_name}</td>
-                            <td data-label="Section Code">${course.section_code}</td>
-                            <td data-label="Section Code">${course.course_code}</td>
+                            <td data-label="Course Name">${section.course_name}</td>
+                            <td data-label="Course Code">${section.course_code}</td>
+                            <td data-label="Section Code">${section.section_code}</td>
                             <td data-label="Actions" class="action-icons text-nowrap">
-                                <a href="/faculty/course/${course.course_id}/edit"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="delete-item" data-id="${course.course_id}" data-type="article" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
+                                <a href="/faculty/course/${section.course_id}/edit"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="delete-item" data-id="${section.course_id}" data-type="article" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                     `;
-                        courseTable.append(row);
+                        sectionTable.append(row);
                     });
 
                 }
@@ -72,57 +72,27 @@ $(document).ready(function () {
         });
     }
 
-    // Pagination click event
     $(document).on("click", "#pagination .page-link", function (e) {
         e.preventDefault();
         let newPage = parseInt($(this).data("page"));
         if (!isNaN(newPage)) {
             page = newPage;
-            fetchCourse(page);
+            fetchSection(page);
         }
     });
 
-    // Publish/unpublish button click event
-    $(document).on("click", ".toggle-status-btn", function () {
-        const button = $(this);
-        const articleId = button.data("id");
-
-        $.ajax({
-            url: `/article/toggle_status/${articleId}/`,
-            type: "POST",
-            headers: {
-                'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
-            },
-            success: function () {
-                if (button.hasClass("publish-btn")) {
-                    button.removeClass("publish-btn").addClass("unpublish-btn").text("Unpublish");
-                } else {
-                    button.removeClass("unpublish-btn").addClass("publish-btn").text("Publish");
-                }
-
-                showToast("Success", "CourseSection status updated successfully!", "success");
-            },
-            error: function (xhr, status, error) {
-                console.error("Error toggling article status:", error);
-            }
-        });
-    });
-
-    // Search button click event — resets page to 1 and fetches course with query
     $('#search-btn').on('click', function () {
         page = 1;
-        fetchCourse(page);
+        fetchSection(page);
     });
 
-    // Optional: Pressing Enter inside search input triggers search too
     $('#search-course-name-input, #search-course-code-input').on('keypress', function (e) {
         if (e.which === 13) { // Enter key
             e.preventDefault();
             page = 1;
-            fetchCourse(page);
+            fetchSection(page);
         }
     });
 
-    // Initial fetch
-    fetchCourse(page);
+    fetchSection(page);
 });

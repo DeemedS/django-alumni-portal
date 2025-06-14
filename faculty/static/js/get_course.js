@@ -76,32 +76,6 @@ $(document).ready(function () {
         }
     });
 
-    // Publish/unpublish button click event
-    $(document).on("click", ".toggle-status-btn", function () {
-        const button = $(this);
-        const articleId = button.data("id");
-
-        $.ajax({
-            url: `/article/toggle_status/${articleId}/`,
-            type: "POST",
-            headers: {
-                'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
-            },
-            success: function () {
-                if (button.hasClass("publish-btn")) {
-                    button.removeClass("publish-btn").addClass("unpublish-btn").text("Unpublish");
-                } else {
-                    button.removeClass("unpublish-btn").addClass("publish-btn").text("Publish");
-                }
-
-                showToast("Success", "CourseSection status updated successfully!", "success");
-            },
-            error: function (xhr, status, error) {
-                console.error("Error toggling article status:", error);
-            }
-        });
-    });
-
     // Search button click event — resets page to 1 and fetches course with query
     $('#search-btn').on('click', function () {
         page = 1;
