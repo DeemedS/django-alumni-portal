@@ -14,7 +14,7 @@ $(document).ready(function () {
         $('.pagination-controls').hide();
 
         // Show the searching message
-        $('#searching-message').show();
+        $('#searching-message').removeClass('d-none').show();
 
         $.ajax({
             url: `/api/alumni-list/`,
@@ -30,7 +30,7 @@ $(document).ready(function () {
             success: function (response) {
 
                 // Hide the searching message
-                $('#searching-message').hide();
+                $('#searching-message').addClass('d-none').hide();
 
                 // Show table and pagination again
                 $('table').show();
@@ -75,7 +75,10 @@ $(document).ready(function () {
                 createPagination(page, Math.ceil(response.count / pageSize), 5);
             },
             error: function (xhr, status, error) {
-                console.error("Error fetching alumni:", error);
+                $('#searching-message').addClass('d-none').hide();
+                $('table').show();
+                $('.pagination-controls').show();
+                console.error("Error fetching article:", error);
             }
         });
     }
@@ -115,7 +118,7 @@ $(document).ready(function () {
     });
 
     // Search/filter button
-    $('#search-button').on('click', function () {
+    $('#search-btn').on('click', function () {
         page = 1;
         fetchAlumni(page);
     });

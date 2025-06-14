@@ -8,7 +8,7 @@ $(document).ready(function () {
 
         // Hide table and pagination
         $('table').hide();
-        $('.pagination-controls').hide();
+        $('#searching-message').removeClass('d-none').show();
 
         // Show the searching message
         $('#searching-message').show();
@@ -26,7 +26,7 @@ $(document).ready(function () {
                 careersTable.empty();
 
                 // Hide the searching message
-                $('#searching-message').hide();
+                $('#searching-message').addClass('d-none').hide();
 
                 // Show table and pagination again
                 $('table').show();
@@ -69,7 +69,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching article:", error);
-                $('#searching-message').hide();
+                $('#searching-message').addClass('d-none').hide();
                 $('table').show();
                 $('.pagination-controls').show();
             }
