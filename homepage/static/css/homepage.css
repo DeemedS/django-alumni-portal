@@ -354,11 +354,36 @@
   margin-bottom: 10px;
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1024px) {
   .hero-image-right {
     display: none;
   }
+
+    .hero-text {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-text .subtitle,
+  .hero-text .title,
+  .hero-text .description {
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .hero-text .title {
+    font-size: 4rem; /* Optional: scale down title on mobile */
+  }
+
+  .hero-text .description {
+    font-size: 1rem;
+  }
 }
+
 
 @media (min-width: 1281px) {
     .hero{
