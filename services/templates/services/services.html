@@ -106,9 +106,15 @@
         <p class="text-center">To get full access to our online services, please register and log in to the alumni portal.</p>
 
         <div class="btn-container">
-            <button type="button" class="btn btn-ann" onclick="window.location.href='/portal'">ALUMNI PORTAL</button>
+            <button type="button" class="btn btn-ann" id="alumni-portal-btn">ALUMNI PORTAL</button>
         </div>
     </div>
 </div>
+
+<script nonce={{request.csp_nonce}}>
+    document.getElementById('alumni-portal-btn').addEventListener('click', function () {
+        window.location.href = '/portal';
+    });
+</script>
 
 {% endblock %}
