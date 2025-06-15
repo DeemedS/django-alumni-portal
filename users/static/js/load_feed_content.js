@@ -218,7 +218,9 @@ function loadMore() {
 }
 
 $(document).ready(function () {
-    loadMore(); // Initial load
+    window.alumniDataReady.then(() => {
+        loadMore(); // Initial load
+    });
 });
 
 let scrollTimeout;
