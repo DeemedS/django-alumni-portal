@@ -1,7 +1,12 @@
 {% load static %}
 
 <div class="FeaturedArticle">
-    <img src="{{ featured_article.banner.url }}" alt="Background Image" class="mt-3">
+    {% if featured_article.thumbnail %}
+        <img src="{{ featured_article.banner.url }}" alt="Background Image" class="mt-3">
+    {% else %}
+         <img src="{% static "images/default_image.png" %}" alt="default image" class="mt-3">
+    {% endif %}
+    
     <div class="row">
         <div class="featured_article-content col">
             <h2 class="featured_article-title">{{ featured_article.title}}</h2>
