@@ -33,7 +33,11 @@ function renderCard(item, index) {
         const title = item.title || (item.type === "article" ? "Untitled" : "Untitled Event");
         const body = item.body || "";
         const isLong = body.split(/\s+/).length > 50;
-        const imageUrl = item.type === "article" ? (item.thumbnail || "/static/images/arcdologo.jpg") : (item.banner || "/static/images/arcdologo.jpg");
+        const imageUrl = ["article", "event"].includes(item.type)
+            ? (item.type === "article"
+                ? (item.thumbnail || "/static/images/default_image.png")
+                : (item.banner || "/static/images/default_image.png"))
+            : "/static/images/default_image.png";
         const label = item.type === "article" ? "NEWS & ANNOUNCEMENT" : "EVENT";
         const likeCount = item.like_count || 0;
 
