@@ -31,7 +31,7 @@ class FilteredEventsAPIView(APIView):
         month = request.GET.get('month')
         year = request.GET.get('year')
         is_active = request.GET.get('is_active', 'all')
-        page_size = request.GET.get('page_size') or 10
+        page_size = int(request.GET.get('page_size') or 10)
         search_query = request.GET.get('q')
 
         events = Event.objects.all().annotate(like_count=Count('liked_by'))
@@ -51,16 +51,16 @@ class FilteredEventsAPIView(APIView):
         else:
             events = events.order_by('-date')
         
-        if month and month != 0:
-            events = events.filter(date__month=month)
+        if month and int(month) != 0:
+            events = events.filter(date__month=int(month))
 
         if year:
-            events = events.filter(date__year=year)
+            events = events.filter(date__year=int(year))
 
         paginator = PageNumberPagination()
         paginator.page_size = page_size
         result_page = paginator.paginate_queryset(events, request)
-        serializer = EventSerializer(result_page, many=True, context={"request": request})
+        serializer = EventSerializer(events.first(), context={"request": request})
         
         return paginator.get_paginated_response(serializer.data)
     
