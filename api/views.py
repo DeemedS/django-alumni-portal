@@ -1,20 +1,19 @@
-import logging
-from venv import logger
 from django.shortcuts import get_object_or_404
-from .serializers import CourseSectionSerializer, CourseWithSectionsSerializer, EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer, AlumniNetworkSerializer
+from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer, AlumniNetworkSerializer
 
 from django.utils.timezone import now
 from events.models import Event
 from articles.models import Article
 from careers.models import JobPost
-from authentication.models import Course, Section, User
+from authentication.models import User
 from story.models import Stories
 from .permissions import IsStaffUser
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.db.models import Q, Prefetch
+from django.db.models import Q
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -22,125 +21,93 @@ from django.db.models import Q
 from django.db.models import Count
 from datetime import datetime
 
-logger = logging.getLogger(__name__)
-
 # Create your views here.
 class FilteredEventsAPIView(APIView):
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
     def get(self, request, *args, **kwargs):
-        try:
-            event_filter = request.GET.get('event_filter', 'all')
-            search_query = request.GET.get('q')
+        event_filter = request.GET.get('event_filter', 'all')
+        month = request.GET.get('month')
+        year = request.GET.get('year')
+        is_active = request.GET.get('is_active', 'all')
+        page_size = request.GET.get('page_size') or 10
+        search_query = request.GET.get('q')
 
-            try:
-                month = int(request.GET.get('month')) if request.GET.get('month') else None
-            except ValueError:
-                month = None
+        events = Event.objects.all().annotate(like_count=Count('liked_by'))
 
-            try:
-                year = int(request.GET.get('year')) if request.GET.get('year') else None
-            except ValueError:
-                year = None
+        if search_query:
+            events = events.filter(Q(title__icontains=search_query))
 
-            try:
-                page_size = int(request.GET.get('page_size')) if request.GET.get('page_size') else 10
-            except ValueError:
-                page_size = 10
+        if is_active.lower() in ['true', '1']:
+            events = events.filter(is_active=True)
+        elif is_active.lower() in ['false', '0']:
+            events = events.filter(is_active=False)
 
-            is_active = request.GET.get('is_active', 'all')
+        if event_filter == 'upcoming':
+            events = events.filter(date__gte=now()).order_by('-date')
+        elif event_filter == 'past':
+            events = events.filter(date__lt=now()).order_by('-date')
+        else:
+            events = events.order_by('-date')
+        
+        if month and month != 0:
+            events = events.filter(date__month=month)
 
-            events = Event.objects.all().annotate(like_count=Count('liked_by'))
+        if year:
+            events = events.filter(date__year=year)
 
-            if search_query:
-                events = events.filter(Q(title__icontains=search_query))
-
-            if is_active.lower() in ['true', '1']:
-                events = events.filter(is_active=True)
-            elif is_active.lower() in ['false', '0']:
-                events = events.filter(is_active=False)
-
-            if event_filter == 'upcoming':
-                events = events.filter(date__gte=now()).order_by('-date')
-            elif event_filter == 'past':
-                events = events.filter(date__lt=now()).order_by('-date')
-            else:
-                events = events.order_by('-date')
-
-            if month:
-                events = events.filter(date__month=month)
-
-            if year:
-                events = events.filter(date__year=year)
-
-            paginator = PageNumberPagination()
-            paginator.page_size = page_size
-            result_page = paginator.paginate_queryset(events, request)
-            serializer = EventSerializer(result_page, many=True, context={"request": request})
-            return paginator.get_paginated_response(serializer.data)
-
-        except Exception as e:
-            logger.error("Error in FilteredEventsAPIView: %s", str(e), exc_info=True)
-            return Response({'error': 'Internal server error'}, status=500)
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(events, request)
+        serializer = EventSerializer(result_page, many=True, context={"request": request})
+        
+        return paginator.get_paginated_response(serializer.data)
+    
 
 class FilteredArticlesAPIView(APIView):
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
     def get(self, request, *args, **kwargs):
-        try:
-            article_filter = request.GET.get('article_filter', 'all')
-            search_query = request.GET.get('q')
+        article_filter = request.GET.get('article_filter', 'all')
+        month = request.GET.get('month')
+        year = request.GET.get('year')
+        is_active = request.GET.get('is_active', 'all')
+        page_size = request.GET.get('page_size') or 10
+        search_query = request.GET.get('q')
+        
+        articles = Article.objects.all().annotate(like_count=Count('liked_by'))
 
-            try:
-                month = int(request.GET.get('month')) if request.GET.get('month') else None
-            except ValueError:
-                month = None
+        if search_query:
+            articles = articles.filter(Q(title__icontains=search_query))
 
-            try:
-                year = int(request.GET.get('year')) if request.GET.get('year') else None
-            except ValueError:
-                year = None
+        if is_active.lower() in ['true', '1']:
+            articles = articles.filter(is_active=True)
+        elif is_active.lower() in ['false', '0']:
+            articles = articles.filter(is_active=False)
 
-            try:
-                page_size = int(request.GET.get('page_size')) if request.GET.get('page_size') else 10
-            except ValueError:
-                page_size = 10
+        if article_filter == 'news':
+            articles = articles.filter(category='news').order_by('-date')
+        elif article_filter == 'Ann':
+            articles = articles.filter(category='Ann').order_by('-date')
+        else:
+            articles = articles.order_by('-date')
+        
+        if month and month != 0:
+            articles = articles.filter(date__month=month)
 
-            is_active = request.GET.get('is_active', 'all')
+        if year:
+            articles = articles.filter(date__year=year)
 
-            articles = Article.objects.all().annotate(like_count=Count('liked_by'))
-
-            if search_query:
-                articles = articles.filter(Q(title__icontains=search_query))
-
-            if is_active.lower() in ['true', '1']:
-                articles = articles.filter(is_active=True)
-            elif is_active.lower() in ['false', '0']:
-                articles = articles.filter(is_active=False)
-
-            if article_filter == 'news':
-                articles = articles.filter(category='news').order_by('-date')
-            elif article_filter == 'Ann':
-                articles = articles.filter(category='Ann').order_by('-date')
-            else:
-                articles = articles.order_by('-date')
-
-            if month:
-                articles = articles.filter(date__month=month)
-            if year:
-                articles = articles.filter(date__year=year)
-
-            paginator = PageNumberPagination()
-            paginator.page_size = page_size
-            result_page = paginator.paginate_queryset(articles, request)
-            serializer = ArticleSerializer(result_page, many=True, context={"request": request})
-            return paginator.get_paginated_response(serializer.data)
-
-        except Exception as e:
-            logger.error("Error in FilteredArticlesAPIView: %s", str(e), exc_info=True)
-            return Response({'error': 'Internal server error'}, status=500)
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(articles, request)
+        serializer = ArticleSerializer(result_page, many=True, context={"request": request})
+        
+        return paginator.get_paginated_response(serializer.data)
     
 
 @api_view(['GET'])
@@ -184,7 +151,7 @@ def get_user_info(request):
                 'id': user.section.id if user.section else None,
                 'section_code': user.section.section_code if user.section else None,
             },
-            'year_graduated': user.year_graduated,
+            'school_year': user.school_year,
         }
 
         return Response(user_info, status=200)
@@ -192,52 +159,45 @@ def get_user_info(request):
         return Response({"detail": "Authentication credentials were not provided."}, status=401)
     
 class FilteredJobPostsAPIView(APIView):
+
     permission_classes = [AllowAny]
     authentication_classes = []
-
+    
     def get(self, request, *args, **kwargs):
-        try:
-            keyword = request.GET.get('keyword', '')
-            location = request.GET.get('location', '')
-            job_type = request.GET.get('job_type', '')
-            is_active = request.GET.get('is_active', 'all')
-            search_query = request.GET.get('q')
+        keyword = request.GET.get('keyword', '')
+        location = request.GET.get('location', '')
+        job_type = request.GET.get('job_type', '')
+        is_active = request.GET.get('is_active', 'all')
+        page_size = request.GET.get('page_size') or 10
+        search_query = request.GET.get('q')
 
-            try:
-                page_size = int(request.GET.get('page_size')) if request.GET.get('page_size') else 10
-            except ValueError:
-                page_size = 10
+        job_posts = JobPost.objects.all().annotate(like_count=Count('liked_by')).order_by('-created_at')
+        
+        if search_query:
+            job_posts = job_posts.filter(Q(title__icontains=search_query))
 
-            job_posts = JobPost.objects.all().annotate(
-                like_count=Count('liked_by')
-            ).order_by('-created_at')
+        if is_active.lower() in ['true', '1']:
+            job_posts = job_posts.filter(is_active=True)
+        elif is_active.lower() in ['false', '0']:
+            job_posts = job_posts.filter(is_active=False)
 
-            if search_query:
-                job_posts = job_posts.filter(Q(title__icontains=search_query))
+        #search by keyword and location
+        if keyword:
+            job_posts = job_posts.filter(Q(title__icontains=keyword)).order_by('-created_at')
+        if location:
+            job_posts = job_posts.filter(location__icontains=location).order_by('-created_at')
 
-            if is_active.lower() in ['true', '1']:
-                job_posts = job_posts.filter(is_active=True)
-            elif is_active.lower() in ['false', '0']:
-                job_posts = job_posts.filter(is_active=False)
+        #filter by jobtype
+        if job_type:
+            job_posts = job_posts.filter(job_type=job_type).order_by('-created_at')
 
-            if keyword:
-                job_posts = job_posts.filter(Q(title__icontains=keyword))
-
-            if location:
-                job_posts = job_posts.filter(location__icontains=location)
-
-            if job_type:
-                job_posts = job_posts.filter(job_type=job_type)
-
-            paginator = PageNumberPagination()
-            paginator.page_size = page_size
-            result_page = paginator.paginate_queryset(job_posts, request)
-            serializer = JobPostSerializer(result_page, many=True, context={"request": request})
-            return paginator.get_paginated_response(serializer.data)
-
-        except Exception as e:
-            logger.error("Error in FilteredJobPostsAPIView: %s", str(e), exc_info=True)
-            return Response({"error": "Internal server error"}, status=500)
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(job_posts, request)
+        serializer = JobPostSerializer(result_page, many=True, context={"request": request})
+        
+        
+        return paginator.get_paginated_response(serializer.data)
     
 class JobPostDetailView(RetrieveAPIView):
     permission_classes = [AllowAny]
@@ -258,7 +218,7 @@ class AlumniListView(APIView):
         # Get filters from query params
         verification = request.GET.get('verification')
         course_code = request.GET.get('course_code')
-        year_graduated = request.GET.get('year_graduated')
+        school_year = request.GET.get('school_year')
         search_query = request.GET.get('search')
 
         # Start with base queryset
@@ -276,8 +236,8 @@ class AlumniListView(APIView):
             users = users.filter(course__course_code__icontains=course_code)
 
         # Filter: School year (direct field)
-        if year_graduated:
-            users = users.filter(year_graduated__icontains=year_graduated)
+        if school_year:
+            users = users.filter(school_year__icontains=school_year)
 
         # Filter: Basic search on name or email
         if search_query:
@@ -382,13 +342,14 @@ class FilteredAlumniAPIView(APIView):
         course_code = request.GET.get('course_code')
         section_code = request.GET.get('section_code')
 
-        if not request.GET.get('year_graduated'):
+        if not request.GET.get('school_year'):
             current_year = datetime.now().year - 1
-            year_graduated = f"{current_year}"
+            last_year = current_year - 1
+            school_year = f"{last_year}-{current_year}"
         else:
-            year_graduated = request.GET.get('year_graduated')
+            school_year = request.GET.get('school_year')
         
-        alumni = User.objects.all().order_by("id")
+        alumni = User.objects.all()
 
         if is_active.lower() in ['true', '1']:
             alumni = alumni.filter(is_active=True)
@@ -398,9 +359,9 @@ class FilteredAlumniAPIView(APIView):
         if course_code:
             alumni = alumni.filter(course__course_code=course_code)
 
-        # # Filter by year_graduated
-        if year_graduated:
-            alumni = alumni.filter(year_graduated=year_graduated)
+        # # Filter by school_year
+        if school_year:
+            alumni = alumni.filter(school_year=school_year)
         
         if section_code:
             alumni = alumni.filter(section__section_code=section_code)
@@ -410,85 +371,4 @@ class FilteredAlumniAPIView(APIView):
         result_page = paginator.paginate_queryset(alumni, request)
         serializer = AlumniNetworkSerializer(result_page, many=True, context={"request": request})
         
-        return paginator.get_paginated_response(serializer.data)
-    
-class FilteredCourseSectionAPIView(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = []
-
-    def get(self, request):
-        page_size = int(request.GET.get('page_size', 10))
-
-        course_name = request.GET.get('course_name')
-        course_code = request.GET.get('course_code')
-        section_code = request.GET.get('section_code')
-
-        courses = Course.objects.all().order_by("id")
-
-        # Filter by course fields
-        if course_name:
-            courses = courses.filter(course_name__icontains=course_name)
-
-        if course_code:
-            courses = courses.filter(course_code__icontains=course_code)
-
-        # Filter section_code (optional)
-        if section_code:
-            courses = courses.prefetch_related(
-                Prefetch(
-                    'sections',
-                    queryset=Section.objects.filter(section_code__icontains=section_code),
-                    to_attr='filtered_sections'
-                )
-            )
-        else:
-            courses = courses.prefetch_related('sections')
-
-        paginator = PageNumberPagination()
-        paginator.page_size = page_size
-        result_page = paginator.paginate_queryset(courses, request)
-
-        serializer = CourseWithSectionsSerializer(result_page, many=True, context={"request": request})
-        return paginator.get_paginated_response(serializer.data)
-    
-class FilteredCourseSectionWithOnlySectionsAPIView(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = []
-
-    def get(self, request):
-        page_size = int(request.GET.get('page_size', 10))
-
-        course_name = request.GET.get('course_name')
-        course_code = request.GET.get('course_code')
-        section_code = request.GET.get('section_code')
-
-        # Filter only courses that have at least one section
-        courses = Course.objects.annotate(
-            section_count=Count('sections')
-        ).filter(section_count__gt=0).order_by("id")
-
-        # Filter by course fields
-        if course_name:
-            courses = courses.filter(course_name__icontains=course_name)
-
-        if course_code:
-            courses = courses.filter(course_code__icontains=course_code)
-
-        # Filter section_code (optional)
-        if section_code:
-            courses = courses.prefetch_related(
-                Prefetch(
-                    'sections',
-                    queryset=Section.objects.filter(section_code__icontains=section_code),
-                    to_attr='filtered_sections'
-                )
-            )
-        else:
-            courses = courses.prefetch_related('sections')
-
-        paginator = PageNumberPagination()
-        paginator.page_size = page_size
-        result_page = paginator.paginate_queryset(courses, request)
-
-        serializer = CourseWithSectionsSerializer(result_page, many=True, context={"request": request})
         return paginator.get_paginated_response(serializer.data)
