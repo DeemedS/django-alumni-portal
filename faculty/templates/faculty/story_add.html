@@ -32,10 +32,10 @@
                         {{ form.thumbnail }}
                     </div>
 
-                    <div class="text-end mt-4">
-                      <button type="reset" class="cancel-btn px-4" onclick="discardChanges()">Discard</button>
-                      <button type="submit" class="submit-btn px-4">Add</button>
-                  </div>
+                    <div class="text-end mt-4 center-spinner">
+                        <button type="button" class="cancel-btn px-4" onclick="history.back();" >Discard</button>
+                        <button id="form-submit" type="submit" class="submit-btn px-4"><span id="btn-spinner" class="spinner d-none"></span>Add</button>
+                    </div>
                 </form>
                  <!-- end of content-->
             </div>

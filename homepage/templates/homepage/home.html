@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    {{ school_abv }} Alumni Website | Home
+    {{ school_abv }} Alumni Portal | Home
 {% endblock %}
 
 {% block content %}
     {% include "components/hero.html" %}
 
-    <div class="container">
+    {% comment %} <div class="container">
         <div class="row w-text">
             <div class="col-md-8">
                 
@@ -20,7 +20,7 @@
                 <p>Celebrating the legacy of PUP alumni, fostering connections, and inspiring future generations.</p>
         </div>
         </div>
-    </div>
+    </div> {% endcomment %}
     
     {% include "components/announcement.html" %}
     {% include "components/services.html" %}

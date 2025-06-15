@@ -25,6 +25,7 @@ from .models import WebsiteSettings, Official, POSITION_CHOICES
 from django.utils.text import slugify
 from .forms import OfficialForm, WebsiteSettingsForm
 from story.models import Stories
+from django.db.models import Q
 
 def generate_student_number():
     while True:
@@ -44,11 +45,6 @@ def generate_student_number():
 def faculty_dashboard(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
     
     context = {
@@ -61,22 +57,28 @@ def faculty_dashboard(request):
     
 
 def faculty_logout(request):
+    access_token = request.COOKIES.get('access_token')
+    refresh_token = request.COOKIES.get('refresh_token')
+    
     logout(request)
+
+    response = redirect('/faculty')
+    
+    if access_token:
+        response.delete_cookie('access_token')
+    if refresh_token:
+        response.delete_cookie('refresh_token')
+
     messages.success(request, "You have been logged out successfully.")
-    return redirect('/faculty') 
+    return response
 
 @login_required(login_url='/faculty/')
-def alumni_management(request):\
+def alumni_management(request):
     
     courses = Course.objects.all()
 
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
 
     context = {
@@ -89,14 +91,45 @@ def alumni_management(request):\
     return render(request, 'faculty/alumni_management.html', context)
 
 @login_required(login_url='/faculty/')
+def section_management(request):
+    
+    courses = Course.objects.all()
+
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        return redirect(reverse('authentication:faculty'))
+
+    context = {
+        'active_page':'section',
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'courses': courses
+    }
+
+    return render(request, 'section_management.html', context)
+
+@login_required(login_url='/faculty/')
+def course_management(request):
+    
+    courses = Course.objects.all()
+
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        return redirect(reverse('authentication:faculty'))
+
+    context = {
+        'active_page':'course',
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'courses': courses
+    }
+
+    return render(request, 'course_management.html', context)
+
+@login_required(login_url='/faculty/')
 def alumni_view(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     alumni = get_object_or_404(User, id=id)
@@ -110,10 +143,6 @@ def alumni_view(request, id):
 def careers_management(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
         return redirect(reverse('authentication:faculty'))
 
     context = {
@@ -127,11 +156,6 @@ def careers_management(request):
 def careers_edit(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     try:
@@ -166,11 +190,6 @@ def careers_edit(request, id):
 def careers_view(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     try:
@@ -216,11 +235,6 @@ def careers_view(request, id):
 def events_management(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     context = {
@@ -234,11 +248,6 @@ def events_management(request):
 def events_add(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     if request.method == 'POST':
@@ -259,11 +268,6 @@ def events_add(request):
 def events_edit(request, slug):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     event = get_object_or_404(Event, slug=slug)
@@ -288,11 +292,6 @@ def events_edit(request, slug):
 def events_view(request, slug):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     event = get_object_or_404(Event, slug=slug)
@@ -307,11 +306,6 @@ def events_view(request, slug):
 def articles_management(request):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     context = {
@@ -325,11 +319,6 @@ def articles_management(request):
 def articles_view(request, slug):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     article = get_object_or_404(Article, slug=slug)
@@ -344,12 +333,7 @@ def articles_view(request, slug):
 @login_required(login_url='/faculty/')
 def story_management(request):
     if not request.user.is_staff or not request.user.is_active:
-        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")    
         return redirect(reverse('authentication:faculty'))
     
     context = {
@@ -363,11 +347,6 @@ def story_management(request):
 def story_view(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        # Debug: Print stored messages before redirecting
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))
-
         return redirect(reverse('authentication:faculty'))
     
     story = get_object_or_404(Stories, id=id)
@@ -412,12 +391,13 @@ def alumni_import(request):
 
             if User.objects.filter(student_number=student_number).exists():
                 return JsonResponse({'success': False, 'message': f"Student number {student_number} already exists."}, status=409)
+            
+            course_code = row.get('Course Code', '').strip()
+            course_name = row.get('Course', '').strip()
 
-            # Get course
-            try:
-                course = Course.objects.get(course_code=row['Course Code'])
-            except Course.DoesNotExist:
-                return JsonResponse({'success': False, 'message': f"Course code '{row['Course Code']}' not found."}, status=400)
+            course = Course.objects.filter(
+                Q(course_code=course_code) | Q(course_name=course_name)
+            ).first()
             
             try:
                 section = Section.objects.get(section_code=row['Section Code'], course=course)
@@ -496,8 +476,6 @@ def alumni_export(request):
     if request.method == 'POST':
         try:
             data_json = request.POST.get('data')
-
-            print(data_json)
 
             if not data_json:
                 return JsonResponse({'success': False, 'message': "No data provided."}, status=400)
@@ -759,10 +737,6 @@ def handle_settings_form(request):
 def toggle_user_status(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
     
     if request.method == 'POST':
@@ -779,3 +753,209 @@ def toggle_user_status(request, id):
     else:
         messages.error(request, "Invalid request method.")
         return redirect(reverse('authentication:faculty'))
+    
+@login_required(login_url='/faculty/')
+def course_delete(request, id):
+    course = Course.objects.filter(id=id).first()
+
+    if not course:
+        return JsonResponse({"success": False, "message": "Course not found"}, status=404)
+
+    try:
+        # Delete course from all users' saved course list
+        users_with_course = User.objects.filter(course=course)
+        for user in users_with_course:
+            user.course = None
+            user.save()
+
+        # Delete the job post itself
+        course.delete()
+        return JsonResponse({"success": True}, status=200)
+    except Exception as e:
+        return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
+    
+@login_required(login_url='/faculty/')
+def section_delete(request, id):
+    section = Section.objects.filter(id=id).first()
+
+    if not section:
+        return JsonResponse({"success": False, "message": "Section not found"}, status=404)
+
+    try:
+        # Delete section from all users' saved section list
+        users_with_section = User.objects.filter(section=section)
+        for user in users_with_section:
+            user.section = None
+            user.save()
+
+        # Delete the section post itself
+        section.delete()
+        return JsonResponse({"success": True}, status=200)
+    except Exception as e:
+        return JsonResponse({"success": False, "message": "Internal server error"}, status=500)
+    
+@login_required(login_url='/faculty/')
+def course_add(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            course_code = data.get("course_code", "")
+            course_name = data.get("course_name", "")
+
+            if not course_code or not course_name:
+                return JsonResponse({
+                    "error": "Invalid input or missing inputs."
+                }, status=400)
+
+            
+            if Course.objects.filter(course_code=course_code).exists():
+                return JsonResponse({
+                    "error": "Course code already exists."
+                }, status=400)
+
+            course = Course.objects.create(
+                course_code=course_code,
+                course_name=course_name,
+            )
+            
+            course.save()
+
+            return JsonResponse({"message": "Course added successfully!"}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+@login_required(login_url='/faculty/')
+def section_add(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            course_id = data.get("course_id", "")
+            section_code = data.get("section_code", "")
+
+            if not course_id or not section_code:
+                return JsonResponse({
+                    "error": "Invalid input or missing inputs."
+                }, status=400)
+
+            if not Course.objects.filter(id=course_id).exists():
+                return JsonResponse({
+                    "error": "Course not Found."
+                }, status=400)
+                
+
+            course = Course.objects.get(id=course_id)
+
+            if Section.objects.filter(course=course, section_code__iexact=section_code).exists():
+                return JsonResponse({
+                    "error": "Section code already exists for this course."
+                }, status=400)
+
+            section = Section.objects.create(
+                course=course,
+                section_code=section_code,
+            )
+            
+            section.save()
+
+            return JsonResponse({"message": "Section added successfully!"}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+        
+
+@login_required(login_url='/faculty/')
+def course_edit(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            course_code = data.get("course_code", "")
+            course_name = data.get("course_name", "")
+            course_id = data.get("course_id", "")
+
+            if not course_code or not course_name or not course_id:
+                return JsonResponse({
+                    "success": False,
+                    "message": "Invalid input or missing inputs."
+                }, status=400)
+
+            course = Course.objects.get(id=course_id)
+            course.course_code = course_code
+            course.course_name = course_name
+            course.save()
+
+            return JsonResponse({
+                "success": True,
+                "message": "Course updated successfully!"
+            }, status=200)
+
+        except Course.DoesNotExist:
+            return JsonResponse({"success": False, "message": "Course not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "message": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)}, status=500)
+        
+@login_required(login_url='/faculty/')
+def section_edit(request):
+    if not request.user.is_staff or not request.user.is_active:
+        messages.error(request, "Access denied. You must be an active faculty member to proceed.")
+        return redirect(reverse('authentication:faculty'))
+
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+
+            section_code = data.get("section_code", "")
+            section_id = data.get("section_id", "")
+            
+
+            if not section_code or not section_id:
+                return JsonResponse({
+                    "success": False,
+                    "message": "Invalid input or missing inputs."
+                }, status=400)
+            
+            section = Section.objects.get(id=section_id)
+            course = section.course
+
+            if Section.objects.filter(course=course, section_code__iexact=section_code).exists():
+                return JsonResponse({
+                    "success": False,
+                    "message": "Section code already exists for this course.",
+                }, status=400)
+
+            
+            section.section_code = section_code
+            section.save()
+
+            return JsonResponse({
+                "success": True,
+                "message": "Section updated successfully!"
+            }, status=200)
+
+        except Course.DoesNotExist:
+            return JsonResponse({"success": False, "message": "Section not found"}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "message": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)}, status=500)

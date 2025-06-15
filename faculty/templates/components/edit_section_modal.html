@@ -1,0 +1,29 @@
+
+<div class="modal fade" id="edit-section-modal" tabindex="-1" aria-labelledby="edit-section-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-warning edit-section-modal">
+      <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+        <div class="edit-section w-100">
+          <h4>Edit Section</h4>
+          {% csrf_token %}
+          
+          <input type="hidden" id="edit-section-id" name="section_id">
+          
+
+          <div class="mb-3 text-start w-100">
+            <label for="edit-section-code" class="form-label">Section Code</label>
+            <input type="text" class="form-control" id="edit-section-code" name="section_code" placeholder="e.g., 2P">
+          </div>
+
+          <div class="d-flex justify-content-center mt-4 w-100 flex-column flex-sm-row">
+            <button class="cancel-btn flex-fill me-sm-3 mb-2 mb-sm-0" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-warning flex-fill update-section-btn">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

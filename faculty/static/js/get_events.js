@@ -9,7 +9,7 @@ $(document).ready(function () {
         $('table').hide();
         $('.pagination-controls').hide();
 
-        $('#searching-message').show();
+        $('#searching-message').removeClass('d-none').show();
 
         let url = `/api/filtered-events/?page=${page}&page_size=${pageSize}`;
         if (query) {
@@ -24,7 +24,7 @@ $(document).ready(function () {
                 eventsTable.empty();
 
                 // Hide the searching message
-                $('#searching-message').hide();
+                $('#searching-message').addClass('d-none').hide();
 
                 // Show table and pagination again
                 $('table').show();
@@ -73,7 +73,7 @@ $(document).ready(function () {
                         eventsTable.append(row);
                     });
                 }
-                $('#searching-message').hide();
+                $('#searching-message').addClass('d-none').hide();
                 $('table').show();
                 $('.pagination-controls').show();
                 createPagination(page, Math.ceil(response.count / pageSize), 5);

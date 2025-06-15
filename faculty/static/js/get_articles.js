@@ -11,7 +11,7 @@ $(document).ready(function () {
         $('.pagination-controls').hide();
 
         // Show the searching message
-        $('#searching-message').show();
+        $('#searching-message').removeClass('d-none').show();
 
         let url = `/api/filtered-articles/?page=${page}&page_size=${pageSize}`;
         if (query) {
@@ -23,7 +23,7 @@ $(document).ready(function () {
             type: "GET",
             success: function (response) {
                 // Hide the searching message
-                $('#searching-message').hide();
+                $('#searching-message').addClass('d-none').hide();
 
                 // Show table and pagination again
                 $('table').show();
@@ -84,7 +84,7 @@ $(document).ready(function () {
                 createPagination(page, Math.ceil(response.count / pageSize), 5);
             },
             error: function (xhr, status, error) {
-                $('#searching-message').hide();
+                $('#searching-message').addClass('d-none').hide();
                 $('table').show();
                 $('.pagination-controls').show();
                 console.error("Error fetching article:", error);

@@ -108,12 +108,16 @@
                                         <input type="text" class="form-control" placeholder="Student Number" name="student_number" id="student_number">
                                 </div>
                                 <div class="row mb-2">
-                                    <div class="col-md-6">
-                                        <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="password" class="form-control" placeholder="Confirm Password" id="confirm-pass" name="confirm-pass" required>
-                                    </div>
+                                <div class="col-md-6 position-relative">
+                                    <input type="password" class="form-control pe-5" placeholder="Password" id="password" name="password" required>
+                                    <i class="fa-solid fa-eye toggle-password position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                    data-target="password"></i>
+                                </div>
+                                <div class="col-md-6 position-relative">
+                                    <input type="password" class="form-control pe-5" placeholder="Confirm Password" id="confirm-pass" name="confirm-pass" required>
+                                    <i class="fa-solid fa-eye toggle-password position-absolute top-50 end-0 translate-middle-y me-3 cursor-pointer"
+                                    data-target="confirm-pass"></i>
+                                </div>
                                 </div>
                                  <!-- Profile Photo field -->
                                 <div class="mb-2">
@@ -248,5 +252,6 @@
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/spinner.js' %}"></script>
 <link nonce="{{ request.csp_nonce }}" href="{% static 'css/spinner.css' %}" rel="stylesheet" type="text/css">
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/authentication.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/show_password.js' %}"></script>
 
 {% endblock %}

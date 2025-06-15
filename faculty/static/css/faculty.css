@@ -623,8 +623,8 @@
 .fw-bold { font-weight: bold; }
 .fst-italic { font-style: italic; }
 
-/* Officials management css */
-.submit-officials-btn {
+
+.submit-btn {
   background-color: var(--pupred);
   color: white;
   border: none;
@@ -762,5 +762,25 @@
     .official-form-right {
         margin-top: 1rem;
     }
-    
+ }
+  
+.submit-btn:hover {
+  background-color: var(--pupdarkred) !important;
+  color: var(--pupgold);
+  cursor: pointer;
+}
+  
+.cancel-btn {
+  background-color: white !important;
+  color: var(--pupred) !important;
+  border: 2px solid var(--pupred) !important;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.cancel-btn:hover {
+  background-color: var(--pupgoldenrod) !important;
+  border: 2px solid var(--pupgoldenrod) !important;
+  color: white !important;
+  cursor: pointer;
 }

@@ -14,6 +14,8 @@ $(document).ready(function() {
 
         var pageSize = window.innerWidth <= 640 ? 5 : (window.innerWidth <= 1024 ? 10 : 20);
 
+        $('#searching-message').removeClass('d-none').show();
+
         var data = {
             page: page,
             page_size: pageSize,
@@ -29,6 +31,8 @@ $(document).ready(function() {
                 type: 'GET',
                 data: data,
                 success: function(response) {
+
+                    $('#searching-message').addClass('d-none').hide();
 
                     $('#alumni-cards-container').empty();
                     if (response.results.length > 0) {
@@ -54,7 +58,7 @@ $(document).ready(function() {
                             $('#alumni-cards-container').append(cardHtml);
                         });
                     } else {
-                        var noAlumniHtml = '<div class="col-12 text-center"><p>No alumnis found for the selected filters.</p></div>';
+                        var noAlumniHtml = '<div class="col-12 text-center"><p>No alumni found for the selected filters.</p></div>';
                         $('#alumni-cards-container').append(noAlumniHtml);
                     }
 
@@ -67,6 +71,7 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     console.error('Error fetching alumnis:', error);
                     $('#alumni-cards-container').fadeIn(400);
+                    $('#searching-message').addClass('d-none').hide();
                 }
             });
         });

@@ -3,7 +3,7 @@ from events.models import Event
 from articles.models import Article
 from django.utils.timezone import now
 from careers.models import JobPost
-from authentication.models import User
+from authentication.models import Course, User, Section
 from story.models import Stories
 
 class EventSerializer(serializers.ModelSerializer):
@@ -97,3 +97,40 @@ class AlumniNetworkSerializer(serializers.ModelSerializer):
         model = User
         fields = ['first_name', 'last_name', 'middle_name', 'course_code', 'section_code', 'year_graduated', 'work_experience', 'profile_image',
                 'facebook_link', "x_link", "linkedin_link"]
+        
+from rest_framework import serializers
+
+class CourseSectionSerializer(serializers.ModelSerializer):
+    course_id = serializers.IntegerField(source="course.id", read_only=True)
+    course_code = serializers.CharField(source="course.course_code", read_only=True)
+    course_name = serializers.CharField(source="course.course_name", read_only=True)
+    section_id = serializers.IntegerField(source="id", read_only=True)
+    section_code = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Section
+        fields = [
+            "course_id",
+            "course_code",
+            "course_name",
+            "section_id",
+            "section_code",
+        ]
+
+class SectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Section
+        fields = ['id', 'section_code']
+class CourseWithSectionsSerializer(serializers.ModelSerializer):
+    sections = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Course
+        fields = ['id', 'course_code', 'course_name', 'sections']
+
+    def get_sections(self, obj):
+        # Use filtered_sections if available (due to prefetch), fallback to all
+        sections = getattr(obj, 'filtered_sections', None)
+        if sections is None:
+            sections = obj.sections.all()
+        return SectionSerializer(sections, many=True).data

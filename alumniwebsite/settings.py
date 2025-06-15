@@ -83,6 +83,7 @@ MIDDLEWARE = [
     "csp.middleware.CSPMiddleware",
     "alumniwebsite.middleware.init_csp_nonce_middleware",
     "alumniwebsite.middleware.RemoveServerHeaderMiddleware",
+    'alumniwebsite.middleware.JWTAuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'alumniwebsite.urls'
@@ -98,6 +99,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'faculty.context_processors.custom_auth_flags',
             ],
             "libraries": {
             "csp": "csp.templatetags.csp",
@@ -409,3 +411,5 @@ LOGGING = {
         },
     },
 }
+
+CSRF_FAILURE_VIEW = 'alumniwebsite.views.custom_csrf_failure_view'

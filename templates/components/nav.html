@@ -34,8 +34,38 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'services:services'%}">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'about:about'%}">About</a></li>
 
-        {% if is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'users:edit' %}">Profile</a></li>
+        {% if not is_authenticated and request.user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Profile
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item text-primary" href="{% url 'auth:login' %}">Login As User</a></li>
+                    <li><a class="dropdown-item text-primary" href="{% url 'faculty:faculty_dashboard' %}">Admin Page</a></li>
+                    <li><a class="dropdown-item text-primary" href="{% url 'faculty:faculty_logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        {% elif is_authenticated and request.user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Profile
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item text-primary" href="{% url 'users:edit' %}">Edit Profile</a></li>
+                    <li><a class="dropdown-item text-primary" href="{% url 'faculty:faculty_dashboard' %}">Admin Page</a></li>
+                    <li><a class="dropdown-item text-primary" href="{% url 'faculty:faculty_logout' %}">Logout</a></li>
+                </ul>
+            </li>
+        {% elif is_authenticated and not request.user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Profile
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item text-primary" href="{% url 'users:edit' %}">Edit Profile</a></li>
+                    <li><a class="dropdown-item text-primary" href="{% url 'users:logout' %}">Logout</a></li>
+                </ul>
+            </li>
         {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'auth:portal' %}">Login</a></li>
         {% endif %}

@@ -1,0 +1,220 @@
+{% extends "faculty_page_layout.html" %}
+{% load static %}
+
+{% block title %}Section Management{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+
+{% include 'components/faculty_topnav.html' %}
+
+{% include 'components/delete_modal.html' %}
+{% include 'components/edit_section_modal.html' %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        {% include "components/faculty_sidebar.html" %}
+        <div class="bg-light col mb-3 px-0 m-2 mt-3">
+
+            <div class="greeting-bar">
+                Section Management
+            </div>
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <!-- start of content -->
+                <div class="container-fluid p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3 search-container">
+                        <h4 class="fw-bold title-text mb-0">SECTION LIST</h4>
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center gap-3">
+                                <button class="add-alumni-btn" data-bs-toggle="modal" data-bs-target="#add-section-modal">
+                                    <i class="fa-solid fa-plus me-1"></i>ADD SECTION
+                                </button>
+                            </div>
+                </div>
+            </div>
+                    
+                    
+            <div class="d-flex justify-content-center align-items-center mb-3 search-inputs">
+                <div class="d-flex align-items-center w-100">
+
+                        <input type="text" id="search-course-name-input" name="course_name" class="form-control search-bar" placeholder="Search Course Name">  
+                        <input type="text" id="search-course-code-input" name="course_code" class="form-control search-bar" placeholder="Course Code">  
+                        <input type="text" id="search-section-code-input" name="section_code" class="form-control search-bar" placeholder="Section Code">
+
+
+                        <button id="search-btn" class="add-alumni-btn search-btn">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                        
+                </div>
+            </div>
+
+
+
+            <div class="table-responsive mt-3 ">
+                <div id="searching-message" class="d-none text-center my-4 fw-semibold fs-5">
+                Searching Course and Sections...
+                </div>
+                    <table class="table table-bordered align-middle table-striped">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Course Code</th>
+                                <th>Section Code</th>
+                                <th>Actions</th>
+                             </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- end of content -->
+            </div>
+
+            <div class="pagination-controls d-flex justify-content-center mt-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" id="pagination">
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <!-- Toast template will be added dynamically -->
+</div>
+
+<div class="modal fade" id="add-section-modal" tabindex="-1" aria-labelledby="add-section-modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger add-course-modal">
+      <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+        <div class="add-section w-100">
+          <h4>Add Section</h4>
+            {% csrf_token %}
+            <div class="mb-3 text-start w-100">
+                <label for="course-name" class="form-label">Course Name</label>
+                <input type="text" class="form-control" id="courseSearch" placeholder="e.g., Bachelor of Science in Computer Engineering" value="" >
+                <input type="hidden" id="course-name" name="course-name" value=""> 
+                <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow course-sug"></div>
+                <input type="hidden" id="selectedCourse" name="course">
+            </div>
+
+          <div class="mb-3 text-start w-100">
+            <label for="section-code" class="form-label">Section Code</label>
+            <input type="text" class="form-control" id="section-code" placeholder="e.g., 2P">
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4 w-100 flex-column flex-sm-row">
+          <button class="cancel-btn flex-fill me-sm-3 mb-2 mb-sm-0" data-bs-dismiss="modal">Cancel</button>
+           <button id="submit-section-btn" type="submit" class="btn btn-danger flex-fill" ><span id="btn-spinner" class="spinner d-none"></span>Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/get_section.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/faculty_pagination.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/delete_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/add_section.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/edit_section.js' %}"></script>
+
+<script nonce="{{request.csp_nonce}}">
+    document.addEventListener("DOMContentLoaded", function () {
+        const courseSearch = document.getElementById("courseSearch");
+        const courseSuggestions = document.getElementById("courseSuggestions");
+        const selectedCourse = document.getElementById("selectedCourse");
+        const courseName = document.getElementById("course-name");
+    
+        const courses = [
+            {% for course in courses %}
+                { id: "{{ course.id }}", text: "{{ course|escapejs }}", name: "{{ course.course_name|escapejs }}" },
+            {% endfor %}
+        ];
+    
+    
+        function filterCourseSuggestions(query) {
+            const filtered = courses.filter(course =>
+                course.text.toLowerCase().includes(query.toLowerCase())
+            );
+    
+            courseSuggestions.innerHTML = "";
+            if (filtered.length > 0) {
+                filtered.forEach(course => {
+                    const div = document.createElement("div");
+                    div.className = "list-group-item list-group-item-action";
+                    div.textContent = course.text;
+                    div.dataset.id = course.id;
+                    div.addEventListener("click", () => selectCourse(course));
+                    courseSuggestions.appendChild(div);
+                });
+                courseSuggestions.style.display = "block";
+            } else {
+                courseSuggestions.style.display = "none";
+            }
+        }
+    
+        function selectCourse(course) {
+            courseSearch.value = course.text;
+            selectedCourse.value = course.id;
+            courseName.value = course.name;
+            courseSuggestions.style.display = "none";
+        }
+    
+
+        function validateCourseInput() {
+            const enteredText = courseSearch.value.trim();
+            const matchedCourse = courses.find(course => course.text.toLowerCase() === enteredText.toLowerCase());
+    
+            if (matchedCourse) {
+                selectCourse(matchedCourse);
+            } else {
+                selectedCourse.value = "";
+                courseName.value = enteredText;
+            }
+        }
+    
+        courseSearch.addEventListener("input", () => filterCourseSuggestions(courseSearch.value));
+    
+        courseSearch.addEventListener("blur", validateCourseInput);
+    
+        document.addEventListener("click", (event) => {
+            if (!courseSearch.contains(event.target) && !courseSuggestions.contains(event.target)) {
+                courseSuggestions.style.display = "none";
+            }
+        });
+
+    });
+
+    const birthdayInput = document.getElementById('birthday');
+
+    birthdayInput.addEventListener('focus', () => {
+    birthdayInput.type = 'date';
+    });
+
+    birthdayInput.addEventListener('blur', () => {
+    birthdayInput.type = 'text';
+    });
+    
+    document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.employment-date').forEach(function (input) {
+        input.addEventListener('focus', function () {
+        input.type = 'date';
+        });
+
+        input.addEventListener('blur', function () {
+        if (!input.value) {
+            input.type = 'text';
+        }
+        });
+    });
+    });
+</script>
+{% endblock %}

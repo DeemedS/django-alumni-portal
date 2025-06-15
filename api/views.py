@@ -1,19 +1,18 @@
 from django.shortcuts import get_object_or_404
-from .serializers import EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer, AlumniNetworkSerializer
+from .serializers import CourseSectionSerializer, CourseWithSectionsSerializer, EventSerializer , ArticleSerializer, JobPostSerializer, ALumniSerializer, RelatedALumniSerializer, StorySerializer, AlumniNetworkSerializer
 
 from django.utils.timezone import now
 from events.models import Event
 from articles.models import Article
 from careers.models import JobPost
-from authentication.models import User
+from authentication.models import Course, Section, User
 from story.models import Stories
 from .permissions import IsStaffUser
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from django.db.models import Q
-
+from django.db.models import Q, Prefetch
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -344,12 +343,11 @@ class FilteredAlumniAPIView(APIView):
 
         if not request.GET.get('year_graduated'):
             current_year = datetime.now().year - 1
-            last_year = current_year - 1
-            year_graduated = f"{last_year}-{current_year}"
+            year_graduated = f"{current_year}"
         else:
             year_graduated = request.GET.get('year_graduated')
         
-        alumni = User.objects.all()
+        alumni = User.objects.all().order_by("id")
 
         if is_active.lower() in ['true', '1']:
             alumni = alumni.filter(is_active=True)
@@ -371,4 +369,85 @@ class FilteredAlumniAPIView(APIView):
         result_page = paginator.paginate_queryset(alumni, request)
         serializer = AlumniNetworkSerializer(result_page, many=True, context={"request": request})
         
+        return paginator.get_paginated_response(serializer.data)
+    
+class FilteredCourseSectionAPIView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def get(self, request):
+        page_size = int(request.GET.get('page_size', 10))
+
+        course_name = request.GET.get('course_name')
+        course_code = request.GET.get('course_code')
+        section_code = request.GET.get('section_code')
+
+        courses = Course.objects.all().order_by("id")
+
+        # Filter by course fields
+        if course_name:
+            courses = courses.filter(course_name__icontains=course_name)
+
+        if course_code:
+            courses = courses.filter(course_code__icontains=course_code)
+
+        # Filter section_code (optional)
+        if section_code:
+            courses = courses.prefetch_related(
+                Prefetch(
+                    'sections',
+                    queryset=Section.objects.filter(section_code__icontains=section_code),
+                    to_attr='filtered_sections'
+                )
+            )
+        else:
+            courses = courses.prefetch_related('sections')
+
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(courses, request)
+
+        serializer = CourseWithSectionsSerializer(result_page, many=True, context={"request": request})
+        return paginator.get_paginated_response(serializer.data)
+    
+class FilteredCourseSectionWithOnlySectionsAPIView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def get(self, request):
+        page_size = int(request.GET.get('page_size', 10))
+
+        course_name = request.GET.get('course_name')
+        course_code = request.GET.get('course_code')
+        section_code = request.GET.get('section_code')
+
+        # Filter only courses that have at least one section
+        courses = Course.objects.annotate(
+            section_count=Count('sections')
+        ).filter(section_count__gt=0).order_by("id")
+
+        # Filter by course fields
+        if course_name:
+            courses = courses.filter(course_name__icontains=course_name)
+
+        if course_code:
+            courses = courses.filter(course_code__icontains=course_code)
+
+        # Filter section_code (optional)
+        if section_code:
+            courses = courses.prefetch_related(
+                Prefetch(
+                    'sections',
+                    queryset=Section.objects.filter(section_code__icontains=section_code),
+                    to_attr='filtered_sections'
+                )
+            )
+        else:
+            courses = courses.prefetch_related('sections')
+
+        paginator = PageNumberPagination()
+        paginator.page_size = page_size
+        result_page = paginator.paginate_queryset(courses, request)
+
+        serializer = CourseWithSectionsSerializer(result_page, many=True, context={"request": request})
         return paginator.get_paginated_response(serializer.data)

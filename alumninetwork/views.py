@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.conf import settings
 from django.shortcuts import redirect, render
 import requests
@@ -24,6 +25,9 @@ def alumninetwork_home(request):
         if response.status_code == 200:
             # Now, render the dashboard template and pass the user info
             user_data = user_response.json()
+
+            current_year = datetime.now().year - 1
+            
             context = {
                 "courses": courses,
                 "sections": sections,
@@ -31,6 +35,7 @@ def alumninetwork_home(request):
                 'first_name' : user_data.get('first_name'),
                 'last_name' : user_data.get('last_name'),
                 'profile_image': user_data.get('profile_image'),
+                'current_year': current_year,
                 'is_authenticated': True,
             }
             return render(request, 'alumninetwork/alumninetwork.html',context)
