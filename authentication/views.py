@@ -81,7 +81,11 @@ def user_login(request):
         if response.status_code == 200:
             return redirect('/myaccount/')
         else:
-            return render(request, 'login.html')
+            return render(request, 'login.html', {
+                'form' : FormWithCaptcha(),
+                "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
+                'settings': websettings,
+            })
 
     return render(request, 'login.html', {
         'form' : FormWithCaptcha(),
