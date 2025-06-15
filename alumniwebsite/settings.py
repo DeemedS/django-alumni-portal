@@ -218,11 +218,6 @@ else:
     # Fallback: local media
     DOMAIN_URL = config('DOMAIN_URL')
 
-    if not DEBUG:
-        # Production override if not already using HTTPS in DOMAIN_URL
-        if DOMAIN_URL.startswith('http://'):
-            DOMAIN_URL = DOMAIN_URL.replace('http://', 'https://')
-
     MEDIA_URL = f"{DOMAIN_URL}/media/"
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
