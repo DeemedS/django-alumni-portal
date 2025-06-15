@@ -216,7 +216,14 @@ if USE_S3_MEDIA:
     # DEFAULT_FILE_STORAGE = 'your_project.settings.MediaStorage'
 else:
     # Fallback: local media
-    MEDIA_URL = '/media/'
+    DOMAIN_URL = config('DOMAIN_URL')
+
+    if not DEBUG:
+        # Production override if not already using HTTPS in DOMAIN_URL
+        if DOMAIN_URL.startswith('http://'):
+            DOMAIN_URL = DOMAIN_URL.replace('http://', 'https://')
+
+    MEDIA_URL = f"{DOMAIN_URL}/media/"
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
@@ -272,9 +279,6 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
-DOMAIN_URL = config('DOMAIN_URL')
-
-
 
 CORS_ALLOW_ORIGINS = config('CORS_ALLOW_ORIGINS', cast=Csv())
 
