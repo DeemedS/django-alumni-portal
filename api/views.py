@@ -10,7 +10,7 @@ from story.models import Stories
 from .permissions import IsStaffUser
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.db.models import Q, Prefetch
 from rest_framework.decorators import api_view
@@ -204,6 +204,22 @@ class JobPostDetailView(RetrieveAPIView):
     queryset = JobPost.objects.all()
     serializer_class = JobPostSerializer
     lookup_field = 'id'
+
+class SavedJobsPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 20
+
+class UserSavedJobsView(ListAPIView):
+    serializer_class = JobPostSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = SavedJobsPagination
+
+    def get_queryset(self):
+        saved_jobs = self.request.user.jobs or []
+        job_ids = [job.get('id') for job in saved_jobs if 'id' in job]
+        
+        return JobPost.objects.filter(id__in=job_ids, is_active=True).order_by('-created_at')
 class EventsDetailView(RetrieveAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []

@@ -1,80 +1,86 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const jobsContainer = document.getElementById("jobs-container");
+    const paginationContainer = document.getElementById("pagination-container"); // Make sure you have this in HTML
 
-    async function fetchSavedJobs() {
+    const jobTypeMapping = {
+        FT: "Full-Time",
+        PT: "Part-Time",
+        CT: "Contract",
+        IN: "Internship"
+    };
+
+    async function fetchSavedJobs(page = 1) {
         try {
-            const response = await fetch("/careers/userjobs/");
+            const response = await fetch(`/api/careers/userjobs/?page=${page}`);
             if (!response.ok) {
                 throw new Error("Failed to fetch saved jobs.");
             }
             return await response.json();
         } catch (error) {
             console.error("Error fetching saved jobs:", error);
-            return [];
-        }
-    }
-
-    async function fetchJobDetails(jobId) {
-        try {
-            const response = await fetch(`/api/job-details/${jobId}/`);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch job details for ID: ${jobId}`);
-            }
-            return await response.json();
-        } catch (error) {
-            console.error("Error fetching job details:", error);
             return null;
         }
     }
 
-    async function renderJobs(jobs) {
+    function renderPagination(next, previous, currentPage) {
+        paginationContainer.innerHTML = "";
+
+        if (previous) {
+            const prevBtn = document.createElement("button");
+            prevBtn.textContent = "Previous";
+            prevBtn.className = "btn btn-secondary me-2";
+            prevBtn.addEventListener("click", () => loadJobs(currentPage - 1));
+            paginationContainer.appendChild(prevBtn);
+        }
+
+        if (next) {
+            const nextBtn = document.createElement("button");
+            nextBtn.textContent = "Next";
+            nextBtn.className = "btn btn-secondary";
+            nextBtn.addEventListener("click", () => loadJobs(currentPage + 1));
+            paginationContainer.appendChild(nextBtn);
+        }
+    }
+
+    async function renderJobs(data, page) {
         jobsContainer.innerHTML = "";
-    
-        if (!jobs.jobs || jobs.jobs.length === 0) {
+
+        if (!data || !data.results || data.results.length === 0) {
             jobsContainer.innerHTML = `<p class="text-muted">No saved jobs found.</p>`;
             return;
         }
-        // Mapping of job type abbreviations to full forms
-        const jobTypeMapping = {
-            FT: "Full-Time",
-            PT: "Part-Time",
-            CT: "Contract",
-            IN: "Internship",
-            // Add more mappings as needed
-        };
 
-        const jobDetailsList = await Promise.all(jobs.jobs.map(job => fetchJobDetails(job.id)));
-    
-        jobDetailsList.forEach(jobDetails => {
-            if (jobDetails) {
-                const jobCard = document.createElement("div");
-                jobCard.className = "save-job-card";
-                jobCard.innerHTML = `
-                    <div class="save-job-card-inner">
-                        <h5 class="save-job-title">${jobDetails.title}</h5>
-                        <p class="save-job-meta"><strong>Company:</strong> ${jobDetails.company}</p>
-                        <p class="save-job-meta"><strong>Job Type:</strong> ${jobTypeMapping[jobDetails.job_type] || jobDetails.job_type}</p>
-                        <p class="save-job-meta"><strong>Location:</strong> ${jobDetails.location}</p>
-                        ${jobDetails.salary ? `<p class="save-job-meta"><strong>Salary:</strong> ${jobDetails.salary} PHP</p>` : ""}
-
-                        <div class="save-job-card-footer">
-                        <a href="/careers/${jobDetails.id}" class="save-job-card-btn">
+        data.results.forEach(job => {
+            const jobCard = document.createElement("div");
+            jobCard.className = "save-job-card";
+            jobCard.innerHTML = `
+                <div class="save-job-card-inner">
+                    <h5 class="save-job-title">${job.title}</h5>
+                    <p class="save-job-meta"><strong>Company:</strong> ${job.company}</p>
+                    <p class="save-job-meta"><strong>Job Type:</strong> ${jobTypeMapping[job.job_type] || job.job_type}</p>
+                    <p class="save-job-meta"><strong>Location:</strong> ${job.location}</p>
+                    ${job.salary ? `<p class="save-job-meta"><strong>Salary:</strong> ${job.salary} PHP</p>` : ""}
+                    <div class="save-job-card-footer">
+                        <a href="/careers/${job.id}" class="save-job-card-btn">
                             View More
                             <svg viewBox="0 0 16 16" aria-hidden="true">
-                            <path d="M6 3l4 5-4 5" fill="none" stroke="currentColor" stroke-width="2"
+                                <path d="M6 3l4 5-4 5" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </a>
-                        </div>
                     </div>
-                
-
-                `;
-                jobsContainer.appendChild(jobCard);
-            }
+                </div>
+            `;
+            jobsContainer.appendChild(jobCard);
         });
+
+        renderPagination(data.next, data.previous, page);
     }
 
-    const savedJobs = await fetchSavedJobs();
-    await renderJobs(savedJobs);
+    async function loadJobs(page = 1) {
+        const savedJobs = await fetchSavedJobs(page);
+        await renderJobs(savedJobs, page);
+    }
+
+    await loadJobs(); // Initial load
 });
