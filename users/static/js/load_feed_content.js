@@ -16,7 +16,7 @@ function fetchData(pageType, page) {
         job: "/api/filtered-jobposts/"
     };
 
-    return $.get(`${baseUrls[pageType]}?page=${page}&page_size=3&is_active=true`)
+    return $.get(`${baseUrls[pageType]}?page=${page}&page_size=1&is_active=true`)
         .then(res => res.results.map(item => ({
             ...item,
             type: pageType,
