@@ -220,6 +220,23 @@ class UserSavedJobsView(ListAPIView):
         job_ids = [job.get('id') for job in saved_jobs if 'id' in job]
         
         return JobPost.objects.filter(id__in=job_ids, is_active=True).order_by('-created_at')
+    
+
+class SavedEventsPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 20
+
+class UserSavedEventsView(ListAPIView):
+    serializer_class = EventSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = SavedJobsPagination
+
+    def get_queryset(self):
+        saved_events = self.request.user.events or []
+        event_ids = [event.get('id') for event in saved_events if 'id' in event]
+        
+        return Event.objects.filter(id__in=event_ids, is_active=True).order_by('-created_at')
 class EventsDetailView(RetrieveAPIView):
     permission_classes = [AllowAny]
     authentication_classes = []

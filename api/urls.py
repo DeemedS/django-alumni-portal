@@ -31,6 +31,7 @@ urlpatterns = [
     path('job-details/<int:id>/', views.JobPostDetailView.as_view(), name='job-details'),
     path('event-details/<int:id>/', views.EventsDetailView.as_view(), name='event-details'),
     path("careers/userjobs/", views.UserSavedJobsView.as_view(), name="user-saved-jobs"),
+    path("events/userevents/", views.UserSavedEventsView.as_view(), name="user-saved-events"),
 
     path('alumni-list/', views.AlumniListView.as_view(), name='alumni-list'),
     path('related-alumni/', views.RelatedAlumniListView.as_view(), name='related-alumni-list'),
