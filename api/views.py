@@ -341,11 +341,7 @@ class FilteredAlumniAPIView(APIView):
         course_code = request.GET.get('course_code')
         section_code = request.GET.get('section_code')
 
-        if not request.GET.get('year_graduated'):
-            current_year = datetime.now().year - 1
-            year_graduated = f"{current_year}"
-        else:
-            year_graduated = request.GET.get('year_graduated')
+        year_graduated = request.GET.get('year_graduated')
         
         alumni = User.objects.all().order_by("id")
 
