@@ -49,10 +49,16 @@ class JWTAuthenticationMiddleware(MiddlewareMixin):
         request.is_user_authenticated = False
         request.is_admin = False
 
+        user_agent = request.META.get('HTTP_USER_AGENT', 'Mozilla/5.0')
+
+        base_headers = {
+            'User-Agent': user_agent
+        }
+
         if access_token and refresh_token:
             try:
                 api_url = f"{settings.API_TOKEN_URL}/token/verify/"
-                response = requests.post(api_url, data={'token': access_token})
+                response = requests.post(api_url, data={'token': access_token}, headers=base_headers)
 
                 if response.status_code == 200:
                     payload = jwt.decode(access_token, settings.SECRET_KEY, algorithms=["HS256"])

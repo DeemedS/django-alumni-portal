@@ -30,12 +30,13 @@ function fetchData(pageType, page) {
 
 function renderCard(item, index) {
     if (item.type === "article" || item.type === "event") {
-        const title = item.title || (item.type === "article" ? "Untitled" : "Untitled Event");
-        const body = item.body || "";
+        const title = item.title ?? "Untitled";
+        const body = item.body ?? "";
+        const likeCount = item.like_count ?? 0;
         const isLong = body.split(/\s+/).length > 50;
         const imageUrl = item.type === "article" ? (item.thumbnail || "/static/images/default_image.png") : (item.banner || "/static/images/default_image.png");
         const label = item.type === "article" ? "NEWS & ANNOUNCEMENT" : "EVENT";
-        const likeCount = item.like_count || 0;
+        
 
         return `
             <div class="card card-custom mb-3 mt-3">
@@ -182,15 +183,11 @@ function loadMore() {
             .sort((a, b) => b.created_at - a.created_at);
 
         const container = $("#news-feed-container");
-        newItems.forEach(item => {
-            combined.push(item);
-            const index = combined.length - 1;
+        const startIndex = combined.length;
+        combined.push(...newItems);
+        newItems.forEach((item, i) => {
+            const index = startIndex + i;
             container.append(renderCard(item, index));
-            $('#news-feed-container img').on('error', function() {
-                if (!this.src.includes('default_image.png')) {
-                    this.src = '/static/images/default_image.png';
-                }
-            });
         });
 
         isLoading = false;
@@ -204,16 +201,21 @@ $(document).ready(function () {
     loadMore(); // Initial load
 });
 
+let scrollTimeout;
 $(window).on("scroll", function () {
-    const scrollTop = $(window).scrollTop();
-    const windowHeight = $(window).height();
-    const documentHeight = $(document).height();
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(() => {
+        scrollTimeout = null;
 
-    const scrollPercent = (scrollTop + windowHeight) / documentHeight;
+        const scrollTop = $(window).scrollTop();
+        const windowHeight = $(window).height();
+        const documentHeight = $(document).height();
+        const scrollPercent = (scrollTop + windowHeight) / documentHeight;
 
-    if (scrollPercent >= 0.8 && (hasMore.article || hasMore.event || hasMore.job)) {
-        loadMore();
-    }
+        if (scrollPercent >= 0.8 && (hasMore.article || hasMore.event || hasMore.job)) {
+            loadMore();
+        }
+    }, 200); // throttle delay
 });
 
 $("#news-feed-container").on("click", ".see-more", function () {
@@ -235,33 +237,27 @@ $("#news-feed-container").on("click", ".see-more", function () {
 
 
 function getPreviewByWords(text, maxWords = 30) {
-    const lines = text.split('\n'); // preserve lines
-    let wordCount = 0;
-    let resultLines = [];
+    const lines = text.split('\n');
+    let count = 0;
+    let preview = [];
 
     for (const line of lines) {
-        const trimmedLine = line.trim();
-        const words = trimmedLine.split(/\s+/);
-
-        if (trimmedLine === "") {
-            // preserve empty line but don't add to word count
-            resultLines.push("");
+        if (line.trim() === "") {
+            preview.push("");
             continue;
         }
 
-        if (wordCount + words.length <= maxWords) {
-            resultLines.push(line); // keep original line with spacing
-            wordCount += words.length;
+        const words = line.trim().split(/\s+/);
+        if (count + words.length <= maxWords) {
+            preview.push(line);
+            count += words.length;
         } else {
-            // Add only the remaining words from this line
-            const remaining = maxWords - wordCount;
-            const partialLine = words.slice(0, remaining).join(' ');
-            resultLines.push(partialLine);
+            preview.push(words.slice(0, maxWords - count).join(" "));
             break;
         }
     }
 
-    return resultLines.join('\n') + '...';
+    return preview.join('\n') + "...";
 }
 
 function escapeHtml(unsafe) {
@@ -273,12 +269,11 @@ function escapeHtml(unsafe) {
 
 
 $("#news-feed-container").on("click", ".like-btn", function () {
-    const $btn    = $(this);
-    const itemId  = $btn.data("id");
-    const itemType= $btn.data("type");     // 'article' | 'event' | 'job'
-    const $card   = $btn.closest(".card");
-    const $icon   = $btn.find("i");
-    const $count  = $card.find(".like-number");
+    const $btn = $(this);
+    const itemId = $btn.data("id");
+    const itemType = $btn.data("type");
+    const $icon = $btn.find("i");
+    const $count = $btn.closest(".card").find(".like-number");
     const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]')?.value;
 
     $.ajax({
@@ -287,13 +282,10 @@ $("#news-feed-container").on("click", ".like-btn", function () {
         headers: { "X-CSRFToken": csrfToken },
         success: function (res) {
             $count.text(res.like_count);
-
-            if (res.liked) {
-                $icon.removeClass("fa-regular").addClass("fa-solid text-danger");
-            } else {
-                $icon.removeClass("fa-solid text-danger").addClass("fa-regular");
-            }
             $btn.data("liked", res.liked);
+            $icon
+                .toggleClass("fa-solid text-danger", res.liked)
+                .toggleClass("fa-regular", !res.liked);
         },
         error: function () {
             alert("Please log in to like this item.");
