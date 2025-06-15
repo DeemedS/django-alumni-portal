@@ -7,43 +7,7 @@
 
 {% include 'components/faculty_topnav.html' %}
 <style nonce="{{ request.csp_nonce }}">
-    .officials-form-label {
-      font-weight: bold;
-    }
-
-    .officials-section {
-      background-color: white;
-      border-radius: 0.5rem;
-      padding: 2rem;
-      margin-top: .8rem;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .official-title {
-      font-weight: 600;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 0.5rem;
-
-      color: var(--pupred);
-      font-size: 1.5rem;
-      font-weight: bold;
-      /* margin-bottom: 1rem; */
-    }
-
-    .form-entry {
-      margin-bottom: 1.5rem;
-    }
-    .officials-section input[type="text"]:focus,
-    .officials-section input[type="file"]:focus {
-        border-color: var(--pupred);
-        box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
-    }
-
-    .mx-width-150 {
-        max-width: 150px;
-    }
-
+    
 </style>
 <div class="container-fluid">
     <div class="row flex-nowrap">
@@ -61,164 +25,299 @@
                 <!-- start of content -->
                 <form id="officials-form">
                     {% csrf_token %}
-                    <div class="container officials-section">
+                    <div class="container">
                         <div class="row">
                             <!-- ARCDO Officials -->
                             <div class="col-md-6">
                                 <h5 class="official-title">ARCDO OFFICIALS</h5>
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Director</label>
-                                    <input type="text" class="form-control mb-2" name="director_name" value="{{ officials.director.name }}">
 
-                                    <div class="mb-2">
-                                        <img src="{{ officials.director.photo.url }}" alt="Director Photo" class="img-thumbnail mx-width-150">
+                                <div class="official-card">
+                                    <div class="official-position-label">Director</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="director_name" value="{{ officials.director.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.director.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.director.photo.url }}" alt="ARCDO Director Photo" class="official-photo">
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    {{ forms.director.photo }}
                                 </div>
 
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Chief, Career Development & Placement Services</label>
-                                    <input type="text" class="form-control mb-2" name="chief_career_development_placement_services_name" value="{{ officials.chief_career_development_placement_services.name }}">
+                                <div class="official-card">
+                                    <div class="official-position-label">Chief, Career Development & Placement Services</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="chief_career_development_placement_services_name" value="{{ officials.chief_career_development_placement_services.name }}">
 
-                                    <div class="mb-2">
-                                        <img src="{{ officials.chief_career_development_placement_services.photo.url }}" alt="Chief Career Photo" class="img-thumbnail mx-width-150">
+                                            <div class="official-file-info">
+                                                {{ forms.chief_career_development_placement_services.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.chief_career_development_placement_services.photo.url }}" alt="Chief Career Photo" class="official-photo">
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
 
-                                    {{ forms.chief_career_development_placement_services.photo }}
-                                </div>
-                                
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Chief, Alumni Relations Services</label>
-                                    <input type="text" class="form-control mb-2" name="chief_alumni_relations_services_name" value="{{ officials.chief_alumni_relations_services.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.chief_alumni_relations_services.photo.url }}" alt="Chief Alumni Photo" class="img-thumbnail mx-width-150">
+                                <div class="official-card">
+                                    <div class="official-position-label">Chief, Alumni Relations Services</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="chief_alumni_relations_services_name" value="{{ officials.chief_alumni_relations_services.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.chief_alumni_relations_services.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.chief_alumni_relations_services.photo.url }}" alt="Chief Alumni Photo" class="official-photo">
+                                            </div>
+                                        </div>
                                     </div>
-                                    {{ forms.chief_alumni_relations_services.photo }}
                                 </div>
-                                
+
                                 <!-- Repeating Admin Staff -->
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Admin Staff</label>
-                                    <input type="text" class="form-control mb-2" name="admin_staff_1_name" value="{{ officials.admin_staff_1.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.admin_staff_1.photo.url }}" alt="Chief Admin Staff Photo" class="img-thumbnail mx-width-150">
+                                 <div class="official-card">
+                                    <div class="official-position-label">Admin Staff</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="admin_staff_1_name" value="{{ officials.admin_staff_1.name }}">
+
+                                            <div class="official-file-info">
+                                               {{ forms.admin_staff_1.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.admin_staff_1.photo.url }}" alt="Admin Staff Photo" class="official-photo">
+                                            </div>
+                                        </div>
                                     </div>
-                                    {{ forms.admin_staff_1.photo }}
-                                </div>
-                                
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Admin Staff</label>
-                                    <input type="text" class="form-control mb-2" name="admin_staff_2_name" value="{{ officials.admin_staff_2.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.admin_staff_2.photo.url }}" alt="Chief Admin Staff Photo" class="img-thumbnail mx-width-150">
-                                    </div>
-                                    {{ forms.admin_staff_2.photo }}
                                 </div>
 
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Admin Staff</label>
-                                    <input type="text" class="form-control mb-2" name="admin_staff_3_name" value="{{ officials.admin_staff_3.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.admin_staff_3.photo.url }}" alt="Chief Admin Staff Photo" class="img-thumbnail mx-width-150">
+                                <div class="official-card">
+                                    <div class="official-position-label">Admin Staff</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="admin_staff_2_name" value="{{ officials.admin_staff_2.name }}">
+
+                                            <div class="official-file-info">
+                                               {{ forms.admin_staff_2.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.admin_staff_2.photo.url }}" alt="Admin Staff Photo" class="official-photo">
+                                            </div>
+                                        </div>
                                     </div>
-                                    {{ forms.admin_staff_3.photo }}
                                 </div>
-                                
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Admin Staff</label>
-                                    <input type="text" class="form-control mb-2" name="admin_staff_4_name" value="{{ officials.admin_staff_4.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.admin_staff_4.photo.url }}" alt="Chief Admin Staff Photo" class="img-thumbnail mx-width-150">
+
+                                <div class="official-card">
+                                    <div class="official-position-label">Admin Staff</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="admin_staff_3_name" value="{{ officials.admin_staff_3.name }}">
+
+                                            <div class="official-file-info">
+                                               {{ forms.admin_staff_3.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.admin_staff_3.photo.url }}" alt="Admin Staff Photo" class="official-photo">
+                                            </div>
+                                        </div>
                                     </div>
-                                    {{ forms.admin_staff_4.photo }}
                                 </div>
+
+                                <div class="official-card">
+                                    <div class="official-position-label">Admin Staff</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="admin_staff_4_name" value="{{ officials.admin_staff_4.name }}">
+
+                                            <div class="official-file-info">
+                                               {{ forms.admin_staff_4.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.admin_staff_4.photo.url }}" alt="Admin Staff Photo" class="official-photo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            
+
                             <!-- Executive Officials -->
                             <div class="col-md-6">
                                 <h5 class="official-title">EXECUTIVE OFFICIALS</h5>
-                                
-                                <div class="form-entry">
-                                    <label class="officials-form-label">President</label>
-                                    <input type="text" class="form-control mb-2" name="president_name" value="{{ officials.president.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.president.photo.url }}" alt="President Photo" class="img-thumbnail mx-width-150">
+
+                                <div class="official-card">
+                                    <div class="official-position-label">President</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="president_name" value="{{ officials.president.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.president.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.president.photo.url }}" alt="President Photo" class="official-photo">
+                                            </div>
+                                        </div>
                                     </div>
-                                    {{ forms.president.photo }}
-                                </div>
-                                
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Executive Vice President</label>
-                                    <input type="text" class="form-control mb-2" name="executive_vice_president_name" value="{{ officials.executive_vice_president.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.executive_vice_president.photo.url }}" alt="Executive Vice President Photo" class="img-thumbnail mx-width-150">
-                                    </div>
-                                    {{ forms.executive_vice_president.photo }}
-                                </div>
-                                
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Vice President for Academic Affairs</label>
-                                    <input type="text" class="form-control mb-2" name="vice_president_for_academic_affairs_name" value="{{ officials.vice_president_for_academic_affairs.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.vice_president_for_academic_affairs.photo.url }}" alt="Executive Vice Academic Affairs Photo" class="img-thumbnail mx-width-150">
-                                    </div>
-                                    {{ forms.vice_president_for_academic_affairs.photo }}
-                                </div>
-                                
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Vice President for Student Affairs & Services</label>
-                                    <input type="text" class="form-control mb-2" name="vice_president_for_student_affairs_services_name" value="{{ officials.vice_president_for_student_affairs_services.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.vice_president_for_student_affairs_services.photo.url }}" alt="Executive Vice Student Affairs Photo" class="img-thumbnail mx-width-150">
-                                    </div>
-                                    {{ forms.vice_president_for_student_affairs_services.photo }}
                                 </div>
 
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Vice President for Research, Extension, & Dev't</label>
-                                    <input type="text" class="form-control mb-2" name="vice_president_for_research_extension_devt_name" value="{{ officials.vice_president_for_research_extension_devt.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.vice_president_for_research_extension_devt.photo.url }}" alt="Executive VP Research Photo" class="img-thumbnail mx-width-150">
+                                <div class="official-card">
+                                    <div class="official-position-label">Executive Vice President</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="executive_vice_president_name" value="{{ officials.executive_vice_president.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.executive_vice_president.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.executive_vice_president.photo.url }}" alt="Executive Vice President Photo" class="official-photo">
+                                            </div>
+                                        </div>
                                     </div>
-                                    {{ forms.vice_president_for_research_extension_devt.photo }}
                                 </div>
+
+                                <div class="official-card">
+                                    <div class="official-position-label">Vice President for Academic Affairs</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="vice_president_for_academic_affairs_name" value="{{ officials.vice_president_for_academic_affairs.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.vice_president_for_academic_affairs.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.vice_president_for_academic_affairs.photo.url }}" alt="Vice President for Academic Affairs Photo" class="official-photo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="official-card">
+                                    <div class="official-position-label">Vice President for Student Affairs & Services</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="vice_president_for_student_affairs_services_name" value="{{ officials.vice_president_for_student_affairs_services.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.vice_president_for_student_affairs_services.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.vice_president_for_student_affairs_services.photo.url }}" alt="Vice President for Student Affairs & Services Photo" class="official-photo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="official-card">
+                                    <div class="official-position-label">Vice President for Research, Extension, & Dev't</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="vice_president_for_research_extension_devt_name" value="{{ officials.vice_president_for_research_extension_devt.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.vice_president_for_research_extension_devt.photo }}}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.vice_president_for_research_extension_devt.photo.url }}" alt="Vice President for Research, Extension, & Dev't Photo" class="official-photo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="official-card">
+                                    <div class="official-position-label">Vice President for Branches & Campuses</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="vice_president_for_branches_campuses_name" value="{{ officials.vice_president_for_branches_campuses.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.vice_president_for_branches_campuses.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.vice_president_for_branches_campuses.photo.url }}" alt="Vice President for Branches & Campuses Photo" class="official-photo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="official-card">
+                                    <div class="official-position-label">Vice President for Administration</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="vice_president_for_administration_name" value="{{ officials.vice_president_for_administration.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.vice_president_for_administration.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.vice_president_for_administration.photo.url }}" alt="Vice President for Administration Photo" class="official-photo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="official-card">
+                                    <div class="official-position-label">Vice President for Finance</div>
+                                    <div class="official-form-section">
+                                        <div class="official-form-left">
+                                            <input type="text" class="form-control mb-2" name="vice_president_for_finance_name" value="{{ officials.vice_president_for_finance.name }}">
+
+                                            <div class="official-file-info">
+                                                {{ forms.vice_president_for_finance.photo }}
+                                            </div>
+                                        </div>
+                                        <div class="official-form-right">
+                                            <div class="official-image-container">
+                                                 <img src="{{ officials.vice_president_for_finance.photo.url }}" alt="Vice President for Finance Photo" class="official-photo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Vice President for Branches & Campuses</label>
-                                    <input type="text" class="form-control mb-2" name="vice_president_for_branches_campuses_name" value="{{ officials.vice_president_for_branches_campuses.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.vice_president_for_branches_campuses.photo.url }}" alt="Executive VP Branches Photo" class="img-thumbnail mx-width-150">
-                                    </div>
-                                    {{ forms.vice_president_for_branches_campuses.photo }}
-                                </div>
+
                                 
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Vice President for Administration</label>
-                                    <input type="text" class="form-control mb-2" name="vice_president_for_administration_name" value="{{ officials.vice_president_for_administration.name }}">
-                                    <div class="mb-2">
-                                        <img src="{{ officials.vice_president_for_administration.photo.url }}" alt="Executive VP Admin Photo" class="img-thumbnail mx-width-150">
-                                    </div>
-                                    {{ forms.vice_president_for_administration.photo }}
-                                </div>
-                                
-                                <div class="form-entry">
-                                    <label class="officials-form-label">Vice President for Finance</label>
-                                    <input type="text" class="form-control mb-2" name="vice_president_for_finance_name" value="{{ officials.vice_president_for_finance.name }}">
-                                    {% if officials.vice_president_for_finance.photo %}
-                                    <div class="mb-2">
-                                        <img src="{{ officials.vice_president_for_finance.photo.url }}" alt="Executive VP Finance Photo" class="img-thumbnail mx-width-150">
-                                    </div>
-                                    {% endif %}
-                                    {{ forms.vice_president_for_finance.photo }}
-                                </div>
                             </div>
                         </div>
 
                         <!-- Save / Discard Buttons -->
                         <div class="text-start mt-4">
-                            <button type="submit" class="submit-btn me-3">SAVE</button>
-                            <button type="reset" class="cancel-btn">DISCARD</button>
+                            <button type="submit" class="submit-officials-btn me-3">SAVE</button>
+                            <button type="reset" class="cancel-officials-btn  me-3">DISCARD</button>
                         </div>
                     </div>
                 </form>

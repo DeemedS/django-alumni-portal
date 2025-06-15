@@ -1,6 +1,8 @@
 :root {
-    --red: #800000;
     --pupred: #800000;
+    --pupdarkred: #600000;
+    --pupgold: #FEAF00;
+    --pupgoldenrod: #DAA520;
 }
 
 /* POPPINS FONT */
@@ -53,7 +55,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #800000;
+    color: var(--pupred);
 
 }
 
@@ -290,8 +292,8 @@
 }
 
 .nav-pills .sidebar-text.active {
-    background-color: #FEAF00;
-    color: #600;
+    background-color: var(--pupgold);
+    color: var(--pupdarkred);
 }
 
 .side-bar a {
@@ -313,7 +315,7 @@
 
 /*User Edit Profile*/
 .user-header {
-    background-color: #800000;
+    background-color: var(--pupred);
     color: #ececec;
     padding: 10px;
     border-radius: 5px;
@@ -340,13 +342,13 @@
 }
 
 .edit-user-form a {
-    background-color: var(--red);
+    background-color: var(--pupred);
     color: #ececec;
 }
 
 .edit-user-form input:focus, .edit-user-form select:focus{
-    border: 1px solid var(--red);
-    box-shadow: 0 0 5px var(--red);
+    border: 1px solid var(--pupred);
+    box-shadow: 0 0 5px var(--pupred);
 }
     
 .top-nav {
@@ -362,7 +364,7 @@
 }
 
 .requirements {
-    border-left: 2px solid #800000;
+    border-left: 2px solid var(--pupred);
 }
 
 .card-text {
@@ -380,7 +382,7 @@
 }
 
 .alumni-btn {
-    background-color: #800000;
+    background-color: var(--pupred);
     color: #fff;
     border: none;
     padding: 10px 10px;
@@ -424,7 +426,7 @@
 }
 
 .job-card-btn {
-    background-color: #8B0000;
+    background-color: var(--pupdarkred);
     color: #fff;
     border: none;
     margin-top: 1rem;
@@ -539,6 +541,82 @@
     }
 }
 
+/* Save job card css */
+.save-job-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Outer shell with accent line */
+.save-job-card {
+  border-left: 5px solid var(--pupred);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+}
+
+.save-job-card:hover {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+/* Inner content padding */
+.save-job-card-inner {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Title */
+.save-job-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+}
+
+/* Meta text */
+.save-job-meta {
+  margin: 0.25rem 0;
+  font-size: 0.925rem;
+  color: var(--text-subtle);
+}
+
+/* Footer button area */
+.save-job-card-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* Button */
+.save-job-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--pupred);
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.save-job-card-btn:hover {
+  background: var(--pupdarkred);
+}
+
+.save-job-card-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+}
+/* end of save job card */
+
 /* myday css */
 
 .alumni-card {
@@ -597,7 +675,7 @@
 }
 
 .red-background {
-    background-color: #800000;
+    background-color: var(--pupred);
 }
 
 .pastel-ochre-background {
@@ -646,7 +724,7 @@
 
 /*  */
 .line-divider {
-    border: 1px solid #800000;
+    border: 1px solid var(--pupred);
     width: 50%;
     margin: 0 auto;
     margin-top: 2rem;

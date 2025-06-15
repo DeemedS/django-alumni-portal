@@ -9,7 +9,10 @@ class OfficialForm(forms.ModelForm):
         widgets = {
             'position': forms.Select(attrs={'class': 'form-select'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'photo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'photo': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+                'accept': 'image/*'
+                }),
         }
 
     def save(self, commit=True):

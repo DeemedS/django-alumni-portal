@@ -48,18 +48,27 @@ document.addEventListener("DOMContentLoaded", async function () {
         jobDetailsList.forEach(jobDetails => {
             if (jobDetails) {
                 const jobCard = document.createElement("div");
-                jobCard.className = "col-md-4 mb-4";
+                jobCard.className = "save-job-card";
                 jobCard.innerHTML = `
-                    <div class="card h-100 border-0 shadow-sm position-relative p-3">
-                        <h5 class="card-title fw-bold">${jobDetails.title}</h5>
-                        <p class="mb-1"><strong>Company:</strong> ${jobDetails.company}</p>
-                        <p class="mb-1"><strong>Job Type:</strong> ${jobTypeMapping[jobDetails.job_type] || jobDetails.job_type}</p>
-                        <p class="mb-1"><strong>Location:</strong> ${jobDetails.location}</p>
-                        ${jobDetails.salary ? `<p class="mb-3"><strong>Salary:</strong> ${jobDetails.salary} PHP</p>` : ""}
-                        <div class="mt-auto mb-2 pt-2">
-                            <a href="/careers/${jobDetails.id}" class="job-card-btn">View More</a>
+                    <div class="save-job-card-inner">
+                        <h5 class="save-job-title">${jobDetails.title}</h5>
+                        <p class="save-job-meta"><strong>Company:</strong> ${jobDetails.company}</p>
+                        <p class="save-job-meta"><strong>Job Type:</strong> ${jobTypeMapping[jobDetails.job_type] || jobDetails.job_type}</p>
+                        <p class="save-job-meta"><strong>Location:</strong> ${jobDetails.location}</p>
+                        ${jobDetails.salary ? `<p class="save-job-meta"><strong>Salary:</strong> ${jobDetails.salary} PHP</p>` : ""}
+
+                        <div class="save-job-card-footer">
+                        <a href="/careers/${jobDetails.id}" class="save-job-card-btn">
+                            View More
+                            <svg viewBox="0 0 16 16" aria-hidden="true">
+                            <path d="M6 3l4 5-4 5" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
                         </div>
                     </div>
+                
+
                 `;
                 jobsContainer.appendChild(jobCard);
             }
