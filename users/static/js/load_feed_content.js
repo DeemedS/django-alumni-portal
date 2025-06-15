@@ -9,6 +9,25 @@ let hasMore = {
     job: true
 };
 
+let lastLoadedType = null;
+
+function getNextType() {
+    const types = ["article", "event", "job"];
+
+    // Rotate based on last loaded type
+    const startIndex = lastLoadedType ? (types.indexOf(lastLoadedType) + 1) % types.length : 0;
+
+    for (let i = 0; i < types.length; i++) {
+        const type = types[(startIndex + i) % types.length];
+        if (hasMore[type]) {
+            lastLoadedType = type;
+            return type;
+        }
+    }
+
+    return null;
+}
+
 function fetchData(pageType, page) {
     const baseUrls = {
         article: "/api/filtered-articles/",
@@ -160,41 +179,42 @@ function renderCard(item, index) {
 
 function loadMore() {
     if (isLoading || (!hasMore.article && !hasMore.event && !hasMore.job)) return;
+
     isLoading = true;
 
-    const promises = [];
-    if (hasMore.article) promises.push(fetchData("article", articlePage));
-    if (hasMore.event) promises.push(fetchData("event", eventPage));
-    if (hasMore.job) promises.push(fetchData("job", jobPage));
+    const nextType = getNextType();
 
-    Promise.all(promises).then(results => {
-        const [articles = [], events = [], jobs = []] = results;
+    if (!nextType) {
+        isLoading = false;
+        return;
+    }
 
-        if (articles.length > 0) articlePage++;
-        else hasMore.article = false;
+    const pageMap = { article: articlePage, event: eventPage, job: jobPage };
 
-        if (events.length > 0) eventPage++;
-        else hasMore.event = false;
+    fetchData(nextType, pageMap[nextType])
+        .then(items => {
+            if (items.length > 0) {
+                if (nextType === "article") articlePage++;
+                if (nextType === "event") eventPage++;
+                if (nextType === "job") jobPage++;
+            } else {
+                hasMore[nextType] = false;
+            }
 
-        if (jobs.length > 0) jobPage++;
-        else hasMore.job = false;
-
-        const newItems = [...articles, ...events, ...jobs]
-            .sort((a, b) => b.created_at - a.created_at);
-
-        const container = $("#news-feed-container");
-        const startIndex = combined.length;
-        combined.push(...newItems);
-        newItems.forEach((item, i) => {
-            const index = startIndex + i;
-            container.append(renderCard(item, index));
+            const startIndex = combined.length;
+            items.sort((a, b) => b.created_at - a.created_at);
+            combined.push(...items);
+            const container = $("#news-feed-container");
+            items.forEach((item, i) => {
+                container.append(renderCard(item, startIndex + i));
+            });
+        })
+        .catch(() => {
+            hasMore[nextType] = false;
+        })
+        .always(() => {
+            isLoading = false;
         });
-
-        isLoading = false;
-    }).catch(() => {
-        isLoading = false;
-        console.error("Error loading data.");
-    });
 }
 
 $(document).ready(function () {
