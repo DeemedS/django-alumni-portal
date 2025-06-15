@@ -5,6 +5,7 @@
 
 {% block content %}
 {% include 'components/faculty_topnav.html' %}
+
 <div class="container-fluid">
     <div class="row flex-nowrap">
         
@@ -17,155 +18,64 @@
             </div>
 
             <div class="bg-light p-3 min-vh-100 d-flex flex-column">
-
-                <!-- Metrics Row -->
-                    <div class="row mb-3">
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Registered Alumni</h6>
-                                <div class="count">{{ registered_alumni }}</div>
-                                <h6 class="mt-3">Total Alumni</h6>
-                                <div class="count">{{ total_alumni }}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Active Job Posts</h6>
-                                <div class="count">{{ active_jobs }}</div>
-                                <h6 class="mt-3">Total Job Posts</h6>
-                                <div class="count">{{ total_jobs }}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Upcoming Events</h6>
-                                <div class="count">{{ upcoming_events }}</div>
-                                <h6 class="mt-3">Total Events</h6>
-                                <div class="count">{{ total_events }}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Published Articles</h6>
-                                <div class="count">{{ active_articles }}</div>
-                                <h6 class="mt-3">Total Articles</h6>
-                                <div class="count">{{ total_articles }}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Published Stories</h6>
-                                <div class="count">{{ active_stories }}</div>
-                                <h6 class="mt-3">Total Stories</h6>
-                                <div class="count">{{ total_stories }}</div>
-                            </div>
-                        </div>
-
-                    </div>
-                <!-- End Metrics Row -->
-                
-                <!-- Alumni Tiles -->
-                <div class="admin-section row g-4">
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/alumni-management">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-user-graduate mb-2"></i>
-                                    <p class="section-title">Alumni</p>
-                                </div>
+                <!-- Grid Layout for Cards -->
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <a href="/faculty/alumni-management" class="text-decoration-none">
+                            <div class="card-custom p-3">
+                                <i class="icon fa-solid fa-graduation-cap"></i>
+                                <h5>ALUMNI </h5>
                             </div>
                         </a>
                     </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/careers-management">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-briefcase mb-2"></i>
-                                    <p class="section-title">Careers</p>
-                                </div>
+                    <div class="col-md-4">
+                        <a href="/faculty/careers-management" class="text-decoration-none">
+                            <div class="card-custom p-3">
+                                <i class="icon fa-solid fa-briefcase"></i>
+                                <h5>CAREERS</h5>
                             </div>
                         </a>
                     </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/events-management">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-calendar-alt mb-2"></i>
-                                    <p class="section-title">Events</p>
-                                </div>
+                    <div class="col-md-4">
+                        <a href="/faculty/events-management" class="text-decoration-none">
+                            <div class="card-custom p-3">
+                                <i class="icon fa-solid fa-calendar-days"></i>
+                                <h5>EVENTS</h5>
                             </div>
                         </a>
                     </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/articles-management">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-newspaper mb-2"></i>
-                                    <p class="section-title">Articles</p>
-                                </div>
+                    <div class="col-md-4">
+                        <a href="/faculty/articles-management" class="text-decoration-none">
+                            <div class="card-custom p-3">
+                                <i class="icon fa-solid fa-newspaper"></i>
+                                <h5>ARTICLE</h5>
                             </div>
                         </a>
                     </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/story-management">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-book-open mb-2"></i>
-                                    <p class="section-title">Stories</p>
-                                </div>
+                    <div class="col-md-4">
+                        <a href="/faculty/story-management" class="text-decoration-none">
+                            <div class="card-custom p-3">
+                                <i class="icon fa-solid fa-book-open-reader"></i>
+                                <h5>ALUMNI STORIES</h5>
                             </div>
                         </a>
                     </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/officials-management">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-user-tie mb-2"></i>
-                                    <p class="section-title">Officials</p>
-                                </div>
+                    <div class="col-md-4">
+                        <a href="/faculty/officials-management" class="text-decoration-none">
+                            <div class="card-custom p-3">
+                                <i class="icon fa-solid fa-users"></i>
+                                <h5>OFFICIALS</h5>
                             </div>
                         </a>
                     </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/course-management">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-book mb-2"></i>
-                                    <p class="section-title">Courses</p>
-                                </div>
+                    <div class="col-md-4">
+                        <a href="/faculty/system-settings" class="text-decoration-none">
+                            <div class="card-custom p-3">
+                                <i class="icon fa-solid fa-cogs"></i>
+                                <h5>SYSTEM SETTINGS</h5>
                             </div>
                         </a>
                     </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/section-management">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-rectangle-list mb-2"></i>
-                                    <p class="section-title">Sections</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6">
-                        <a href="/faculty/system-settings">
-                            <div class="card text-center h-100">
-                                <div class="admin-card-body">
-                                    <i class="fas fa-gear mb-2"></i>
-                                    <p class="section-title">System Settings</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
                 </div>
             
         </div>
