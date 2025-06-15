@@ -11,8 +11,12 @@
         <div class="arcticle-content my-3">
             <a href="javascript:history.back()" class="btn btn-secondary my-3">Back</a>
             <article class="py-3">
+
+
                 {% if event.banner %}
                     <img src="{{ event.banner.url }}" alt="Banner for {{ event.title }}">
+                {% else %}
+                    <img src="{% static 'images/default_image.png' %}" alt="Default banner">
                 {% endif %}
                 <h1>{{ event.title }}</h1>
                 <p>Published on: {{ event.date }}</p>

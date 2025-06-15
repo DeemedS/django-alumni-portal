@@ -11,7 +11,11 @@
             <a href="javascript:history.back()" class="btn btn-secondary my-3">Back</a>
             <article class="py-3">
                 
-                    <img src="{{ story.banner.url }}" alt="">
+                {% if event.banner %}
+                    <img src="{{ story.banner.url }}" alt="Banner for {{ story.title }}">
+                {% else %}
+                    <img src="{% static 'images/default_image.png' %}" alt="Default banner">
+                {% endif %}
                 
                 <h1>{{ story.title }}</h1>
                 <p>{{ story.created_at }}</p>
