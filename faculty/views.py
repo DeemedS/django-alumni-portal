@@ -1,4 +1,5 @@
 import csv
+from datetime import date
 import json
 import os
 from django.http import HttpResponse, JsonResponse
@@ -26,6 +27,7 @@ from django.utils.text import slugify
 from .forms import OfficialForm, WebsiteSettingsForm
 from story.models import Stories
 from django.db.models import Q
+from django.utils import timezone
 
 def generate_student_number():
     while True:
@@ -43,6 +45,17 @@ def generate_student_number():
 
 @login_required(login_url='/faculty/')
 def faculty_dashboard(request):
+    active_jobs = JobPost.objects.filter(is_active=True).count()
+    total_jobs = JobPost.objects.count()
+    upcoming_events = Event.objects.filter(is_active=True,date__gte=timezone.now()).order_by('date').count()
+    total_events = Event.objects.count()
+    registered_alumni = User.objects.filter(is_active=True, is_staff=False).count()
+    total_alumni = User.objects.filter(is_staff=False).count()
+    active_articles = Article.objects.filter(is_active=True).count()
+    total_articles = Article.objects.count()
+    active_stories = Stories.objects.filter(is_active=True).count()
+    total_stories = Stories.objects.count()
+    
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
         return redirect(reverse('authentication:faculty'))
@@ -51,6 +64,17 @@ def faculty_dashboard(request):
         'active_page':'dashboard',
         'first_name': request.user.first_name,
         'last_name': request.user.last_name,
+        'active_jobs': active_jobs,
+        'total_jobs': total_jobs,
+        'upcoming_events': upcoming_events,
+        'total_events': total_events,
+        'registered_alumni': registered_alumni,
+        'total_alumni': total_alumni,
+        'active_articles': active_articles,
+        'total_articles': total_articles,
+        'active_stories': active_stories,
+        'total_stories': total_stories,
+
     }
 
     return render(request, 'faculty_dashboard.html', context)
