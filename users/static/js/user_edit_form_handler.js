@@ -48,7 +48,7 @@ $(document).ready(function () {
                     errorMessage = xhr.responseJSON.error;
                 }
 
-                console.error("Error:", err);
+                console.error("Error:", error);
                 console.error("Error:", errorMessage);
 
                 $("#btn-spinner").addClass("d-none");
