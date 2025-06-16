@@ -175,9 +175,9 @@ def user_edit(request):
                 section_id = section.get('id') if section else None
                 section_code = section.get('section_code', '') if section else ""
                 year_graduated = user_data.get('year_graduated')
-                facebook_link = user_data.get('facebook_link')
-                linkedin_link = user_data.get('linkedin_link')
-                x_link = user_data.get('x_link')
+                facebook_link = user_data.get('facebook_link') or ""
+                linkedin_link = user_data.get('linkedin_link') or ""
+                x_link = user_data.get('x_link') or ""
                 
 
             courses = Course.objects.all()
