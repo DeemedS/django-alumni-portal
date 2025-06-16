@@ -119,6 +119,7 @@ def get_user_info(request):
         user = request.user
 
         user_info = {
+            'id': user.id,
             'first_name': user.first_name,
             'last_name': user.last_name,
             'suffix': user.suffix,
@@ -288,12 +289,11 @@ class RelatedAlumniListView(APIView):
 
     def get(self, request, *args, **kwargs):
         course_code = request.GET.get('course_code')
-        first_name = request.GET.get('first_name')
-        last_name = request.GET.get('last_name')
+        user_id = request.GET.get('user_id')
 
         base_queryset = User.objects.all()
-        if first_name and last_name:
-            base_queryset = base_queryset.exclude(Q(first_name=first_name) & Q(last_name=last_name))
+        if user_id:
+            base_queryset = base_queryset.exclude(user_id=user_id)
 
         base_queryset = base_queryset.exclude(Q(first_name='') | Q(last_name=''))
 
