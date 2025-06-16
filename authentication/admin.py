@@ -14,7 +14,7 @@ class UserAdmin(UserAdmin):
                         'x_link', 'facebook_link', 'linkedin_link',
                         'jobs', 'events', 
                         'email_verified')}),
-        ('Permissions', {'fields': ('is_staff', 'is_active')}),
+        ('Permissions', {'fields': ('is_staff', 'is_active','is_superuser')}),
     )
     add_fieldsets = (
         (None, {
