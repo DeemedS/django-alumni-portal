@@ -57,7 +57,6 @@ def user_dashboard(request):
                 'first_name': user_data.get('first_name'),
                 'last_name': user_data.get('last_name'),
                 'profile_image': user_data.get('profile_image'),
-                'user_id': user_data.get('id'),
                 'is_authenticated': True
             }
             return render(request, 'user_dashboard.html', context)
