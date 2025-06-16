@@ -65,7 +65,7 @@
                 <div class="card-body">
                   <h5 class="card-title">REQUEST DOCUMENTS</h5>
                   <p class="card-text">Request documents online like,<br> Transcript of Records, Diploma etc.</p>
-                    <p>For more information, please refer <a href="#" class="">here</a></p>
+                    <p>For more information, please refer <a href="https://odrs.pup.edu.ph/ur/" target="_blank" class="">here</a></p>
                 </div>
               </div> 
             </div>
@@ -102,7 +102,12 @@
         <p class="text-center">To get full access to our online services, please register and log in to the alumni portal.</p>
 
         <div class="btn-container">
-            <button type="button" class="btn btn-ann" onclick="window.location.href='/portal'">ALUMNI PORTAL</button>
+            <button type="button" class="btn btn-ann" id="alumni-portal-btn">ALUMNI PORTAL</button>
         </div>
     </div>
 </div>
+<script nonce={{request.csp_nonce}}>
+    document.getElementById('alumni-portal-btn').addEventListener('click', function () {
+        window.location.href = '/portal';
+    });
+</script>

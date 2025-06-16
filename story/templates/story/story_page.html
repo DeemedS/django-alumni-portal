@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="story-content my-3">
-            <a href="javascript:history.back()" class="btn btn-secondary my-3">Back</a>
+            <a href="{% url 'story:stories' %}" class="btn btn-warning my-3">BACK TO STORIES</a>
             <article class="py-3">
                 
                 {% if event.banner %}

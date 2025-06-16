@@ -81,8 +81,13 @@
     </div>
 
     <div class="btn-container">
-        <button type="button" class="btn btn-ann" onClick = window.location.href='/news' >View All Announcement <i class="fa-solid fa-arrow-right"></i></button>
+        <button type="button" class="btn btn-ann" id="view-ann-btn" >View All Announcement <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
     </div>
 </div>
+<script nonce={{request.csp_nonce}}>
+    document.getElementById('view-ann-btn').addEventListener('click', function () {
+        window.location.href = '/news';
+    });
+</script>

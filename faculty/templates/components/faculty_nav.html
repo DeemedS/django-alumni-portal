@@ -62,6 +62,7 @@
                     Profile
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item " href="{% url 'users:dashboard' %}">Newsfeed</a></li>
                     <li><a class="dropdown-item " href="{% url 'users:edit' %}">Edit Profile</a></li>
                     <li><a class="dropdown-item " href="{% url 'users:logout' %}">Logout</a></li>
                 </ul>
