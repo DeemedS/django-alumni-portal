@@ -430,12 +430,28 @@ def alumni_import(request):
             except Section.MultipleObjectsReturned:
                 section = None
 
-            # Format birthday and start date
+
             def format_date(value):
                 if not value:
                     return None
-                # Try to parse if string or date format expected
-                return value  # adjust if needed
+                if isinstance(value, str):
+                    try:
+                        return datetime.fromisoformat(value).date()
+                    except ValueError:
+                        try:
+                            return datetime.strptime(value, "%Y-%m-%d").date()
+                        except ValueError:
+                            try:
+                                return datetime.strptime(value, "%m/%d/%Y").date()
+                            except ValueError:
+                                return None
+                elif isinstance(value, datetime):
+                    return value.date()
+                elif isinstance(value, (int, float)):
+                    from datetime import datetime, timedelta
+                    excel_base = datetime(1899, 12, 30)  # Excel base date
+                    return (excel_base + timedelta(days=float(value))).date()
+                return None
 
             birthday = format_date(row.get('Birthday'))
             start_date = format_date(row.get('Start Date'))

@@ -427,9 +427,8 @@ def article_add(request):
                 else:
                     print(form.cleaned_data, 'is empty')
         
-            return redirect(reverse('faculty:article_add'))
+            return redirect('faculty:edit_article', slug=article.slug)
         
-
 
     else:
 
