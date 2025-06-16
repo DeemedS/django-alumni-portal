@@ -36,16 +36,24 @@ $(document).ready(function () {
             contentType: "application/json",
             headers: { "X-CSRFToken": csrfToken },
             success: function (response) {
-                showToast("Success", "Successfully Added New Alumni.", "success");
+                showToast("Success", "Successfully Updated Information.", "success");
                 setTimeout(function () {
                 window.location.href = `/myaccount/edit/`;
                 }, 1000);
             },
             error: function (xhr, status, error) {
-                console.error("Error:", error);
+                let errorMessage = "An unexpected error occurred.";
+
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
+                }
+
+                console.error("Error:", err);
+                console.error("Error:", errorMessage);
+
                 $("#btn-spinner").addClass("d-none");
                 $("#form-submit").prop("disabled", false);
-                showToast("Error", error, "danger");
+                showToast("Error", errorMessage, "danger");
                 
             }
         });
