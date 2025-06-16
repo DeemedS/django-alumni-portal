@@ -9,6 +9,9 @@ const backgroundClasses = [
 let splide;
 
 window.fetchRelatedAlumni = function(courseCode = null, pageSize = 10) {
+
+    const userId = document.getElementById("user_id").value;
+
     return new Promise((resolve) => {
         $.ajax({
             url: "/api/related-alumni",
@@ -16,6 +19,7 @@ window.fetchRelatedAlumni = function(courseCode = null, pageSize = 10) {
             data: {
                 page_size: pageSize,
                 course_code: courseCode,
+                user_id: userId,
             },
             success: function (response) {
                 const alumniList = response.results || [];
