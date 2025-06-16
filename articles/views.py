@@ -45,7 +45,10 @@ def articles_list(request):
     ]
 
     articles = Article.objects.all().order_by('-date')
-    featured_article = Article.objects.filter(featured=True, is_active=True).first()
+    featured_article = (
+        Article.objects.filter(featured=True, is_active=True).first()
+        or Article.objects.filter(is_active=True).order_by('-created_at').first()
+    )
 
     if access_token and refresh_token:
         # Here you might want to validate the tokens or perform some action
@@ -137,12 +140,6 @@ def edit_article(request, slug):
         bodytext_formset = BodyTextFormSet(request.POST, request.FILES, prefix='bodytext')
         bodyimage_formset = BodyImageFormSet(request.POST, request.FILES, prefix='bodyimage')
         subtitle_formset = SubTitleFormSet(request.POST, prefix='subtitle')
-
-        print(article_form.is_valid())
-        print(bodytext_formset.is_valid())
-        print(bodyimage_formset.is_valid())
-        print(subtitle_formset.is_valid())
-        print(bodyimage_formset.errors)
 
         if article_form.is_valid() and bodytext_formset.is_valid() and bodyimage_formset.is_valid() and subtitle_formset.is_valid():
             article = article_form.save()
@@ -281,10 +278,6 @@ def edit_article(request, slug):
 def toggle_article_status(request, id):
     if not request.user.is_staff or not request.user.is_active:
         messages.error(request, "Access denied. You must be an active faculty member to proceed.")
-        
-        storage = get_messages(request)
-        print("Messages before redirect:", list(storage))  # Check if message exists
-
         return redirect(reverse('authentication:faculty'))
     
     if request.method == 'POST':
@@ -324,19 +317,10 @@ def article_add(request):
 
 
     if request.method == 'POST': 
-
-        print(request.POST)
-
         article_form = ArticleForm(request.POST, request.FILES, instance=None)
         bodytext_formset = BodyTextFormSet(request.POST, request.FILES, prefix='bodytext')
         bodyimage_formset = BodyImageFormSet(request.POST, request.FILES, prefix='bodyimage')
         subtitle_formset = SubTitleFormSet(request.POST, prefix='subtitle')
-
-        print(article_form.is_valid())
-        print(bodytext_formset.is_valid())
-        print(bodyimage_formset.is_valid())
-        print(subtitle_formset.is_valid())
-        print(bodyimage_formset.errors)
 
         if article_form.is_valid() and bodytext_formset.is_valid() and bodyimage_formset.is_valid() and subtitle_formset.is_valid():
             article = article_form.save()
