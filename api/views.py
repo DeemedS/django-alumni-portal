@@ -295,6 +295,8 @@ class RelatedAlumniListView(APIView):
         if first_name and last_name:
             base_queryset = base_queryset.exclude(Q(first_name=first_name) & Q(last_name=last_name))
 
+        base_queryset = base_queryset.exclude(Q(first_name='') & Q(last_name=''))
+
         users = base_queryset.filter(is_active=True, is_faculty=False)
 
         if course_code:
