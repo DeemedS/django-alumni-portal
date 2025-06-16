@@ -877,7 +877,8 @@ def remove_profile_photo(request):
     profile_image_path = os.path.normpath(profile_image_path)
 
     # Get default image path from UserSettings
-    default_image_path = 'user/profile_pics/default.jpg'
+    default_image_path = 'user/profile_pics/default.png'
+
     try:
         settings_obj = UserSettings.objects.first()
         if settings_obj:

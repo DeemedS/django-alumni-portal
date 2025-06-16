@@ -99,7 +99,7 @@
             {% csrf_token %}
             <div class="mb-3 text-start w-100">
                 <label for="course-name" class="form-label">Course Name</label>
-                <input type="text" class="form-control" id="courseSearch" placeholder="e.g., Bachelor of Science in Computer Engineering" value="" >
+                <input type="text" class="form-control" autocomplete="off" id="courseSearch" placeholder="e.g., Bachelor of Science in Computer Engineering" value="" >
                 <input type="hidden" id="course-name" name="course-name" value=""> 
                 <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow course-sug"></div>
                 <input type="hidden" id="selectedCourse" name="course">
