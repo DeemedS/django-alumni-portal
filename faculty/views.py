@@ -426,9 +426,9 @@ def alumni_import(request):
             try:
                 section = Section.objects.get(section_code=row['Section Code'], course=course)
             except Section.DoesNotExist:
-                section = ''
+                section = None
             except Section.MultipleObjectsReturned:
-                section = ''
+                section = None
 
             # Format birthday and start date
             def format_date(value):
