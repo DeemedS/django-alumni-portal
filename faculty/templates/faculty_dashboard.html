@@ -19,49 +19,54 @@
             <div class="bg-light p-3 min-vh-100 d-flex flex-column">
 
                 <!-- Metrics Row -->
-                    <div class="row mb-3">
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Registered Alumni</h6>
-                                <div class="count">{{ registered_alumni }}</div>
-                                <h6 class="mt-3">Total Alumni</h6>
-                                <div class="count">{{ total_alumni }}</div>
-                            </div>
+                <div class="metrics mb-4">
+                    <!-- Registered Alumni -->
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h5>Registered Alumni</h5>
+                            <div class="stat-main">{{ registered_alumni }}</div>
+                            <div class="stat-sub">Total Alumni: <strong>{{ total_alumni }}</strong></div>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Active Job Posts</h6>
-                                <div class="count">{{ active_jobs }}</div>
-                                <h6 class="mt-3">Total Job Posts</h6>
-                                <div class="count">{{ total_jobs }}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Upcoming Events</h6>
-                                <div class="count">{{ upcoming_events }}</div>
-                                <h6 class="mt-3">Total Events</h6>
-                                <div class="count">{{ total_events }}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Published Articles</h6>
-                                <div class="count">{{ active_articles }}</div>
-                                <h6 class="mt-3">Total Articles</h6>
-                                <div class="count">{{ total_articles }}</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="metric-box">
-                                <h6>Published Stories</h6>
-                                <div class="count">{{ active_stories }}</div>
-                                <h6 class="mt-3">Total Stories</h6>
-                                <div class="count">{{ total_stories }}</div>
-                            </div>
-                        </div>
-
+                        <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
                     </div>
+                    <!-- Active Job Posts -->
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h5>Active Job Posts</h5>
+                            <div class="stat-main">{{ active_jobs }}</div>
+                            <div class="stat-sub">Total Job Posts: <strong>{{ total_jobs }}</strong></div>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+                    </div>
+                    <!-- Upcoming Events -->
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h5>Upcoming Events</h5>
+                            <div class="stat-main">{{ upcoming_events }}</div>
+                            <div class="stat-sub">Total Events: <strong>{{ total_events }}</strong></div>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-calendar-days"></i></div>
+                    </div>
+                    <!-- Published Articles -->
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h5>Published Articles</h5>
+                            <div class="stat-main">{{ active_articles }}</div>
+                            <div class="stat-sub">Total Articles: <strong>{{ total_articles }}</strong></div>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-newspaper"></i></div>
+                    </div>
+                    <!-- Published Stories -->
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h5>Published Stories</h5>
+                            <div class="stat-main">{{ active_stories }}</div>
+                            <div class="stat-sub">Total Stories: <strong>{{ total_stories }}</strong></div>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-book-open"></i></div>
+                    </div>
+
+                </div>
                 <!-- End Metrics Row -->
                 
                 <!-- Dashboard Navigation-->

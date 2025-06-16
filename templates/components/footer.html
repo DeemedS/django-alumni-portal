@@ -83,7 +83,8 @@
 
                         <div class="col-md-12">
                             <button type="submit" name="submit" class="footer-button fw-bold">
-                                <i class="fa-solid fa-paper-plane"></i> Send message
+                                <i class="fa-solid fa-paper-plane" id="spinner-hide"></i> 
+                                <span id="btn-spinner" class="spinner d-none"></span> Send message
                             </button>
                             
                         </div>
@@ -106,3 +107,5 @@
 </div>
 
 <script nonce="{{ request.csp_nonce }}" src="{% static 'js/footer_email_handler.js' %}"></script>
+<script nonce="{{ request.csp_nonce }}" src="{% static 'js/spinner.js' %}"></script>
+<link nonce="{{ request.csp_nonce }}" href="{% static 'css/spinner.css' %}" rel="stylesheet" type="text/css">
