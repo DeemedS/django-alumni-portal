@@ -1,9 +1,7 @@
 {% extends "user_page_layout.html" %}
 {% load static %}
 
-{% block title %}
-    Alumni Portal | User Story
-{% endblock %}
+{% block title %}Alumni Portal | User Story{% endblock %}
 
 {% block content %}
 {% include "components/top_nav.html" %}
@@ -15,39 +13,16 @@
             <div class="user-header mt-3">
                 <h3>My Story</h3>
             </div>
-            <!-- start of content -->
-             {% if request.user.is_staff %}
-                <div class="bg-light p-3 min-vh-100 d-flex flex-column">
-                    <div class="row">
-                        <div class="col gap-3">
-                            <h4 class="mb-4">All Your Stories</h4>
-                            {% if stories %}
-                                <div class="list-group">
-                                    {% for s in stories %}
-                                        <div class="list-group-item mb-3">
-                                            <h5>{{ s.title }}</h5>
-                                            <p>{{ s.body|truncatewords:40 }}</p>
-                                            {% if s.banner %}
-                                                <div><strong>Banner:</strong> <a href="{{ s.banner.url }}" target="_blank">View banner</a></div>
-                                            {% endif %}
-                                            {% if s.thumbnail %}
-                                                <div><strong>Thumbnail:</strong> <a href="{{ s.thumbnail.url }}" target="_blank">View thumbnail</a></div>
-                                            {% endif %}
-                                            <div class="text-muted small">Created: {{ s.created_at }}</div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                <p>No stories found.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="bg-light p-3 min-vh-100 d-flex flex-column">
-                    <div class="row">
-                        <div class="col gap-3">
-                            <form method="POST" enctype="multipart/form-data" class="form-section">
+
+            <div class="bg-light p-3 min-vh-100 d-flex flex-column">
+                <div class="row">
+                    <div class="col gap-3">
+
+                        {% if form %}
+                            <h4 class="mb-3">
+                                {% if story and not is_staff %}Update Story{% else %}Submit a Story{% endif %}
+                            </h4>
+                            <form method="POST" enctype="multipart/form-data" class="form-section mb-5">
                                 {% csrf_token %}
                                 {{ form.non_field_errors }}
 
@@ -62,34 +37,55 @@
                                     <div class="form-text">(Narrative, max of 300 words)</div>
                                 </div>
 
-                                <div class="col-md-4 mb-3">
-                                    <label for="{{ form.banner.id_for_label }}" class="form-label file-label">Banner</label>
-                                    {{ form.banner }}
-                                    {% if story and story.banner %}
-                                        <div class="mt-2"><strong>Current:</strong> <a href="{{ story.banner.url }}" target="_blank">View banner</a></div>
-                                    {% endif %}
+                                <div class="row g-4">
+                                    <!-- Banner -->
+                                    <div class="col-md-6">
+                                        <label for="{{ form.banner.id_for_label }}" class="form-label fw-bold">Banner</label>
+                                        <div class="mb-2">
+                                            {{ form.banner }}
+                                        </div>
+                                        {% if story and story.banner %}
+                                            <div class="position-relative border rounded p-2 bg-white shadow-sm">
+                                                <img src="{{ story.banner.url }}" alt="Current Banner" class="img-fluid rounded mb-2" style="max-height: 200px; object-fit: cover;">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="clear_banner" id="clearBanner">
+                                                    <label class="form-check-label text-danger" for="clearBanner">Remove current banner</label>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Thumbnail -->
+                                    <div class="col-md-6">
+                                        <label for="{{ form.thumbnail.id_for_label }}" class="form-label fw-bold">Thumbnail</label>
+                                        <div class="mb-2">
+                                            {{ form.thumbnail }}
+                                        </div>
+                                        {% if story and story.thumbnail %}
+                                            <div class="position-relative border rounded p-2 bg-white shadow-sm">
+                                                <img src="{{ story.thumbnail.url }}" alt="Current Thumbnail" class="img-fluid rounded mb-2" style="max-height: 200px; object-fit: cover;">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="clear_thumbnail" id="clearThumbnail">
+                                                    <label class="form-check-label text-danger" for="clearThumbnail">Remove current thumbnail</label>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
                                 </div>
 
-                                <div class="col-md-4 mb-4">
-                                    <label for="{{ form.thumbnail.id_for_label }}" class="form-label file-label">Thumbnail</label>
-                                    {{ form.thumbnail }}
-                                    {% if story and story.thumbnail %}
-                                        <div class="mt-2"><strong>Current:</strong> <a href="{{ story.thumbnail.url }}" target="_blank">View thumbnail</a></div>
-                                    {% endif %}
-                                </div>
-
-                                <div class="d-flex gap-3 mt-2">
+                                <div class="d-flex gap-3 mt-4">
                                     <button type="submit" class="submit-btn px-4">
-                                        {% if story %} Update {% else %} Submit {% endif %}
+                                        {% if story and not is_staff %}Update{% else %}Submit{% endif %}
                                     </button>
                                     <button type="reset" class="cancel-btn px-4">DISCARD</button>
                                 </div>
                             </form>
-                        </div>
+                        {% endif %}
+
                     </div>
                 </div>
-            {% endif %}
-            <!-- end of content -->
+            </div>
+
         </div>
     </div>
 </div>
