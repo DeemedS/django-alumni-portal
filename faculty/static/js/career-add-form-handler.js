@@ -32,6 +32,8 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 console.error("Error:", error);
                 showToast("Error", "Error submitting the form!", "danger");
+                const btnspinner = document.getElementById('btn-spinner');
+                btnspinner.classList.add('d-none');
             }
         });
     });

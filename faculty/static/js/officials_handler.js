@@ -21,6 +21,9 @@ $('#officials-form').on('submit', function (e) {
         },
         error: function (xhr, status, error) {
             showToast("Update Failed", `An error occurred while submitting the form.`, "danger");
+            setTimeout(function () {
+                location.reload();
+            }, 1000);
             console.error(xhr.responseText);
         }
     });
