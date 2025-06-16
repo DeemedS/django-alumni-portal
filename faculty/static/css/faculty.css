@@ -100,34 +100,59 @@
 
 /* DASHBOARD css */
 /* for metrics */
-.metric-box {
-    background-color: #ffffff;
-    border-left: 5px solid var(--pupred);
+.metrics {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    gap: 1rem;
     padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 8px rgba(0,0,0,0.05);
-    transition: 0.2s ease;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
-
-.metric-box:hover {
-    transform: translateY(-3px);
+.stat-card {
+    position: relative;
+      min-width: 230px;
+      flex: 0 0 auto;
+      background-color: #ffffff;
+      border-radius: 0.75rem;
+      padding: 1rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 5px solid #FFB300 !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.stat-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
-.metric-box h6 {
-    margin-bottom: 0;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #555;
+.stat-info h5 {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin: 0 0 0.25rem;
 }
 
-.metric-box .count {
-    font-size: 1.4rem;
-    font-weight: 600;
+.stat-info .stat-main {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #212529;
+}
+
+.stat-info .stat-sub {
+    font-size: 0.8rem;
+    color: #495057;
+}
+
+.stat-icon {
+    font-size: 1.8rem;
     color: var(--pupred);
 }
+
 /* for tiles */
  .text-maroon {
-    color: #800000;
+    color: var(--pupred);
 }
 
 .admin-section .card {
@@ -135,7 +160,7 @@
     /* border: 1px solid var(--pupred); */
     border-radius: 0.75rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: fff;
+    color: #fff;
 }
 
 .admin-section .card:hover {
@@ -164,6 +189,7 @@
 
 }
 .section-title {
+    color: var(--pupdarkred);
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 0;
