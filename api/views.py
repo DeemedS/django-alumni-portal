@@ -288,14 +288,12 @@ class RelatedAlumniListView(APIView):
 
     def get(self, request, *args, **kwargs):
         course_code = request.GET.get('course_code', None)
-        user_id = request.GET.get('user_id', None)
+        first_name = request.GET.get('first_name', None)
+        last_name = request.GET.get('last_name', None)
 
-        base_queryset = User.objects.exclude(Q(first_name="") | Q(last_name=""))
+        base_queryset = User.objects.exclude(Q(first_name=first_name) and Q(last_name=last_name))
 
         users = base_queryset.filter(is_active=True, is_faculty=False)
-
-        if user_id:
-            users = base_queryset.filter(id=user_id)
 
         if course_code:
             users = base_queryset.filter(course__course_code=course_code)\

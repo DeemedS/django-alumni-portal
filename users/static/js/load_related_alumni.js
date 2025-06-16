@@ -10,7 +10,8 @@ let splide;
 
 window.fetchRelatedAlumni = function(courseCode = null, pageSize = 10) {
 
-    const userId = document.getElementById("user_id").value;
+    const first_name = document.getElementById("first_name").value;
+    const last_name = document.getElementById("last_name").value;
 
     return new Promise((resolve) => {
         $.ajax({
@@ -19,7 +20,8 @@ window.fetchRelatedAlumni = function(courseCode = null, pageSize = 10) {
             data: {
                 page_size: pageSize,
                 course_code: courseCode,
-                user_id: userId,
+                first_name: first_name,
+                last_name: last_name,
             },
             success: function (response) {
                 const alumniList = response.results || [];
