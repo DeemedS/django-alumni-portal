@@ -287,25 +287,26 @@ class RelatedAlumniListView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
-        course_code = request.GET.get('course_code', None)
-        first_name = request.GET.get('first_name', None)
-        last_name = request.GET.get('last_name', None)
+        course_code = request.GET.get('course_code')
+        first_name = request.GET.get('first_name')
+        last_name = request.GET.get('last_name')
 
-        base_queryset = User.objects.exclude(Q(first_name=first_name) and Q(last_name=last_name))
+        base_queryset = User.objects.all()
+        if first_name and last_name:
+            base_queryset = base_queryset.exclude(Q(first_name=first_name) & Q(last_name=last_name))
 
         users = base_queryset.filter(is_active=True, is_faculty=False)
 
         if course_code:
-            users = base_queryset.filter(course__course_code=course_code)\
-                .select_related('course')\
-                .order_by("?")
-        else:
-            users = base_queryset.select_related('course')\
-            .order_by("?")
+            users = users.filter(course__course_code=course_code)
 
+        users = users.select_related('course').order_by('?')
 
         paginator = PageNumberPagination()
-        paginator.page_size = request.GET.get('page_size', 10)
+        try:
+            paginator.page_size = int(request.GET.get('page_size', 10))
+        except ValueError:
+            paginator.page_size = 10
 
         result_page = paginator.paginate_queryset(users, request)
         serializer = RelatedALumniSerializer(result_page, many=True)
