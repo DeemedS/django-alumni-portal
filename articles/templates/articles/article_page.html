@@ -15,8 +15,8 @@
         <!-- Main content -->
         <div class="article-content">
 
-            <a href="javascript:history.back()" class="btn btn-secondary my-3">Back</a>
-                    
+            <a href="{% url 'articles:articles_list' %}" class="btn btn-warning my-3">BACK TO ARTICLES</a>
+
             <article>
                 {% if article.banner %}
                     <img src="{{ article.banner.url }}" alt="Banner for {{ article.title }}">
