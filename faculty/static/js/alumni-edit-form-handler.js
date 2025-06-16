@@ -35,6 +35,8 @@ $(document).ready(function () {
             headers: { "X-CSRFToken": getCSRFToken() },
             success: function (response) {
                 showToast("Success", "Successfully Edited Alumni.", "success");
+                
+                location.reload()
             },
             error: function (xhr, status, error) {
                 console.error("Error:", error);
