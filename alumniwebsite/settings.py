@@ -218,7 +218,11 @@ else:
     # Fallback: local media
     DOMAIN_URL = config('DOMAIN_URL')
 
-    MEDIA_URL = f"{DOMAIN_URL}/media/"
+    if DEBUG:
+        MEDIA_URL = '/media/'
+    else:
+        MEDIA_URL = f"{DOMAIN_URL}/media/"
+        
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
