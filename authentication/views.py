@@ -86,6 +86,8 @@ def user_login(request):
                 "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
                 'settings': websettings,
             })
+        
+    list(messages.get_messages(request))
 
     return render(request, 'login.html', {
         'form' : FormWithCaptcha(),
@@ -199,6 +201,8 @@ def register(request):
             return render(request, 'signup.html', context)
         
         return render(request, 'success_page.html', context)
+    
+    list(messages.get_messages(request))
 
     return render(request, 'signup.html', context)
 
@@ -232,6 +236,8 @@ def faculty(request):
         else:
             messages.error(request, "Invalid email or password.")
 
+    list(messages.get_messages(request))
+    
     return render(request, 'faculty.html', context)
 
 
