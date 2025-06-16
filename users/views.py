@@ -943,7 +943,8 @@ def upload_profile_photo(request):
     except User.DoesNotExist:
         return JsonResponse({'error': 'User not found'}, status=404)
 
-    filename = f"user/profile_pics/{user.id}.jpg"  # Still use user.id for filename
+    extension = os.path.splitext(photo.name)[1]
+    filename = f"user/profile_pics/{user.id}{extension}"
 
     # Delete old photo if exists
     if default_storage.exists(filename):
