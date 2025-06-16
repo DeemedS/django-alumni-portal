@@ -57,7 +57,7 @@
             
                 <!-- Render the form -->
                     <div class="container mt-3">
-                        <form id="userForm" class="userForm mb-3" method="post">
+                        <form id="userForm" class="userForm mb-3" method="post" autocomplete="off">
                             {% csrf_token %}
 
                             <div class="row mb-3">
@@ -172,7 +172,7 @@
                             <div class="row mb-3 mt-3">
                                 <div class="col-md-4">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="student_number" name="student_number" value="{{ student_number }}" readonly>
+                                        <input type="text" class="form-control" id="student_number" name="student_number" value="{{ student_number }}">
                                         <label for="student_number" class="form-label">Student Number</label>
                                     </div>
                                 </div>

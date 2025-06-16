@@ -84,7 +84,7 @@
                         <div class="col-md-6 position-relative">
                             <label for="courseSearch" class="form-label">Course</label>
                             <input type="hidden" id="course_name" name="course_name" value=""> 
-                            <input type="text" class="form-control" id="courseSearch" placeholder="Course" value="{{ alumni.course }}" >
+                            <input type="text" autocomplete="off" class="form-control" id="courseSearch" placeholder="Course" value="{{ alumni.course }}" >
                             <div id="courseSuggestions" class="list-group position-absolute w-100 mt-1 shadow course-sug" ></div>
                             <input type="hidden" id="selectedCourse" name="course">
                         </div>

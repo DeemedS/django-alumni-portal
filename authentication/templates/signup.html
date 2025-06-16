@@ -33,7 +33,7 @@
                         <div class="d-flex align-items-center justify-content-center">
                             <div class="form-box bg-white p-4 shadow-lg">
                             <h6 class="text-center fw-bold mb-3">Register Account</h6>
-                            <form method="POST" enctype="multipart/form-data">
+                            <form method="POST" enctype="multipart/form-data" autocomplete="off">
                                 {% csrf_token %}
 
                                 {% if messages %}
