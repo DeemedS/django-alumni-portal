@@ -869,12 +869,21 @@ def remove_profile_photo(request):
 
     user_data = user_response.json()
     profile_image_path = user_data.get('profile_image', '')
+    user_email = user_data.get('email')
+
+    User = get_user_model()
+
+    try:
+        user = User.objects.get(email=user_email)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
 
     # Normalize the profile_image_path to be relative to MEDIA_ROOT
     if profile_image_path.startswith(settings.MEDIA_URL):
         profile_image_path = profile_image_path[len(settings.MEDIA_URL):]
 
-    profile_image_path = os.path.normpath(profile_image_path)
+    # Ensure forward slashes for Linux (avoid Windows backslashes)
+    profile_image_path = profile_image_path.replace('\\', '/')
 
     # Get default image path from UserSettings
     default_image_path = 'user/profile_pics/default.png'
@@ -891,6 +900,9 @@ def remove_profile_photo(request):
 
     if default_storage.exists(profile_image_path):
         default_storage.delete(profile_image_path)
+
+    user.profile_image = default_image_path
+    user.save()
 
     return JsonResponse({'message': 'Photo reset to default successfully'})
 
@@ -929,7 +941,7 @@ def upload_profile_photo(request):
         return HttpResponseRedirect('/login/')
 
     user_data = user_response.json()
-    user_email = user_data.get('email')  # <-- Get email here
+    user_email = user_data.get('email')
 
     if not user_email:
         return JsonResponse({'error': 'User email not found'}, status=400)
