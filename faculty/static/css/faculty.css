@@ -109,6 +109,12 @@
     justify-content: center;
     align-items: center;
     align-content: center;
+    @media screen and (max-width: 768px) {
+        justify-content: normal;
+        align-items: normal;
+        align-content: normal;
+        
+    }
 }
 .stat-card {
     position: relative;
@@ -228,6 +234,7 @@
     padding: 10px 10px;
     border-radius: 5px;
     text-decoration: none;
+    text-align: center;
 }
 .alumni-btn-green { /* Alumni button for import and export*/
     background-color: #198754;
