@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseNotAllowed, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from .forms import FormWithCaptcha
 from django.core.mail import send_mail
 from faculty.models import WebsiteSettings
@@ -10,7 +10,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import logging
 import json
-from urllib.parse import urlparse
 
 def home(request):
     context = {'form' : FormWithCaptcha()}
