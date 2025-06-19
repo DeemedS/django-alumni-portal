@@ -66,8 +66,8 @@ def user_login(request):
             refresh = RefreshToken.for_user(user)
             access_token = AccessToken.for_user(user)
             response = redirect('/myaccount/')
-            response.set_cookie('access_token', str(access_token), httponly=True, secure=True)
-            response.set_cookie('refresh_token', str(refresh), httponly=True, secure=True)
+            response.set_cookie('access_token', str(access_token), httponly=True, secure=True, secure=True, samesite='Lax')
+            response.set_cookie('refresh_token', str(refresh), httponly=True, secure=True, secure=True, samesite='Lax')
             return response
         else:
             messages.error(request, 'Invalid email or password')
