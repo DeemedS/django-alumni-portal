@@ -71,7 +71,7 @@ def user_dashboard(request):
         if refresh_response.status_code == 200:
             new_access_token = refresh_response.json().get('access')
             response = redirect('/myaccount/')
-            response.set_cookie('access_token', new_access_token, httponly=True)
+            response.set_cookie('access_token', new_access_token, httponly=True, secure=True, secure=True, samesite='Lax')
             return response
         else:
             return redirect('/login/')
@@ -225,7 +225,7 @@ def user_edit(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True)
+                response.set_cookie('access_token', access_token, httponly=True, secure=True, secure=True, samesite='Lax')
 
                 return response
             
@@ -268,7 +268,7 @@ def user_change_password(request):
             new_tokens = refresh_response.json()
             access_token = new_tokens.get('access')
             response = redirect('/myaccount/')
-            response.set_cookie('access_token', access_token, httponly=True)
+            response.set_cookie('access_token', access_token, httponly=True, secure=True, secure=True, samesite='Lax')
             return response
         else:
             return redirect('/login/')
@@ -368,7 +368,7 @@ def saved_jobs(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True)
+                response.set_cookie('access_token', access_token, httponly=True, secure=True, secure=True, samesite='Lax')
                 return response
             
             else:
@@ -416,7 +416,7 @@ def saved_events(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True)
+                response.set_cookie('access_token', access_token, httponly=True, secure=True, secure=True, samesite='Lax')
                 return response
             
             else:
@@ -653,7 +653,7 @@ def user_stories(request):
             if refresh_response.status_code == 200:
                 new_access_token = refresh_response.json().get('access')
                 response = redirect('/myaccount/user_stories/')
-                response.set_cookie('access_token', new_access_token, httponly=True)
+                response.set_cookie('access_token', new_access_token, httponly=True, secure=True, secure=True, samesite='Lax')
                 return response
         return redirect('/login/')
 
@@ -778,7 +778,7 @@ def user_donation(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True)
+                response.set_cookie('access_token', access_token, httponly=True, secure=True, secure=True, samesite='Lax')
                 return response
             
             else:
@@ -826,7 +826,7 @@ def alumni_network(request):
                 new_tokens = refresh_response.json()
                 access_token = new_tokens.get('access')
                 response = redirect('/myaccount/')
-                response.set_cookie('access_token', access_token, httponly=True)
+                response.set_cookie('access_token', access_token, httponly=True, secure=True, secure=True, samesite='Lax')
                 return response
             
             else:
@@ -854,7 +854,7 @@ def remove_profile_photo(request):
             new_tokens = refresh_response.json()
             access_token = new_tokens.get('access')
             response = redirect('/myaccount/')
-            response.set_cookie('access_token', access_token, httponly=True)
+            response.set_cookie('access_token', access_token, httponly=True, secure=True, secure=True, samesite='Lax')
             return response
         else:
             return redirect('/login/')
@@ -926,7 +926,7 @@ def upload_profile_photo(request):
             new_tokens = refresh_response.json()
             access_token = new_tokens.get('access')
             response = HttpResponseRedirect('/myaccount/')
-            response.set_cookie('access_token', access_token, httponly=True)
+            response.set_cookie('access_token', access_token, httponly=True, secure=True, secure=True, samesite='Lax')
             return response
         else:
             return HttpResponseRedirect('/login/')
