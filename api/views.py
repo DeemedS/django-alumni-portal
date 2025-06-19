@@ -255,7 +255,7 @@ class AlumniListView(APIView):
         search_query = request.GET.get('search')
 
         # Start with base queryset
-        users = User.objects.all().order_by("last_name", "first_name")
+        users = User.objects.filter(is_staff=False).order_by("last_name", "first_name")
 
         # Filter: Verification status
         if verification == 'verified':
