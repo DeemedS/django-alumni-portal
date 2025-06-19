@@ -302,7 +302,7 @@ if not DEBUG:
     CSRF_COOKIE_SAMESITE = 'Strict'
 
     SESSION_COOKIE_NAME = '__Secure-sessionid'
-    CSRF_COOKIE_NAME = '__Secure-sessionid'
+    CSRF_COOKIE_NAME = '__Secure-csrftoken'
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
     CSRF_COOKIE_PATH = '/'
