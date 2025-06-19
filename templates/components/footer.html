@@ -89,7 +89,7 @@
                             
                         </div>
 
-                        <script nonce="{{ CSP_NONCE }}" src="https://www.google.com/recaptcha/api.js" async defer></script>
+                        <script nonce="{{ request.csp_nonce }}" src="https://www.google.com/recaptcha/api.js" async defer></script>
                     </form>
                 </div>
             </div>
