@@ -5,6 +5,7 @@ from events.models import Event
 from faculty.models import WebsiteSettings
 from django.conf import settings
 from alumniwebsite.forms import FormWithCaptcha
+from django.views.decorators.http import require_GET
 
 def home(request):
     form = FormWithCaptcha()

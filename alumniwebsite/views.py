@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import logging
 import json
+from urllib.parse import urlparse
 
 def home(request):
     context = {'form' : FormWithCaptcha()}
@@ -89,8 +90,9 @@ def csp_report_view(request):
         return JsonResponse({"status": "ok"})
     return JsonResponse({"status": "only POST allowed"}, status=405)
 
+
 def custom_csrf_failure_view(request, reason=""):
-    referer = request.META.get('HTTP_REFERER')
-    if referer:
-        return redirect(f'{referer}?csrf_error=1')
-    return redirect('/?csrf_error=1')
+    return render(request, "errors/csrf_failure.html", {
+        "reason": reason,
+        "referer": request.META.get("HTTP_REFERER", ""),
+    }, status=403)
