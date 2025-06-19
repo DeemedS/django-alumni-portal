@@ -384,7 +384,7 @@ class FilteredAlumniAPIView(APIView):
 
         year_graduated = request.GET.get('year_graduated')
         
-        alumni = User.objects.all().order_by("id")
+        alumni = User.objects.filter(is_staff=False).order_by("id")
 
         if is_active.lower() in ['true', '1']:
             alumni = alumni.filter(is_active=True)
