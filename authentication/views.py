@@ -36,7 +36,6 @@ def portal(request):
     })
 
 def user_login(request):
-
     access_token = request.COOKIES.get('access_token')
     websettings = WebsiteSettings.objects.first()
 
@@ -44,53 +43,39 @@ def user_login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        if not User.objects.filter(email=email).exists():
+        user_qs = User.objects.filter(email=email)
+        if not user_qs.exists():
             messages.error(request, 'User does not exist')
             return render(request, 'login.html')
-        
-        if not User.objects.filter(email=email, is_active=True).exists():
+        if not user_qs.filter(is_active=True).exists():
             messages.error(request, 'User is not active')
             return render(request, 'login.html')
-        
-        if not User.objects.filter(email=email, email_verified=True).exists():
+        if not user_qs.filter(email_verified=True).exists():
             messages.error(request, 'Please verify your email address')
             return render(request, 'login.html')
-            
-
-        api_url = f"{settings.API_TOKEN_URL}/token/"
-        response = requests.post(api_url, data={'email': email, 'password': password})
 
         user = authenticate(request, email=email, password=password)
 
-        if user is not None:
+        if user:
             refresh = RefreshToken.for_user(user)
-            access_token = AccessToken.for_user(user)
+            access = refresh.access_token
+
             response = redirect('/myaccount/')
-            response.set_cookie('access_token', str(access_token), httponly=True, secure=True, samesite='Lax')
+            response.set_cookie('access_token', str(access), httponly=True, secure=True, samesite='Lax')
             response.set_cookie('refresh_token', str(refresh), httponly=True, secure=True, samesite='Lax')
             return response
         else:
             messages.error(request, 'Invalid email or password')
 
-
     if access_token:
-        api_url = f"{settings.API_TOKEN_URL}/token/verify/"
-        data = {'token': access_token}
-        response = requests.post(api_url, data=data)
-
-        if response.status_code == 200:
+        verify_url = f"{settings.API_TOKEN_URL}/token/verify/"
+        verify_response = requests.post(verify_url, data={'token': access_token})
+        if verify_response.status_code == 200:
             return redirect('/myaccount/')
-        else:
-            return render(request, 'login.html', {
-                'form' : FormWithCaptcha(),
-                "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
-                'settings': websettings,
-            })
-        
-    list(messages.get_messages(request))
 
+    list(messages.get_messages(request))  # clear old messages
     return render(request, 'login.html', {
-        'form' : FormWithCaptcha(),
+        'form': FormWithCaptcha(),
         "RECAPTCHA_PUBLIC_KEY": settings.RECAPTCHA_PUBLIC_KEY,
         'settings': websettings,
     })
