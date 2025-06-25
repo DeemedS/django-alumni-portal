@@ -99,8 +99,7 @@ function renderCard(item, index) {
                         <i class="${item.is_liked ? 'fa-solid text-danger' : 'fa-regular'} fa-heart me-1"></i>
                         Like
                     </div>
-                    <div class="pointer" 
-                        onclick="handleSend(this)" 
+                    <div class="pointer send-button"
                         data-link="${   
                             item.type === 'event'
                                 ? `https://alumniportal.guianalankem.com/events/view/${item.slug}`
@@ -167,7 +166,7 @@ function renderCard(item, index) {
                         Like
                     </div>
                     <div><i class="fa-regular fa-bookmark me-1"></i>Save Job</div>
-                    <div class="pointer" onclick="handleSend(this)" data-link="https://alumniportal.guianalankem.com/careers/${item.id}">
+                    <div class="pointer send-button" data-link="https://alumniportal.guianalankem.com/careers/${item.id}">
                     <i class="fa fa-paper-plane me-1" id="send"></i>Send</div>
                 </div>
             </div>
@@ -313,4 +312,8 @@ $("#news-feed-container").on("click", ".like-btn", function () {
             alert("Please log in to like this item.");
         }
     });
+});
+
+$("#news-feed-container").on("click", ".send-button", function () {
+    handleSend(this);
 });
