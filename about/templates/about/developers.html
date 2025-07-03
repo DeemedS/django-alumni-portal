@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %}PUP Alumni Portal | About Us{% endblock %}
+
+{% block content %}
+<div class="about">
+    <div class="top-spacer mb-5">
+        <div class="container d-flex align-items-center"> <!-- Use a height that suits your design -->
+            <h2>ABOUT <span>THE DEVELOPERS</span></h2>
+        </div>
+    </div>
+    <section class="about-team">
+        <h1 class="section-title mt-5">MEET THE DEV TEAM</h1>
+        <div class="team-grid">
+        {% for developer in developers %}
+            <div class="profile-card">
+                {% if developer.image %}
+                    <img src="{{ developer.image.url }}" alt="{{ developer.name }}">
+                {% else %}
+                    <img src="{% static 'images/default_image.png' %}" alt="{{ developer.name }}">
+                {% endif %}
+                <div class="developer-links">
+                    {% if developer.github_profile %}
+                        <a href="{{ developer.github_profile }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    {% endif %}
+                    {% if developer.linkedin_profile %}
+                        <a href="{{ developer.linkedin_profile }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                    {% endif %}
+                    {% if developer.website %}
+                        <a href="{{ developer.website }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-code"></i>
+                        </a>
+                    {% endif %}
+                </div>
+                <h2>{{ developer.name }}</h2>
+                <p class="role">{{ developer.role }}</p>
+                <p>{{ developer.bio }}</p>
+
+                
+                
+            </div>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}
+

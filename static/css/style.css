@@ -302,9 +302,13 @@ footer .footer-form {
     font-size: 0.8rem;
     font-weight: 400;
     color: #fff;
-    height: 6rem;
+    height: 8rem;
     width: 100%;
     margin: 0;
+}
+.copyrights a {
+    text-decoration: none;
+    color: #FFC107;
 }
 @media (max-width: 576px) {
     footer .footer-form {
