@@ -4,6 +4,7 @@ from django.conf import settings
 from faculty.models import WebsiteSettings, POSITION_CHOICES, Official
 from django.utils.text import slugify
 from alumniwebsite.forms import FormWithCaptcha
+from .models import Developers
 # Create your views here.
 
 def about(request):
@@ -25,4 +26,12 @@ def about(request):
     }
 
     return render(request, 'about/about.html', context)
+
+def developers(request):
+    developers = Developers.objects.all()
+    context = {
+        'developers': developers
+    }
+
+    return render(request, 'about/developers.html', context)
 
