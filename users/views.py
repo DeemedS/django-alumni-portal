@@ -25,6 +25,9 @@ from django.core.files.storage import default_storage
 from django.views.decorators.http import require_POST
 from django.core.files.base import ContentFile
 from django.contrib.auth import update_session_auth_hash
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 def user_dashboard(request):
     access_token = request.COOKIES.get('access_token')
@@ -964,8 +967,21 @@ def upload_profile_photo(request):
     if default_storage.exists(filename):
         default_storage.delete(filename)
 
+    # Resize the image
+    image = Image.open(photo)
+    # Convert to RGB to avoid issues with PNG or other formats
+    if image.mode in ("RGBA", "P"):
+        image = image.convert("RGB")
+    # Resize to max 300x300 while maintaining aspect ratio
+    image.thumbnail((300, 300))
+
+    image_io = BytesIO()
+    image_format = 'JPEG' if extension.lower() in ['.jpg', '.jpeg'] else 'PNG'
+    image.save(image_io, format=image_format, quality=75, optimize=True)
+    image_content = ContentFile(image_io.getvalue())
+
     # Save new photo
-    path = default_storage.save(filename, ContentFile(photo.read()))
+    path = default_storage.save(filename, image_content)
     photo_url = default_storage.url(path)
 
     # Update user's profile_image field
