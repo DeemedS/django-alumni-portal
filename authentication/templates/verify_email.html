@@ -24,7 +24,7 @@
             {% if status == 200 %}
                 <header>Verification Successfull</header>
                 <div class="alert alert-success text-center" role="alert">
-                <p>Your account has been successfully verified. You can now login to your account.</p>
+                <p>Your account has been successfully verified. PUP Admin still needs to verify your identity to login. </p>
                 <p>Click <a href="/login">here</a> to login.</p>
                 </div>
             {% elif status == 404 %}
@@ -36,7 +36,7 @@
             {% elif status == 409 %}
                 <header>Your email is already verified.</header>
                 <div class="alert alert-success text-center" role="alert">
-                <p>You can now login to your account.</p>
+                <p>If you can't login. PUP Admin still needs to verify your identity.</p>
                 <p>Click <a href="/login">here</a> to login.</p>
                 </div>
             {% elif status == 400 %}
