@@ -1,6 +1,7 @@
-import secrets
+import os
+import uuid
 import requests
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect, render
@@ -19,7 +20,10 @@ import string
 from alumniwebsite.forms import FormWithCaptcha
 from authentication.models import Course
 from faculty.models import WebsiteSettings
-from django.db.models import Q
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 
 User = get_user_model()
@@ -157,6 +161,21 @@ def register(request):
         if not profile_image:
             messages.error(request, "Profile image is required.")
             return render(request, 'signup.html', context)
+        
+        extension = os.path.splitext(profile_image.name)[1]
+
+        image = Image.open(profile_image)
+
+        if image.mode in ("RGBA", "P"):
+            image = image.convert("RGB")
+        # Resize to max 300x300 while maintaining aspect ratio
+        image.thumbnail((300, 300))
+
+        image_io = BytesIO()
+        image_format = 'JPEG' if extension.lower() in ['.jpg', '.jpeg'] else 'PNG'
+        image.save(image_io, format=image_format, quality=75, optimize=True)
+        image_content = ContentFile(image_io.getvalue())
+
 
         # Create the user
         user = User.objects.create_user(
@@ -172,9 +191,12 @@ def register(request):
             course=Course.objects.get(id=course) if course else None,
             year_graduated=year_graduated,
             work_experience=work_exp,
-            profile_image=profile_image
         )
 
+        
+        filename = f"profile_images/{user.id}{extension.lower()}"
+        path = default_storage.save(filename, image_content)
+        user.profile_image = path
         user.save()
 
         if not send_verification_email(user):
